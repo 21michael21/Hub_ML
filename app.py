@@ -1,13 +1,9 @@
 from __future__ import annotations
 
-import base64
-import binascii
 import ast
 import html
-import io
 import json
 import os
-import queue
 import random
 import re
 import subprocess
@@ -18,19 +14,31 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
 import streamlit as st
+from core.datasets.registry import find_dataset_record, read_dataset_preview, scan_datasets
+from core.notebook.kernel import (
+    KernelManager,
+    get_notebook_runtime,
+    interrupt_notebook_kernel,
+    poll_notebook_execution,
+    refresh_notebook_kernel_state,
+    restart_notebook_kernel,
+    start_notebook_cell,
+)
+from core.notebook.output import render_notebook_output
+from core.tasks.loader import load_mentor_tasks
+from core.tasks.models import dataset_snippet_for_task
+from core.tasks.runner import (
+    build_mentor_task_script,
+    classify_task_result,
+    run_code_in_notebook_kernel_sync,
+    traceback_text,
+)
 
 try:
     from streamlit_ace import st_ace
 except ImportError:
     st_ace = None
-
-try:
-    from jupyter_client import KernelManager
-except ImportError:
-    KernelManager = None
-
 
 APP_TITLE = "Learning Sandbox — Theory Hub"
 NO_SECTION_KEY = "__no_section__"
@@ -67,11 +75,6 @@ PRACTICE_META = {
 
 
 st.set_page_config(page_title=APP_TITLE, page_icon="📚", layout="wide")
-
-
-@st.cache_resource(show_spinner=False)
-def get_notebook_runtime() -> dict[str, Any]:
-    return {"kernel_state": None, "outputs": {}}
 
 
 def inject_styles() -> None:
@@ -1462,117 +1465,6 @@ def run_algorithm_tests(lesson_path: str, timeout_seconds: int = 30) -> dict[str
         }
 
 
-def humanize_notebook_name(name: str) -> str:
-    stem = Path(str(name)).stem
-    replacements = {
-        "analysis_1_stats": "Stats",
-        "analysis_2_numpy": "NumPy",
-        "analysis_3_pandas": "Pandas",
-        "python_1_start": "Python Start",
-        "python_2_basics": "Python Basics",
-        "python_2_project": "Python Project",
-        "python_3_architecture": "Python Architecture",
-        "python_4_advanced": "Advanced Python",
-        "python_5_OOP": "Python OOP",
-        "python_6_advanced+": "Very Advanced Python",
-        "python_EXTRA_typing": "Python Typing",
-    }
-    if stem in replacements:
-        return replacements[stem]
-    words = re.split(r"[_\-\s]+", stem)
-    return " ".join(word.capitalize() for word in words if word)
-
-
-def normalize_mentor_task(raw: Any) -> dict[str, Any] | None:
-    if not isinstance(raw, dict):
-        return None
-    if raw.get("has_asserts") is not True:
-        return None
-
-    task_id = str(raw.get("id") or "").strip()
-    source_notebook = str(raw.get("source_notebook") or "").strip()
-    title = str(raw.get("title") or "").strip()
-    prompt = str(raw.get("prompt") or "").strip()
-    starter_code = str(raw.get("starter_code") or "").strip()
-    confidence = str(raw.get("confidence") or "").strip().casefold()
-    tests = [str(item).strip() for item in raw.get("tests", []) if str(item).strip()]
-
-    if not task_id or not source_notebook or not prompt or not starter_code or not tests:
-        return None
-    if confidence not in {"high", "medium", "low"}:
-        confidence = "low"
-
-    return {
-        "id": task_id,
-        "source_notebook": source_notebook,
-        "notebook_label": humanize_notebook_name(source_notebook),
-        "title": title or task_id,
-        "prompt": prompt,
-        "starter_code": starter_code,
-        "tests": tests,
-        "check_code": extract_mentor_task_check_code(starter_code),
-        "confidence": confidence,
-        "code_cell_index": raw.get("code_cell_index"),
-        "prompt_cell_index": raw.get("prompt_cell_index"),
-    }
-
-
-def line_has_starter_stub(line: str) -> bool:
-    return bool(re.search(r"#\s*TODO|#\s*(?:ваш|ВАШ)\s+код|\.\.\.|\bpass\b|NotImplementedError", line, re.I))
-
-
-def extract_mentor_task_check_code(starter_code: str) -> str:
-    lines = starter_code.splitlines()
-    assert_indexes = [index for index, line in enumerate(lines) if line.strip().startswith("assert ")]
-    if not assert_indexes:
-        return ""
-
-    first_assert = assert_indexes[0]
-    start = first_assert
-    index = first_assert - 1
-    while index >= 0:
-        line = lines[index]
-        if not line.strip() or line_has_starter_stub(line):
-            break
-        start = index
-        index -= 1
-
-    return "\n".join(lines[start:]).strip()
-
-
-@st.cache_data(show_spinner=False)
-def load_mentor_tasks() -> dict[str, Any]:
-    if not MENTOR_TASKS_PATH.exists():
-        return {"tasks": [], "skipped": 0}
-
-    try:
-        data = json.loads(MENTOR_TASKS_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {"tasks": [], "skipped": 0}
-
-    raw_tasks = data.get("tasks", [])
-    if not isinstance(raw_tasks, list):
-        return {"tasks": [], "skipped": 0}
-
-    tasks: list[dict[str, Any]] = []
-    skipped = 0
-    for raw in raw_tasks:
-        task = normalize_mentor_task(raw)
-        if task is None:
-            skipped += 1
-            continue
-        tasks.append(task)
-
-    tasks.sort(
-        key=lambda task: (
-            str(task["notebook_label"]).casefold(),
-            {"high": 0, "medium": 1, "low": 2}.get(str(task["confidence"]), 9),
-            str(task["title"]).casefold(),
-        )
-    )
-    return {"tasks": tasks, "skipped": skipped}
-
-
 def get_mentor_task_status(task_id: str) -> str:
     progress = ensure_progress_state()
     record = progress.setdefault("mentor_tasks_status", {}).get(task_id, {})
@@ -1597,161 +1489,6 @@ def mentor_tasks_progress(tasks: list[dict[str, Any]]) -> dict[str, int]:
     reviewable = [task for task in tasks if task["confidence"] != "low"]
     done = sum(1 for task in reviewable if get_mentor_task_status(task["id"]) == STATUS_DONE)
     return {"total": len(reviewable), "done": done, "todo": len(reviewable) - done}
-
-
-def build_mentor_task_script(user_code: str, check_code: str) -> str:
-    script = user_code.rstrip()
-    check_code = check_code.strip()
-    if check_code and check_code not in user_code:
-        script += "\n\n# --- checks ---\n" + check_code
-    return script + "\n"
-
-
-def run_code_in_notebook_kernel_sync(code: str, timeout_seconds: int = 20) -> dict[str, Any]:
-    started = time.perf_counter()
-    kernel_state = refresh_notebook_kernel_state()
-    if kernel_state.get("status") == "busy":
-        return {
-            "ok": False,
-            "timed_out": False,
-            "outputs": [
-                {
-                    "type": "error",
-                    "ename": "KernelBusy",
-                    "evalue": "Notebook kernel занят другой ячейкой. Дождитесь завершения или прервите выполнение.",
-                    "traceback": [],
-                }
-            ],
-            "stdout": "",
-            "error": "KernelBusy",
-            "elapsed": 0.0,
-        }
-
-    km = kernel_state.get("km")
-    if km is None or not getattr(km, "is_alive", lambda: False)():
-        return {
-            "ok": False,
-            "timed_out": False,
-            "outputs": [
-                {
-                    "type": "error",
-                    "ename": "KernelUnavailable",
-                    "evalue": kernel_state.get("last_error", "Jupyter kernel недоступен."),
-                    "traceback": [],
-                }
-            ],
-            "stdout": "",
-            "error": "KernelUnavailable",
-            "elapsed": 0.0,
-        }
-
-    outputs: list[dict[str, Any]] = []
-    kc = None
-    try:
-        kc = km.client()
-        kc.start_channels()
-        msg_id = kc.execute(code, store_history=True, allow_stdin=False)
-        shell_done = False
-        while True:
-            elapsed = time.perf_counter() - started
-            if elapsed > timeout_seconds:
-                try:
-                    km.interrupt_kernel()
-                except Exception:
-                    pass
-                drain_deadline = time.perf_counter() + 3.0
-                while time.perf_counter() < drain_deadline:
-                    try:
-                        msg = kc.get_iopub_msg(timeout=0.1)
-                    except queue.Empty:
-                        continue
-                    if msg.get("parent_header", {}).get("msg_id") != msg_id:
-                        continue
-                    msg_type = msg.get("header", {}).get("msg_type")
-                    if msg_type == "status" and msg.get("content", {}).get("execution_state") == "idle":
-                        break
-                outputs.append(
-                    {
-                        "type": "error",
-                        "ename": "Timeout",
-                        "evalue": f"Выполнение прервано после {timeout_seconds} сек.",
-                        "traceback": [],
-                    }
-                )
-                return {
-                    "ok": False,
-                    "timed_out": True,
-                    "outputs": outputs,
-                    "stdout": outputs_to_stdout(outputs),
-                    "error": "Timeout",
-                    "elapsed": elapsed,
-                }
-
-            try:
-                shell_msg = kc.get_shell_msg(timeout=0.01)
-            except queue.Empty:
-                shell_msg = None
-            if shell_msg and shell_msg.get("parent_header", {}).get("msg_id") == msg_id:
-                shell_done = True
-
-            try:
-                msg = kc.get_iopub_msg(timeout=0.05)
-            except queue.Empty:
-                if shell_done:
-                    break
-                continue
-
-            if msg.get("parent_header", {}).get("msg_id") != msg_id:
-                continue
-
-            msg_type = msg.get("header", {}).get("msg_type")
-            if msg_type == "status" and msg.get("content", {}).get("execution_state") == "idle":
-                break
-
-            output = notebook_output_from_message(msg)
-            if output is not None:
-                outputs.append(output)
-
-        error_output = next((output for output in outputs if output.get("type") == "error"), None)
-        return {
-            "ok": error_output is None,
-            "timed_out": False,
-            "outputs": outputs,
-            "stdout": outputs_to_stdout(outputs),
-            "error": error_output.get("ename") if error_output else "",
-            "elapsed": time.perf_counter() - started,
-        }
-    except Exception as exc:
-        outputs.append(
-            {
-                "type": "error",
-                "ename": exc.__class__.__name__,
-                "evalue": str(exc),
-                "traceback": [],
-            }
-        )
-        return {
-            "ok": False,
-            "timed_out": False,
-            "outputs": outputs,
-            "stdout": outputs_to_stdout(outputs),
-            "error": exc.__class__.__name__,
-            "elapsed": time.perf_counter() - started,
-        }
-    finally:
-        try:
-            if kc is not None:
-                kc.stop_channels()
-        except Exception:
-            pass
-
-
-def outputs_to_stdout(outputs: list[dict[str, Any]]) -> str:
-    chunks: list[str] = []
-    for output in outputs:
-        if output.get("type") == "stream" and output.get("name") == "stdout":
-            chunks.append(str(output.get("text") or ""))
-    return "".join(chunks)
 
 
 @st.cache_data(show_spinner=False)
@@ -1829,82 +1566,6 @@ def load_architecture_guidelines() -> dict[str, Any]:
 
     document_html = re.sub(r"</?body[^>]*>", "", raw_html, flags=re.I).strip()
     return {"title": title, "html": document_html, "sections": sections}
-
-
-def format_bytes(size: int) -> str:
-    units = ["B", "KB", "MB", "GB"]
-    value = float(size)
-    for unit in units:
-        if value < 1024 or unit == units[-1]:
-            return f"{value:.1f} {unit}" if unit != "B" else f"{int(value)} B"
-        value /= 1024
-    return f"{size} B"
-
-
-def count_csv_rows(path: Path) -> int | None:
-    try:
-        with path.open("r", encoding="utf-8", errors="replace", newline="") as handle:
-            line_count = sum(1 for _ in handle)
-    except OSError:
-        return None
-    return max(line_count - 1, 0)
-
-
-@st.cache_data(show_spinner=False)
-def scan_datasets() -> list[dict[str, Any]]:
-    if not DATASETS_DIR.exists() or not DATASETS_DIR.is_dir():
-        return []
-
-    datasets: list[dict[str, Any]] = []
-    for csv_path in sorted(DATASETS_DIR.glob("*.csv"), key=lambda path: path.name.casefold()):
-        if csv_path.name.startswith("."):
-            continue
-
-        record: dict[str, Any] = {
-            "name": csv_path.name,
-            "path": str(csv_path),
-            "size_bytes": csv_path.stat().st_size,
-            "size": format_bytes(csv_path.stat().st_size),
-            "rows": None,
-            "columns": None,
-            "error": None,
-        }
-        try:
-            header = pd.read_csv(csv_path, nrows=0)
-            record["columns"] = len(header.columns)
-            record["rows"] = count_csv_rows(csv_path)
-        except (pd.errors.EmptyDataError, pd.errors.ParserError, UnicodeDecodeError, OSError) as exc:
-            record["error"] = str(exc)
-
-        datasets.append(record)
-
-    return datasets
-
-
-@st.cache_data(show_spinner=False)
-def read_dataset_preview(path: str, nrows: int = 50) -> dict[str, Any]:
-    try:
-        preview = pd.read_csv(path, nrows=nrows)
-    except (pd.errors.EmptyDataError, pd.errors.ParserError, UnicodeDecodeError, OSError) as exc:
-        return {"error": str(exc), "preview": None, "dtypes": None, "describe": None}
-
-    numeric = preview.select_dtypes(include="number")
-    describe = numeric.describe().transpose() if not numeric.empty else None
-    return {
-        "error": None,
-        "preview": preview,
-        "dtypes": preview.dtypes.astype(str).reset_index().rename(
-            columns={"index": "column", 0: "dtype"}
-        ),
-        "describe": describe,
-    }
-
-
-def find_dataset_record(name: str, datasets: list[dict[str, Any]]) -> dict[str, Any] | None:
-    wanted = str(name or "").strip().casefold()
-    if not wanted:
-        return None
-    return next((dataset for dataset in datasets if dataset["name"].casefold() == wanted), None)
 
 
 def open_dataset_tab(dataset_name: str) -> None:
@@ -2050,335 +1711,6 @@ if {"category", "revenue"}.issubset(df.columns):
     plt.tight_layout()
     plt.show()
 '''
-
-
-def run_hidden_kernel_setup(kc: Any) -> None:
-    try:
-        msg_id = kc.execute(
-            'get_ipython().run_line_magic("matplotlib", "inline")',
-            store_history=False,
-            silent=True,
-            allow_stdin=False,
-        )
-        started = time.perf_counter()
-        while time.perf_counter() - started < 4:
-            try:
-                msg = kc.get_iopub_msg(timeout=0.2)
-            except queue.Empty:
-                continue
-            if msg.get("parent_header", {}).get("msg_id") != msg_id:
-                continue
-            if (
-                msg.get("header", {}).get("msg_type") == "status"
-                and msg.get("content", {}).get("execution_state") == "idle"
-            ):
-                break
-    except Exception:
-        pass
-
-
-def start_notebook_kernel() -> dict[str, Any]:
-    if KernelManager is None:
-        return {
-            "km": None,
-            "kc": None,
-            "status": "dead",
-            "busy_cell_id": None,
-            "last_error": "jupyter_client/ipykernel не установлены.",
-        }
-
-    runtime = get_notebook_runtime()
-    kernel_state = runtime.get("kernel_state")
-    if isinstance(kernel_state, dict):
-        km = kernel_state.get("km")
-        if km is not None and getattr(km, "is_alive", lambda: False)():
-            st.session_state["notebook_kernel_state"] = kernel_state
-            return kernel_state
-
-    try:
-        km = KernelManager()
-        km.start_kernel(cwd=str(PROJECT_ROOT))
-        kc = km.client()
-        kc.start_channels()
-        kc.wait_for_ready(timeout=12)
-        run_hidden_kernel_setup(kc)
-        kc.stop_channels()
-    except Exception as exc:
-        return {
-            "km": None,
-            "kc": None,
-            "status": "dead",
-            "busy_cell_id": None,
-            "last_error": str(exc),
-        }
-
-    kernel_state = {
-        "km": km,
-        "kc": None,
-        "status": "idle",
-        "busy_cell_id": None,
-        "active_execution": None,
-        "last_error": "",
-    }
-    runtime["kernel_state"] = kernel_state
-    st.session_state["notebook_kernel_state"] = kernel_state
-    return kernel_state
-
-
-def refresh_notebook_kernel_state() -> dict[str, Any]:
-    kernel_state = start_notebook_kernel()
-    km = kernel_state.get("km")
-
-    if km is None or not getattr(km, "is_alive", lambda: False)():
-        kernel_state["status"] = "dead"
-        kernel_state["busy_cell_id"] = None
-        return kernel_state
-
-    if kernel_state.get("active_execution"):
-        kernel_state["status"] = "busy"
-    elif kernel_state.get("status") == "busy":
-        kernel_state["status"] = "idle"
-        kernel_state["busy_cell_id"] = None
-
-    return kernel_state
-
-
-def shutdown_notebook_kernel(kernel_state: dict[str, Any]) -> None:
-    km = kernel_state.get("km")
-    kc = kernel_state.get("kc")
-    active = kernel_state.get("active_execution")
-    if isinstance(active, dict):
-        active_kc = active.get("kc")
-        try:
-            if active_kc is not None:
-                active_kc.stop_channels()
-        except Exception:
-            pass
-    try:
-        if kc is not None:
-            kc.stop_channels()
-    except Exception:
-        pass
-    try:
-        if km is not None and getattr(km, "is_alive", lambda: False)():
-            km.shutdown_kernel(now=True)
-    except Exception:
-        pass
-
-
-def restart_notebook_kernel() -> None:
-    runtime = get_notebook_runtime()
-    kernel_state = runtime.get("kernel_state")
-    if isinstance(kernel_state, dict):
-        shutdown_notebook_kernel(kernel_state)
-
-    runtime["kernel_state"] = None
-    runtime["outputs"] = {}
-    st.session_state["notebook_outputs"] = runtime["outputs"]
-    start_notebook_kernel()
-
-
-def interrupt_notebook_kernel() -> None:
-    kernel_state = refresh_notebook_kernel_state()
-    km = kernel_state.get("km")
-    try:
-        if km is not None and getattr(km, "is_alive", lambda: False)():
-            km.interrupt_kernel()
-            kernel_state["last_error"] = ""
-    except Exception as exc:
-        kernel_state["last_error"] = f"Не удалось прервать ядро: {exc}"
-
-
-def notebook_output_from_message(msg: dict[str, Any]) -> dict[str, Any] | None:
-    msg_type = msg.get("header", {}).get("msg_type")
-    content = msg.get("content", {})
-
-    if msg_type == "stream":
-        return {
-            "type": "stream",
-            "name": content.get("name", "stdout"),
-            "text": content.get("text", ""),
-        }
-
-    if msg_type in {"execute_result", "display_data"}:
-        data = content.get("data", {})
-        return {
-            "type": msg_type,
-            "data": data,
-            "text": data.get("text/plain", ""),
-            "metadata": content.get("metadata", {}),
-        }
-
-    if msg_type == "error":
-        return {
-            "type": "error",
-            "ename": content.get("ename", ""),
-            "evalue": content.get("evalue", ""),
-            "traceback": content.get("traceback", []),
-        }
-
-    return None
-
-
-def finish_notebook_execution(kernel_state: dict[str, Any]) -> None:
-    active = kernel_state.get("active_execution")
-    if not isinstance(active, dict):
-        return
-
-    kc = active.get("kc")
-    cell_id = active.get("cell_id")
-    outputs = active.get("outputs", [])
-    runtime = get_notebook_runtime()
-    runtime.setdefault("outputs", {})[cell_id] = outputs
-    st.session_state["notebook_outputs"] = runtime["outputs"]
-
-    try:
-        if kc is not None:
-            kc.stop_channels()
-    except Exception:
-        pass
-
-    kernel_state["active_execution"] = None
-    kernel_state["status"] = "idle"
-    kernel_state["busy_cell_id"] = None
-
-
-def poll_notebook_execution(kernel_state: dict[str, Any], time_budget: float = 0.12) -> None:
-    active = kernel_state.get("active_execution")
-    if not isinstance(active, dict):
-        return
-
-    km = kernel_state.get("km")
-    kc = active.get("kc")
-    msg_id = active.get("msg_id")
-    cell_id = active.get("cell_id")
-    outputs: list[dict[str, Any]] = active.setdefault("outputs", [])
-    runtime = get_notebook_runtime()
-    output_store = runtime.setdefault("outputs", {})
-    started = time.perf_counter()
-    active.setdefault("started_at", started)
-
-    if kc is None or msg_id is None or cell_id is None:
-        finish_notebook_execution(kernel_state)
-        return
-
-    while time.perf_counter() - started < time_budget:
-        try:
-            shell_msg = kc.get_shell_msg(timeout=0.01)
-        except queue.Empty:
-            shell_msg = None
-
-        if shell_msg and shell_msg.get("parent_header", {}).get("msg_id") == msg_id:
-            active["shell_done"] = True
-            active["last_message_at"] = time.perf_counter()
-
-        if active.get("shell_done") and time.perf_counter() - active.get("last_message_at", started) > 0.35:
-            finish_notebook_execution(kernel_state)
-            return
-
-        if km is None or not getattr(km, "is_alive", lambda: False)():
-            outputs.append(
-                {
-                    "type": "error",
-                    "ename": "KernelDead",
-                    "evalue": "Python-ядро остановилось. Перезапустите его.",
-                    "traceback": [],
-                }
-            )
-            output_store[cell_id] = outputs
-            kernel_state["status"] = "dead"
-            kernel_state["busy_cell_id"] = None
-            kernel_state["active_execution"] = None
-            return
-
-        try:
-            msg = kc.get_iopub_msg(timeout=0.03)
-        except queue.Empty:
-            quiet_after_output = (
-                bool(outputs)
-                and time.perf_counter() - active.get("last_message_at", started) > 2.0
-            )
-            if quiet_after_output:
-                finish_notebook_execution(kernel_state)
-                return
-            continue
-
-        if msg.get("parent_header", {}).get("msg_id") != msg_id:
-            continue
-
-        active["last_message_at"] = time.perf_counter()
-        msg_type = msg.get("header", {}).get("msg_type")
-        if msg_type == "status":
-            execution_state = msg.get("content", {}).get("execution_state")
-            if execution_state == "idle":
-                finish_notebook_execution(kernel_state)
-                return
-            kernel_state["status"] = "busy"
-            continue
-
-        output = notebook_output_from_message(msg)
-        if output is not None:
-            outputs.append(output)
-            output_store[cell_id] = outputs
-            st.session_state["notebook_outputs"] = output_store
-
-
-def start_notebook_cell(cell_id: str, code: str) -> None:
-    kernel_state = refresh_notebook_kernel_state()
-    if kernel_state.get("status") == "busy":
-        return
-
-    km = kernel_state.get("km")
-    runtime = get_notebook_runtime()
-    output_store = runtime.setdefault("outputs", {})
-    st.session_state["notebook_outputs"] = output_store
-    output_store[cell_id] = [
-        {
-            "type": "stream",
-            "name": "status",
-            "text": "Выполняется...",
-        }
-    ]
-
-    if km is None or not getattr(km, "is_alive", lambda: False)():
-        output_store[cell_id] = [
-            {
-                "type": "error",
-                "ename": "KernelUnavailable",
-                "evalue": kernel_state.get("last_error", "Jupyter kernel недоступен."),
-                "traceback": [],
-            }
-        ]
-        kernel_state["status"] = "dead"
-        return
-
-    try:
-        kc = km.client()
-        kc.start_channels()
-        msg_id = kc.execute(code, store_history=True, allow_stdin=False)
-    except Exception as exc:
-        output_store[cell_id] = [
-            {
-                "type": "error",
-                "ename": exc.__class__.__name__,
-                "evalue": str(exc),
-                "traceback": [],
-            }
-        ]
-        kernel_state["status"] = "idle"
-        kernel_state["busy_cell_id"] = None
-        return
-
-    kernel_state["status"] = "busy"
-    kernel_state["busy_cell_id"] = cell_id
-    kernel_state["active_execution"] = {
-        "cell_id": cell_id,
-        "kc": kc,
-        "msg_id": msg_id,
-        "outputs": [],
-        "shell_done": False,
-        "last_message_at": time.perf_counter(),
-    }
 
 
 def add_notebook_cell() -> None:
@@ -3411,12 +2743,25 @@ def render_mentor_task_summary(task: dict[str, Any]) -> None:
 
 
 def render_mentor_task_result(result: dict[str, Any]) -> None:
-    if result.get("ok"):
+    classification = str(result.get("classification") or classify_task_result(result))
+    elapsed = float(result.get("elapsed") or 0)
+
+    if classification == "PASS":
         st.success(f"✅ Решено · {float(result.get('elapsed') or 0):.2f}s")
-    elif result.get("timed_out"):
-        st.error(f"⏱ Таймаут · {float(result.get('elapsed') or 0):.2f}s")
+    elif classification == "FAIL":
+        st.error(f"❌ FAIL · {elapsed:.2f}s")
+        st.caption("Код запустился, но ожидаемые значения не совпали с assert-проверками.")
+    elif classification == "ERROR":
+        st.error(f"💥 ERROR · {elapsed:.2f}s")
+        st.caption("Код упал до прохождения проверок. Исправьте runtime-ошибку и запустите снова.")
+    elif classification == "TIMEOUT":
+        st.error(f"⏱ TIMEOUT · {elapsed:.2f}s")
+        st.caption("Выполнение заняло слишком много времени и было прервано.")
+    elif classification == "KERNEL_BUSY":
+        st.warning("⏳ KERNEL_BUSY")
+        st.caption("Jupyter-ядро уже выполняет другую ячейку или задачу.")
     else:
-        st.error(f"❌ Проверка не прошла · {float(result.get('elapsed') or 0):.2f}s")
+        st.error(f"❌ {classification or 'UNKNOWN'} · {elapsed:.2f}s")
 
     stdout = str(result.get("stdout") or "")
     if stdout:
@@ -3428,7 +2773,12 @@ def render_mentor_task_result(result: dict[str, Any]) -> None:
     if errors:
         st.markdown("#### Ошибка / traceback")
         for output in errors:
-            render_notebook_output(output)
+            ename = str(output.get("ename") or "Error")
+            evalue = str(output.get("evalue") or "")
+            st.caption(f"{ename}: {evalue}".strip())
+            with st.expander("Показать traceback", expanded=False):
+                text = traceback_text(output)
+                st.code(text or str(output), language="text")
     elif not stdout:
         st.caption("Код не напечатал stdout, но assert-проверки прошли.")
 
@@ -3437,13 +2787,23 @@ def render_mentor_task_detail(task: dict[str, Any]) -> None:
     code_key = f"mentor_task_code_{task['id']}"
     result_key = f"mentor_task_result_{task['id']}"
     if code_key not in st.session_state:
-        st.session_state[code_key] = task["starter_code"]
+        st.session_state[code_key] = task["solution_starter"]
 
     left_col, right_col = st.columns([0.45, 0.55], gap="large")
     with left_col:
         st.markdown("#### Условие")
         st.caption(f"{task['notebook_label']} / {task['source_notebook']} · cell {task.get('code_cell_index')}")
         st.markdown(task["prompt"])
+        dataset_snippet = dataset_snippet_for_task(task)
+        if dataset_snippet:
+            with st.expander("Dataset snippet", expanded=False):
+                st.caption("Относительные пути от корня проекта. Можно использовать в решении или Notebook.")
+                st.code(dataset_snippet, language="python")
+        if task.get("dependency_hint"):
+            st.warning(task["dependency_hint"])
+            if task.get("setup_code"):
+                with st.expander("Setup, который будет добавлен перед проверкой", expanded=False):
+                    st.code(task["setup_code"], language="python")
         with st.expander("Assert-проверки", expanded=False):
             st.code("\n".join(task["tests"]), language="python")
 
@@ -3466,15 +2826,19 @@ def render_mentor_task_detail(task: dict[str, Any]) -> None:
 
         button_cols = st.columns(2)
         if button_cols[0].button("▶ Проверить", key=f"check_mentor_task_{task['id']}", use_container_width=True):
-            final_script = build_mentor_task_script(st.session_state.get(code_key, ""), task["check_code"])
+            final_script = build_mentor_task_script(
+                st.session_state.get(code_key, ""),
+                task["test_code"],
+                task.get("setup_code", ""),
+            )
             with st.spinner("Запускаю в Jupyter-ядре и проверяю assert..."):
                 result = run_code_in_notebook_kernel_sync(final_script)
             st.session_state[result_key] = result
-            if result.get("ok"):
+            if classify_task_result(result) == "PASS":
                 set_mentor_task_status(task["id"], STATUS_DONE, result)
 
         if button_cols[1].button("Сбросить код", key=f"reset_mentor_task_{task['id']}", use_container_width=True):
-            st.session_state[code_key] = task["starter_code"]
+            st.session_state[code_key] = task["solution_starter"]
             st.rerun()
 
         if result_key in st.session_state:
@@ -3812,71 +3176,6 @@ def render_scratch_tab(datasets: list[dict[str, Any]]) -> None:
         st.code(result["stdout"] or "", language="text")
         st.markdown("#### stderr")
         st.code(result["stderr"] or "", language="text")
-
-
-def mime_payload_to_text(value: Any) -> str:
-    if isinstance(value, list):
-        return "".join(str(item) for item in value)
-    return str(value or "")
-
-
-def render_notebook_rich_data(data: dict[str, Any], output_type: str) -> None:
-    if not isinstance(data, dict):
-        st.code(str(data), language="text")
-        return
-
-    png_payload = data.get("image/png")
-    if png_payload:
-        try:
-            image_bytes = base64.b64decode(mime_payload_to_text(png_payload), validate=False)
-            st.caption("image/png")
-            st.image(io.BytesIO(image_bytes))
-            return
-        except (binascii.Error, ValueError, OSError) as exc:
-            st.warning(f"Не удалось отрисовать image/png: {exc}")
-
-    html_payload = data.get("text/html")
-    if html_payload:
-        st.caption("text/html")
-        st.markdown(mime_payload_to_text(html_payload), unsafe_allow_html=True)
-        return
-
-    plain_payload = data.get("text/plain")
-    if plain_payload:
-        st.caption("result" if output_type == "execute_result" else "display")
-        st.code(mime_payload_to_text(plain_payload), language="text")
-        return
-
-    st.caption(f"{output_type}: нет поддерживаемого вывода")
-
-
-def render_notebook_output(output: dict[str, Any]) -> None:
-    output_type = output.get("type")
-
-    if output_type == "stream":
-        name = str(output.get("name") or "stdout")
-        text = str(output.get("text") or "")
-        if name == "status":
-            st.info(text)
-        else:
-            st.caption(name)
-            st.code(text, language="text")
-        return
-
-    if output_type in {"execute_result", "display_data"}:
-        render_notebook_rich_data(output.get("data", {}), str(output_type))
-        return
-
-    if output_type == "error":
-        ename = str(output.get("ename") or "Error")
-        evalue = str(output.get("evalue") or "")
-        traceback_lines = output.get("traceback") or []
-        st.error(f"{ename}: {evalue}".strip())
-        if traceback_lines:
-            st.code("\n".join(str(line) for line in traceback_lines), language="text")
-        return
-
-    st.code(str(output), language="text")
 
 
 def render_notebook_cell(
@@ -4315,11 +3614,11 @@ def main() -> None:
     note_index = build_note_index(sections)
     graph = scan_link_graph(str(resolved_vault))
     practice_cards, practice_warnings = scan_practice_cards()
-    datasets = scan_datasets()
+    datasets = scan_datasets(DATASETS_DIR)
     algorithm_lessons = scan_algorithm_lessons()
     interview_data = load_interview_questions()
     architecture_data = load_architecture_guidelines()
-    mentor_data = load_mentor_tasks()
+    mentor_data = load_mentor_tasks(MENTOR_TASKS_PATH)
     tab_options = [
         "Home",
         "Theory",
