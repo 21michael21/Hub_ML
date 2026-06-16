@@ -1,7 +1,7 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "sources": {
-    "theory_notes": 206,
+    "theory_notes": 207,
     "practice_cards": 7,
     "mentor_tasks": 64,
     "algorithm_lessons": 9,
@@ -9,13 +9,12 @@
     "theory_audit": "/Users/mihailkulibaba/Documents/New project/content/reports/theory_audit.json"
   },
   "summary": {
-    "generated_at": "2026-06-16T22:02:13.602653+00:00",
+    "generated_at": "2026-06-16T22:06:36.071667+00:00",
     "total_topics": 36,
     "status_counts": {
       "partial": 8,
-      "covered": 15,
-      "theory_only": 12,
-      "practice_only": 1
+      "covered": 16,
+      "theory_only": 12
     },
     "coverage_by_track": {
       "Classic ML": {
@@ -35,9 +34,8 @@
         "theory_only": 1
       },
       "Interview Prep": {
-        "covered": 1,
-        "partial": 1,
-        "practice_only": 1
+        "covered": 2,
+        "partial": 1
       },
       "MLOps": {
         "covered": 1,
@@ -154,23 +152,8 @@
         "status": "theory_only"
       }
     ],
-    "practice_without_theory": [
-      {
-        "id": "interview.take_home",
-        "title": "Take-home Assignments",
-        "track": "Interview Prep",
-        "level": "middle",
-        "status": "practice_only"
-      }
-    ],
+    "practice_without_theory": [],
     "recommended_next_10_topics": [
-      {
-        "id": "interview.take_home",
-        "title": "Take-home Assignments",
-        "track": "Interview Prep",
-        "level": "middle",
-        "status": "practice_only"
-      },
       {
         "id": "genai.prompting",
         "title": "Prompt Engineering",
@@ -233,6 +216,13 @@
         "track": "Statistics",
         "level": "junior",
         "status": "theory_only"
+      },
+      {
+        "id": "ml.supervised",
+        "title": "Supervised Learning",
+        "track": "Classic ML",
+        "level": "junior",
+        "status": "partial"
       }
     ],
     "recommended_next_3_project_directions": [
@@ -755,7 +745,7 @@
       "level": "junior",
       "required": true,
       "status": "partial",
-      "theory_quality": 26.0,
+      "theory_quality": 42.0,
       "evidence_counts": {
         "theory": 5,
         "practice": 0,
@@ -812,12 +802,12 @@
             "matched_patterns": [
               "algorithms",
               "big o",
+              "hashmap",
               "two pointers",
               "sliding window",
-              "stack",
-              "recursion"
+              "stack"
             ],
-            "quality_score": 0
+            "quality_score": 80
           }
         ],
         "practice": [],
@@ -1831,7 +1821,7 @@
       "level": "junior",
       "required": true,
       "status": "covered",
-      "theory_quality": 70.0,
+      "theory_quality": 77.0,
       "evidence_counts": {
         "theory": 5,
         "practice": 1,
@@ -1882,9 +1872,11 @@
             "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
             "title": "Statistics Course Article",
             "matched_patterns": [
+              "probability",
+              "distribution",
               "variance"
             ],
-            "quality_score": 45
+            "quality_score": 80
           }
         ],
         "practice": [
@@ -1914,7 +1906,7 @@
       "level": "junior",
       "required": true,
       "status": "theory_only",
-      "theory_quality": 68.0,
+      "theory_quality": 75.0,
       "evidence_counts": {
         "theory": 5,
         "practice": 0,
@@ -1970,11 +1962,11 @@
             "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
             "title": "Statistics Course Article",
             "matched_patterns": [
+              "hypothesis",
               "p-value",
-              "confidence interval",
               "a/b"
             ],
-            "quality_score": 45
+            "quality_score": 80
           }
         ],
         "practice": [],
@@ -3322,6 +3314,16 @@
           },
           {
             "kind": "theory",
+            "path": "00_Graph/14_Python_Algorithms.md",
+            "title": "Python Algorithms",
+            "matched_patterns": [
+              "interview",
+              "questions"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
             "path": "00_Graph/20_Data_Analysis_Path.md",
             "title": "Data Analysis Path",
             "matched_patterns": [
@@ -3344,15 +3346,6 @@
             "title": "Product Analytics",
             "matched_patterns": [
               "questions"
-            ],
-            "quality_score": 80
-          },
-          {
-            "kind": "theory",
-            "path": "00_Inbox/LEARNING_ROADMAP_FREE_RESOURCES.md",
-            "title": "Дорожная карта: Бесплатные курсы и ресурсы (2026)",
-            "matched_patterns": [
-              "interview"
             ],
             "quality_score": 80
           }
@@ -3393,7 +3386,7 @@
       "level": "junior",
       "required": true,
       "status": "partial",
-      "theory_quality": 26.0,
+      "theory_quality": 42.0,
       "evidence_counts": {
         "theory": 5,
         "practice": 0,
@@ -3444,9 +3437,11 @@
             "path": "00_Graph/14_Python_Algorithms.md",
             "title": "Python Algorithms",
             "matched_patterns": [
+              "mock interview",
+              "coding interview",
               "algorithms"
             ],
-            "quality_score": 0
+            "quality_score": 80
           }
         ],
         "practice": [],
@@ -3559,17 +3554,27 @@
       "track": "Interview Prep",
       "level": "middle",
       "required": true,
-      "status": "practice_only",
-      "theory_quality": null,
+      "status": "covered",
+      "theory_quality": 80.0,
       "evidence_counts": {
-        "theory": 0,
+        "theory": 1,
         "practice": 1,
         "mentor_tasks": 0,
         "algorithms": 0,
         "interviews": 0
       },
       "evidence": {
-        "theory": [],
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+            "title": "Portfolio Output Guide",
+            "matched_patterns": [
+              "take-home"
+            ],
+            "quality_score": 80
+          }
+        ],
         "practice": [
           {
             "kind": "practice",
@@ -3597,7 +3602,7 @@
       "level": "beginner",
       "required": true,
       "status": "covered",
-      "theory_quality": 74.0,
+      "theory_quality": 80.0,
       "evidence_counts": {
         "theory": 5,
         "practice": 5,
@@ -3607,6 +3612,15 @@
       },
       "evidence": {
         "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/14_Python_Algorithms.md",
+            "title": "Python Algorithms",
+            "matched_patterns": [
+              "portfolio"
+            ],
+            "quality_score": 80
+          },
           {
             "kind": "theory",
             "path": "00_Graph/20_Data_Analysis_Path.md",
@@ -3644,15 +3658,6 @@
               "portfolio"
             ],
             "quality_score": 80
-          },
-          {
-            "kind": "theory",
-            "path": "01_Python/Architecture/02_Project_Structure.md",
-            "title": "Структура проекта",
-            "matched_patterns": [
-              "readme"
-            ],
-            "quality_score": 50
           }
         ],
         "practice": [

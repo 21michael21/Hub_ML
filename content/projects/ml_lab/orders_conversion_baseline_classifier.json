@@ -1,0 +1,174 @@
+{
+  "id": "orders_conversion_baseline_classifier",
+  "title": "Orders Conversion Baseline Classifier",
+  "level": "junior",
+  "track": "Classic ML",
+  "datasets": ["df_events.csv", "df_orders.csv"],
+  "skills": [
+    "classification",
+    "pandas feature aggregation",
+    "train/test split",
+    "baseline modeling",
+    "classification metrics",
+    "leakage analysis",
+    "model card writing"
+  ],
+  "estimated_time": "4-6 ч",
+  "goal": "Build a simple, readable baseline classifier that predicts whether a user has an order conversion using only simple aggregated event features.",
+  "business_context": "A product team wants a first conversion-propensity baseline before investing in complex ML. The goal is not production accuracy; the goal is to learn how to define a target, avoid leakage, evaluate honestly, and explain limitations.",
+  "prerequisites": [
+    "Pandas Basics",
+    "VKAT Analysis Data",
+    "Statistics Basics",
+    "Classic ML basics",
+    "Portfolio Output Guide"
+  ],
+  "related_theory_paths": [
+    "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+    "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+    "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+    "05_IT_Resources/Portfolio_Output_Guide.md"
+  ],
+  "related_practice_ids": ["data_analysis_orders_eda"],
+  "related_task_ids": ["analysis_3_pandas", "analysis_1_stats"],
+  "related_dataset_names": ["df_events.csv", "df_orders.csv"],
+  "related_portfolio_templates": [
+    {
+      "title": "Baseline classifier model card",
+      "what_to_write": "Write a model card with problem, data, target, features, split strategy, metrics, limitations, leakage risks, and next steps. Use real metrics from your Notebook run; do not invent numbers.",
+      "chart_or_table": "Include a metrics table, confusion matrix, and a short feature/target definition table.",
+      "readme_bullet": "Built a conversion baseline classifier with pandas and scikit-learn, defining a target, creating aggregated features, evaluating classification metrics, and documenting leakage risks in a model card."
+    }
+  ],
+  "milestones": [
+    {
+      "id": "define_target",
+      "title": "Define the target",
+      "type": "reading",
+      "description": "Define the binary target clearly: converted = user has at least one order in df_orders.csv. Write down what one prediction row represents. For this MVP, use user-level rows. Note the main caveat: if event features include behavior after conversion, the model can leak future information.",
+      "dataset_hints": ["df_orders.csv contains order/user identifiers.", "df_events.csv contains user events."],
+      "checklist": [
+        "I wrote the target definition in one sentence.",
+        "I chose user-level prediction rows.",
+        "I described at least one leakage risk.",
+        "I did not claim this is production-ready conversion prediction."
+      ],
+      "portfolio_output": "Target definition paragraph for the model card."
+    },
+    {
+      "id": "prepare_dataset",
+      "title": "Prepare the modeling table",
+      "type": "code",
+      "description": "Load events and orders, create one row per user, and attach the converted target. Keep the code simple and inspect shapes at every step.",
+      "dataset_hints": ["Use relative paths from project root: datasets/df_events.csv and datasets/df_orders.csv."],
+      "starter_code": "import pandas as pd\n\n# Load source data from project root.\nevents = pd.read_csv(\"datasets/df_events.csv\")\norders = pd.read_csv(\"datasets/df_orders.csv\")\n\nprint(\"events\", events.shape)\nprint(\"orders\", orders.shape)\nprint(events.head())\nprint(orders.head())\n\n# One row per user from events.\nusers = events[[\"user_id\"]].drop_duplicates().copy()\nconverted_users = orders[[\"user_id\"]].drop_duplicates().assign(converted=1)\nmodel_df = users.merge(converted_users, on=\"user_id\", how=\"left\")\nmodel_df[\"converted\"] = model_df[\"converted\"].fillna(0).astype(int)\n\nprint(model_df[\"converted\"].value_counts(normalize=True))\nprint(model_df.head())",
+      "checklist": [
+        "I loaded both datasets from datasets/.",
+        "model_df has one row per user_id.",
+        "converted is binary 0/1.",
+        "I checked the class balance."
+      ],
+      "portfolio_output": "Modeling-table shape and class-balance note."
+    },
+    {
+      "id": "create_features",
+      "title": "Create simple features",
+      "type": "code",
+      "description": "Create only simple aggregated event features. Start with counts: total events and event_type counts per user. Exclude direct conversion/post-purchase events such as order.created from baseline features, because they leak the target. Keep feature names readable.",
+      "dataset_hints": ["Use groupby and pivot_table/crosstab on df_events.csv."],
+      "starter_code": "# Simple count features.\n# Exclude event types that directly encode conversion or post-purchase behavior.\nleaky_event_types = {\"order.created\", \"support.feedback_submitted\"}\nfeature_events = events[~events[\"event_type\"].isin(leaky_event_types)].copy()\n\nprint(\"excluded event types:\", sorted(leaky_event_types & set(events[\"event_type\"].unique())))\n\nevent_counts = feature_events.groupby(\"user_id\").size().rename(\"events_total\")\n\nif \"event_type\" in feature_events.columns:\n    event_type_features = pd.crosstab(feature_events[\"user_id\"], feature_events[\"event_type\"])\n    event_type_features.columns = [f\"event_type__{col}\" for col in event_type_features.columns]\nelse:\n    event_type_features = pd.DataFrame(index=event_counts.index)\n\nfeatures = pd.concat([event_counts, event_type_features], axis=1).fillna(0).reset_index()\nmodel_df = model_df.merge(features, on=\"user_id\", how=\"left\").fillna(0)\n\nfeature_cols = [col for col in model_df.columns if col not in {\"user_id\", \"converted\"}]\nprint(\"features\", feature_cols)\nprint(model_df[feature_cols + [\"converted\"]].head())",
+      "checklist": [
+        "I created at least one numeric feature.",
+        "Features are aggregated by user_id.",
+        "I can explain each feature in plain language.",
+        "I excluded order.created or clearly post-purchase events from baseline features.",
+        "I noted whether any remaining feature could still leak future behavior."
+      ],
+      "portfolio_output": "Feature table with plain-language descriptions."
+    },
+    {
+      "id": "train_test_split",
+      "title": "Make a train/test split",
+      "type": "code",
+      "description": "Split features and target into train/test sets. Use stratification so class balance is similar in both parts. This is the first honest evaluation guardrail.",
+      "dataset_hints": ["Use sklearn.model_selection.train_test_split."],
+      "starter_code": "from sklearn.model_selection import train_test_split\n\nX = model_df[feature_cols]\ny = model_df[\"converted\"]\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X,\n    y,\n    test_size=0.25,\n    random_state=42,\n    stratify=y,\n)\n\nprint(\"train\", X_train.shape, y_train.mean())\nprint(\"test\", X_test.shape, y_test.mean())",
+      "checklist": [
+        "I split before evaluating.",
+        "I used stratify=y.",
+        "I checked target rate in train and test.",
+        "I did not tune decisions on the test set repeatedly."
+      ],
+      "portfolio_output": "Train/test split note for the model card."
+    },
+    {
+      "id": "baseline_model",
+      "title": "Train a baseline model",
+      "type": "code",
+      "description": "Train a simple LogisticRegression baseline. The point is a transparent baseline before complexity, not maximum score.",
+      "dataset_hints": ["Use sklearn.linear_model.LogisticRegression and sklearn.pipeline/StandardScaler if needed."],
+      "starter_code": "from sklearn.linear_model import LogisticRegression\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\n\nbaseline = make_pipeline(\n    StandardScaler(with_mean=False),\n    LogisticRegression(max_iter=1000, class_weight=\"balanced\", random_state=42),\n)\n\nbaseline.fit(X_train, y_train)\ny_pred = baseline.predict(X_test)\ny_proba = baseline.predict_proba(X_test)[:, 1]\n\nprint(\"trained baseline\")\nprint(\"positive predictions\", int(y_pred.sum()))",
+      "checklist": [
+        "I trained only on X_train/y_train.",
+        "I used a simple baseline model.",
+        "I can explain why baseline comes before complex models.",
+        "I saved predictions for evaluation."
+      ],
+      "portfolio_output": "Short baseline model description."
+    },
+    {
+      "id": "evaluate_metrics",
+      "title": "Evaluate classification metrics",
+      "type": "code",
+      "description": "Calculate classification metrics. Include accuracy, precision, recall, F1, ROC AUC if both classes are present, and confusion matrix. Interpret what each metric means for conversion prediction.",
+      "dataset_hints": ["Use sklearn.metrics."],
+      "starter_code": "from sklearn.metrics import (\n    accuracy_score,\n    precision_score,\n    recall_score,\n    f1_score,\n    roc_auc_score,\n    confusion_matrix,\n    classification_report,\n)\n\nmetrics = {\n    \"accuracy\": accuracy_score(y_test, y_pred),\n    \"precision\": precision_score(y_test, y_pred, zero_division=0),\n    \"recall\": recall_score(y_test, y_pred, zero_division=0),\n    \"f1\": f1_score(y_test, y_pred, zero_division=0),\n}\nif y_test.nunique() == 2:\n    metrics[\"roc_auc\"] = roc_auc_score(y_test, y_proba)\n\nprint(metrics)\nprint(confusion_matrix(y_test, y_pred))\nprint(classification_report(y_test, y_pred, zero_division=0))",
+      "checklist": [
+        "I reported more than accuracy.",
+        "I inspected the confusion matrix.",
+        "I explained precision vs recall tradeoff.",
+        "I did not present metrics as product impact."
+      ],
+      "portfolio_output": "Metrics table and confusion matrix for the model card."
+    },
+    {
+      "id": "error_analysis",
+      "title": "Do basic error analysis",
+      "type": "code",
+      "description": "Inspect false positives and false negatives. Look for simple patterns, but keep conclusions careful because this is a baseline with simple features.",
+      "dataset_hints": ["Join predictions back to user_id for inspection."],
+      "starter_code": "eval_df = X_test.copy()\neval_df[\"user_id\"] = model_df.loc[X_test.index, \"user_id\"].values\neval_df[\"y_true\"] = y_test.values\neval_df[\"y_pred\"] = y_pred\neval_df[\"score\"] = y_proba\n\nfalse_positives = eval_df[(eval_df[\"y_true\"] == 0) & (eval_df[\"y_pred\"] == 1)]\nfalse_negatives = eval_df[(eval_df[\"y_true\"] == 1) & (eval_df[\"y_pred\"] == 0)]\n\nprint(\"false positives\", false_positives.shape)\nprint(\"false negatives\", false_negatives.shape)\nprint(false_positives.head())\nprint(false_negatives.head())",
+      "checklist": [
+        "I counted false positives and false negatives.",
+        "I inspected several examples.",
+        "I wrote one hypothesis for each error type.",
+        "I stated what extra data/time split would improve the analysis."
+      ],
+      "portfolio_output": "Error-analysis notes with cautious hypotheses."
+    },
+    {
+      "id": "model_card",
+      "title": "Write the model card",
+      "type": "model_card",
+      "description": "Create a concise model card. It should be honest enough for a portfolio: what problem you modeled, what data you used, what target/features mean, what metrics you got, where leakage may exist, and what you would do next.",
+      "reflection_prompt": "Write the model card from your real Notebook outputs. Do not invent metrics. Keep leakage risk and baseline limitations explicit.",
+      "dataset_hints": ["Use real metrics from your Notebook output."],
+      "starter_code": "model_card_template = \"\"\"\n# Orders Conversion Baseline Classifier\n\n## Problem\nWhat decision or learning question does this baseline support?\n\n## Data\nWhich datasets were used? What is one row?\n\n## Target\nHow is converted defined?\n\n## Features\nWhich simple aggregated features were used?\n\n## Metrics\nPaste real metrics from your evaluation. Do not invent numbers.\n\n## Limitations\nLeakage risks, class balance, time split limitations, missing context.\n\n## Next steps\nBetter time-aware split, richer features, threshold tuning, calibration, product validation.\n\"\"\"\nprint(model_card_template)",
+      "checklist": [
+        "The model card has problem, data, target, features, metrics, limitations, and next steps.",
+        "Metrics are copied from a real run.",
+        "Leakage risk is explicit.",
+        "The writeup says baseline, not production model."
+      ],
+      "portfolio_output": "Completed model card markdown."
+    }
+  ],
+  "deliverables": [
+    "Notebook with target definition, features, split, baseline model, and metrics",
+    "Metrics table and confusion matrix",
+    "Error-analysis notes",
+    "Model card markdown",
+    "Resume-ready bullet"
+  ],
+  "portfolio_prompt": "Write a model-card style portfolio case study. Use your real metrics, explain target and leakage risks, show why the model is a baseline, and list concrete next steps."
+}

@@ -1,12 +1,12 @@
 # Learning Coverage Report
 
-Generated: `2026-06-16T22:02:13.602653+00:00`
+Generated: `2026-06-16T22:06:36.071667+00:00`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
 ## Summary
 
 - Total topics: **36**
-- Status counts: `{'partial': 8, 'covered': 15, 'theory_only': 12, 'practice_only': 1}`
+- Status counts: `{'partial': 8, 'covered': 16, 'theory_only': 12}`
 
 ## Overall Coverage By Track
 
@@ -16,7 +16,7 @@ Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 | Data Analysis | 4 | 4 | 0 | 0 | 0 | 0 |
 | GenAI and RAG | 4 | 1 | 0 | 3 | 0 | 0 |
 | Git and Tools | 2 | 1 | 0 | 1 | 0 | 0 |
-| Interview Prep | 3 | 1 | 1 | 0 | 1 | 0 |
+| Interview Prep | 3 | 2 | 1 | 0 | 0 | 0 |
 | MLOps | 3 | 1 | 0 | 2 | 0 | 0 |
 | Math for ML | 2 | 1 | 0 | 1 | 0 | 0 |
 | NLP | 3 | 0 | 2 | 1 | 0 | 0 |
@@ -48,24 +48,22 @@ _No missing required topics._
 
 ## Practice Without Theory
 
-| Track | Level | ID | Title |
-| --- | --- | --- | --- |
-| Interview Prep | middle | interview.take_home | Take-home Assignments |
+_No practice-only topics._
 
 ## Recommended Next 10 Topics To Fix
 
 | # | Track | Level | ID | Title | Status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Interview Prep | middle | interview.take_home | Take-home Assignments | practice_only |
-| 2 | GenAI and RAG | beginner | genai.prompting | Prompt Engineering | theory_only |
-| 3 | GenAI and RAG | junior | genai.rag | RAG Basics | theory_only |
-| 4 | Git and Tools | junior | git.reproducibility | Environment and Reproducibility | theory_only |
-| 5 | MLOps | middle | mlops.serving | Model Serving Basics | theory_only |
-| 6 | Math for ML | middle | math.optimization | Optimization Basics | theory_only |
-| 7 | NLP | middle | nlp.transformers | Transformers and Embeddings | theory_only |
-| 8 | Portfolio and Career | junior | career.resume_remote | Resume and Remote Work Readiness | theory_only |
-| 9 | SQL | junior | sql.aggregation_windows | SQL Aggregations and Window Functions | theory_only |
-| 10 | Statistics | junior | stats.hypothesis_ab | Hypothesis Testing and A/B Tests | theory_only |
+| 1 | GenAI and RAG | beginner | genai.prompting | Prompt Engineering | theory_only |
+| 2 | GenAI and RAG | junior | genai.rag | RAG Basics | theory_only |
+| 3 | Git and Tools | junior | git.reproducibility | Environment and Reproducibility | theory_only |
+| 4 | MLOps | middle | mlops.serving | Model Serving Basics | theory_only |
+| 5 | Math for ML | middle | math.optimization | Optimization Basics | theory_only |
+| 6 | NLP | middle | nlp.transformers | Transformers and Embeddings | theory_only |
+| 7 | Portfolio and Career | junior | career.resume_remote | Resume and Remote Work Readiness | theory_only |
+| 8 | SQL | junior | sql.aggregation_windows | SQL Aggregations and Window Functions | theory_only |
+| 9 | Statistics | junior | stats.hypothesis_ab | Hypothesis Testing and A/B Tests | theory_only |
+| 10 | Classic ML | junior | ml.supervised | Supervised Learning | partial |
 
 ## Recommended Next 3 Project Directions
 
@@ -118,7 +116,7 @@ _No missing required topics._
 - Level: `junior`
 - Required: `True`
 - Status: **partial**
-- Theory quality: `26.0`
+- Theory quality: `42.0`
 - Theory: `00_Atlas/00_Knowledge_Map.md`; `00_Atlas/04_Algorithms_for_ML.md`; `00_Atlas/05_Theory_Deep_Dives.md`
 - Algorithms: `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/01_big_o.py`; `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py`; `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/03_hashmap_pattern.py`
 ### SQL Select, Filter, Join
@@ -220,7 +218,7 @@ _No missing required topics._
 - Level: `junior`
 - Required: `True`
 - Status: **covered**
-- Theory quality: `70.0`
+- Theory quality: `77.0`
 - Theory: `02_Data_Analysis/00_Index.md`; `02_Data_Analysis/01_Data_Analysis_Theory_Deep_Dive.md`; `02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md`
 - Practice: `/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md`
 ### Hypothesis Testing and A/B Tests
@@ -230,7 +228,7 @@ _No missing required topics._
 - Level: `junior`
 - Required: `True`
 - Status: **theory_only**
-- Theory quality: `68.0`
+- Theory quality: `75.0`
 - Theory: `00_Inbox/TECH_STACK_2026_INDUSTRY.md`; `02_Data_Analysis/01_Data_Analysis_Theory_Deep_Dive.md`; `02_Data_Analysis/Datasets/03_Metrics_Map.md`
 ### Linear Algebra for ML
 
@@ -393,7 +391,7 @@ _No missing required topics._
 - Required: `True`
 - Status: **covered**
 - Theory quality: `72.0`
-- Theory: `00_Atlas/05_Theory_Deep_Dives.md`; `00_Graph/20_Data_Analysis_Path.md`; `00_Graph/21_Data_Tools.md`
+- Theory: `00_Atlas/05_Theory_Deep_Dives.md`; `00_Graph/14_Python_Algorithms.md`; `00_Graph/20_Data_Analysis_Path.md`
 - Algorithms: `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py`; `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/08_mock_interview.py`
 ### Coding Interview Practice
 
@@ -402,7 +400,7 @@ _No missing required topics._
 - Level: `junior`
 - Required: `True`
 - Status: **partial**
-- Theory quality: `26.0`
+- Theory quality: `42.0`
 - Theory: `00_Atlas/00_Knowledge_Map.md`; `00_Atlas/04_Algorithms_for_ML.md`; `00_Atlas/05_Theory_Deep_Dives.md`
 - Mentor Tasks: `python_2_basics.ipynb`; `python_2_basics.ipynb`; `python_3_architecture.ipynb`
 - Algorithms: `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/01_big_o.py`; `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py`; `/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/03_hashmap_pattern.py`
@@ -412,8 +410,9 @@ _No missing required topics._
 - Track: `Interview Prep`
 - Level: `middle`
 - Required: `True`
-- Status: **practice_only**
-- Theory quality: `None`
+- Status: **covered**
+- Theory quality: `80.0`
+- Theory: `05_IT_Resources/Portfolio_Output_Guide.md`
 - Practice: `/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md`
 ### Portfolio Artifacts
 
@@ -422,8 +421,8 @@ _No missing required topics._
 - Level: `beginner`
 - Required: `True`
 - Status: **covered**
-- Theory quality: `74.0`
-- Theory: `00_Graph/20_Data_Analysis_Path.md`; `00_Graph/21_Data_Tools.md`; `00_Graph/22_Product_Analytics.md`
+- Theory quality: `80.0`
+- Theory: `00_Graph/14_Python_Algorithms.md`; `00_Graph/20_Data_Analysis_Path.md`; `00_Graph/21_Data_Tools.md`
 - Practice: `/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_boxplot.md`; `/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md`; `/Users/mihailkulibaba/Documents/New project/practice/data_visualization_orders_daily_line.md`
 ### Resume and Remote Work Readiness
 

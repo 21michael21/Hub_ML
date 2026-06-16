@@ -54,6 +54,50 @@ Dataset registry helpers live here.
   - reads previews;
   - returns dtypes and numeric summaries.
 
+### `core/projects`
+
+Project-based learning helpers live here.
+
+- `core/projects/models.py`
+  - normalizes project recipes and milestones;
+  - calculates readiness and completion.
+
+- `core/projects/loader.py`
+  - loads project recipes from `content/projects/data_lab/` and `content/projects/ml_lab/`.
+
+- `core/projects/progress.py`
+  - stores milestone completion, checklist state, reflection text, and project completion flags through the existing progress file pattern.
+
+- `core/projects/workspace.py`
+  - creates ignored local project workspaces under `user_projects/`;
+  - writes README, portfolio, notes, milestones, manifest, and artifact folders;
+  - refuses to overwrite existing folders unless explicitly requested.
+
+### `core/portfolio`
+
+Portfolio export helpers live here.
+
+- `core/portfolio/exporter.py`
+  - builds Markdown templates from completed projects and completed practice cards;
+  - avoids inventing results or metrics;
+  - writes user-facing output only when the app explicitly asks it to.
+
+### `core/experiments`
+
+Experiment Tracker Lite helpers live here.
+
+- `core/experiments/tracker.py`
+  - normalizes local experiment records;
+  - saves and loads JSONL records;
+  - summarizes and compares runs by user-provided metrics.
+
+### `core/reports`
+
+Read-only report helpers live here.
+
+- `core/reports/theory_quality.py`
+  - loads generated theory audit and coverage reports for the app UI.
+
 ## Content Sources
 
 ### `practice/`
@@ -65,6 +109,28 @@ Visualization assignments from mentor `analysis_4_visualizations.ipynb` are repr
 ### `content/extracted/mentor_tasks.json`
 
 Extracted mentor notebook tasks live here. Only tasks with asserts are used by the Mentor Tasks tab.
+
+### `content/projects/`
+
+Project recipes live here:
+
+- `content/projects/data_lab/`
+  - Orders EDA Report;
+  - Events Funnel Analysis;
+  - Matching Quality Dashboard.
+
+- `content/projects/ml_lab/`
+  - Orders Conversion Baseline Classifier.
+
+Recipes are JSON files. They describe goals, datasets, milestones, deliverables,
+related theory/practice/tasks, and portfolio prompts.
+
+### `content/reports/`
+
+Generated static reports live here:
+
+- `theory_audit.json` / `theory_audit.md`
+- `coverage_report.json` / `coverage_report.md`
 
 ### `datasets/`
 
@@ -91,9 +157,13 @@ Raw VKAT notebooks and source data are intentionally ignored by git unless promo
 - portfolio outputs;
 - algorithm statuses;
 - mentor task statuses.
+- project milestone statuses;
+- project completion flags.
 
 This file is intentionally ignored by git because it is personal local state.
 
+`user_projects/` stores generated project workspaces and is also ignored by git.
+
 ## Safety Boundary
 
-Notebook, Scratch, Algorithms, and Mentor Tasks execute local code. Hub_ML is a trusted local workstation, not a secure sandbox for untrusted code.
+Notebook, Scratch, Algorithms, Mentor Tasks, and code project milestones execute local code. Hub_ML is a trusted local workstation, not a secure sandbox for untrusted code.

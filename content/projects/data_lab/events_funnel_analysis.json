@@ -1,0 +1,109 @@
+{
+  "id": "events_funnel_analysis",
+  "title": "Events Funnel Analysis",
+  "level": "junior",
+  "track": "Data Lab",
+  "datasets": ["df_events.csv", "df_orders.csv"],
+  "skills": ["pandas", "event analytics", "funnel analysis", "groupby", "portfolio writing"],
+  "estimated_time": "3-4 ч",
+  "goal": "Analyze user events as a simple funnel: understand event types, unique users per step, conversion between steps, and where the biggest drop appears.",
+  "business_context": "A product team wants to understand how users move from product interaction to orders and which event step deserves deeper investigation.",
+  "prerequisites": ["Pandas Basics", "Product Analytics", "VKAT Analysis Data"],
+  "related_theory_paths": [
+    "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+    "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+    "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+    "00_Graph/22_Product_Analytics.md",
+    "05_IT_Resources/Portfolio_Output_Guide.md"
+  ],
+  "related_practice_ids": ["data_analysis_orders_eda"],
+  "related_task_ids": ["analysis_3_pandas"],
+  "related_dataset_names": ["df_events.csv", "df_orders.csv"],
+  "related_portfolio_templates": [
+    {
+      "title": "Events funnel case study",
+      "what_to_write": "Define the funnel steps, show unique users and conversion rates, explain the largest drop, and document assumptions about event semantics.",
+      "chart_or_table": "Include a funnel table with users/conversion and one bar chart of unique users by step.",
+      "readme_bullet": "Analyzed product event data as a funnel, calculating unique-user conversion rates and identifying the highest-drop step with documented assumptions."
+    }
+  ],
+  "milestones": [
+    {
+      "id": "map_events",
+      "title": "Map event types",
+      "type": "code",
+      "description": "Load df_events.csv, count event types, and decide which event types can form a useful funnel.",
+      "dataset_hints": ["Use df_events.csv and inspect event_type values."],
+      "starter_code": "import pandas as pd\n\nevents = pd.read_csv(\"datasets/df_events.csv\")\nprint(events.shape)\nprint(events[\"event_type\"].value_counts())\nprint(events.head())",
+      "checklist": [
+        "I listed all event types.",
+        "I selected a plausible funnel order.",
+        "I noted any ambiguous event meanings."
+      ],
+      "portfolio_output": "Event type map and chosen funnel definition."
+    },
+    {
+      "id": "count_users",
+      "title": "Count unique users by step",
+      "type": "code",
+      "description": "Calculate unique users for each selected funnel step. Use unique users, not raw event count, unless you explicitly explain why.",
+      "dataset_hints": ["Use user_id as the user denominator."],
+      "starter_code": "funnel = (\n    events.groupby(\"event_type\", as_index=False)\n    .agg(users=(\"user_id\", \"nunique\"), events=(\"event_type\", \"size\"))\n    .sort_values(\"users\", ascending=False)\n)\nprint(funnel)",
+      "checklist": [
+        "I used unique users for funnel steps.",
+        "I kept raw event counts as supporting context.",
+        "I explained the denominator."
+      ],
+      "portfolio_output": "Funnel table with users and events."
+    },
+    {
+      "id": "conversion_rates",
+      "title": "Calculate conversion rates",
+      "type": "code",
+      "description": "Choose a funnel order and calculate step-to-step conversion rates. If event meanings are unclear, document assumptions.",
+      "dataset_hints": ["Conversion is step_n_users / previous_step_users."],
+      "starter_code": "steps = funnel[[\"event_type\", \"users\"]].copy()\nsteps[\"previous_users\"] = steps[\"users\"].shift(1)\nsteps[\"step_conversion\"] = steps[\"users\"] / steps[\"previous_users\"]\nprint(steps)",
+      "checklist": [
+        "I wrote the funnel order.",
+        "I calculated step conversion.",
+        "I did not hide assumptions."
+      ],
+      "portfolio_output": "Conversion table and assumption notes."
+    },
+    {
+      "id": "visualize_funnel",
+      "title": "Visualize the funnel",
+      "type": "visualization",
+      "description": "Build a simple bar chart showing users by funnel step. The chart should be readable and not oversell causal conclusions.",
+      "dataset_hints": ["Use the funnel table from previous milestones."],
+      "starter_code": "import matplotlib.pyplot as plt\n\nax = steps.plot(x=\"event_type\", y=\"users\", kind=\"bar\", legend=False, figsize=(8, 4))\nax.set_title(\"Users by event type\")\nax.set_xlabel(\"Event type\")\nax.set_ylabel(\"Unique users\")\nplt.xticks(rotation=30, ha=\"right\")\nplt.tight_layout()\nplt.show()",
+      "checklist": [
+        "Chart has a clear title.",
+        "Axis labels are readable.",
+        "Categories are readable.",
+        "I wrote one insight and one limitation."
+      ],
+      "portfolio_output": "Funnel chart with explanation."
+    },
+    {
+      "id": "funnel_summary",
+      "title": "Write the funnel summary",
+      "type": "reflection",
+      "description": "Summarize the biggest drop, limitations of event definitions, and the next data question to ask.",
+      "dataset_hints": ["Mention whether order data should be joined next."],
+      "checklist": [
+        "I identified the biggest drop.",
+        "I described assumptions.",
+        "I suggested one next analysis step."
+      ],
+      "portfolio_output": "Funnel analysis summary for Portfolio."
+    }
+  ],
+  "deliverables": [
+    "Event type map",
+    "Funnel conversion table",
+    "Funnel chart",
+    "Written summary with assumptions and next step"
+  ],
+  "portfolio_prompt": "Write a funnel analysis case study: define the funnel, show user counts/conversions, explain the biggest drop, and state what data you need to validate the interpretation."
+}

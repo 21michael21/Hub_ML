@@ -9,6 +9,8 @@ __pycache__/
 # Local scratch / experiments
 test_vault/
 AI_Isaac_Roguelite_Project/
+/portfolio/
+/user_projects/
 
 # Source archives kept locally for research, not used by the app
 content/source/home_assignments/

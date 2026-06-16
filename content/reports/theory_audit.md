@@ -1,12 +1,12 @@
 # Theory Content Audit
 
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
-Generated: `2026-06-16T21:51:33.473919+00:00`
+Generated: `2026-06-16T22:06:33.268838+00:00`
 
 ## Summary
 
-- Total notes: **206**
-- Average quality score: **46.6 / 100**
+- Total notes: **207**
+- Average quality score: **47.7 / 100**
 
 ## Notes By Section
 
@@ -19,7 +19,7 @@ Generated: `2026-06-16T21:51:33.473919+00:00`
 | 02 Data Analysis | 15 |
 | 03 Ml | 19 |
 | 04 Nlp | 19 |
-| 05 It Resources | 56 |
+| 05 It Resources | 57 |
 | 90 Templates | 3 |
 | 99 Meta | 6 |
 | Без раздела | 2 |
@@ -38,7 +38,6 @@ Generated: `2026-06-16T21:51:33.473919+00:00`
 | 0 | 23 | 00 Graph | 00_Graph/34_ML_Tooling.md | ML Tooling |
 | 0 | 24 | 00 Graph | 00_Graph/13_Python_Advanced.md | Python Advanced |
 | 0 | 25 | 00 Graph | 00_Graph/44_NLP_Tasks_Tools.md | NLP Tasks and Tools |
-| 0 | 27 | 00 Graph | 00_Graph/14_Python_Algorithms.md | Python Algorithms |
 | 0 | 32 | 00 Graph | 00_Graph/60_Learning_Bridges.md | Learning Bridges |
 | 0 | 32 | 00 Graph | 00_Graph/64_Algorithms_to_ML.md | Algorithms to ML |
 | 0 | 35 | 00 Graph | 00_Graph/61_Python_to_Data.md | Python to Data |
@@ -48,11 +47,11 @@ Generated: `2026-06-16T21:51:33.473919+00:00`
 | 0 | 37 | 00 Graph | 00_Graph/15_Python_Architecture_Typing.md | Python Architecture and Typing |
 | 0 | 37 | 00 Graph | 00_Graph/40_NLP_Path.md | NLP Path |
 | 0 | 37 | 00 Graph | 00_Graph/63_ML_to_NLP.md | ML to NLP |
+| 10 | 12 | 90 Templates | 90_Templates/Template_Lesson.md | Lesson: {{title}} |
 
 ## Missing Core Topics
 
 - Git
-- Portfolio
 
 ## Notes Without Frontmatter
 
@@ -71,7 +70,6 @@ _None._
 - `00_Graph/11_Python_Core.md`
 - `00_Graph/12_Python_OOP.md`
 - `00_Graph/13_Python_Advanced.md`
-- `00_Graph/14_Python_Algorithms.md`
 - `00_Graph/15_Python_Architecture_Typing.md`
 - `00_Graph/30_Machine_Learning_Path.md`
 - `00_Graph/31_Supervised_Learning.md`
@@ -110,6 +108,7 @@ _None._
 - `04_NLP/01_Text_Pipeline_Map.md`
 - `04_NLP/02_Text_Representations_Map.md`
 - `04_NLP/03_Deep_NLP_Map.md`
+- `04_NLP/04_NLP_Tasks_Tools_Map.md`
 
 ## Notes Without Sources
 
@@ -124,7 +123,6 @@ _None._
 - `00_Graph/11_Python_Core.md`
 - `00_Graph/12_Python_OOP.md`
 - `00_Graph/13_Python_Advanced.md`
-- `00_Graph/14_Python_Algorithms.md`
 - `00_Graph/15_Python_Architecture_Typing.md`
 - `00_Graph/30_Machine_Learning_Path.md`
 - `00_Graph/31_Supervised_Learning.md`
@@ -162,7 +160,8 @@ _None._
 - `02_Data_Analysis/01_Data_Analysis_Theory_Deep_Dive.md`
 - `02_Data_Analysis/Datasets/00_Product_Analytics_Map.md`
 - `02_Data_Analysis/Numpy/02_Numpy_Course_Article.md`
-- `02_Data_Analysis/Pandas/02_Pandas_Course_Article.md`
+- `03_ML/00_Index.md`
+- `03_ML/01_Supervised_Learning_Map.md`
 
 ## Recommended Next Actions
 
@@ -170,7 +169,7 @@ _None._
 - Add examples/code snippets to technical notes that currently have no examples.
 - Add source/reference sections to notes that are copied, AI-generated, or important for interviews.
 - Add practice and portfolio sections to notes that should become job-ready learning material.
-- Create or connect missing core topics: Git, Portfolio.
+- Create or connect missing core topics: Git.
 
 ## Heuristic Notes
 

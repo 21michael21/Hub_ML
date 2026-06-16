@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import html
 import json
 import os
@@ -26,6 +27,37 @@ from core.notebook.kernel import (
     start_notebook_cell,
 )
 from core.notebook.output import render_notebook_output
+from core.experiments.tracker import (
+    SUPPORTED_METRICS,
+    compare_experiments,
+    experiment_records_path,
+    load_experiment_records,
+    save_experiment_record,
+    summarize_experiments,
+)
+from core.interview_arena import (
+    PRACTICE_MODES,
+    extract_expected_complexity,
+    infer_difficulty,
+    normalize_algorithm_attempt,
+    normalize_interview_answer_attempt,
+    summarize_interview_arena_progress,
+)
+from core.portfolio.exporter import EXPORT_WARNING, generate_portfolio_markdown, portfolio_export_path
+from core.projects.loader import load_project_recipes_from_dirs
+from core.projects.models import calculate_readiness, checklist_progress
+from core.projects.progress import (
+    completed_milestone_ids,
+    is_project_complete,
+    milestone_record,
+    project_progress_from_record,
+    set_checklist_item,
+    set_milestone_completion,
+    set_milestone_data,
+    set_project_completion,
+    set_project_completion_if_ready,
+)
+from core.projects.workspace import create_project_workspace, project_workspace_path
 from core.reports.theory_quality import (
     coverage_by_track,
     coverage_summary,
@@ -58,6 +90,8 @@ PROGRESS_PATH = Path(__file__).with_name(".learning_progress.json")
 PRACTICE_DIR = Path(__file__).with_name("practice")
 DATASETS_DIR = Path(__file__).with_name("datasets")
 PROJECT_ROOT = Path(__file__).parent
+PORTFOLIO_DIR = PROJECT_ROOT / "portfolio"
+USER_PROJECTS_DIR = PROJECT_ROOT / "user_projects"
 ALGORITHMS_DIR = PROJECT_ROOT / "content" / "source" / "vkat" / "VKAT-main" / "algos_patterns"
 INTERVIEW_QUESTIONS_PATH = PROJECT_ROOT / "content" / "interview_questions" / "ml_ds_interview_questions.json"
 ARCHITECTURE_GUIDELINES_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines.html"
@@ -65,6 +99,9 @@ ARCHITECTURE_GUIDELINES_INDEX_PATH = PROJECT_ROOT / "content" / "study" / "archi
 MENTOR_TASKS_PATH = PROJECT_ROOT / "content" / "extracted" / "mentor_tasks.json"
 THEORY_AUDIT_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "theory_audit.json"
 COVERAGE_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "coverage_report.json"
+DATA_LAB_PROJECTS_DIR = PROJECT_ROOT / "content" / "projects" / "data_lab"
+ML_LAB_PROJECTS_DIR = PROJECT_ROOT / "content" / "projects" / "ml_lab"
+PROJECT_RECIPE_DIRS = (DATA_LAB_PROJECTS_DIR, ML_LAB_PROJECTS_DIR)
 STATUS_NOT_STARTED = "not_started"
 STATUS_READING = "reading"
 STATUS_DONE = "done"
@@ -490,7 +527,10 @@ def load_progress() -> dict[str, Any]:
             "practice_status": {},
             "portfolio_outputs": {},
             "algos_status": {},
+            "algorithm_attempts": {},
+            "interview_answer_attempts": {},
             "mentor_tasks_status": {},
+            "data_lab_projects": {},
         }
 
     try:
@@ -501,7 +541,10 @@ def load_progress() -> dict[str, Any]:
             "practice_status": {},
             "portfolio_outputs": {},
             "algos_status": {},
+            "algorithm_attempts": {},
+            "interview_answer_attempts": {},
             "mentor_tasks_status": {},
+            "data_lab_projects": {},
         }
 
     if not isinstance(data, dict):
@@ -510,7 +553,10 @@ def load_progress() -> dict[str, Any]:
             "practice_status": {},
             "portfolio_outputs": {},
             "algos_status": {},
+            "algorithm_attempts": {},
+            "interview_answer_attempts": {},
             "mentor_tasks_status": {},
+            "data_lab_projects": {},
         }
     if not isinstance(data.get("notes"), dict):
         data["notes"] = {}
@@ -521,8 +567,14 @@ def load_progress() -> dict[str, Any]:
         data["portfolio_outputs"] = {}
     if not isinstance(data.get("algos_status"), dict):
         data["algos_status"] = {}
+    if not isinstance(data.get("algorithm_attempts"), dict):
+        data["algorithm_attempts"] = {}
+    if not isinstance(data.get("interview_answer_attempts"), dict):
+        data["interview_answer_attempts"] = {}
     if not isinstance(data.get("mentor_tasks_status"), dict):
         data["mentor_tasks_status"] = {}
+    if not isinstance(data.get("data_lab_projects"), dict):
+        data["data_lab_projects"] = {}
     return data
 
 
@@ -1439,6 +1491,46 @@ def algorithm_progress(lessons: list[dict[str, Any]]) -> dict[str, int]:
     return {"total": total, "done": done, "todo": total - done}
 
 
+def get_algorithm_attempts(lesson_id: str) -> list[dict[str, Any]]:
+    progress = ensure_progress_state()
+    attempts = progress.setdefault("algorithm_attempts", {}).get(lesson_id, [])
+    return attempts if isinstance(attempts, list) else []
+
+
+def save_algorithm_attempt(lesson_id: str, attempt: dict[str, Any]) -> None:
+    progress = ensure_progress_state()
+    record = normalize_algorithm_attempt({"lesson_id": lesson_id, **attempt})
+    progress.setdefault("algorithm_attempts", {}).setdefault(lesson_id, []).append(record)
+    save_progress(progress)
+
+
+def interview_question_id(company: str, kind: str, index: int, text: str) -> str:
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", f"{company}-{kind}-{index}").strip("-").lower()
+    digest = hashlib.sha1(str(text).encode("utf-8")).hexdigest()[:8]
+    return f"{slug}-{digest}"
+
+
+def get_interview_attempts(question_id: str) -> list[dict[str, Any]]:
+    progress = ensure_progress_state()
+    attempts = progress.setdefault("interview_answer_attempts", {}).get(question_id, [])
+    return attempts if isinstance(attempts, list) else []
+
+
+def save_interview_attempt(question_id: str, attempt: dict[str, Any]) -> None:
+    progress = ensure_progress_state()
+    record = normalize_interview_answer_attempt({"question_id": question_id, **attempt})
+    progress.setdefault("interview_answer_attempts", {}).setdefault(question_id, []).append(record)
+    save_progress(progress)
+
+
+def interview_arena_progress_summary() -> dict[str, int]:
+    progress = ensure_progress_state()
+    return summarize_interview_arena_progress(
+        progress.get("algorithm_attempts", {}),
+        progress.get("interview_answer_attempts", {}),
+    )
+
+
 def run_algorithm_tests(lesson_path: str, timeout_seconds: int = 30) -> dict[str, Any]:
     started = time.perf_counter()
     path = Path(lesson_path).expanduser().resolve()
@@ -1500,6 +1592,92 @@ def mentor_tasks_progress(tasks: list[dict[str, Any]]) -> dict[str, int]:
     reviewable = [task for task in tasks if task["confidence"] != "low"]
     done = sum(1 for task in reviewable if get_mentor_task_status(task["id"]) == STATUS_DONE)
     return {"total": len(reviewable), "done": done, "todo": len(reviewable) - done}
+
+
+def get_data_lab_project_record(project_id: str) -> dict[str, Any]:
+    progress = ensure_progress_state()
+    record = progress.setdefault("data_lab_projects", {}).get(project_id, {})
+    return record if isinstance(record, dict) else {}
+
+
+def is_data_lab_milestone_done(project_id: str, milestone_id: str) -> bool:
+    return milestone_id in completed_milestone_ids(get_data_lab_project_record(project_id))
+
+
+def get_data_lab_milestone_record(project_id: str, milestone_id: str) -> dict[str, Any]:
+    return milestone_record(get_data_lab_project_record(project_id), milestone_id)
+
+
+def set_data_lab_milestone_done(project_id: str, milestone_id: str, done: bool) -> None:
+    progress = ensure_progress_state()
+    record = get_data_lab_project_record(project_id)
+    updated_record = set_milestone_completion(
+        record,
+        milestone_id,
+        done,
+    )
+    if not done:
+        updated_record = set_project_completion(updated_record, False)
+    progress.setdefault("data_lab_projects", {})[project_id] = updated_record
+    save_progress(progress)
+
+
+def set_data_lab_milestone_updates(project_id: str, milestone_id: str, updates: dict[str, Any]) -> None:
+    progress = ensure_progress_state()
+    record = get_data_lab_project_record(project_id)
+    progress.setdefault("data_lab_projects", {})[project_id] = set_milestone_data(record, milestone_id, updates)
+    save_progress(progress)
+
+
+def set_data_lab_milestone_checklist_item(
+    project_id: str,
+    milestone_id: str,
+    item: str,
+    checked: bool,
+) -> None:
+    progress = ensure_progress_state()
+    record = get_data_lab_project_record(project_id)
+    progress.setdefault("data_lab_projects", {})[project_id] = set_checklist_item(
+        record,
+        milestone_id,
+        item,
+        checked,
+    )
+    save_progress(progress)
+
+
+def is_data_lab_project_complete(project_id: str) -> bool:
+    return is_project_complete(get_data_lab_project_record(project_id))
+
+
+def set_data_lab_project_complete(project: dict[str, Any], complete: bool) -> None:
+    progress = ensure_progress_state()
+    record = get_data_lab_project_record(project["id"])
+    progress.setdefault("data_lab_projects", {})[project["id"]] = set_project_completion_if_ready(project, record, complete)
+    save_progress(progress)
+
+
+def data_lab_projects_progress(projects: list[dict[str, Any]]) -> dict[str, int]:
+    total_milestones = 0
+    done_milestones = 0
+    done_projects = 0
+    for project in projects:
+        stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
+        total_milestones += stats["total"]
+        done_milestones += stats["done"]
+        if is_data_lab_project_complete(project["id"]):
+            done_projects += 1
+    return {
+        "projects_total": len(projects),
+        "projects_done": done_projects,
+        "milestones_total": total_milestones,
+        "milestones_done": done_milestones,
+    }
+
+
+@st.cache_data(show_spinner=False)
+def scan_data_lab_projects() -> list[dict[str, Any]]:
+    return load_project_recipes_from_dirs(PROJECT_RECIPE_DIRS)
 
 
 @st.cache_data(show_spinner=False)
@@ -2007,6 +2185,14 @@ def open_practice_card(card_id: str) -> None:
     st.session_state["active_tab"] = "🎯 Practice"
 
 
+def open_mentor_task(task: dict[str, Any]) -> None:
+    st.session_state["selected_mentor_task"] = task["id"]
+    if task.get("confidence") in {"high", "medium"}:
+        st.session_state["mentor_task_notebook_filter"] = task.get("notebook_label", "Все")
+        st.session_state["mentor_task_confidence_filter"] = task.get("confidence", "Все")
+    st.session_state["active_tab"] = "🎯 Tasks"
+
+
 def open_theory_note(note: dict[str, str]) -> None:
     set_active_note(note, push_history=True)
     st.session_state["active_tab"] = "Theory"
@@ -2183,6 +2369,7 @@ def render_dashboard(
         ("Theory", "Theory"),
         ("Practice", "🎯 Practice"),
         ("Tasks", "🎯 Tasks"),
+        ("Data Lab", "🧪 Data Lab Projects"),
         ("Portfolio", "📁 Portfolio"),
         ("Datasets", "📊 Datasets"),
         ("Scratch", "⚡ Scratch"),
@@ -2535,6 +2722,748 @@ def render_practice_tab(
         render_practice_detail(selected_card, note_index, datasets)
 
 
+def select_data_lab_project(project_id: str) -> None:
+    st.session_state["selected_data_lab_project"] = project_id
+
+
+def find_practice_card(card_id: str, cards: list[dict[str, Any]]) -> dict[str, Any] | None:
+    wanted = str(card_id or "").strip()
+    if not wanted:
+        return None
+    wanted_stem = Path(wanted).stem
+    return next(
+        (
+            card
+            for card in cards
+            if str(card.get("id") or "") == wanted
+            or Path(str(card.get("id") or "")).stem == wanted_stem
+        ),
+        None,
+    )
+
+
+def related_mentor_tasks(task_ref: str, tasks: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    wanted = str(task_ref or "").strip()
+    if not wanted:
+        return []
+    wanted_key = wanted.casefold()
+    matches: list[dict[str, Any]] = []
+    for task in tasks:
+        task_id = str(task.get("id") or "")
+        source_notebook = Path(str(task.get("source_notebook") or "")).stem
+        notebook_label = str(task.get("notebook_label") or "")
+        if task_id.casefold() == wanted_key:
+            return [task]
+        if source_notebook.casefold() == wanted_key or notebook_label.casefold() == wanted_key:
+            matches.append(task)
+    return sorted(matches, key=lambda item: str(item.get("title", "")).casefold())
+
+
+def first_related_mentor_task(task_ref: str, tasks: list[dict[str, Any]]) -> dict[str, Any] | None:
+    matches = related_mentor_tasks(task_ref, tasks)
+    return matches[0] if matches else None
+
+
+def project_readiness_checks(
+    project: dict[str, Any],
+    *,
+    note_index: dict[str, Any],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    datasets: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    checks: list[dict[str, Any]] = []
+
+    for theory_path in project.get("related_theory_paths", []):
+        note = note_from_relative_path(str(theory_path), note_index) or resolve_related_note(str(theory_path), note_index)
+        checks.append(
+            {
+                "kind": "Theory",
+                "label": str(theory_path),
+                "done": bool(note and get_note_status(note) == STATUS_DONE),
+            }
+        )
+
+    for card_id in project.get("related_practice_ids", []):
+        card = find_practice_card(str(card_id), practice_cards)
+        label = str(card.get("title") if card else card_id)
+        checks.append(
+            {
+                "kind": "Practice",
+                "label": label,
+                "done": bool(card and get_card_status(card) == PRACTICE_DONE),
+            }
+        )
+
+    for task_ref in project.get("related_task_ids", []):
+        related_tasks = related_mentor_tasks(str(task_ref), mentor_tasks)
+        done = bool(related_tasks) and any(get_mentor_task_status(task["id"]) == STATUS_DONE for task in related_tasks)
+        label = f"{task_ref} ({len(related_tasks)} tasks)" if related_tasks else str(task_ref)
+        checks.append({"kind": "Tasks", "label": label, "done": done})
+
+    for dataset_name in project.get("related_dataset_names", []):
+        checks.append(
+            {
+                "kind": "Datasets",
+                "label": str(dataset_name),
+                "done": find_dataset_record(str(dataset_name), datasets) is not None,
+            }
+        )
+
+    return checks
+
+
+def render_readiness_badge(readiness: dict[str, Any]) -> str:
+    status = str(readiness.get("status") or "not ready")
+    if status == "ready":
+        css_class = "status-done"
+        label = "ready"
+    elif status == "almost ready":
+        css_class = "status-reading"
+        label = "almost ready"
+    else:
+        css_class = "status-repeat"
+        label = "not ready"
+    return f'<span class="status-pill {css_class}">{html.escape(label)}</span>'
+
+
+def render_project_progress_badge(stats: dict[str, Any]) -> str:
+    label = f"{stats['done']}/{stats['total']} milestones"
+    css_class = "status-done" if stats["total"] and stats["done"] == stats["total"] else "status-reading"
+    icon = "■" if css_class == "status-done" else "◐"
+    return f'<span class="status-pill {css_class}">{icon} {html.escape(label)}</span>'
+
+
+def render_data_lab_project_card(project: dict[str, Any]) -> None:
+    stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
+    datasets = ", ".join(project.get("datasets", [])) or "no datasets"
+    skills = " · ".join(project.get("skills", [])[:4])
+    st.markdown(
+        f"""
+<div class="today-card">
+    <div class="today-card-title">{html.escape(project["title"])}</div>
+    <div class="muted-small">{html.escape(project["level"])} · {html.escape(datasets)}</div>
+    <div class="muted-small">{html.escape(skills)}</div>
+    <div style="margin-top: 0.5rem;">{render_project_progress_badge(stats)}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.progress(stats["ratio"])
+    st.button(
+        "Открыть проект",
+        key=f"data_lab_select_{project['id']}",
+        on_click=select_data_lab_project,
+        args=(project["id"],),
+        use_container_width=True,
+    )
+
+
+def project_milestone_widget_key(project_id: str, milestone_id: str, suffix: str) -> str:
+    return safe_widget_key("project_milestone", project_id, milestone_id, suffix)
+
+
+def render_project_milestone_result(result: dict[str, Any]) -> None:
+    render_mentor_task_result(result)
+    rich_outputs = [
+        output
+        for output in result.get("outputs", [])
+        if isinstance(output, dict) and output.get("type") in {"execute_result", "display_data"}
+    ]
+    if rich_outputs:
+        st.markdown("##### Rich output")
+        for output in rich_outputs:
+            render_notebook_output(output)
+
+
+def render_project_code_runner(project: dict[str, Any], milestone: dict[str, Any], record: dict[str, Any]) -> None:
+    project_id = project["id"]
+    milestone_id = milestone["id"]
+    code_key = project_milestone_widget_key(project_id, milestone_id, "code")
+    result_key = project_milestone_widget_key(project_id, milestone_id, "last_result")
+    starter_code = str(milestone.get("starter_code") or "")
+    if code_key not in st.session_state:
+        st.session_state[code_key] = str(record.get("solution_code") or starter_code)
+
+    st.markdown("##### Solution code")
+    use_plain_editor = st.session_state.get("project_milestones_plain_editor", False) or st_ace is None
+    if st_ace is not None and not use_plain_editor:
+        code = st_ace(
+            value=st.session_state[code_key],
+            language="python",
+            theme="tomorrow_night",
+            min_lines=12,
+            max_lines=28,
+            key=f"{code_key}_editor",
+        )
+        if code is not None:
+            st.session_state[code_key] = code
+    else:
+        st.text_area("Python code", key=code_key, height=360)
+
+    test_code = str(milestone.get("test_code") or "").strip()
+    if test_code:
+        with st.expander("Assert checks", expanded=False):
+            st.code(test_code, language="python")
+    else:
+        st.caption("No assert checks for this milestone. Run code, inspect output, then mark done manually.")
+
+    button_cols = st.columns(3)
+    if button_cols[0].button("▶ Run milestone", key=f"{code_key}_run", use_container_width=True):
+        solution_code = str(st.session_state.get(code_key, ""))
+        script = build_mentor_task_script(solution_code, test_code)
+        with st.spinner("Running in the existing Jupyter kernel..."):
+            result = run_code_in_notebook_kernel_sync(script)
+        classification = classify_task_result(result)
+        updates: dict[str, Any] = {
+            "solution_code": solution_code,
+            "last_result": result,
+            "last_classification": classification,
+        }
+        if test_code and classification == "PASS":
+            updates["done"] = True
+        set_data_lab_milestone_updates(project_id, milestone_id, updates)
+        st.session_state[result_key] = result
+
+    if button_cols[1].button("Save code", key=f"{code_key}_save", use_container_width=True):
+        set_data_lab_milestone_updates(project_id, milestone_id, {"solution_code": st.session_state.get(code_key, "")})
+        st.success("Milestone code saved.")
+
+    if button_cols[2].button("Reset code", key=f"{code_key}_reset", use_container_width=True):
+        st.session_state[code_key] = starter_code
+        set_data_lab_milestone_updates(project_id, milestone_id, {"solution_code": starter_code})
+        st.rerun()
+
+    result = st.session_state.get(result_key) or record.get("last_result")
+    if isinstance(result, dict) and result:
+        render_project_milestone_result(result)
+
+
+def render_project_checklist(project: dict[str, Any], milestone: dict[str, Any], record: dict[str, Any]) -> None:
+    checklist = list(milestone.get("checklist", []))
+    if milestone.get("type") == "visualization":
+        for item in milestone.get("quality_checklist", []):
+            if item not in checklist:
+                checklist.append(item)
+    if not checklist:
+        return
+
+    raw_checked_items = record.get("checked_items", [])
+    checked_items = {str(item) for item in raw_checked_items} if isinstance(raw_checked_items, list) else set()
+    stats = checklist_progress(checklist, checked_items)
+    st.markdown("##### Checklist")
+    st.caption(f"{stats['done']}/{stats['total']} checked")
+    for index, item in enumerate(checklist):
+        item_key = project_milestone_widget_key(project["id"], milestone["id"], f"check_{index}")
+        previous = item in checked_items
+        current = st.checkbox(str(item), value=previous, key=item_key)
+        if current != previous:
+            set_data_lab_milestone_checklist_item(project["id"], milestone["id"], str(item), current)
+            st.rerun()
+
+
+def render_project_writing_milestone(project: dict[str, Any], milestone: dict[str, Any], record: dict[str, Any]) -> None:
+    prompt = str(milestone.get("reflection_prompt") or milestone.get("description") or "").strip()
+    if prompt:
+        st.markdown("##### Writing prompt")
+        st.markdown(prompt)
+
+    notes_key = project_milestone_widget_key(project["id"], milestone["id"], "notes")
+    if notes_key not in st.session_state:
+        st.session_state[notes_key] = str(record.get("notes") or "")
+    st.text_area("Notes / reflection", key=notes_key, height=180)
+    if st.button("Save notes", key=f"{notes_key}_save", use_container_width=True):
+        set_data_lab_milestone_updates(project["id"], milestone["id"], {"notes": st.session_state.get(notes_key, "")})
+        st.success("Notes saved.")
+
+
+def render_data_lab_milestone(project: dict[str, Any], milestone: dict[str, Any]) -> None:
+    project_id = project["id"]
+    milestone_id = milestone["id"]
+    done = is_data_lab_milestone_done(project_id, milestone_id)
+    record = get_data_lab_milestone_record(project_id, milestone_id)
+    icon = "✅" if done else "□"
+    required_label = "required" if milestone.get("required", True) else "optional"
+    with st.expander(f"{icon} {milestone['title']} · {milestone['type']} · {required_label}", expanded=not done):
+        st.markdown(milestone["description"])
+        hints = milestone.get("dataset_hints", [])
+        if hints:
+            st.caption("Dataset hints: " + " · ".join(str(item) for item in hints))
+
+        milestone_type = str(milestone.get("type") or "")
+        if milestone_type in {"code", "visualization"}:
+            render_project_code_runner(project, milestone, record)
+        if milestone_type in {"reflection", "report", "model_card"}:
+            render_project_writing_milestone(project, milestone, record)
+        render_project_checklist(project, milestone, record)
+
+        portfolio_output = str(milestone.get("portfolio_output") or "").strip()
+        if portfolio_output:
+            st.markdown("##### Portfolio output")
+            st.markdown(portfolio_output)
+
+        button_cols = st.columns(2)
+        if done:
+            button_cols[0].button(
+                "Сбросить milestone",
+                key=f"data_lab_reset_{project_id}_{milestone_id}",
+                on_click=set_data_lab_milestone_done,
+                args=(project_id, milestone_id, False),
+                use_container_width=True,
+            )
+        else:
+            button_cols[0].button(
+                "Отметить готово",
+                key=f"data_lab_done_{project_id}_{milestone_id}",
+                on_click=set_data_lab_milestone_done,
+                args=(project_id, milestone_id, True),
+                use_container_width=True,
+            )
+
+
+def render_data_lab_before_start(
+    project: dict[str, Any],
+    *,
+    note_index: dict[str, Any],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    datasets: list[dict[str, Any]],
+) -> None:
+    checks = project_readiness_checks(
+        project,
+        note_index=note_index,
+        practice_cards=practice_cards,
+        mentor_tasks=mentor_tasks,
+        datasets=datasets,
+    )
+    readiness = calculate_readiness(checks)
+
+    st.markdown("#### Before you start")
+    st.markdown(
+        f"{render_readiness_badge(readiness)} "
+        f"<span class='muted-small'>{readiness['done']}/{readiness['total']} prerequisites completed</span>",
+        unsafe_allow_html=True,
+    )
+    if readiness["missing"]:
+        with st.expander("Missing prerequisites", expanded=False):
+            for item in readiness["missing"]:
+                st.markdown(f"- {item}")
+
+    if project.get("related_theory_paths"):
+        st.markdown("##### Theory notes")
+        theory_cols = st.columns(2)
+        for index, theory_path in enumerate(project["related_theory_paths"]):
+            note = note_from_relative_path(str(theory_path), note_index) or resolve_related_note(str(theory_path), note_index)
+            col = theory_cols[index % len(theory_cols)]
+            if note:
+                label = f"📖 {Path(str(theory_path)).stem.replace('_', ' ')}"
+                col.button(
+                    label,
+                    key=f"data_lab_theory_{project['id']}_{index}",
+                    on_click=open_theory_note,
+                    args=(note,),
+                    use_container_width=True,
+                )
+            else:
+                col.button(
+                    f"{theory_path} — missing",
+                    key=f"data_lab_theory_missing_{project['id']}_{index}",
+                    disabled=True,
+                    use_container_width=True,
+                )
+
+    if project.get("related_practice_ids"):
+        st.markdown("##### Practice cards")
+        for card_id in project["related_practice_ids"]:
+            card = find_practice_card(str(card_id), practice_cards)
+            if not card:
+                st.button(f"{card_id} — missing", key=f"data_lab_practice_missing_{project['id']}_{card_id}", disabled=True)
+                continue
+            status = get_card_status(card)
+            cols = st.columns([0.7, 0.3])
+            cols[0].caption(f"{card['title']} · {card.get('section', '')} · {PRACTICE_META[status]['label']}")
+            cols[1].button(
+                "Open practice",
+                key=f"data_lab_practice_{project['id']}_{card_id}",
+                on_click=open_practice_card,
+                args=(card["id"],),
+                use_container_width=True,
+            )
+
+    if project.get("related_task_ids"):
+        st.markdown("##### Mentor tasks")
+        for task_ref in project["related_task_ids"]:
+            matches = related_mentor_tasks(str(task_ref), mentor_tasks)
+            task = matches[0] if matches else None
+            cols = st.columns([0.7, 0.3])
+            if task:
+                done_count = sum(1 for item in matches if get_mentor_task_status(item["id"]) == STATUS_DONE)
+                cols[0].caption(f"{task_ref}: {done_count}/{len(matches)} solved · first: {task['title']}")
+                cols[1].button(
+                    "Open task",
+                    key=f"data_lab_task_{project['id']}_{task_ref}",
+                    on_click=open_mentor_task,
+                    args=(task,),
+                    use_container_width=True,
+                )
+            else:
+                cols[0].caption(f"{task_ref} — no matching task found")
+                cols[1].button(
+                    "Open task",
+                    key=f"data_lab_task_missing_{project['id']}_{task_ref}",
+                    disabled=True,
+                    use_container_width=True,
+                )
+
+    dataset_names = project.get("related_dataset_names") or project.get("datasets", [])
+    if dataset_names:
+        st.markdown("##### Datasets to inspect")
+        dataset_cols = st.columns(max(1, min(3, len(dataset_names))))
+        for index, dataset_name in enumerate(dataset_names):
+            col = dataset_cols[index % len(dataset_cols)]
+            exists = find_dataset_record(str(dataset_name), datasets) is not None
+            col.button(
+                f"📊 {dataset_name}" if exists else f"{dataset_name} — missing",
+                key=f"data_lab_before_dataset_{project['id']}_{dataset_name}",
+                on_click=open_dataset_tab if exists else None,
+                args=(dataset_name,) if exists else None,
+                disabled=not exists,
+                use_container_width=True,
+            )
+
+
+def render_data_lab_portfolio_output(project: dict[str, Any]) -> None:
+    st.markdown("#### Portfolio output")
+    templates = project.get("related_portfolio_templates", [])
+    if templates:
+        for template in templates:
+            with st.expander(template["title"], expanded=False):
+                if template.get("what_to_write"):
+                    st.markdown("##### What to write")
+                    st.markdown(template["what_to_write"])
+                if template.get("chart_or_table"):
+                    st.markdown("##### Chart/table to include")
+                    st.markdown(template["chart_or_table"])
+                if template.get("readme_bullet"):
+                    st.markdown("##### README bullet")
+                    st.markdown(template["readme_bullet"])
+    st.markdown("##### Project prompt")
+    st.markdown(project.get("portfolio_prompt") or "Write a concise project summary.")
+
+
+def render_data_lab_project_completion(project: dict[str, Any], stats: dict[str, Any]) -> None:
+    complete = is_data_lab_project_complete(project["id"])
+    can_complete = bool(stats.get("complete"))
+    st.markdown("#### Project completion")
+    if complete:
+        st.success("Project marked complete.")
+        st.button(
+            "Снять отметку complete",
+            key=f"data_lab_project_uncomplete_{project['id']}",
+            on_click=set_data_lab_project_complete,
+            args=(project, False),
+        )
+    else:
+        st.caption("Финальную отметку можно поставить только когда все required milestones закрыты.")
+        missing = stats.get("missing_required", [])
+        if missing:
+            st.caption("Missing required: " + ", ".join(str(item) for item in missing))
+        st.button(
+            "Mark project complete",
+            key=f"data_lab_project_complete_{project['id']}",
+            on_click=set_data_lab_project_complete,
+            args=(project, True),
+            disabled=not can_complete,
+        )
+
+
+def render_project_workspace_scaffolder(project: dict[str, Any]) -> None:
+    workspace_path = project_workspace_path(project, USER_PROJECTS_DIR)
+    exists = workspace_path.exists()
+    result_key = safe_widget_key("project_workspace_result", project["id"])
+
+    st.markdown("#### Project Workspace")
+    st.caption(
+        "Creates a local user workspace under `user_projects/`. "
+        "Datasets are not copied; generated files reference `../../datasets/...`."
+    )
+    st.code(str(workspace_path), language="text")
+
+    overwrite = False
+    if exists:
+        st.warning("Workspace folder already exists. Existing files will not be overwritten unless you confirm.")
+        overwrite = st.checkbox(
+            "I understand this will overwrite generated workspace template files",
+            key=safe_widget_key("project_workspace_overwrite", project["id"]),
+        )
+
+    if st.button(
+        "Create project workspace",
+        key=safe_widget_key("project_workspace_create", project["id"]),
+        disabled=exists and not overwrite,
+        use_container_width=True,
+    ):
+        result = create_project_workspace(
+            project,
+            USER_PROJECTS_DIR,
+            PROJECT_ROOT,
+            overwrite=overwrite,
+        )
+        st.session_state[result_key] = result
+
+    result = st.session_state.get(result_key)
+    if isinstance(result, dict):
+        if result.get("created"):
+            st.success(f"Workspace created: {result.get('path')}")
+            with st.expander("Generated files", expanded=False):
+                for item in result.get("written", []):
+                    st.markdown(f"- `{item}`")
+        elif result.get("exists"):
+            st.info(f"Workspace already exists: {result.get('path')}")
+
+    st.caption(
+        "Open generated files manually in Finder/VS Code. Start with README.md, write findings in portfolio.md, "
+        "and place charts/tables under artifacts/."
+    )
+
+
+def parse_experiment_metrics_from_state(project_id: str) -> dict[str, float]:
+    metrics: dict[str, float] = {}
+    for metric_name in SUPPORTED_METRICS:
+        value = st.session_state.get(safe_widget_key("experiment_metric", project_id, metric_name), "")
+        text = str(value).strip()
+        if not text:
+            continue
+        try:
+            metrics[metric_name] = float(text)
+        except ValueError:
+            continue
+    return metrics
+
+
+def render_experiment_tracker(project: dict[str, Any]) -> None:
+    if str(project.get("track") or "").casefold() != "classic ml":
+        return
+
+    workspace_path = project_workspace_path(project, USER_PROJECTS_DIR)
+    records_path = experiment_records_path(workspace_path)
+    records = load_experiment_records(records_path)
+    summary = summarize_experiments(records)
+    project_id = project["id"]
+
+    st.markdown("#### Experiment Tracker Lite")
+    st.caption(
+        "Local JSONL log for ML runs. Save only metrics you actually produced in Notebook or entered manually. "
+        "Raw datasets are never stored here."
+    )
+    st.code(str(records_path), language="text")
+
+    metric_cols = st.columns(3)
+    metric_cols[0].metric("Runs", summary["total"])
+    metric_cols[1].metric("Completed", summary["by_status"].get("completed", 0))
+    metric_cols[2].metric("Failed", summary["by_status"].get("failed", 0))
+
+    with st.expander("Save current experiment summary", expanded=False):
+        status = st.selectbox(
+            "Status",
+            ["draft", "completed", "failed"],
+            key=safe_widget_key("experiment_status", project_id),
+        )
+        model_name = st.text_input(
+            "Model name",
+            value="LogisticRegression",
+            key=safe_widget_key("experiment_model", project_id),
+        )
+        target_column = st.text_input(
+            "Target column",
+            value="converted",
+            key=safe_widget_key("experiment_target", project_id),
+        )
+        feature_columns_text = st.text_area(
+            "Feature columns (comma or newline separated)",
+            key=safe_widget_key("experiment_features", project_id),
+            height=80,
+            placeholder="events_total, event_type__cart.shown, event_type__checkout.shown",
+        )
+        parameters_text = st.text_area(
+            "Parameters JSON",
+            key=safe_widget_key("experiment_parameters", project_id),
+            height=90,
+            placeholder='{"class_weight": "balanced", "max_iter": 1000}',
+        )
+
+        st.markdown("##### Metrics")
+        metric_grid = st.columns(5)
+        for index, metric_name in enumerate(SUPPORTED_METRICS):
+            metric_grid[index % len(metric_grid)].text_input(
+                metric_name,
+                key=safe_widget_key("experiment_metric", project_id, metric_name),
+                placeholder="empty",
+            )
+
+        notes = st.text_area(
+            "Notes",
+            key=safe_widget_key("experiment_notes", project_id),
+            height=100,
+            placeholder="What changed? What did the metric mean? Any leakage or data caveat?",
+        )
+        code_snippet = st.text_area(
+            "Code snippet",
+            key=safe_widget_key("experiment_code", project_id),
+            height=140,
+            placeholder="Paste the exact code snippet that produced these metrics.",
+        )
+        artifact_paths_text = st.text_area(
+            "Artifact paths (comma or newline separated)",
+            key=safe_widget_key("experiment_artifacts", project_id),
+            height=70,
+            placeholder="artifacts/tables/metrics.csv, artifacts/charts/confusion_matrix.png",
+        )
+
+        if st.button("Save experiment record", key=safe_widget_key("experiment_save", project_id), use_container_width=True):
+            metrics = parse_experiment_metrics_from_state(project_id)
+            record = {
+                "project_id": project_id,
+                "dataset_names": project.get("related_dataset_names") or project.get("datasets") or [],
+                "target_column": target_column,
+                "feature_columns": feature_columns_text,
+                "model_name": model_name,
+                "parameters": parameters_text,
+                "metrics": metrics,
+                "notes": notes,
+                "code_snippet": code_snippet,
+                "artifact_paths": artifact_paths_text,
+                "status": status,
+            }
+            saved = save_experiment_record(record, records_path)
+            st.success(f"Experiment saved: {saved['id']}")
+            st.rerun()
+
+    records = load_experiment_records(records_path)
+    if not records:
+        st.info("No experiment records yet. Run a milestone in Notebook, copy real metrics here, then save a record.")
+        return
+
+    metric_options = summarize_experiments(records)["metric_names"] or list(SUPPORTED_METRICS)
+    selected_metric = st.selectbox(
+        "Compare by metric",
+        metric_options,
+        key=safe_widget_key("experiment_compare_metric", project_id),
+    )
+    comparison = compare_experiments(records, selected_metric)
+    st.dataframe(comparison, use_container_width=True, hide_index=True)
+
+    with st.expander("Raw experiment records", expanded=False):
+        st.json(records)
+
+
+def render_data_lab_project_detail(
+    project: dict[str, Any],
+    datasets: list[dict[str, Any]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    note_index: dict[str, Any],
+) -> None:
+    stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
+    st.markdown(f"### {project['title']}")
+    st.markdown(project["goal"])
+    st.progress(stats["ratio"])
+    st.caption(f"{stats['done']}/{stats['total']} milestones · {project.get('estimated_time', '')}")
+
+    meta_cols = st.columns(3)
+    meta_cols[0].metric("Level", project.get("level", "—"))
+    meta_cols[1].metric("Datasets", len(project.get("datasets", [])))
+    meta_cols[2].metric("Skills", len(project.get("skills", [])))
+
+    st.markdown("#### Business Context")
+    st.markdown(project.get("business_context") or "No business context provided.")
+
+    render_data_lab_before_start(
+        project,
+        note_index=note_index,
+        practice_cards=practice_cards,
+        mentor_tasks=mentor_tasks,
+        datasets=datasets,
+    )
+
+    st.markdown("#### Datasets")
+    dataset_cols = st.columns(max(1, min(3, len(project.get("datasets", [])) or 1)))
+    for index, dataset_name in enumerate(project.get("datasets", [])):
+        col = dataset_cols[index % len(dataset_cols)]
+        exists = find_dataset_record(dataset_name, datasets) is not None
+        if exists:
+            col.button(
+                f"📊 {dataset_name}",
+                key=f"data_lab_dataset_{project['id']}_{dataset_name}",
+                on_click=open_dataset_tab,
+                args=(dataset_name,),
+                use_container_width=True,
+            )
+        else:
+            col.button(
+                f"{dataset_name} — missing",
+                key=f"data_lab_dataset_{project['id']}_{dataset_name}",
+                disabled=True,
+                use_container_width=True,
+            )
+
+    if project.get("prerequisites"):
+        st.markdown("#### Prerequisites")
+        st.markdown("\n".join(f"- {item}" for item in project["prerequisites"]))
+
+    st.markdown("#### Milestones")
+    for milestone in project.get("milestones", []):
+        render_data_lab_milestone(project, milestone)
+
+    st.markdown("#### Deliverables")
+    st.markdown("\n".join(f"- {item}" for item in project.get("deliverables", [])))
+
+    render_data_lab_portfolio_output(project)
+    render_project_workspace_scaffolder(project)
+    render_experiment_tracker(project)
+    render_data_lab_project_completion(project, stats)
+
+
+def render_data_lab_projects_tab(
+    projects: list[dict[str, Any]],
+    datasets: list[dict[str, Any]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    note_index: dict[str, Any],
+) -> None:
+    st.markdown("### 🧪 Data Lab Projects")
+    st.markdown(
+        "End-to-end проекты: от датасета и анализа до графиков, выводов и portfolio output. Код пока запускай в Notebook вручную."
+    )
+
+    if not projects:
+        st.info("Data Lab project recipes не найдены.")
+        return
+
+    stats = data_lab_projects_progress(projects)
+    metric_cols = st.columns(3)
+    metric_cols[0].metric("Проектов", stats["projects_total"])
+    metric_cols[1].metric("Проекты готовы", f"{stats['projects_done']}/{stats['projects_total']}")
+    metric_cols[2].metric("Milestones", f"{stats['milestones_done']}/{stats['milestones_total']}")
+    milestone_ratio = stats["milestones_done"] / stats["milestones_total"] if stats["milestones_total"] else 0.0
+    st.progress(milestone_ratio)
+
+    selected_id = st.session_state.get("selected_data_lab_project")
+    if selected_id not in {project["id"] for project in projects}:
+        selected_id = projects[0]["id"]
+        st.session_state["selected_data_lab_project"] = selected_id
+
+    list_col, detail_col = st.columns([0.38, 0.62])
+    with list_col:
+        st.markdown("#### Project Catalog")
+        for project in projects:
+            render_data_lab_project_card(project)
+
+    selected_project = next(project for project in projects if project["id"] == selected_id)
+    with detail_col:
+        render_data_lab_project_detail(selected_project, datasets, practice_cards, mentor_tasks, note_index)
+
+
 def artifact_markup(artifact: str) -> str:
     value = artifact.strip()
     if not value:
@@ -2545,11 +3474,63 @@ def artifact_markup(artifact: str) -> str:
     return safe_value
 
 
-def render_portfolio_tab(cards: list[dict[str, Any]]) -> None:
+def render_portfolio_export_section(cards: list[dict[str, Any]], data_lab_projects: list[dict[str, Any]]) -> None:
+    completed_projects = [project for project in data_lab_projects if is_data_lab_project_complete(project["id"])]
+    completed_cards = [card for card in cards if get_card_status(card) == PRACTICE_DONE]
+    project_by_id = {project["id"]: project for project in completed_projects}
+    card_by_id = {card["id"]: card for card in completed_cards}
+
+    st.markdown("#### Portfolio Export")
+    st.warning(EXPORT_WARNING)
+
+    if not completed_projects and not completed_cards:
+        st.info("Пока нет completed Data Lab проектов или completed practice cards для экспорта.")
+        return
+
+    selected_project_ids = st.multiselect(
+        "Completed Data Lab projects",
+        options=[project["id"] for project in completed_projects],
+        format_func=lambda project_id: project_by_id[project_id]["title"],
+        key="portfolio_export_projects",
+    )
+    selected_card_ids = st.multiselect(
+        "Completed practice cards",
+        options=[card["id"] for card in completed_cards],
+        format_func=lambda card_id: card_by_id[card_id]["title"],
+        key="portfolio_export_cards",
+    )
+
+    selected_projects = [project_by_id[project_id] for project_id in selected_project_ids]
+    selected_cards = [card_by_id[card_id] for card_id in selected_card_ids]
+    output_records = {card["id"]: get_output_record(card["id"]) for card in selected_cards}
+    markdown = generate_portfolio_markdown(selected_projects, selected_cards, output_records)
+    target_path = portfolio_export_path(PORTFOLIO_DIR)
+
+    st.caption(f"Export target: {target_path}")
+    with st.expander("Markdown preview", expanded=bool(selected_projects or selected_cards)):
+        st.code(markdown, language="markdown")
+
+    if st.button(
+        "Export markdown",
+        key="portfolio_export_write",
+        disabled=not (selected_projects or selected_cards),
+        use_container_width=True,
+    ):
+        try:
+            PORTFOLIO_DIR.mkdir(parents=True, exist_ok=True)
+            target_path = portfolio_export_path(PORTFOLIO_DIR)
+            target_path.write_text(markdown, encoding="utf-8")
+        except OSError as exc:
+            st.error(f"Не удалось записать portfolio markdown: {exc}")
+        else:
+            st.success(f"Portfolio markdown exported: {target_path}")
+
+
+def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[dict[str, Any]]) -> None:
     st.markdown("### 📁 Portfolio")
     st.markdown("Здесь собираются результаты практики: артефакты, выводы и следы работы, которые потом можно превращать в резюме и GitHub.")
 
-    if not cards:
+    if not cards and not data_lab_projects:
         st.info("Пока нет карточек практики, поэтому портфолио пустое.")
         return
 
@@ -2562,6 +3543,8 @@ def render_portfolio_tab(cards: list[dict[str, Any]]) -> None:
 
     output_ratio = output_stats["with_outputs"] / output_stats["total"] if output_stats["total"] else 0.0
     st.progress(output_ratio)
+
+    render_portfolio_export_section(cards, data_lab_projects)
 
     view = st.radio(
         "Показать",
@@ -2655,6 +3638,110 @@ def render_algorithm_result(result: dict[str, Any]) -> None:
         st.caption("Процесс не вернул stdout/stderr.")
 
 
+def extract_algorithm_tests_preview(code: str) -> str:
+    match = re.search(r"def\s+run_tests\s*\([^)]*\):(?P<body>.*?)(?:\nif\s+__name__|$)", code or "", flags=re.S)
+    if not match:
+        return ""
+    return "def run_tests():" + match.group("body").rstrip()
+
+
+def render_timed_mock_controls(scope: str, item_id: str) -> int:
+    cols = st.columns([0.35, 0.25, 0.4])
+    limit = cols[0].selectbox(
+        "Time limit",
+        [10, 20, 30, 45],
+        key=safe_widget_key("mock_limit", scope, item_id),
+    )
+    start_key = safe_widget_key("mock_start", scope, item_id)
+    if cols[1].button("Start timer", key=f"{start_key}_button", use_container_width=True):
+        st.session_state[start_key] = time.time()
+    started_at = st.session_state.get(start_key)
+    elapsed_minutes = 0
+    if isinstance(started_at, (int, float)):
+        elapsed_minutes = int((time.time() - started_at) // 60)
+        cols[2].metric("Elapsed", f"{elapsed_minutes} min", delta=f"limit {limit} min")
+    else:
+        cols[2].caption("Timer not started. This is a lightweight elapsed-time display.")
+    return elapsed_minutes
+
+
+def render_algorithm_self_review(lesson: dict[str, Any], mode: str, last_result: dict[str, Any] | None = None) -> None:
+    lesson_id = lesson["id"]
+    st.markdown("#### Self-review")
+    tests_passed_default = bool(last_result and last_result.get("exit_code") == 0 and not last_result.get("timed_out"))
+    cols = st.columns(3)
+    tests_passed = cols[0].checkbox(
+        "Did solution pass tests?",
+        value=tests_passed_default,
+        key=safe_widget_key("algo_review_tests", lesson_id, mode),
+    )
+    time_spent = cols[1].number_input(
+        "Time spent (min)",
+        min_value=0,
+        max_value=240,
+        value=0,
+        key=safe_widget_key("algo_review_time", lesson_id, mode),
+    )
+    retry_later = cols[2].checkbox(
+        "Retry later",
+        key=safe_widget_key("algo_review_retry", lesson_id, mode),
+    )
+    big_o = st.text_area(
+        "Big O explanation",
+        key=safe_widget_key("algo_review_big_o", lesson_id, mode),
+        height=80,
+        placeholder="Time: O(...), Space: O(...). Explain why.",
+    )
+    edge_cases = st.text_area(
+        "Edge cases considered",
+        key=safe_widget_key("algo_review_edges", lesson_id, mode),
+        height=80,
+        placeholder="empty input, duplicates, negative numbers, single element...",
+    )
+    hard = st.text_area(
+        "What was hard?",
+        key=safe_widget_key("algo_review_hard", lesson_id, mode),
+        height=80,
+    )
+    if st.button("Save algorithm attempt", key=safe_widget_key("algo_review_save", lesson_id, mode), use_container_width=True):
+        save_algorithm_attempt(
+            lesson_id,
+            {
+                "mode": mode,
+                "tests_passed": tests_passed,
+                "time_spent_minutes": time_spent,
+                "big_o_explanation": big_o,
+                "edge_cases": edge_cases,
+                "what_was_hard": hard,
+                "retry_later": retry_later,
+            },
+        )
+        st.success("Algorithm attempt saved.")
+
+
+def render_algorithm_attempt_review(lesson: dict[str, Any]) -> None:
+    attempts = get_algorithm_attempts(lesson["id"])
+    st.markdown("#### Saved attempts")
+    if not attempts:
+        st.info("No attempts saved yet.")
+        return
+    st.dataframe(
+        [
+            {
+                "timestamp": attempt.get("timestamp"),
+                "mode": attempt.get("mode"),
+                "tests_passed": attempt.get("tests_passed"),
+                "time_spent_minutes": attempt.get("time_spent_minutes"),
+                "retry_later": attempt.get("retry_later"),
+                "big_o": attempt.get("big_o_explanation"),
+            }
+            for attempt in attempts
+        ],
+        use_container_width=True,
+        hide_index=True,
+    )
+
+
 def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     st.markdown("### 🧩 Algorithms Lab")
     st.markdown(
@@ -2670,6 +3757,13 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     metric_cols[0].metric("Уроков", stats["total"])
     metric_cols[1].metric("Пройдено", stats["done"])
     metric_cols[2].metric("Осталось", stats["todo"])
+
+    mode = st.radio(
+        "Mode",
+        PRACTICE_MODES,
+        key="algorithm_practice_mode",
+        horizontal=True,
+    )
 
     lesson_ids = [lesson["id"] for lesson in lessons]
     selected_id = st.session_state.get("selected_algorithm_lesson")
@@ -2687,12 +3781,15 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     )
     lesson = next(item for item in lessons if item["id"] == selected_id)
     status = get_algorithm_status(lesson["id"])
+    lesson_text = "\n".join([str(lesson.get("docstring") or ""), str(lesson.get("code") or "")])
+    difficulty = infer_difficulty(lesson_text)
+    expected_complexity = extract_expected_complexity(lesson_text)
 
     st.markdown(
         f"""
 <div class="today-card">
     <div class="today-card-title">{html.escape(lesson["title"])}</div>
-    <div class="muted-small">{html.escape(lesson["id"])}</div>
+    <div class="muted-small">{html.escape(lesson["id"])} · difficulty: {html.escape(difficulty)} · expected: {html.escape(expected_complexity)}</div>
     <div style="margin-top: 0.45rem;">{status_badge(status)}</div>
 </div>
         """,
@@ -2702,6 +3799,9 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     if lesson.get("error"):
         st.warning(f"Файл не удалось прочитать: {lesson['error']}")
         return
+
+    if mode == "Timed Mock":
+        render_timed_mock_controls("algorithm", lesson["id"])
 
     st.markdown("#### Теория")
     docstring = str(lesson.get("docstring") or "").strip()
@@ -2713,6 +3813,24 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     with st.expander("Эталонный код", expanded=False):
         st.code(str(lesson.get("code") or ""), language="python")
 
+    if mode in {"Practice", "Timed Mock"}:
+        st.markdown("#### Practice Setup")
+        st.caption("Starter code: use the lesson templates/functions as your starting point. Run built-in tests when ready.")
+        st.code(str(lesson.get("code") or ""), language="python")
+        tests_preview = extract_algorithm_tests_preview(str(lesson.get("code") or ""))
+        if tests_preview:
+            with st.expander("Tests preview", expanded=False):
+                st.code(tests_preview, language="python")
+        st.markdown("##### Edge case checklist")
+        for item in ["empty input", "single element", "duplicates", "negative values", "already sorted / reverse sorted"]:
+            st.checkbox(item, key=safe_widget_key("algo_edge", lesson["id"], mode, item))
+        st.text_area(
+            "Explanation prompt",
+            value="Explain the pattern, why the data structure fits, and the final time/space complexity.",
+            key=safe_widget_key("algo_explanation_prompt", lesson["id"], mode),
+            height=80,
+        )
+
     result_key = f"algorithm_result_{lesson['id']}"
     if st.button("▶ Прогнать тесты", key=f"run_algorithm_{lesson['id']}", use_container_width=True):
         with st.spinner("Запускаю файл и встроенные assert-проверки..."):
@@ -2723,6 +3841,11 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
 
     if result_key in st.session_state:
         render_algorithm_result(st.session_state[result_key])
+
+    if mode in {"Practice", "Timed Mock"}:
+        render_algorithm_self_review(lesson, mode, st.session_state.get(result_key))
+    elif mode == "Review":
+        render_algorithm_attempt_review(lesson)
 
 
 def select_mentor_task(task_id: str) -> None:
@@ -2926,6 +4049,71 @@ def render_tasks_tab(mentor_data: dict[str, Any]) -> None:
             st.code(task["starter_code"], language="python")
 
 
+def render_interview_question_practice(
+    company: str,
+    kind: str,
+    index: int,
+    text: str,
+    mode: str,
+) -> None:
+    question_id = interview_question_id(company, kind, index, text)
+    attempts = get_interview_attempts(question_id)
+    repeat_label = " · repeat later" if attempts and attempts[-1].get("repeat_later") else ""
+    st.markdown(f"{index}. {text}")
+    if attempts:
+        latest = attempts[-1]
+        st.caption(
+            f"Last rating: {latest.get('self_rating', 0)}/5 · attempts: {len(attempts)}{repeat_label}"
+        )
+
+    if mode in {"Practice", "Timed Mock"}:
+        notes = st.text_area(
+            "Answer notes",
+            key=safe_widget_key("interview_notes", question_id, mode),
+            height=90,
+            placeholder="Write your answer in your own words. No ideal answer is generated here.",
+        )
+        cols = st.columns(3)
+        rating = cols[0].slider(
+            "Self-rating",
+            1,
+            5,
+            3,
+            key=safe_widget_key("interview_rating", question_id, mode),
+        )
+        repeat_later = cols[1].checkbox(
+            "Repeat later",
+            key=safe_widget_key("interview_repeat", question_id, mode),
+        )
+        if cols[2].button("Save answer", key=safe_widget_key("interview_save", question_id, mode), use_container_width=True):
+            save_interview_attempt(
+                question_id,
+                {
+                    "company": company,
+                    "question": text,
+                    "answer_notes": notes,
+                    "self_rating": rating,
+                    "repeat_later": repeat_later,
+                },
+            )
+            st.success("Interview answer attempt saved.")
+    elif mode == "Review" and attempts:
+        with st.expander("Saved attempts", expanded=False):
+            st.dataframe(
+                [
+                    {
+                        "timestamp": attempt.get("timestamp"),
+                        "rating": attempt.get("self_rating"),
+                        "repeat_later": attempt.get("repeat_later"),
+                        "notes": attempt.get("answer_notes"),
+                    }
+                    for attempt in attempts
+                ],
+                use_container_width=True,
+                hide_index=True,
+            )
+
+
 def render_interviews_tab(interview_data: dict[str, Any]) -> None:
     st.markdown("### 🎤 Interviews")
     st.markdown("Вопросы и задачи с ML/DS собеседований, сгруппированные по компаниям.")
@@ -2939,6 +4127,15 @@ def render_interviews_tab(interview_data: dict[str, Any]) -> None:
     metric_cols[0].metric("Компаний", interview_data.get("total_companies", len(companies)))
     metric_cols[1].metric("Вопросов", interview_data.get("total_questions", 0))
     metric_cols[2].metric("Задач", interview_data.get("total_tasks", 0))
+
+    mode = st.radio(
+        "Mode",
+        PRACTICE_MODES,
+        key="interview_practice_mode",
+        horizontal=True,
+    )
+    if mode == "Timed Mock":
+        render_timed_mock_controls("interview", "global")
 
     company_names = ["Все"] + [entry["company"] for entry in companies]
     filter_cols = st.columns([0.45, 0.55])
@@ -2973,11 +4170,11 @@ def render_interviews_tab(interview_data: dict[str, Any]) -> None:
             if questions:
                 st.markdown("#### Вопросы")
                 for index, question in enumerate(questions, start=1):
-                    st.markdown(f"{index}. {question}")
+                    render_interview_question_practice(entry["company"], "question", index, question, mode)
             if tasks:
                 st.markdown("#### Задачи")
-                for task in tasks:
-                    st.markdown(task)
+                for index, task in enumerate(tasks, start=1):
+                    render_interview_question_practice(entry["company"], "task", index, task, mode)
             if entry.get("notes"):
                 st.markdown("#### Дополнительно")
                 for note in entry["notes"]:
@@ -3490,6 +4687,7 @@ def render_progress(
     practice_cards: list[dict[str, Any]],
     algorithm_lessons: list[dict[str, Any]],
     mentor_tasks: list[dict[str, Any]],
+    data_lab_projects: list[dict[str, Any]],
 ) -> None:
     notes = all_notes(sections)
     total = len(notes)
@@ -3534,6 +4732,20 @@ def render_progress(
     st.progress(mentor_ratio)
     st.caption(f"Задачи ментора: {mentor_done}/{mentor_total} ({mentor_ratio:.0%})")
 
+    data_lab_stats = data_lab_projects_progress(data_lab_projects)
+    data_lab_total = data_lab_stats["projects_total"]
+    data_lab_done = data_lab_stats["projects_done"]
+    data_lab_ratio = data_lab_done / data_lab_total if data_lab_total else 0.0
+    st.markdown("#### Data Lab Projects")
+    data_lab_cols = st.columns(2)
+    data_lab_cols[0].metric("Проектов", data_lab_total)
+    data_lab_cols[1].metric("Complete", data_lab_done)
+    st.progress(data_lab_ratio)
+    st.caption(
+        f"Data Lab: {data_lab_done}/{data_lab_total} проектов complete · "
+        f"{data_lab_stats['milestones_done']}/{data_lab_stats['milestones_total']} milestones"
+    )
+
     algorithm_stats = algorithm_progress(algorithm_lessons)
     algorithm_total = algorithm_stats["total"]
     algorithm_done = algorithm_stats["done"]
@@ -3544,6 +4756,14 @@ def render_progress(
     algorithm_cols[1].metric("Пройдено", algorithm_done)
     st.progress(algorithm_ratio)
     st.caption(f"Алгоритмы: {algorithm_done}/{algorithm_total} уроков ({algorithm_ratio:.0%})")
+
+    arena_stats = interview_arena_progress_summary()
+    st.markdown("#### Interview Arena")
+    arena_cols = st.columns(4)
+    arena_cols[0].metric("Algorithm attempts", arena_stats["algorithm_attempts"])
+    arena_cols[1].metric("Mock sessions", arena_stats["mock_sessions_completed"])
+    arena_cols[2].metric("Interview answers", arena_stats["interview_answers"])
+    arena_cols[3].metric("Repeat later", arena_stats["questions_repeat_later"])
 
     output_stats = portfolio_progress(practice_cards)
     output_total = output_stats["total"]
@@ -3772,11 +4992,13 @@ def main() -> None:
     interview_data = load_interview_questions()
     architecture_data = load_architecture_guidelines()
     mentor_data = load_mentor_tasks(MENTOR_TASKS_PATH)
+    data_lab_projects = scan_data_lab_projects()
     tab_options = [
         "Home",
         "Theory",
         "🎯 Practice",
         "🎯 Tasks",
+        "🧪 Data Lab Projects",
         "📁 Portfolio",
         "📊 Datasets",
         "⚡ Scratch",
@@ -3812,8 +5034,10 @@ def main() -> None:
         render_practice_tab(practice_cards, practice_warnings, note_index, datasets)
     elif active_tab == "🎯 Tasks":
         render_tasks_tab(mentor_data)
+    elif active_tab == "🧪 Data Lab Projects":
+        render_data_lab_projects_tab(data_lab_projects, datasets, practice_cards, mentor_data.get("tasks", []), note_index)
     elif active_tab == "📁 Portfolio":
-        render_portfolio_tab(practice_cards)
+        render_portfolio_tab(practice_cards, data_lab_projects)
     elif active_tab == "📊 Datasets":
         render_datasets_tab(datasets, practice_cards)
     elif active_tab == "⚡ Scratch":
@@ -3831,7 +5055,7 @@ def main() -> None:
     elif active_tab == "Roadmap":
         render_roadmap(sections)
     elif active_tab == "Progress":
-        render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []))
+        render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []), data_lab_projects)
     else:
         render_links_health(graph)
 
