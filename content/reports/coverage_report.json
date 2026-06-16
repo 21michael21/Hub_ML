@@ -1,0 +1,3793 @@
+{
+  "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
+  "sources": {
+    "theory_notes": 206,
+    "practice_cards": 7,
+    "mentor_tasks": 64,
+    "algorithm_lessons": 9,
+    "interview_companies": 15,
+    "theory_audit": "/Users/mihailkulibaba/Documents/New project/content/reports/theory_audit.json"
+  },
+  "summary": {
+    "generated_at": "2026-06-16T22:02:13.602653+00:00",
+    "total_topics": 36,
+    "status_counts": {
+      "partial": 8,
+      "covered": 15,
+      "theory_only": 12,
+      "practice_only": 1
+    },
+    "coverage_by_track": {
+      "Classic ML": {
+        "partial": 1,
+        "covered": 2,
+        "theory_only": 1
+      },
+      "Data Analysis": {
+        "covered": 4
+      },
+      "GenAI and RAG": {
+        "theory_only": 3,
+        "covered": 1
+      },
+      "Git and Tools": {
+        "covered": 1,
+        "theory_only": 1
+      },
+      "Interview Prep": {
+        "covered": 1,
+        "partial": 1,
+        "practice_only": 1
+      },
+      "MLOps": {
+        "covered": 1,
+        "theory_only": 2
+      },
+      "Math for ML": {
+        "covered": 1,
+        "theory_only": 1
+      },
+      "NLP": {
+        "partial": 2,
+        "theory_only": 1
+      },
+      "Portfolio and Career": {
+        "covered": 1,
+        "theory_only": 1
+      },
+      "Python": {
+        "partial": 4
+      },
+      "SQL": {
+        "covered": 1,
+        "theory_only": 1
+      },
+      "Statistics": {
+        "covered": 2,
+        "theory_only": 1
+      }
+    },
+    "missing_required_topics": [],
+    "theory_without_practice": [
+      {
+        "id": "sql.aggregation_windows",
+        "title": "SQL Aggregations and Window Functions",
+        "track": "SQL",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "git.reproducibility",
+        "title": "Environment and Reproducibility",
+        "track": "Git and Tools",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "stats.hypothesis_ab",
+        "title": "Hypothesis Testing and A/B Tests",
+        "track": "Statistics",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "math.optimization",
+        "title": "Optimization Basics",
+        "track": "Math for ML",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "ml.unsupervised",
+        "title": "Unsupervised Learning",
+        "track": "Classic ML",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "nlp.transformers",
+        "title": "Transformers and Embeddings",
+        "track": "NLP",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "genai.prompting",
+        "title": "Prompt Engineering",
+        "track": "GenAI and RAG",
+        "level": "beginner",
+        "status": "theory_only"
+      },
+      {
+        "id": "genai.rag",
+        "title": "RAG Basics",
+        "track": "GenAI and RAG",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "genai.evaluation_agents",
+        "title": "LLM Evaluation, Agents, and Tools",
+        "track": "GenAI and RAG",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "mlops.serving",
+        "title": "Model Serving Basics",
+        "track": "MLOps",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "mlops.monitoring",
+        "title": "Monitoring and Data Drift",
+        "track": "MLOps",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "career.resume_remote",
+        "title": "Resume and Remote Work Readiness",
+        "track": "Portfolio and Career",
+        "level": "junior",
+        "status": "theory_only"
+      }
+    ],
+    "practice_without_theory": [
+      {
+        "id": "interview.take_home",
+        "title": "Take-home Assignments",
+        "track": "Interview Prep",
+        "level": "middle",
+        "status": "practice_only"
+      }
+    ],
+    "recommended_next_10_topics": [
+      {
+        "id": "interview.take_home",
+        "title": "Take-home Assignments",
+        "track": "Interview Prep",
+        "level": "middle",
+        "status": "practice_only"
+      },
+      {
+        "id": "genai.prompting",
+        "title": "Prompt Engineering",
+        "track": "GenAI and RAG",
+        "level": "beginner",
+        "status": "theory_only"
+      },
+      {
+        "id": "genai.rag",
+        "title": "RAG Basics",
+        "track": "GenAI and RAG",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "git.reproducibility",
+        "title": "Environment and Reproducibility",
+        "track": "Git and Tools",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "mlops.serving",
+        "title": "Model Serving Basics",
+        "track": "MLOps",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "math.optimization",
+        "title": "Optimization Basics",
+        "track": "Math for ML",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "nlp.transformers",
+        "title": "Transformers and Embeddings",
+        "track": "NLP",
+        "level": "middle",
+        "status": "theory_only"
+      },
+      {
+        "id": "career.resume_remote",
+        "title": "Resume and Remote Work Readiness",
+        "track": "Portfolio and Career",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "sql.aggregation_windows",
+        "title": "SQL Aggregations and Window Functions",
+        "track": "SQL",
+        "level": "junior",
+        "status": "theory_only"
+      },
+      {
+        "id": "stats.hypothesis_ab",
+        "title": "Hypothesis Testing and A/B Tests",
+        "track": "Statistics",
+        "level": "junior",
+        "status": "theory_only"
+      }
+    ],
+    "recommended_next_3_project_directions": [
+      "EDA + visualization case study on df_orders/df_events: data quality, metrics, charts, and written business insights.",
+      "Classic ML baseline project: supervised model, validation split, metrics, error analysis, and reproducible README.",
+      "NLP/RAG portfolio prototype: text preprocessing or retrieval baseline with clear evaluation notes."
+    ]
+  },
+  "topics": [
+    {
+      "id": "python.basics",
+      "title": "Python Basics",
+      "track": "Python",
+      "level": "beginner",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 34.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 5,
+        "algorithms": 5,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/00_Knowledge_Map.md",
+            "title": "VKAT Knowledge Atlas",
+            "matched_patterns": [
+              "01_python"
+            ],
+            "quality_score": 35
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/01_Python_for_Data_Analysis.md",
+            "title": "Python for Data Analysis",
+            "matched_patterns": [
+              "python core",
+              "01_python",
+              "core map",
+              "list",
+              "dict",
+              "function"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/04_Algorithms_for_ML.md",
+            "title": "Algorithms for ML",
+            "matched_patterns": [
+              "python core",
+              "01_python",
+              "core map"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "python core",
+              "01_python",
+              "core map"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/10_Python_Path.md",
+            "title": "Python Path",
+            "matched_patterns": [
+              "python core",
+              "01_python"
+            ],
+            "quality_score": 15
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/python_refactor_user_events.md",
+            "title": "Python: refactor event summarizer",
+            "matched_patterns": [
+              "refactor"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "Арифметические: `+`, `-`, `*`, `/`, `//`, `%`, `**`",
+            "matched_patterns": [
+              "python_2_basics"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "`+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл.",
+            "matched_patterns": [
+              "python_2_basics"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "Данные можно приводить из одного типа в другой",
+            "matched_patterns": [
+              "python_2_basics"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "Данные можно приводить из одного типа в другой",
+            "matched_patterns": [
+              "python_2_basics"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "Строку нельзя сложить с не строкой. Список тоже.",
+            "matched_patterns": [
+              "python_2_basics"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/01_big_o.py",
+            "title": "01 Big O",
+            "matched_patterns": [
+              "list",
+              "dict",
+              "list",
+              "dict"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py",
+            "title": "02 Python Builtins Complexity",
+            "matched_patterns": [
+              "list",
+              "dict",
+              "list",
+              "dict"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/03_hashmap_pattern.py",
+            "title": "03 Hashmap Pattern",
+            "matched_patterns": [
+              "list",
+              "dict",
+              "list",
+              "dict"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/04_two_pointers_pattern.py",
+            "title": "04 Two Pointers Pattern",
+            "matched_patterns": [
+              "list",
+              "list"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/05_sliding_window_pattern.py",
+            "title": "05 Sliding Window Pattern",
+            "matched_patterns": [
+              "list",
+              "dict",
+              "list",
+              "dict"
+            ],
+            "quality_score": null
+          }
+        ],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "script",
+        "notebook",
+        "utility"
+      ]
+    },
+    {
+      "id": "python.oop",
+      "title": "Object-Oriented Python",
+      "track": "Python",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 36.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 5,
+        "algorithms": 2,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "python oop",
+              "oop",
+              "01_python/oop"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/10_Python_Path.md",
+            "title": "Python Path",
+            "matched_patterns": [
+              "python oop",
+              "oop"
+            ],
+            "quality_score": 15
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/12_Python_OOP.md",
+            "title": "Python OOP",
+            "matched_patterns": [
+              "python oop",
+              "oop",
+              "01_python/oop"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/LEARNING_ROADMAP_FREE_RESOURCES.md",
+            "title": "Дорожная карта: Бесплатные курсы и ресурсы (2026)",
+            "matched_patterns": [
+              "class"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/00_Index.md",
+            "title": "Python Learning Hub",
+            "matched_patterns": [
+              "python oop",
+              "oop"
+            ],
+            "quality_score": 45
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/python_refactor_user_events.md",
+            "title": "Python: refactor event summarizer",
+            "matched_patterns": [
+              "refactor"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "В контексте метода класса, в `self` подставляется объект, для которого вызван метод",
+            "matched_patterns": [
+              "class"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Задание",
+            "matched_patterns": [
+              "class",
+              "cell"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Реализуйте методы:",
+            "matched_patterns": [
+              "cell"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:",
+            "matched_patterns": [
+              "class"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`.",
+            "matched_patterns": [
+              "class"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/06_stack_pattern.py",
+            "title": "06 Stack Pattern",
+            "matched_patterns": [
+              "class",
+              "class"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/07_recursion_pattern.py",
+            "title": "07 Recursion Pattern",
+            "matched_patterns": [
+              "class",
+              "class"
+            ],
+            "quality_score": null
+          }
+        ],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "class design",
+        "small package"
+      ]
+    },
+    {
+      "id": "python.typing_architecture",
+      "title": "Typing and Architecture",
+      "track": "Python",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 28.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 5,
+        "algorithms": 1,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/01_Python_for_Data_Analysis.md",
+            "title": "Python for Data Analysis",
+            "matched_patterns": [
+              "architecture",
+              "python architecture"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "typing",
+              "architecture",
+              "python architecture"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/10_Python_Path.md",
+            "title": "Python Path",
+            "matched_patterns": [
+              "typing",
+              "architecture",
+              "python architecture"
+            ],
+            "quality_score": 15
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/15_Python_Architecture_Typing.md",
+            "title": "Python Architecture and Typing",
+            "matched_patterns": [
+              "typing",
+              "architecture",
+              "protocol",
+              "abc",
+              "python architecture"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/00_Index.md",
+            "title": "Python Learning Hub",
+            "matched_patterns": [
+              "typing",
+              "architecture",
+              "python architecture"
+            ],
+            "quality_score": 45
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/python_refactor_user_events.md",
+            "title": "Python: refactor event summarizer",
+            "matched_patterns": [
+              "refactor"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "В контексте метода класса, в `self` подставляется объект, для которого вызван метод",
+            "matched_patterns": [
+              "python_3_architecture"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Задание",
+            "matched_patterns": [
+              "python_3_architecture"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Реализуйте методы:",
+            "matched_patterns": [
+              "python_3_architecture"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:",
+            "matched_patterns": [
+              "python_3_architecture"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`.",
+            "matched_patterns": [
+              "python_3_architecture"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/05_sliding_window_pattern.py",
+            "title": "05 Sliding Window Pattern",
+            "matched_patterns": [
+              "abc"
+            ],
+            "quality_score": null
+          }
+        ],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "typed module",
+        "package"
+      ]
+    },
+    {
+      "id": "python.algorithms",
+      "title": "Algorithms and Complexity",
+      "track": "Python",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 26.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 5,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/00_Knowledge_Map.md",
+            "title": "VKAT Knowledge Atlas",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 35
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/04_Algorithms_for_ML.md",
+            "title": "Algorithms for ML",
+            "matched_patterns": [
+              "algorithms",
+              "big o",
+              "two pointers",
+              "stack",
+              "recursion"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/10_Python_Path.md",
+            "title": "Python Path",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 15
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/14_Python_Algorithms.md",
+            "title": "Python Algorithms",
+            "matched_patterns": [
+              "algorithms",
+              "big o",
+              "two pointers",
+              "sliding window",
+              "stack",
+              "recursion"
+            ],
+            "quality_score": 0
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/01_big_o.py",
+            "title": "01 Big O",
+            "matched_patterns": [
+              "algos_patterns",
+              "stack",
+              "big o",
+              "stack"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py",
+            "title": "02 Python Builtins Complexity",
+            "matched_patterns": [
+              "algos_patterns"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/03_hashmap_pattern.py",
+            "title": "03 Hashmap Pattern",
+            "matched_patterns": [
+              "algos_patterns",
+              "hashmap",
+              "hashmap"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/04_two_pointers_pattern.py",
+            "title": "04 Two Pointers Pattern",
+            "matched_patterns": [
+              "algos_patterns",
+              "two pointers",
+              "two pointers"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/05_sliding_window_pattern.py",
+            "title": "05 Sliding Window Pattern",
+            "matched_patterns": [
+              "algos_patterns",
+              "sliding window",
+              "sliding window"
+            ],
+            "quality_score": null
+          }
+        ],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "coding interview",
+        "algorithm notebook"
+      ]
+    },
+    {
+      "id": "sql.select_join",
+      "title": "SQL Select, Filter, Join",
+      "track": "SQL",
+      "level": "beginner",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 67.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 1,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "join"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "join"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "where"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "sql",
+              "select",
+              "join",
+              "where"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/01_Setup.md",
+            "title": "Setup (VS Code + venv)",
+            "matched_patterns": [
+              "select"
+            ],
+            "quality_score": 20
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "analysis_3_pandas.ipynb",
+            "title": "Задание 3: Слияния (Merge)",
+            "matched_patterns": [
+              "join"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "analytics query pack"
+      ]
+    },
+    {
+      "id": "sql.aggregation_windows",
+      "title": "SQL Aggregations and Window Functions",
+      "track": "SQL",
+      "level": "junior",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 90.0,
+      "evidence_counts": {
+        "theory": 4,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "group by"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/Analytics_Tech_Interview.md",
+            "title": "📊 Analytics - Интервью",
+            "matched_patterns": [
+              "group by",
+              "partition by"
+            ],
+            "quality_score": 95
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/Golang_Tech_Interview.md",
+            "title": "💬 Golang - Интервью",
+            "matched_patterns": [
+              "group by"
+            ],
+            "quality_score": 95
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/QA_Tech_Interview.md",
+            "title": "🧪 QA - Интервью",
+            "matched_patterns": [
+              "group by"
+            ],
+            "quality_score": 95
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "analytics query pack"
+      ]
+    },
+    {
+      "id": "git.tools",
+      "title": "Git and CLI Workflow",
+      "track": "Git and Tools",
+      "level": "beginner",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 71.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 3,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "git"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Architecture/02_Project_Structure.md",
+            "title": "Структура проекта",
+            "matched_patterns": [
+              "cli"
+            ],
+            "quality_score": 50
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Architecture/04_Architecture_Course_Article.md",
+            "title": "Python Architecture Course Article",
+            "matched_patterns": [
+              "cli"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/Analytics_Tech_Interview.md",
+            "title": "📊 Analytics - Интервью",
+            "matched_patterns": [
+              "git",
+              "commit"
+            ],
+            "quality_score": 95
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/Architecture_Guidelines.md",
+            "title": "Architecture Guidelines",
+            "matched_patterns": [
+              "commit"
+            ],
+            "quality_score": 95
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "readme"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "readme"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/python_refactor_user_events.md",
+            "title": "Python: refactor event summarizer",
+            "matched_patterns": [
+              "readme"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "github repo",
+        "pull request"
+      ]
+    },
+    {
+      "id": "git.reproducibility",
+      "title": "Environment and Reproducibility",
+      "track": "Git and Tools",
+      "level": "junior",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 37.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "venv"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/00_Roadmap.md",
+            "title": "Roadmap: как учить Python",
+            "matched_patterns": [
+              "venv"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/01_Python_Notes.md",
+            "title": "Python Notes",
+            "matched_patterns": [
+              "venv"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/01_Setup.md",
+            "title": "Setup (VS Code + venv)",
+            "matched_patterns": [
+              "venv"
+            ],
+            "quality_score": 20
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Architecture/02_Project_Structure.md",
+            "title": "Структура проекта",
+            "matched_patterns": [
+              "requirements"
+            ],
+            "quality_score": 50
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "reproducible project"
+      ]
+    },
+    {
+      "id": "data.pandas_basics",
+      "title": "Pandas Basics",
+      "track": "Data Analysis",
+      "level": "beginner",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 56.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 4,
+        "mentor_tasks": 3,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/01_Python_for_Data_Analysis.md",
+            "title": "Python for Data Analysis",
+            "matched_patterns": [
+              "pandas"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/02_Data_to_ML_Bridge.md",
+            "title": "Data to ML Bridge",
+            "matched_patterns": [
+              "pandas"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "pandas"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "pandas",
+              "read_csv"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "pandas",
+              "read_csv"
+            ],
+            "quality_score": 80
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_analysis_orders_eda.md",
+            "title": "Data Analysis: EDA по заказам",
+            "matched_patterns": [
+              "pandas",
+              "eda"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_boxplot.md",
+            "title": "Visualization: boxplot комиссии по стоимости доставки",
+            "matched_patterns": [
+              "pandas"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md",
+            "title": "Visualization: распределение комиссии",
+            "matched_patterns": [
+              "pandas"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_orders_daily_line.md",
+            "title": "Visualization: динамика суммы заказов по дням",
+            "matched_patterns": [
+              "pandas"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "analysis_3_pandas.ipynb",
+            "title": "Задание 1: Свойства и статистики",
+            "matched_patterns": [
+              "analysis_3_pandas",
+              "df_events"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_3_pandas.ipynb",
+            "title": "Задание 2: Фильтрация",
+            "matched_patterns": [
+              "analysis_3_pandas"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_3_pandas.ipynb",
+            "title": "Задание 3: Слияния (Merge)",
+            "matched_patterns": [
+              "analysis_3_pandas"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "eda notebook"
+      ]
+    },
+    {
+      "id": "data.cleaning_eda",
+      "title": "Data Cleaning and EDA",
+      "track": "Data Analysis",
+      "level": "beginner",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 73.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 5,
+        "mentor_tasks": 1,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "eda",
+              "missing values",
+              "data quality"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "eda",
+              "missing values"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "eda",
+              "exploratory"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+            "title": "Algorithms Map",
+            "matched_patterns": [
+              "duplicates"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Algorithms/05_Two_Pointers.md",
+            "title": "Two Pointers Паттерн",
+            "matched_patterns": [
+              "duplicates"
+            ],
+            "quality_score": 50
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_analysis_orders_eda.md",
+            "title": "Data Analysis: EDA по заказам",
+            "matched_patterns": [
+              "eda"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_boxplot.md",
+            "title": "Visualization: boxplot комиссии по стоимости доставки",
+            "matched_patterns": [
+              "quality"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md",
+            "title": "Visualization: распределение комиссии",
+            "matched_patterns": [
+              "quality"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_orders_daily_line.md",
+            "title": "Visualization: динамика суммы заказов по дням",
+            "matched_patterns": [
+              "quality"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "quality"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "analysis_3_pandas.ipynb",
+            "title": "Задание 1: Свойства и статистики",
+            "matched_patterns": [
+              "df_events"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "eda report"
+      ]
+    },
+    {
+      "id": "data.groupby_merge",
+      "title": "GroupBy, Merge, and Aggregation",
+      "track": "Data Analysis",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 78.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 1,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "groupby",
+              "join",
+              "agg"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "groupby",
+              "join"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "groupby",
+              "merge",
+              "join"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/02_Python_Theory_Deep_Dive.md",
+            "title": "Python Theory Deep Dive",
+            "matched_patterns": [
+              "join"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Algorithms/01_Big_O.md",
+            "title": "Big O Notation",
+            "matched_patterns": [
+              "merge"
+            ],
+            "quality_score": 80
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_orders_daily_line.md",
+            "title": "Visualization: динамика суммы заказов по дням",
+            "matched_patterns": [
+              "groupby"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "analysis_3_pandas.ipynb",
+            "title": "Задание 3: Слияния (Merge)",
+            "matched_patterns": [
+              "merge",
+              "matching"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "analytics report"
+      ]
+    },
+    {
+      "id": "data.visualization",
+      "title": "Data Visualization",
+      "track": "Data Analysis",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 64.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 3,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/02_Data_to_ML_Bridge.md",
+            "title": "Data to ML Bridge",
+            "matched_patterns": [
+              "visualization"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "visualization"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "visualization",
+              "matplotlib",
+              "chart"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "visualization",
+              "matplotlib",
+              "chart",
+              "plot"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "visualization",
+              "chart"
+            ],
+            "quality_score": 80
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_boxplot.md",
+            "title": "Visualization: boxplot комиссии по стоимости доставки",
+            "matched_patterns": [
+              "data visualization",
+              "chart",
+              "boxplot"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md",
+            "title": "Visualization: распределение комиссии",
+            "matched_patterns": [
+              "data visualization",
+              "chart",
+              "histogram"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_orders_daily_line.md",
+            "title": "Visualization: динамика суммы заказов по дням",
+            "matched_patterns": [
+              "data visualization",
+              "chart",
+              "line chart"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "visual report",
+        "dashboard screenshot"
+      ]
+    },
+    {
+      "id": "stats.descriptive",
+      "title": "Descriptive Statistics",
+      "track": "Statistics",
+      "level": "beginner",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 71.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 5,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "statistics"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "mean"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "describe"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "mean"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "mean"
+            ],
+            "quality_score": 75
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_analysis_orders_eda.md",
+            "title": "Data Analysis: EDA по заказам",
+            "matched_patterns": [
+              "eda"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "analysis_1_stats.ipynb",
+            "title": "Очевидные штуки",
+            "matched_patterns": [
+              "analysis_1_stats"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_1_stats.ipynb",
+            "title": "Очевидные штуки",
+            "matched_patterns": [
+              "analysis_1_stats"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_1_stats.ipynb",
+            "title": "Очевидные штуки",
+            "matched_patterns": [
+              "analysis_1_stats"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_1_stats.ipynb",
+            "title": "Меры центральной тенденции",
+            "matched_patterns": [
+              "analysis_1_stats",
+              "mean",
+              "median"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_1_stats.ipynb",
+            "title": "Меры центральной тенденции",
+            "matched_patterns": [
+              "analysis_1_stats",
+              "mean",
+              "median"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "eda report"
+      ]
+    },
+    {
+      "id": "stats.probability_distributions",
+      "title": "Probability and Distributions",
+      "track": "Statistics",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 70.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/00_Index.md",
+            "title": "Data Analysis Hub",
+            "matched_patterns": [
+              "distribution"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/01_Data_Analysis_Theory_Deep_Dive.md",
+            "title": "Data Analysis Theory Deep Dive",
+            "matched_patterns": [
+              "distribution"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+            "title": "VKAT Analysis Data",
+            "matched_patterns": [
+              "normal"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/Stats/01_Stats_Basics.md",
+            "title": "Статистика — Основы",
+            "matched_patterns": [
+              "distribution"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+            "title": "Statistics Course Article",
+            "matched_patterns": [
+              "variance"
+            ],
+            "quality_score": 45
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md",
+            "title": "Visualization: распределение комиссии",
+            "matched_patterns": [
+              "distribution",
+              "histogram"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "statistical notebook"
+      ]
+    },
+    {
+      "id": "stats.hypothesis_ab",
+      "title": "Hypothesis Testing and A/B Tests",
+      "track": "Statistics",
+      "level": "junior",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 68.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "a/b"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/01_Data_Analysis_Theory_Deep_Dive.md",
+            "title": "Data Analysis Theory Deep Dive",
+            "matched_patterns": [
+              "p-value",
+              "confidence interval",
+              "a/b"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/Datasets/03_Metrics_Map.md",
+            "title": "Метрики — Справочник и ловушки",
+            "matched_patterns": [
+              "p-value",
+              "a/b"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/Stats/01_Stats_Basics.md",
+            "title": "Статистика — Основы",
+            "matched_patterns": [
+              "hypothesis",
+              "p-value",
+              "a/b"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+            "title": "Statistics Course Article",
+            "matched_patterns": [
+              "p-value",
+              "confidence interval",
+              "a/b"
+            ],
+            "quality_score": 45
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "experiment analysis"
+      ]
+    },
+    {
+      "id": "math.linear_algebra",
+      "title": "Linear Algebra for ML",
+      "track": "Math for ML",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 47.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 5,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/02_Data_to_ML_Bridge.md",
+            "title": "Data to ML Bridge",
+            "matched_patterns": [
+              "numpy"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "numpy"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "numpy"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/61_Python_to_Data.md",
+            "title": "Python to Data",
+            "matched_patterns": [
+              "numpy"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "linear algebra",
+              "vector",
+              "numpy"
+            ],
+            "quality_score": 75
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_5_OOP.ipynb",
+            "title": "Задание",
+            "matched_patterns": [
+              "vector"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_2_numpy.ipynb",
+            "title": "Изменять элементы тоже легко, можно поменять одно значение, а можно сразу целую колонку.",
+            "matched_patterns": [
+              "analysis_2_numpy"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_2_numpy.ipynb",
+            "title": "В numpy встроены функции для поиска минимумов, максимумов и суммы. Часто мы хотим найти сумму не всего `np.array`, а по строкам или столбцам. Для этого используется аргумент `axis`.",
+            "matched_patterns": [
+              "analysis_2_numpy",
+              "numpy"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_2_numpy.ipynb",
+            "title": "Можно комбинировать условия с помощью `&` (и) и `|` (или). **Важно:** каждое условие обязательно брать в скобки `()`!",
+            "matched_patterns": [
+              "analysis_2_numpy"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "analysis_2_numpy.ipynb",
+            "title": "Можно менять форму `np.array`, главное чтобы общее количество элементов оставалось тем же.",
+            "matched_patterns": [
+              "analysis_2_numpy"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "math notebook"
+      ]
+    },
+    {
+      "id": "math.optimization",
+      "title": "Optimization Basics",
+      "track": "Math for ML",
+      "level": "middle",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 64.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "03_ML/05_Ensemble_Methods.md",
+            "title": "Ensemble Methods — Комбинирование моделей",
+            "matched_patterns": [
+              "gradient"
+            ],
+            "quality_score": 50
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/09_Hyperparameter_Tuning.md",
+            "title": "Hyperparameter Tuning — Подбор параметров",
+            "matched_patterns": [
+              "optimization"
+            ],
+            "quality_score": 55
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/11_ML_Theory_Deep_Dive.md",
+            "title": "ML Theory Deep Dive",
+            "matched_patterns": [
+              "optimization",
+              "loss function"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/05_Sequence_Models.md",
+            "title": "Sequence Models — Сетки для текста",
+            "matched_patterns": [
+              "gradient"
+            ],
+            "quality_score": 55
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/ML_DS_Tech_Interview.md",
+            "title": "💬 ML/DS - Интервью",
+            "matched_patterns": [
+              "optimization"
+            ],
+            "quality_score": 95
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "model training notebook"
+      ]
+    },
+    {
+      "id": "ml.supervised",
+      "title": "Supervised Learning",
+      "track": "Classic ML",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 24.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 2,
+        "mentor_tasks": 1,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/02_Data_to_ML_Bridge.md",
+            "title": "Data to ML Bridge",
+            "matched_patterns": [
+              "supervised learning"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/03_ML_to_NLP_Bridge.md",
+            "title": "ML to NLP Bridge",
+            "matched_patterns": [
+              "supervised learning",
+              "classification",
+              "regression"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "supervised learning"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/30_Machine_Learning_Path.md",
+            "title": "Machine Learning Path",
+            "matched_patterns": [
+              "supervised learning"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/31_Supervised_Learning.md",
+            "title": "Supervised Learning",
+            "matched_patterns": [
+              "supervised learning",
+              "classification",
+              "regression"
+            ],
+            "quality_score": 0
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "baseline",
+              "preference model"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "baseline"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_5_OOP.ipynb",
+            "title": "Давайте посмотрим, как это выглядит на практике. Сначала мы создадим базовый класс (абстракцию) `BaseBackend`, который заставит всех своих наследников обязательно реализовать методы `load` и `predict`.",
+            "matched_patterns": [
+              "sklearn"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "classification project",
+        "regression project"
+      ]
+    },
+    {
+      "id": "ml.validation_metrics",
+      "title": "Validation and Metrics",
+      "track": "Classic ML",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 47.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 2,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "metric"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "metric"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/33_Model_Quality.md",
+            "title": "Model Quality",
+            "matched_patterns": [
+              "validation"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/62_Data_to_ML.md",
+            "title": "Data to ML",
+            "matched_patterns": [
+              "validation"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "validation"
+            ],
+            "quality_score": 75
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "baseline"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "baseline"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "model report"
+      ]
+    },
+    {
+      "id": "ml.feature_engineering",
+      "title": "Feature Engineering",
+      "track": "Classic ML",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 55.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 2,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/03_ML_to_NLP_Bridge.md",
+            "title": "ML to NLP Bridge",
+            "matched_patterns": [
+              "feature engineering"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "missing values"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "missing values"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/33_Model_Quality.md",
+            "title": "Model Quality",
+            "matched_patterns": [
+              "feature engineering"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "feature engineering"
+            ],
+            "quality_score": 75
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "baseline",
+              "preference model"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "baseline"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "feature notebook"
+      ]
+    },
+    {
+      "id": "ml.unsupervised",
+      "title": "Unsupervised Learning",
+      "track": "Classic ML",
+      "level": "middle",
+      "required": false,
+      "status": "theory_only",
+      "theory_quality": 23.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/02_Data_to_ML_Bridge.md",
+            "title": "Data to ML Bridge",
+            "matched_patterns": [
+              "unsupervised learning"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "unsupervised learning"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/30_Machine_Learning_Path.md",
+            "title": "Machine Learning Path",
+            "matched_patterns": [
+              "unsupervised learning"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/32_Unsupervised_Learning.md",
+            "title": "Unsupervised Learning",
+            "matched_patterns": [
+              "unsupervised learning",
+              "clustering"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/00_Index.md",
+            "title": "Machine Learning Hub",
+            "matched_patterns": [
+              "unsupervised learning"
+            ],
+            "quality_score": 35
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "segmentation project"
+      ]
+    },
+    {
+      "id": "nlp.preprocessing",
+      "title": "Text Preprocessing",
+      "track": "NLP",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 24.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 1,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/03_ML_to_NLP_Bridge.md",
+            "title": "ML to NLP Bridge",
+            "matched_patterns": [
+              "text pipeline"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/04_Algorithms_for_ML.md",
+            "title": "Algorithms for ML",
+            "matched_patterns": [
+              "preprocessing"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "text pipeline"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/40_NLP_Path.md",
+            "title": "NLP Path",
+            "matched_patterns": [
+              "text pipeline"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/41_Text_Pipeline.md",
+            "title": "Text Pipeline",
+            "matched_patterns": [
+              "text pipeline",
+              "tokenization",
+              "preprocessing"
+            ],
+            "quality_score": 0
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "nlp"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "nlp baseline"
+      ]
+    },
+    {
+      "id": "nlp.vectorization",
+      "title": "Vectorization and Classical NLP Baselines",
+      "track": "NLP",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 23.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 2,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/03_ML_to_NLP_Bridge.md",
+            "title": "ML to NLP Bridge",
+            "matched_patterns": [
+              "text representations"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "text representations"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/40_NLP_Path.md",
+            "title": "NLP Path",
+            "matched_patterns": [
+              "text representations"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/42_Text_Representations.md",
+            "title": "Text Representations",
+            "matched_patterns": [
+              "text representations",
+              "bag of words"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/00_Index.md",
+            "title": "NLP Hub",
+            "matched_patterns": [
+              "text representations"
+            ],
+            "quality_score": 35
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "baseline"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "baseline"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "nlp baseline"
+      ]
+    },
+    {
+      "id": "nlp.transformers",
+      "title": "Transformers and Embeddings",
+      "track": "NLP",
+      "level": "middle",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 24.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/03_ML_to_NLP_Bridge.md",
+            "title": "ML to NLP Bridge",
+            "matched_patterns": [
+              "deep nlp"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/04_Algorithms_for_ML.md",
+            "title": "Algorithms for ML",
+            "matched_patterns": [
+              "deep nlp"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "deep nlp"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/40_NLP_Path.md",
+            "title": "NLP Path",
+            "matched_patterns": [
+              "deep nlp"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/43_Deep_NLP.md",
+            "title": "Deep NLP",
+            "matched_patterns": [
+              "attention",
+              "deep nlp"
+            ],
+            "quality_score": 0
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "semantic search",
+        "classification project"
+      ]
+    },
+    {
+      "id": "genai.prompting",
+      "title": "Prompt Engineering",
+      "track": "GenAI and RAG",
+      "level": "beginner",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 62.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "llm"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/LEARNING_ROADMAP_FREE_RESOURCES.md",
+            "title": "Дорожная карта: Бесплатные курсы и ресурсы (2026)",
+            "matched_patterns": [
+              "llm"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "prompt",
+              "prompt engineering",
+              "llm"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/01_NLP_Basics.md",
+            "title": "NLP — Основы обработки текста",
+            "matched_patterns": [
+              "prompt"
+            ],
+            "quality_score": 50
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/10_NLP_Theory_Deep_Dive.md",
+            "title": "NLP Theory Deep Dive",
+            "matched_patterns": [
+              "llm"
+            ],
+            "quality_score": 65
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "prompt library"
+      ]
+    },
+    {
+      "id": "genai.embeddings_search",
+      "title": "Embeddings and Vector Search",
+      "track": "GenAI and RAG",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 57.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 1,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "vector search"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/03_Bag_of_Words.md",
+            "title": "Bag of Words — Представление текста как вектора",
+            "matched_patterns": [
+              "similarity"
+            ],
+            "quality_score": 50
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/04_Word_Embeddings.md",
+            "title": "Word Embeddings — Смысловые вектора слов",
+            "matched_patterns": [
+              "embedding",
+              "similarity"
+            ],
+            "quality_score": 55
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/05_Sequence_Models.md",
+            "title": "Sequence Models — Сетки для текста",
+            "matched_patterns": [
+              "embedding"
+            ],
+            "quality_score": 55
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/06_Transformers_Intro.md",
+            "title": "Transformers — Современный подход к NLP",
+            "matched_patterns": [
+              "similarity"
+            ],
+            "quality_score": 50
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_5_OOP.ipynb",
+            "title": "Задание",
+            "matched_patterns": [
+              "vector"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "semantic search"
+      ]
+    },
+    {
+      "id": "genai.rag",
+      "title": "RAG Basics",
+      "track": "GenAI and RAG",
+      "level": "junior",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 69.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/LEARNING_ROADMAP_FREE_RESOURCES.md",
+            "title": "Дорожная карта: Бесплатные курсы и ресурсы (2026)",
+            "matched_patterns": [
+              "rag"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "rag",
+              "retrieval augmented generation"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/09_Modern_NLP_Tools.md",
+            "title": "Modern NLP Tools — Инструменты для быстрого старта",
+            "matched_patterns": [
+              "chunking"
+            ],
+            "quality_score": 55
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/10_NLP_Theory_Deep_Dive.md",
+            "title": "NLP Theory Deep Dive",
+            "matched_patterns": [
+              "rag",
+              "chunking"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/14_NLP_Tasks_Course_Article.md",
+            "title": "NLP Tasks Course Article",
+            "matched_patterns": [
+              "rag"
+            ],
+            "quality_score": 70
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "rag demo"
+      ]
+    },
+    {
+      "id": "genai.evaluation_agents",
+      "title": "LLM Evaluation, Agents, and Tools",
+      "track": "GenAI and RAG",
+      "level": "middle",
+      "required": false,
+      "status": "theory_only",
+      "theory_quality": 95.0,
+      "evidence_counts": {
+        "theory": 2,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/Golang_Tech_Interview.md",
+            "title": "💬 Golang - Интервью",
+            "matched_patterns": [
+              "agent"
+            ],
+            "quality_score": 95
+          },
+          {
+            "kind": "theory",
+            "path": "05_IT_Resources/ML_DS_Tech_Interview.md",
+            "title": "💬 ML/DS - Интервью",
+            "matched_patterns": [
+              "agent"
+            ],
+            "quality_score": 95
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "agent prototype",
+        "evaluation report"
+      ]
+    },
+    {
+      "id": "mlops.experiments",
+      "title": "Experiment Tracking",
+      "track": "MLOps",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 70.0,
+      "evidence_counts": {
+        "theory": 2,
+        "practice": 3,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "experiment tracking",
+              "mlflow"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/11_ML_Theory_Deep_Dive.md",
+            "title": "ML Theory Deep Dive",
+            "matched_patterns": [
+              "reproducibility"
+            ],
+            "quality_score": 65
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "baseline",
+              "readme"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "baseline",
+              "readme"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/python_refactor_user_events.md",
+            "title": "Python: refactor event summarizer",
+            "matched_patterns": [
+              "readme"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "experiment report"
+      ]
+    },
+    {
+      "id": "mlops.serving",
+      "title": "Model Serving Basics",
+      "track": "MLOps",
+      "level": "middle",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 43.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/04_Algorithms_for_ML.md",
+            "title": "Algorithms for ML",
+            "matched_patterns": [
+              "inference"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/64_Algorithms_to_ML.md",
+            "title": "Algorithms to ML",
+            "matched_patterns": [
+              "inference"
+            ],
+            "quality_score": 0
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "model serving",
+              "api"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Architecture/02_Project_Structure.md",
+            "title": "Структура проекта",
+            "matched_patterns": [
+              "api"
+            ],
+            "quality_score": 50
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Architecture/03_Main_Guard.md",
+            "title": "if __name__ == '__main__'",
+            "matched_patterns": [
+              "api"
+            ],
+            "quality_score": 50
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "batch inference script"
+      ]
+    },
+    {
+      "id": "mlops.monitoring",
+      "title": "Monitoring and Data Drift",
+      "track": "MLOps",
+      "level": "middle",
+      "required": false,
+      "status": "theory_only",
+      "theory_quality": 68.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "monitoring"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/11_ML_Theory_Deep_Dive.md",
+            "title": "ML Theory Deep Dive",
+            "matched_patterns": [
+              "monitoring",
+              "drift"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/13_Model_Quality_Course_Article.md",
+            "title": "Model Quality Course Article",
+            "matched_patterns": [
+              "drift"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/10_NLP_Theory_Deep_Dive.md",
+            "title": "NLP Theory Deep Dive",
+            "matched_patterns": [
+              "monitoring",
+              "drift"
+            ],
+            "quality_score": 65
+          },
+          {
+            "kind": "theory",
+            "path": "04_NLP/14_NLP_Tasks_Course_Article.md",
+            "title": "NLP Tasks Course Article",
+            "matched_patterns": [
+              "monitoring",
+              "drift"
+            ],
+            "quality_score": 70
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "monitoring report"
+      ]
+    },
+    {
+      "id": "interview.ml_ds_questions",
+      "title": "ML/DS Interview Questions",
+      "track": "Interview Prep",
+      "level": "junior",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 72.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 2,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "interview"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "questions"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "questions"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "questions"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/LEARNING_ROADMAP_FREE_RESOURCES.md",
+            "title": "Дорожная карта: Бесплатные курсы и ресурсы (2026)",
+            "matched_patterns": [
+              "interview"
+            ],
+            "quality_score": 80
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py",
+            "title": "02 Python Builtins Complexity",
+            "matched_patterns": [
+              "questions"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/08_mock_interview.py",
+            "title": "08 Mock Interview",
+            "matched_patterns": [
+              "interview",
+              "interview"
+            ],
+            "quality_score": null
+          }
+        ],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "interview answer bank"
+      ]
+    },
+    {
+      "id": "interview.coding",
+      "title": "Coding Interview Practice",
+      "track": "Interview Prep",
+      "level": "junior",
+      "required": true,
+      "status": "partial",
+      "theory_quality": 26.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 5,
+        "algorithms": 5,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Atlas/00_Knowledge_Map.md",
+            "title": "VKAT Knowledge Atlas",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 35
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/04_Algorithms_for_ML.md",
+            "title": "Algorithms for ML",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Atlas/05_Theory_Deep_Dives.md",
+            "title": "Theory Deep Dives",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 40
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/10_Python_Path.md",
+            "title": "Python Path",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 15
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/14_Python_Algorithms.md",
+            "title": "Python Algorithms",
+            "matched_patterns": [
+              "algorithms"
+            ],
+            "quality_score": 0
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "`+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл.",
+            "matched_patterns": [
+              "assert"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_2_basics.ipynb",
+            "title": "Данные можно приводить из одного типа в другой",
+            "matched_patterns": [
+              "assert"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Задание",
+            "matched_patterns": [
+              "assert"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Реализуйте методы:",
+            "matched_patterns": [
+              "assert"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "mentor_task",
+            "path": "python_3_architecture.ipynb",
+            "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:",
+            "matched_patterns": [
+              "assert"
+            ],
+            "quality_score": null
+          }
+        ],
+        "algorithms": [
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/01_big_o.py",
+            "title": "01 Big O",
+            "matched_patterns": [
+              "algos_patterns"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/02_python_builtins_complexity.py",
+            "title": "02 Python Builtins Complexity",
+            "matched_patterns": [
+              "algos_patterns"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/03_hashmap_pattern.py",
+            "title": "03 Hashmap Pattern",
+            "matched_patterns": [
+              "algos_patterns",
+              "assert"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/04_two_pointers_pattern.py",
+            "title": "04 Two Pointers Pattern",
+            "matched_patterns": [
+              "algos_patterns",
+              "assert"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "algorithm",
+            "path": "/Users/mihailkulibaba/Documents/New project/content/source/vkat/VKAT-main/algos_patterns/05_sliding_window_pattern.py",
+            "title": "05 Sliding Window Pattern",
+            "matched_patterns": [
+              "algos_patterns",
+              "assert"
+            ],
+            "quality_score": null
+          }
+        ],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "coding interview log"
+      ]
+    },
+    {
+      "id": "interview.take_home",
+      "title": "Take-home Assignments",
+      "track": "Interview Prep",
+      "level": "middle",
+      "required": true,
+      "status": "practice_only",
+      "theory_quality": null,
+      "evidence_counts": {
+        "theory": 0,
+        "practice": 1,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "take-home",
+              "preference model"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "take-home solution"
+      ]
+    },
+    {
+      "id": "career.portfolio",
+      "title": "Portfolio Artifacts",
+      "track": "Portfolio and Career",
+      "level": "beginner",
+      "required": true,
+      "status": "covered",
+      "theory_quality": 74.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 5,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/20_Data_Analysis_Path.md",
+            "title": "Data Analysis Path",
+            "matched_patterns": [
+              "portfolio",
+              "case study",
+              "artifact"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/21_Data_Tools.md",
+            "title": "Data Tools",
+            "matched_patterns": [
+              "portfolio"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "portfolio"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+            "title": "Algorithms Map",
+            "matched_patterns": [
+              "portfolio"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "01_Python/Architecture/02_Project_Structure.md",
+            "title": "Структура проекта",
+            "matched_patterns": [
+              "readme"
+            ],
+            "quality_score": 50
+          }
+        ],
+        "practice": [
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_boxplot.md",
+            "title": "Visualization: boxplot комиссии по стоимости доставки",
+            "matched_patterns": [
+              "portfolio",
+              "artifact"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_commission_histogram.md",
+            "title": "Visualization: распределение комиссии",
+            "matched_patterns": [
+              "portfolio",
+              "artifact"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/data_visualization_orders_daily_line.md",
+            "title": "Visualization: динамика суммы заказов по дням",
+            "matched_patterns": [
+              "portfolio",
+              "artifact"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/ml_preference_model_take_home.md",
+            "title": "ML Take-home: Preference Model",
+            "matched_patterns": [
+              "portfolio",
+              "readme"
+            ],
+            "quality_score": null
+          },
+          {
+            "kind": "practice",
+            "path": "/Users/mihailkulibaba/Documents/New project/practice/nlp_text_classifier_baseline.md",
+            "title": "NLP: baseline классификатора текста",
+            "matched_patterns": [
+              "readme"
+            ],
+            "quality_score": null
+          }
+        ],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "case study",
+        "github repo",
+        "notebook report"
+      ]
+    },
+    {
+      "id": "career.resume_remote",
+      "title": "Resume and Remote Work Readiness",
+      "track": "Portfolio and Career",
+      "level": "junior",
+      "required": true,
+      "status": "theory_only",
+      "theory_quality": 67.0,
+      "evidence_counts": {
+        "theory": 5,
+        "practice": 0,
+        "mentor_tasks": 0,
+        "algorithms": 0,
+        "interviews": 0
+      },
+      "evidence": {
+        "theory": [
+          {
+            "kind": "theory",
+            "path": "00_Graph/22_Product_Analytics.md",
+            "title": "Product Analytics",
+            "matched_patterns": [
+              "career"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/LEARNING_ROADMAP_FREE_RESOURCES.md",
+            "title": "Дорожная карта: Бесплатные курсы и ресурсы (2026)",
+            "matched_patterns": [
+              "cv"
+            ],
+            "quality_score": 80
+          },
+          {
+            "kind": "theory",
+            "path": "00_Inbox/TECH_STACK_2026_INDUSTRY.md",
+            "title": "Актуальный Tech Stack ML/NLP/DL/DS (2026)",
+            "matched_patterns": [
+              "cv"
+            ],
+            "quality_score": 75
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/05_Ensemble_Methods.md",
+            "title": "Ensemble Methods — Комбинирование моделей",
+            "matched_patterns": [
+              "cv"
+            ],
+            "quality_score": 50
+          },
+          {
+            "kind": "theory",
+            "path": "03_ML/08_Model_Evaluation.md",
+            "title": "Model Evaluation — Оценка качества",
+            "matched_patterns": [
+              "cv"
+            ],
+            "quality_score": 50
+          }
+        ],
+        "practice": [],
+        "mentor_tasks": [],
+        "algorithms": [],
+        "interviews": []
+      },
+      "expected_project_types": [
+        "resume",
+        "linkedin profile"
+      ]
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 # Theory Content Audit
 
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
-Generated: `2026-06-16T21:30:14.881036+00:00`
+Generated: `2026-06-16T21:51:33.473919+00:00`
 
 ## Summary
 
 - Total notes: **206**
-- Average quality score: **45.2 / 100**
+- Average quality score: **46.6 / 100**
 
 ## Notes By Section
 
@@ -29,7 +29,6 @@ Generated: `2026-06-16T21:30:14.881036+00:00`
 | Score | Words | Section | Path | Title |
 | --- | --- | --- | --- | --- |
 | 0 | 19 | 00 Graph | 00_Graph/41_Text_Pipeline.md | Text Pipeline |
-| 0 | 20 | 00 Graph | 00_Graph/21_Data_Tools.md | Data Tools |
 | 0 | 21 | 00 Graph | 00_Graph/31_Supervised_Learning.md | Supervised Learning |
 | 0 | 21 | 00 Graph | 00_Graph/42_Text_Representations.md | Text Representations |
 | 0 | 22 | 00 Graph | 00_Graph/32_Unsupervised_Learning.md | Unsupervised Learning |
@@ -40,7 +39,6 @@ Generated: `2026-06-16T21:30:14.881036+00:00`
 | 0 | 24 | 00 Graph | 00_Graph/13_Python_Advanced.md | Python Advanced |
 | 0 | 25 | 00 Graph | 00_Graph/44_NLP_Tasks_Tools.md | NLP Tasks and Tools |
 | 0 | 27 | 00 Graph | 00_Graph/14_Python_Algorithms.md | Python Algorithms |
-| 0 | 32 | 00 Graph | 00_Graph/20_Data_Analysis_Path.md | Data Analysis Path |
 | 0 | 32 | 00 Graph | 00_Graph/60_Learning_Bridges.md | Learning Bridges |
 | 0 | 32 | 00 Graph | 00_Graph/64_Algorithms_to_ML.md | Algorithms to ML |
 | 0 | 35 | 00 Graph | 00_Graph/61_Python_to_Data.md | Python to Data |
@@ -48,6 +46,8 @@ Generated: `2026-06-16T21:30:14.881036+00:00`
 | 0 | 36 | 00 Graph | 00_Graph/30_Machine_Learning_Path.md | Machine Learning Path |
 | 0 | 36 | 00 Graph | 00_Graph/62_Data_to_ML.md | Data to ML |
 | 0 | 37 | 00 Graph | 00_Graph/15_Python_Architecture_Typing.md | Python Architecture and Typing |
+| 0 | 37 | 00 Graph | 00_Graph/40_NLP_Path.md | NLP Path |
+| 0 | 37 | 00 Graph | 00_Graph/63_ML_to_NLP.md | ML to NLP |
 
 ## Missing Core Topics
 
@@ -73,9 +73,6 @@ _None._
 - `00_Graph/13_Python_Advanced.md`
 - `00_Graph/14_Python_Algorithms.md`
 - `00_Graph/15_Python_Architecture_Typing.md`
-- `00_Graph/20_Data_Analysis_Path.md`
-- `00_Graph/21_Data_Tools.md`
-- `00_Graph/22_Product_Analytics.md`
 - `00_Graph/30_Machine_Learning_Path.md`
 - `00_Graph/31_Supervised_Learning.md`
 - `00_Graph/32_Unsupervised_Learning.md`
@@ -110,6 +107,9 @@ _None._
 - `03_ML/03_Model_Quality_Map.md`
 - `03_ML/04_ML_Tooling_Map.md`
 - `04_NLP/00_Index.md`
+- `04_NLP/01_Text_Pipeline_Map.md`
+- `04_NLP/02_Text_Representations_Map.md`
+- `04_NLP/03_Deep_NLP_Map.md`
 
 ## Notes Without Sources
 
@@ -126,9 +126,6 @@ _None._
 - `00_Graph/13_Python_Advanced.md`
 - `00_Graph/14_Python_Algorithms.md`
 - `00_Graph/15_Python_Architecture_Typing.md`
-- `00_Graph/20_Data_Analysis_Path.md`
-- `00_Graph/21_Data_Tools.md`
-- `00_Graph/22_Product_Analytics.md`
 - `00_Graph/30_Machine_Learning_Path.md`
 - `00_Graph/31_Supervised_Learning.md`
 - `00_Graph/32_Unsupervised_Learning.md`
@@ -163,6 +160,9 @@ _None._
 - `01_Python/Typing/04_Typing_Course_Article.md`
 - `02_Data_Analysis/00_Data_Tools_Map.md`
 - `02_Data_Analysis/01_Data_Analysis_Theory_Deep_Dive.md`
+- `02_Data_Analysis/Datasets/00_Product_Analytics_Map.md`
+- `02_Data_Analysis/Numpy/02_Numpy_Course_Article.md`
+- `02_Data_Analysis/Pandas/02_Pandas_Course_Article.md`
 
 ## Recommended Next Actions
 

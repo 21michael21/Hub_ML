@@ -26,6 +26,15 @@ from core.notebook.kernel import (
     start_notebook_cell,
 )
 from core.notebook.output import render_notebook_output
+from core.reports.theory_quality import (
+    coverage_by_track,
+    coverage_summary,
+    load_json_report,
+    missing_required_topics,
+    report_list,
+    theory_summary,
+    weakest_notes,
+)
 from core.tasks.loader import load_mentor_tasks
 from core.tasks.models import dataset_snippet_for_task
 from core.tasks.runner import (
@@ -54,6 +63,8 @@ INTERVIEW_QUESTIONS_PATH = PROJECT_ROOT / "content" / "interview_questions" / "m
 ARCHITECTURE_GUIDELINES_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines.html"
 ARCHITECTURE_GUIDELINES_INDEX_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines_index.json"
 MENTOR_TASKS_PATH = PROJECT_ROOT / "content" / "extracted" / "mentor_tasks.json"
+THEORY_AUDIT_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "theory_audit.json"
+COVERAGE_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "coverage_report.json"
 STATUS_NOT_STARTED = "not_started"
 STATUS_READING = "reading"
 STATUS_DONE = "done"
@@ -2168,7 +2179,6 @@ def render_dashboard(
             st.success("Все карточки практики готовы.")
 
     st.markdown("#### Быстрые переходы")
-    quick_cols = st.columns(12)
     quick_links = [
         ("Theory", "Theory"),
         ("Practice", "🎯 Practice"),
@@ -2180,9 +2190,11 @@ def render_dashboard(
         ("Algorithms", "🧩 Algorithms"),
         ("Interviews", "🎤 Interviews"),
         ("Architecture", "🏗 Architecture"),
+        ("Quality", "🧭 Theory Quality"),
         ("Roadmap", "Roadmap"),
         ("Links", "🔗 Links Health"),
     ]
+    quick_cols = st.columns(len(quick_links))
     for col, (label, tab_name) in zip(quick_cols, quick_links, strict=True):
         col.button(
             label,
@@ -3047,6 +3059,147 @@ def render_architecture_tab(architecture_data: dict[str, Any]) -> None:
     st.markdown(f'<div class="architecture-doc">{html_to_render}</div>', unsafe_allow_html=True)
 
 
+def note_from_relative_path(relative_path: str, note_index: dict[str, Any]) -> dict[str, str] | None:
+    wanted = str(relative_path or "").strip().casefold()
+    if not wanted:
+        return None
+    for note in note_index.get("all_notes", []):
+        if str(note.get("relative_path", "")).casefold() == wanted:
+            return note
+    return None
+
+
+def render_theory_quality_tab(note_index: dict[str, Any]) -> None:
+    st.markdown("### 🧭 Theory Quality")
+    st.markdown(
+        "Read-only срез качества базы знаний. Он использует готовые отчёты и не сканирует vault автоматически."
+    )
+
+    audit_report = load_json_report(THEORY_AUDIT_REPORT_PATH)
+    coverage_report = load_json_report(COVERAGE_REPORT_PATH)
+    audit_summary = theory_summary(audit_report)
+    cov_summary = coverage_summary(coverage_report)
+
+    with st.expander("Как обновить отчёты вручную", expanded=not audit_report):
+        st.markdown(
+            """
+```bash
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/audit_theory_notes.py --vault "$VAULT_PATH"
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_coverage.py --vault "$VAULT_PATH"
+```
+
+Если `VAULT_PATH` не задан, подставь абсолютный путь к Obsidian vault через `--vault`.
+            """
+        )
+
+    if not audit_report:
+        st.warning(f"Не найден отчёт: `{THEORY_AUDIT_REPORT_PATH}`")
+        return
+
+    meta_cols = st.columns(4)
+    meta_cols[0].metric("Заметок", audit_summary.get("total_notes", 0))
+    meta_cols[1].metric("Средний score", audit_summary.get("average_quality_score", "—"))
+    meta_cols[2].metric("Без examples", len(audit_summary.get("notes_without_examples", []) or []))
+    meta_cols[3].metric("Без sources", len(audit_summary.get("notes_without_sources", []) or []))
+
+    if audit_summary.get("generated_at"):
+        st.caption(f"Theory audit generated: {audit_summary['generated_at']}")
+    if audit_report.get("vault"):
+        st.caption(f"Vault: {audit_report['vault']}")
+
+    st.markdown("#### Weakest Notes")
+    weak = weakest_notes(audit_report, limit=20)
+    if not weak:
+        st.info("Weakest notes не найдены в отчёте.")
+    else:
+        for index, note in enumerate(weak):
+            relative_path = str(note.get("relative_path") or "")
+            title = str(note.get("title") or relative_path)
+            score = note.get("quality_score", "—")
+            words = note.get("word_count", "—")
+            section = str(note.get("section") or "")
+            st.markdown(
+                f"""
+<div class="health-row">
+    <div class="link-label">{html.escape(title)}</div>
+    <div class="link-path">{html.escape(relative_path)}</div>
+    <div class="link-path">score: {html.escape(str(score))} · words: {html.escape(str(words))} · {html.escape(section)}</div>
+</div>
+                """,
+                unsafe_allow_html=True,
+            )
+            target_note = note_from_relative_path(relative_path, note_index)
+            if target_note:
+                st.button(
+                    "Открыть в Theory",
+                    key=f"quality_open_weak_{index}_{relative_path}",
+                    on_click=open_theory_note,
+                    args=(target_note,),
+                    use_container_width=True,
+                )
+
+    list_cols = st.columns(2)
+    with list_cols[0]:
+        st.markdown("#### Notes Without Examples")
+        examples_missing = report_list(audit_summary, "notes_without_examples", limit=30)
+        if examples_missing:
+            st.markdown("\n".join(f"- `{path}`" for path in examples_missing))
+        else:
+            st.success("Все заметки имеют examples по текущей эвристике.")
+
+    with list_cols[1]:
+        st.markdown("#### Notes Without Sources")
+        sources_missing = report_list(audit_summary, "notes_without_sources", limit=30)
+        if sources_missing:
+            st.markdown("\n".join(f"- `{path}`" for path in sources_missing))
+        else:
+            st.success("Все заметки имеют sources по текущей эвристике.")
+
+    st.markdown("#### Coverage")
+    if not coverage_report:
+        st.info(f"Coverage report не найден: `{COVERAGE_REPORT_PATH}`")
+        return
+
+    if cov_summary.get("generated_at"):
+        st.caption(f"Coverage report generated: {cov_summary['generated_at']}")
+
+    missing = missing_required_topics(coverage_report)
+    if missing:
+        st.markdown("##### Missing Required Topics")
+        st.dataframe(
+            [
+                {
+                    "track": topic.get("track"),
+                    "level": topic.get("level"),
+                    "id": topic.get("id"),
+                    "title": topic.get("title"),
+                    "status": topic.get("status"),
+                }
+                for topic in missing
+            ],
+            use_container_width=True,
+            hide_index=True,
+        )
+    else:
+        st.success("Missing required topics не найдены в coverage report.")
+
+    track_rows = []
+    for track, counts in coverage_by_track(coverage_report).items():
+        track_rows.append(
+            {
+                "track": track,
+                "covered": counts.get("covered", 0),
+                "partial": counts.get("partial", 0),
+                "theory_only": counts.get("theory_only", 0),
+                "practice_only": counts.get("practice_only", 0),
+                "missing": counts.get("missing", 0),
+            }
+        )
+    if track_rows:
+        st.markdown("##### Coverage By Track")
+        st.dataframe(track_rows, use_container_width=True, hide_index=True)
+
+
 def render_datasets_tab(
     datasets: list[dict[str, Any]],
     practice_cards: list[dict[str, Any]],
@@ -3631,6 +3784,7 @@ def main() -> None:
         "🧩 Algorithms",
         "🎤 Interviews",
         "🏗 Architecture",
+        "🧭 Theory Quality",
         "Roadmap",
         "Progress",
         "🔗 Links Health",
@@ -3672,6 +3826,8 @@ def main() -> None:
         render_interviews_tab(interview_data)
     elif active_tab == "🏗 Architecture":
         render_architecture_tab(architecture_data)
+    elif active_tab == "🧭 Theory Quality":
+        render_theory_quality_tab(note_index)
     elif active_tab == "Roadmap":
         render_roadmap(sections)
     elif active_tab == "Progress":
