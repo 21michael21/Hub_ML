@@ -45,6 +45,7 @@ ALGORITHMS_DIR = PROJECT_ROOT / "content" / "source" / "vkat" / "VKAT-main" / "a
 INTERVIEW_QUESTIONS_PATH = PROJECT_ROOT / "content" / "interview_questions" / "ml_ds_interview_questions.json"
 ARCHITECTURE_GUIDELINES_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines.html"
 ARCHITECTURE_GUIDELINES_INDEX_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines_index.json"
+MENTOR_TASKS_PATH = PROJECT_ROOT / "content" / "extracted" / "mentor_tasks.json"
 STATUS_NOT_STARTED = "not_started"
 STATUS_READING = "reading"
 STATUS_DONE = "done"
@@ -470,15 +471,33 @@ def read_note(path: str) -> tuple[str, str | None]:
 
 def load_progress() -> dict[str, Any]:
     if not PROGRESS_PATH.exists():
-        return {"notes": {}, "practice_status": {}, "portfolio_outputs": {}, "algos_status": {}}
+        return {
+            "notes": {},
+            "practice_status": {},
+            "portfolio_outputs": {},
+            "algos_status": {},
+            "mentor_tasks_status": {},
+        }
 
     try:
         data = json.loads(PROGRESS_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return {"notes": {}, "practice_status": {}, "portfolio_outputs": {}, "algos_status": {}}
+        return {
+            "notes": {},
+            "practice_status": {},
+            "portfolio_outputs": {},
+            "algos_status": {},
+            "mentor_tasks_status": {},
+        }
 
     if not isinstance(data, dict):
-        return {"notes": {}, "practice_status": {}, "portfolio_outputs": {}, "algos_status": {}}
+        return {
+            "notes": {},
+            "practice_status": {},
+            "portfolio_outputs": {},
+            "algos_status": {},
+            "mentor_tasks_status": {},
+        }
     if not isinstance(data.get("notes"), dict):
         data["notes"] = {}
     data.pop("practice", None)
@@ -488,6 +507,8 @@ def load_progress() -> dict[str, Any]:
         data["portfolio_outputs"] = {}
     if not isinstance(data.get("algos_status"), dict):
         data["algos_status"] = {}
+    if not isinstance(data.get("mentor_tasks_status"), dict):
+        data["mentor_tasks_status"] = {}
     return data
 
 
@@ -1439,6 +1460,298 @@ def run_algorithm_tests(lesson_path: str, timeout_seconds: int = 30) -> dict[str
             "exit_code": None,
             "elapsed": time.perf_counter() - started,
         }
+
+
+def humanize_notebook_name(name: str) -> str:
+    stem = Path(str(name)).stem
+    replacements = {
+        "analysis_1_stats": "Stats",
+        "analysis_2_numpy": "NumPy",
+        "analysis_3_pandas": "Pandas",
+        "python_1_start": "Python Start",
+        "python_2_basics": "Python Basics",
+        "python_2_project": "Python Project",
+        "python_3_architecture": "Python Architecture",
+        "python_4_advanced": "Advanced Python",
+        "python_5_OOP": "Python OOP",
+        "python_6_advanced+": "Very Advanced Python",
+        "python_EXTRA_typing": "Python Typing",
+    }
+    if stem in replacements:
+        return replacements[stem]
+    words = re.split(r"[_\-\s]+", stem)
+    return " ".join(word.capitalize() for word in words if word)
+
+
+def normalize_mentor_task(raw: Any) -> dict[str, Any] | None:
+    if not isinstance(raw, dict):
+        return None
+    if raw.get("has_asserts") is not True:
+        return None
+
+    task_id = str(raw.get("id") or "").strip()
+    source_notebook = str(raw.get("source_notebook") or "").strip()
+    title = str(raw.get("title") or "").strip()
+    prompt = str(raw.get("prompt") or "").strip()
+    starter_code = str(raw.get("starter_code") or "").strip()
+    confidence = str(raw.get("confidence") or "").strip().casefold()
+    tests = [str(item).strip() for item in raw.get("tests", []) if str(item).strip()]
+
+    if not task_id or not source_notebook or not prompt or not starter_code or not tests:
+        return None
+    if confidence not in {"high", "medium", "low"}:
+        confidence = "low"
+
+    return {
+        "id": task_id,
+        "source_notebook": source_notebook,
+        "notebook_label": humanize_notebook_name(source_notebook),
+        "title": title or task_id,
+        "prompt": prompt,
+        "starter_code": starter_code,
+        "tests": tests,
+        "check_code": extract_mentor_task_check_code(starter_code),
+        "confidence": confidence,
+        "code_cell_index": raw.get("code_cell_index"),
+        "prompt_cell_index": raw.get("prompt_cell_index"),
+    }
+
+
+def line_has_starter_stub(line: str) -> bool:
+    return bool(re.search(r"#\s*TODO|#\s*(?:ваш|ВАШ)\s+код|\.\.\.|\bpass\b|NotImplementedError", line, re.I))
+
+
+def extract_mentor_task_check_code(starter_code: str) -> str:
+    lines = starter_code.splitlines()
+    assert_indexes = [index for index, line in enumerate(lines) if line.strip().startswith("assert ")]
+    if not assert_indexes:
+        return ""
+
+    first_assert = assert_indexes[0]
+    start = first_assert
+    index = first_assert - 1
+    while index >= 0:
+        line = lines[index]
+        if not line.strip() or line_has_starter_stub(line):
+            break
+        start = index
+        index -= 1
+
+    return "\n".join(lines[start:]).strip()
+
+
+@st.cache_data(show_spinner=False)
+def load_mentor_tasks() -> dict[str, Any]:
+    if not MENTOR_TASKS_PATH.exists():
+        return {"tasks": [], "skipped": 0}
+
+    try:
+        data = json.loads(MENTOR_TASKS_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"tasks": [], "skipped": 0}
+
+    raw_tasks = data.get("tasks", [])
+    if not isinstance(raw_tasks, list):
+        return {"tasks": [], "skipped": 0}
+
+    tasks: list[dict[str, Any]] = []
+    skipped = 0
+    for raw in raw_tasks:
+        task = normalize_mentor_task(raw)
+        if task is None:
+            skipped += 1
+            continue
+        tasks.append(task)
+
+    tasks.sort(
+        key=lambda task: (
+            str(task["notebook_label"]).casefold(),
+            {"high": 0, "medium": 1, "low": 2}.get(str(task["confidence"]), 9),
+            str(task["title"]).casefold(),
+        )
+    )
+    return {"tasks": tasks, "skipped": skipped}
+
+
+def get_mentor_task_status(task_id: str) -> str:
+    progress = ensure_progress_state()
+    record = progress.setdefault("mentor_tasks_status", {}).get(task_id, {})
+    status = record.get("status", STATUS_NOT_STARTED) if isinstance(record, dict) else STATUS_NOT_STARTED
+    return STATUS_DONE if status == STATUS_DONE else STATUS_NOT_STARTED
+
+
+def set_mentor_task_status(task_id: str, status: str, result: dict[str, Any] | None = None) -> None:
+    progress = ensure_progress_state()
+    record: dict[str, Any] = {
+        "status": STATUS_DONE if status == STATUS_DONE else STATUS_NOT_STARTED,
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    if result:
+        record["last_elapsed"] = result.get("elapsed")
+        record["last_error"] = result.get("error")
+    progress.setdefault("mentor_tasks_status", {})[task_id] = record
+    save_progress(progress)
+
+
+def mentor_tasks_progress(tasks: list[dict[str, Any]]) -> dict[str, int]:
+    reviewable = [task for task in tasks if task["confidence"] != "low"]
+    done = sum(1 for task in reviewable if get_mentor_task_status(task["id"]) == STATUS_DONE)
+    return {"total": len(reviewable), "done": done, "todo": len(reviewable) - done}
+
+
+def build_mentor_task_script(user_code: str, check_code: str) -> str:
+    script = user_code.rstrip()
+    check_code = check_code.strip()
+    if check_code and check_code not in user_code:
+        script += "\n\n# --- checks ---\n" + check_code
+    return script + "\n"
+
+
+def run_code_in_notebook_kernel_sync(code: str, timeout_seconds: int = 20) -> dict[str, Any]:
+    started = time.perf_counter()
+    kernel_state = refresh_notebook_kernel_state()
+    if kernel_state.get("status") == "busy":
+        return {
+            "ok": False,
+            "timed_out": False,
+            "outputs": [
+                {
+                    "type": "error",
+                    "ename": "KernelBusy",
+                    "evalue": "Notebook kernel занят другой ячейкой. Дождитесь завершения или прервите выполнение.",
+                    "traceback": [],
+                }
+            ],
+            "stdout": "",
+            "error": "KernelBusy",
+            "elapsed": 0.0,
+        }
+
+    km = kernel_state.get("km")
+    if km is None or not getattr(km, "is_alive", lambda: False)():
+        return {
+            "ok": False,
+            "timed_out": False,
+            "outputs": [
+                {
+                    "type": "error",
+                    "ename": "KernelUnavailable",
+                    "evalue": kernel_state.get("last_error", "Jupyter kernel недоступен."),
+                    "traceback": [],
+                }
+            ],
+            "stdout": "",
+            "error": "KernelUnavailable",
+            "elapsed": 0.0,
+        }
+
+    outputs: list[dict[str, Any]] = []
+    kc = None
+    try:
+        kc = km.client()
+        kc.start_channels()
+        msg_id = kc.execute(code, store_history=True, allow_stdin=False)
+        shell_done = False
+        while True:
+            elapsed = time.perf_counter() - started
+            if elapsed > timeout_seconds:
+                try:
+                    km.interrupt_kernel()
+                except Exception:
+                    pass
+                drain_deadline = time.perf_counter() + 3.0
+                while time.perf_counter() < drain_deadline:
+                    try:
+                        msg = kc.get_iopub_msg(timeout=0.1)
+                    except queue.Empty:
+                        continue
+                    if msg.get("parent_header", {}).get("msg_id") != msg_id:
+                        continue
+                    msg_type = msg.get("header", {}).get("msg_type")
+                    if msg_type == "status" and msg.get("content", {}).get("execution_state") == "idle":
+                        break
+                outputs.append(
+                    {
+                        "type": "error",
+                        "ename": "Timeout",
+                        "evalue": f"Выполнение прервано после {timeout_seconds} сек.",
+                        "traceback": [],
+                    }
+                )
+                return {
+                    "ok": False,
+                    "timed_out": True,
+                    "outputs": outputs,
+                    "stdout": outputs_to_stdout(outputs),
+                    "error": "Timeout",
+                    "elapsed": elapsed,
+                }
+
+            try:
+                shell_msg = kc.get_shell_msg(timeout=0.01)
+            except queue.Empty:
+                shell_msg = None
+            if shell_msg and shell_msg.get("parent_header", {}).get("msg_id") == msg_id:
+                shell_done = True
+
+            try:
+                msg = kc.get_iopub_msg(timeout=0.05)
+            except queue.Empty:
+                if shell_done:
+                    break
+                continue
+
+            if msg.get("parent_header", {}).get("msg_id") != msg_id:
+                continue
+
+            msg_type = msg.get("header", {}).get("msg_type")
+            if msg_type == "status" and msg.get("content", {}).get("execution_state") == "idle":
+                break
+
+            output = notebook_output_from_message(msg)
+            if output is not None:
+                outputs.append(output)
+
+        error_output = next((output for output in outputs if output.get("type") == "error"), None)
+        return {
+            "ok": error_output is None,
+            "timed_out": False,
+            "outputs": outputs,
+            "stdout": outputs_to_stdout(outputs),
+            "error": error_output.get("ename") if error_output else "",
+            "elapsed": time.perf_counter() - started,
+        }
+    except Exception as exc:
+        outputs.append(
+            {
+                "type": "error",
+                "ename": exc.__class__.__name__,
+                "evalue": str(exc),
+                "traceback": [],
+            }
+        )
+        return {
+            "ok": False,
+            "timed_out": False,
+            "outputs": outputs,
+            "stdout": outputs_to_stdout(outputs),
+            "error": exc.__class__.__name__,
+            "elapsed": time.perf_counter() - started,
+        }
+    finally:
+        try:
+            if kc is not None:
+                kc.stop_channels()
+        except Exception:
+            pass
+
+
+def outputs_to_stdout(outputs: list[dict[str, Any]]) -> str:
+    chunks: list[str] = []
+    for output in outputs:
+        if output.get("type") == "stream" and output.get("name") == "stdout":
+            chunks.append(str(output.get("text") or ""))
+    return "".join(chunks)
 
 
 @st.cache_data(show_spinner=False)
@@ -2523,10 +2836,11 @@ def render_dashboard(
             st.success("Все карточки практики готовы.")
 
     st.markdown("#### Быстрые переходы")
-    quick_cols = st.columns(11)
+    quick_cols = st.columns(12)
     quick_links = [
         ("Theory", "Theory"),
         ("Practice", "🎯 Practice"),
+        ("Tasks", "🎯 Tasks"),
         ("Portfolio", "📁 Portfolio"),
         ("Datasets", "📊 Datasets"),
         ("Scratch", "⚡ Scratch"),
@@ -3067,6 +3381,175 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
         render_algorithm_result(st.session_state[result_key])
 
 
+def select_mentor_task(task_id: str) -> None:
+    st.session_state["selected_mentor_task"] = task_id
+
+
+def mentor_task_badge(task: dict[str, Any]) -> str:
+    status = get_mentor_task_status(task["id"])
+    confidence = str(task["confidence"])
+    confidence_class = "status-repeat" if confidence == "low" else "status-reading"
+    confidence_label = "требует ревью" if confidence == "low" else confidence
+    return (
+        status_badge(status)
+        + " "
+        + f'<span class="status-pill {confidence_class}">{html.escape(confidence_label)}</span>'
+    )
+
+
+def render_mentor_task_summary(task: dict[str, Any]) -> None:
+    st.markdown(
+        f"""
+<div class="today-card">
+    <div class="today-card-title">{html.escape(task["title"])}</div>
+    <div class="muted-small">{html.escape(task["notebook_label"])} · {html.escape(task["source_notebook"])}</div>
+    <div style="margin-top: 0.45rem;">{mentor_task_badge(task)}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_mentor_task_result(result: dict[str, Any]) -> None:
+    if result.get("ok"):
+        st.success(f"✅ Решено · {float(result.get('elapsed') or 0):.2f}s")
+    elif result.get("timed_out"):
+        st.error(f"⏱ Таймаут · {float(result.get('elapsed') or 0):.2f}s")
+    else:
+        st.error(f"❌ Проверка не прошла · {float(result.get('elapsed') or 0):.2f}s")
+
+    stdout = str(result.get("stdout") or "")
+    if stdout:
+        st.markdown("#### stdout")
+        st.code(stdout, language="text")
+
+    outputs = result.get("outputs", [])
+    errors = [output for output in outputs if isinstance(output, dict) and output.get("type") == "error"]
+    if errors:
+        st.markdown("#### Ошибка / traceback")
+        for output in errors:
+            render_notebook_output(output)
+    elif not stdout:
+        st.caption("Код не напечатал stdout, но assert-проверки прошли.")
+
+
+def render_mentor_task_detail(task: dict[str, Any]) -> None:
+    code_key = f"mentor_task_code_{task['id']}"
+    result_key = f"mentor_task_result_{task['id']}"
+    if code_key not in st.session_state:
+        st.session_state[code_key] = task["starter_code"]
+
+    left_col, right_col = st.columns([0.45, 0.55], gap="large")
+    with left_col:
+        st.markdown("#### Условие")
+        st.caption(f"{task['notebook_label']} / {task['source_notebook']} · cell {task.get('code_cell_index')}")
+        st.markdown(task["prompt"])
+        with st.expander("Assert-проверки", expanded=False):
+            st.code("\n".join(task["tests"]), language="python")
+
+    with right_col:
+        st.markdown("#### Решение")
+        use_plain_editor = st.session_state.get("tasks_plain_editor", False) or st_ace is None
+        if st_ace is not None and not use_plain_editor:
+            code = st_ace(
+                value=st.session_state[code_key],
+                language="python",
+                theme="tomorrow_night",
+                min_lines=16,
+                max_lines=32,
+                key=f"mentor_task_editor_{task['id']}",
+            )
+            if code is not None:
+                st.session_state[code_key] = code
+        else:
+            st.text_area("Python code", height=420, key=code_key)
+
+        button_cols = st.columns(2)
+        if button_cols[0].button("▶ Проверить", key=f"check_mentor_task_{task['id']}", use_container_width=True):
+            final_script = build_mentor_task_script(st.session_state.get(code_key, ""), task["check_code"])
+            with st.spinner("Запускаю в Jupyter-ядре и проверяю assert..."):
+                result = run_code_in_notebook_kernel_sync(final_script)
+            st.session_state[result_key] = result
+            if result.get("ok"):
+                set_mentor_task_status(task["id"], STATUS_DONE, result)
+
+        if button_cols[1].button("Сбросить код", key=f"reset_mentor_task_{task['id']}", use_container_width=True):
+            st.session_state[code_key] = task["starter_code"]
+            st.rerun()
+
+        if result_key in st.session_state:
+            render_mentor_task_result(st.session_state[result_key])
+
+
+def render_tasks_tab(mentor_data: dict[str, Any]) -> None:
+    st.markdown("### 🎯 Tasks")
+    st.markdown("Автопроверяемые задачи из ноутбуков ментора. В работу берутся только задания с `assert`.")
+
+    tasks = mentor_data.get("tasks", [])
+    if not tasks:
+        st.info("Файл `content/extracted/mentor_tasks.json` не найден или в нём нет автопроверяемых задач.")
+        return
+
+    normal_tasks = [task for task in tasks if task["confidence"] in {"high", "medium"}]
+    review_tasks = [task for task in tasks if task["confidence"] == "low"]
+    stats = mentor_tasks_progress(tasks)
+    metric_cols = st.columns(4)
+    metric_cols[0].metric("Автозадач", len(tasks))
+    metric_cols[1].metric("В работе", len(normal_tasks))
+    metric_cols[2].metric("Решено", f"{stats['done']}/{stats['total']}")
+    metric_cols[3].metric("На ревью", len(review_tasks))
+
+    notebook_options = ["Все"] + sorted({task["notebook_label"] for task in normal_tasks}, key=str.casefold)
+    confidence_options = ["Все", "high", "medium"]
+    filter_cols = st.columns(3)
+    selected_notebook = filter_cols[0].selectbox("Notebook", notebook_options, key="mentor_task_notebook_filter")
+    selected_confidence = filter_cols[1].selectbox("Confidence", confidence_options, key="mentor_task_confidence_filter")
+    filter_cols[2].checkbox("Простой редактор", key="tasks_plain_editor")
+
+    filtered = [
+        task
+        for task in normal_tasks
+        if (selected_notebook == "Все" or task["notebook_label"] == selected_notebook)
+        and (selected_confidence == "Все" or task["confidence"] == selected_confidence)
+    ]
+
+    selected_id = st.session_state.get("selected_mentor_task")
+    visible_ids = {task["id"] for task in filtered}
+    if filtered and selected_id not in visible_ids:
+        selected_id = filtered[0]["id"]
+        st.session_state["selected_mentor_task"] = selected_id
+
+    if not filtered:
+        st.info("По этим фильтрам задач нет.")
+    else:
+        list_col, detail_col = st.columns([0.36, 0.64], gap="large")
+        with list_col:
+            current_group = ""
+            for task in filtered:
+                if task["notebook_label"] != current_group:
+                    current_group = task["notebook_label"]
+                    st.markdown(f"#### {html.escape(current_group)}")
+                render_mentor_task_summary(task)
+                st.button(
+                    "Открыть",
+                    key=f"mentor_task_select_{task['id']}",
+                    on_click=select_mentor_task,
+                    args=(task["id"],),
+                    use_container_width=True,
+                )
+
+        selected_task = next(task for task in filtered if task["id"] == st.session_state["selected_mentor_task"])
+        with detail_col:
+            render_mentor_task_detail(selected_task)
+
+    with st.expander(f"Требует ревью ({len(review_tasks)})", expanded=False):
+        if not review_tasks:
+            st.caption("Low-confidence задач нет.")
+        for task in review_tasks:
+            render_mentor_task_summary(task)
+            st.code(task["starter_code"], language="python")
+
+
 def render_interviews_tab(interview_data: dict[str, Any]) -> None:
     st.markdown("### 🎤 Interviews")
     st.markdown("Вопросы и задачи с ML/DS собеседований, сгруппированные по компаниям.")
@@ -3554,6 +4037,7 @@ def render_progress(
     sections: dict[str, list[dict[str, str]]],
     practice_cards: list[dict[str, Any]],
     algorithm_lessons: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
 ) -> None:
     notes = all_notes(sections)
     total = len(notes)
@@ -3586,6 +4070,17 @@ def render_progress(
     practice_cols[2].metric("Сделано", practice_done)
     st.progress(practice_ratio)
     st.caption(f"Практика: {practice_done}/{practice_total} карточек ({practice_ratio:.0%})")
+
+    mentor_stats = mentor_tasks_progress(mentor_tasks)
+    mentor_total = mentor_stats["total"]
+    mentor_done = mentor_stats["done"]
+    mentor_ratio = mentor_done / mentor_total if mentor_total else 0.0
+    st.markdown("#### Mentor tasks")
+    mentor_cols = st.columns(2)
+    mentor_cols[0].metric("Автозадач", mentor_total)
+    mentor_cols[1].metric("Решено", mentor_done)
+    st.progress(mentor_ratio)
+    st.caption(f"Задачи ментора: {mentor_done}/{mentor_total} ({mentor_ratio:.0%})")
 
     algorithm_stats = algorithm_progress(algorithm_lessons)
     algorithm_total = algorithm_stats["total"]
@@ -3824,10 +4319,12 @@ def main() -> None:
     algorithm_lessons = scan_algorithm_lessons()
     interview_data = load_interview_questions()
     architecture_data = load_architecture_guidelines()
+    mentor_data = load_mentor_tasks()
     tab_options = [
         "Home",
         "Theory",
         "🎯 Practice",
+        "🎯 Tasks",
         "📁 Portfolio",
         "📊 Datasets",
         "⚡ Scratch",
@@ -3860,6 +4357,8 @@ def main() -> None:
         render_note(selected_section, selected_note, resolved_vault, note_index, graph, sections, practice_cards)
     elif active_tab == "🎯 Practice":
         render_practice_tab(practice_cards, practice_warnings, note_index, datasets)
+    elif active_tab == "🎯 Tasks":
+        render_tasks_tab(mentor_data)
     elif active_tab == "📁 Portfolio":
         render_portfolio_tab(practice_cards)
     elif active_tab == "📊 Datasets":
@@ -3877,7 +4376,7 @@ def main() -> None:
     elif active_tab == "Roadmap":
         render_roadmap(sections)
     elif active_tab == "Progress":
-        render_progress(sections, practice_cards, algorithm_lessons)
+        render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []))
     else:
         render_links_health(graph)
 

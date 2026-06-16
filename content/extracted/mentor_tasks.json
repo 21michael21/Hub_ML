@@ -1,0 +1,1495 @@
+{
+  "summary": {
+    "notebooks_processed": 11,
+    "tasks_extracted": 64,
+    "tasks_with_asserts": 33,
+    "tasks_without_asserts": 31,
+    "confidence": {
+      "high": 27,
+      "medium": 31,
+      "low": 6
+    },
+    "suspicious_markdown_without_candidate": 12
+  },
+  "notebooks": [
+    {
+      "name": "python_1_start.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_1_start.ipynb",
+      "tasks_extracted": 0,
+      "tasks_with_asserts": 0,
+      "confidence": {
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 0
+    },
+    {
+      "name": "python_2_basics.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "tasks_extracted": 17,
+      "tasks_with_asserts": 2,
+      "confidence": {
+        "high": 2,
+        "medium": 15,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 1
+    },
+    {
+      "name": "python_2_project.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_2_project.ipynb",
+      "tasks_extracted": 2,
+      "tasks_with_asserts": 0,
+      "confidence": {
+        "high": 0,
+        "medium": 2,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 1
+    },
+    {
+      "name": "python_3_architecture.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "tasks_extracted": 6,
+      "tasks_with_asserts": 5,
+      "confidence": {
+        "high": 4,
+        "medium": 1,
+        "low": 1
+      },
+      "suspicious_markdown_without_candidate": 6
+    },
+    {
+      "name": "python_4_advanced.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "tasks_extracted": 9,
+      "tasks_with_asserts": 7,
+      "confidence": {
+        "high": 7,
+        "medium": 2,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 0
+    },
+    {
+      "name": "python_5_OOP.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_5_OOP.ipynb",
+      "tasks_extracted": 4,
+      "tasks_with_asserts": 2,
+      "confidence": {
+        "high": 2,
+        "medium": 2,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 0
+    },
+    {
+      "name": "python_6_advanced+.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "tasks_extracted": 9,
+      "tasks_with_asserts": 5,
+      "confidence": {
+        "high": 5,
+        "medium": 4,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 1
+    },
+    {
+      "name": "python_EXTRA_typing.ipynb",
+      "path": "content/source/vkat/VKAT-main/python_EXTRA_typing.ipynb",
+      "tasks_extracted": 5,
+      "tasks_with_asserts": 0,
+      "confidence": {
+        "high": 0,
+        "medium": 5,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 0
+    },
+    {
+      "name": "analysis_1_stats.ipynb",
+      "path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+      "tasks_extracted": 5,
+      "tasks_with_asserts": 5,
+      "confidence": {
+        "high": 0,
+        "medium": 0,
+        "low": 5
+      },
+      "suspicious_markdown_without_candidate": 1
+    },
+    {
+      "name": "analysis_2_numpy.ipynb",
+      "path": "content/source/vkat/VKAT-main/analysis_2_numpy.ipynb",
+      "tasks_extracted": 4,
+      "tasks_with_asserts": 4,
+      "confidence": {
+        "high": 4,
+        "medium": 0,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 0
+    },
+    {
+      "name": "analysis_3_pandas.ipynb",
+      "path": "content/source/vkat/VKAT-main/analysis_3_pandas.ipynb",
+      "tasks_extracted": 3,
+      "tasks_with_asserts": 3,
+      "confidence": {
+        "high": 3,
+        "medium": 0,
+        "low": 0
+      },
+      "suspicious_markdown_without_candidate": 2
+    }
+  ],
+  "tasks": [
+    {
+      "id": "python_2_basics__cell_20",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 20,
+      "prompt_cell_index": 12,
+      "title": "Арифметические: `+`, `-`, `*`, `/`, `//`, `%`, `**`",
+      "prompt": "##### Арифметические: `+`, `-`, `*`, `/`, `//`, `%`, `**`",
+      "starter_code": "# TODO посчитайте колво секунд в году",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_2_basics__cell_60",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 60,
+      "prompt_cell_index": 56,
+      "title": "`+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл.",
+      "prompt": "`+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл.",
+      "starter_code": "# TODO поменяйте местами значения переменных a и b (без использования третьей переменной)\na = 10\nb = 20\n\nassert a == 20\nassert b == 10",
+      "tests": [
+        "assert a == 20",
+        "assert b == 10"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_2_basics__cell_76",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 76,
+      "prompt_cell_index": 68,
+      "title": "Данные можно приводить из одного типа в другой",
+      "prompt": "Данные можно приводить из одного типа в другой",
+      "starter_code": "# TODO пользователь вводит возраст в годах, выведите возраст в днях",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "python_2_basics__cell_77",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 77,
+      "prompt_cell_index": 68,
+      "title": "Данные можно приводить из одного типа в другой",
+      "prompt": "Данные можно приводить из одного типа в другой",
+      "starter_code": "# TODO преобразуйте строку string_num в число и прибавьте к нему 42 \nstring_num = '123'\n\nresult = # ваш код здесь\n\nassert result == 165",
+      "tests": [
+        "assert result == 165"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "python_2_basics__cell_118",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 118,
+      "prompt_cell_index": 113,
+      "title": "Строку нельзя сложить с не строкой. Список тоже.",
+      "prompt": "Строку нельзя сложить с не строкой. Список тоже.",
+      "starter_code": "# TODO добавьте в список my_list элементы 4 и 5, а затем выведите срез списка с 1-го по 3-й элемент включительно\nmy_list = [1, 2, 3]",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 5
+    },
+    {
+      "id": "python_2_basics__cell_130",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 130,
+      "prompt_cell_index": 128,
+      "title": "ключевое слово `del` в словаре удаляет элемент",
+      "prompt": "ключевое слово `del` в словаре удаляет элемент",
+      "starter_code": "# TODO словарь персонажей Звёздных Войн, значения - названия планет откуда они\n\nstar_wars_heroes['Padme']",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 6
+    },
+    {
+      "id": "python_2_basics__cell_135",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 135,
+      "prompt_cell_index": 131,
+      "title": "Методы",
+      "prompt": "##### Методы\n- `.keys()` получить все ключи\n- `.values()`получить все значения\n- `.items()` получить пары ключ-значение",
+      "starter_code": "# TODO создайте словарь с информацией о себе: ключи 'name' и какие-нибудь ещё. Затем добавьте ключ 'city' и выведите словарь.",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 7
+    },
+    {
+      "id": "python_2_basics__cell_142",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 142,
+      "prompt_cell_index": 138,
+      "title": "`data[\"company\"]` извлечёт словарь, из словаря мы можем далее тоже извлечь значение. Просто приписываем `[]` и извлекаем данные вглубь.",
+      "prompt": "`data[\"company\"]` извлечёт словарь, из словаря мы можем далее тоже извлечь значение. Просто приписываем `[]` и извлекаем данные вглубь.",
+      "starter_code": "# TODO - извлеките 'hello'",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 8
+    },
+    {
+      "id": "python_2_basics__cell_144",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 144,
+      "prompt_cell_index": 138,
+      "title": "`data[\"company\"]` извлечёт словарь, из словаря мы можем далее тоже извлечь значение. Просто приписываем `[]` и извлекаем данные вглубь.",
+      "prompt": "`data[\"company\"]` извлечёт словарь, из словаря мы можем далее тоже извлечь значение. Просто приписываем `[]` и извлекаем данные вглубь.",
+      "starter_code": "# TODO - извлеките 'hello'",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 9
+    },
+    {
+      "id": "python_2_basics__cell_163",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 163,
+      "prompt_cell_index": 158,
+      "title": "Для проверки указывают ли указатели на один объект используется `is`, но его мы рассмотрим сильно позже. Два одинаковых списка это всё ещё отдельные объекты в памяти, даже если идентичны по содержанию.",
+      "prompt": "Для проверки указывают ли указатели на один объект используется `is`, но его мы рассмотрим сильно позже. Два одинаковых списка это всё ещё отдельные объекты в памяти, даже если идентичны по содержанию.",
+      "starter_code": "# TODO попробуйте, работает ли это со списком, строкой, дробью, числом?",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 10
+    },
+    {
+      "id": "python_2_basics__cell_177",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 177,
+      "prompt_cell_index": 175,
+      "title": "`elif` позволяет оформить множественное условие красиво. Это то же самое что `else: if`",
+      "prompt": "`elif` позволяет оформить множественное условие красиво. Это то же самое что `else: if`",
+      "starter_code": "# TODO напишите условие: если число number четное - выведите 'четное', иначе 'нечетное'\nnumber = 14",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 11
+    },
+    {
+      "id": "python_2_basics__cell_189",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 189,
+      "prompt_cell_index": 186,
+      "title": "`range`",
+      "prompt": "#### `range`\n\n`range(от какого числа : до какого числа : через сколько считать)` позволяет отсчитывать по нужному диапазону чисел, настраивается как срез. По умолчанию считает от 0, через 1. Варианты использования:\n- `range(10)` - от 0 до 9\n- `range(2:10)` - от 2 до 9\n- `range(2:10:2)` - от 2 до 9 через 2 (будет 2,4,6,8)\n- `range(0,-10,-1)` - от 0 до -9 через -1\n- `range(10,2,-2)` - от 10 до 3 через -2 (будет 10,8,6,4)\n- и т.д.",
+      "starter_code": "# TODO вывести все високосные года от 1950 до 2050",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 12
+    },
+    {
+      "id": "python_2_basics__cell_212",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 212,
+      "prompt_cell_index": 207,
+      "title": "Вложенные циклы",
+      "prompt": "#### Вложенные циклы\n\n- Внутренний цикл выполняется полностью для каждой итерации внешнего цикла\n- Такой подход полезен для работы с двумерными структурами данных и многомерными переборами",
+      "starter_code": "# TODO с помощью цикла for и функции range выведите квадраты чисел от 1 до 5",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 13
+    },
+    {
+      "id": "python_2_basics__cell_224",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 224,
+      "prompt_cell_index": 223,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO напишите цикл while, который уменьшает переменную counter на 1 на каждом шаге и печатает ее.\n# Остановите цикл, когда counter станет равным 0.\ncounter = 5",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 14
+    },
+    {
+      "id": "python_2_basics__cell_267",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 267,
+      "prompt_cell_index": 265,
+      "title": "Мы можем сами контролировать когда хотим изменить исходный, записывая в него значение из функции",
+      "prompt": "Мы можем сами контролировать когда хотим изменить исходный, записывая в него значение из функции",
+      "starter_code": "# TODO напишите функцию get_greeting, которая принимает имя (name) и возвращает строку 'Hello, {name}'\n# Вызовите ее для имени и выведите результат",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 15
+    },
+    {
+      "id": "python_2_basics__cell_293",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 293,
+      "prompt_cell_index": 291,
+      "title": "Многострочную строку тоже можно подать в `print`, и делать в неё вставки",
+      "prompt": "Многострочную строку тоже можно подать в `print`, и делать в неё вставки",
+      "starter_code": "# TODO сделай что-нибудь прикольное",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 16
+    },
+    {
+      "id": "python_2_basics__cell_304",
+      "source_notebook": "python_2_basics.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+      "code_cell_index": 304,
+      "prompt_cell_index": 299,
+      "title": "Как и любой объект, его можно сохранить в переменную и юзать потом",
+      "prompt": "Как и любой объект, его можно сохранить в переменную и юзать потом",
+      "starter_code": "# TODO засеките время выполнения куска программы и выведите во сколько она началось выполнение, во сколько закончилось, и сколько длилось",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 17
+    },
+    {
+      "id": "python_2_project__cell_7",
+      "source_notebook": "python_2_project.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_project.ipynb",
+      "code_cell_index": 7,
+      "prompt_cell_index": 5,
+      "title": "2.2 Поле",
+      "prompt": "#### 2.2 Поле\n\nФункция, которая отрисовывает поле, пусть принимает пока только координаты персонажа\n\nПараметры поля можно тоже передать либо сделать глобальными: ширина, высота, символ которым отмечать пустые пространства",
+      "starter_code": "def draw(character_X, character_Y):\n    \n\n    pass # это означает ничего не делать, вместо этого пишите свой код",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_2_project__cell_19",
+      "source_notebook": "python_2_project.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_2_project.ipynb",
+      "code_cell_index": 19,
+      "prompt_cell_index": 18,
+      "title": "2.7 Удар",
+      "prompt": "#### 2.7 Удар\n\nЯ начну от частного к общему, но если вы делаете свою механику, то рекомендую наоборот, сначала написать общую функцию боя, в ней вызвать функции нанесения урона, потом реализовать функцию нанесения урона, и так далее\n\nНапишем функцию которая подсчитывает нанесённый урон\n\nЕсть множество механик, как брать в расчёт атаку и защиту:\n- в Героях Меча и Магии есть отдельный атрибут урона, который умножается на коэффициент разницы атаки атакующего и защиты атакуемого, если атака превышает, то добавляется 5% урона за каждую единицу разницы, если защита превышает, то вычитается 3% урона, но не более 200% и не менее 50% урона\n- в Доте (или варкрафте) защита даёт логарифмический буст сопротивления всему урону, что-то типа защита 1 снижает урон на 5%, защита 2 на 7%, ..., защита 50 на 40%, но до 100% никогда не дойдёт\n- самая простая механика это просто вычесть из атаки защиту, но главное не начать лечить цель ударами\n- я сделаю снижение атаки на 1% от каждого очка защиты",
+      "starter_code": "def calculate_damage(attack, target_defence):\n    pass\n\ncalculate_damage(10, 10)",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_3_architecture__cell_38",
+      "source_notebook": "python_3_architecture.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "code_cell_index": 38,
+      "prompt_cell_index": 37,
+      "title": "В контексте метода класса, в `self` подставляется объект, для которого вызван метод",
+      "prompt": "В контексте метода класса, в `self` подставляется объект, для которого вызван метод\n\nЭто то же самое, как если бы мы прописали атрибуты напрямую, то есть не у self, а у конкретного объекта",
+      "starter_code": "class Tree:\n\n    def __init__(self):\n        pass\n\nnew_tree = Tree()\n\nnew_tree.leaves = 64\nnew_tree.height = 10.0\n\nnew_tree.leaves",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_3_architecture__cell_48",
+      "source_notebook": "python_3_architecture.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "code_cell_index": 48,
+      "prompt_cell_index": 47,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nРазработайте класс Cell, который при инициализации принимает координаты точки на декартовой плоскости и сохраняет их в поля x и y соответственно.",
+      "starter_code": "class Cell:\n    pass # это просто затычка, чтобы не было ошибки, можешь удалить\n    # TODO ваш код здесь\n\n\npoint = Cell(3, 5)\nassert point.x == 3\nassert point.y == 5",
+      "tests": [
+        "assert point.x == 3",
+        "assert point.y == 5"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_3_architecture__cell_50",
+      "source_notebook": "python_3_architecture.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "code_cell_index": 50,
+      "prompt_cell_index": 49,
+      "title": "Реализуйте методы:",
+      "prompt": "Реализуйте методы:\n- `move`, который перемещает точку на заданное расстояние по осям x и y;\n- `distance`, который определяет до переданной точки расстояние, округлённое до сотых.\nМожешь поменять исходный класс в прошлой ячейке и запустить её, чтобы не дублировать код.",
+      "starter_code": "point = Cell(3, 5)\npoint.move(2, -3)\nassert point.x == 5\nassert point.y == 2\n\npoint_2 = Cell(1, 1)\nassert point.distance(point_2) == 4.24\nassert point_2.distance(point) == 4.24",
+      "tests": [
+        "assert point.x == 5",
+        "assert point.y == 2",
+        "assert point.distance(point_2) == 4.24",
+        "assert point_2.distance(point) == 4.24"
+      ],
+      "has_asserts": true,
+      "confidence": "low",
+      "signals": [
+        "has_asserts"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "python_3_architecture__cell_73",
+      "source_notebook": "python_3_architecture.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "code_cell_index": 73,
+      "prompt_cell_index": 72,
+      "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:",
+      "prompt": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:\n1. `get_stamina(self)` — возвращает текущее значение выносливости.\n2. `sprint(self, distance)` — уменьшает выносливость на (`distance * 2`). \nЕсли выносливости не хватает (она стала бы меньше 0), выносливость не тратится вообще, а метод возвращает `False`. Иначе выносливость тратится и возвращается `True`.",
+      "starter_code": "class Hero:\n    pass\n    # TODO: ваш код здесь\n\n\nhero = Hero(\"Артур\")\nassert hero._name == \"Артур\", \"Имя должно сохраняться в _name\"\nassert hero.get_stamina() == 100, \"Начальная выносливость должна быть 100\"\n\nassert hero.sprint(20) is True, \"Герой должен пробежать, выносливости хватает\"\nassert hero.get_stamina() == 60, \"После бега должно остаться 60 выносливости\"\n\nassert hero.sprint(40) is False, \"Герой не должен пробежать, выносливости не хватает\"\nassert hero.get_stamina() == 60, \"Выносливость не должна потратиться при неудачном беге\"",
+      "tests": [
+        "assert hero._name == \"Артур\", \"Имя должно сохраняться в _name\"",
+        "assert hero.get_stamina() == 100, \"Начальная выносливость должна быть 100\"",
+        "assert hero.sprint(20) is True, \"Герой должен пробежать, выносливости хватает\"",
+        "assert hero.get_stamina() == 60, \"После бега должно остаться 60 выносливости\"",
+        "assert hero.sprint(40) is False, \"Герой не должен пробежать, выносливости не хватает\"",
+        "assert hero.get_stamina() == 60, \"Выносливость не должна потратиться при неудачном беге\""
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "python_3_architecture__cell_75",
+      "source_notebook": "python_3_architecture.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "code_cell_index": 75,
+      "prompt_cell_index": 74,
+      "title": "У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`.",
+      "prompt": "У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`. \n1. В конструкторе палочки примите параметры `name`, `damage`, `mana_cost`.\n2. Вызовите конструктор родителя с помощью `super()` для установки name и damage.\n3. Сохраните mana_cost в инкапсулированный атрибут _mana_cost.\n4. Переопределите метод `attack(self, target, user)`. В нем проверьте:\nЕсли у пользователя достаточно маны, то вычтите эту ману у пользователя и вызовите метод attack родителя. Если маны не хватает, ничего не делайте.",
+      "starter_code": "class Target:\n    def __init__(self, hp):\n        self.hp = hp\n\nclass Mage:\n    def __init__(self, mana):\n        self.mana = mana\n\nclass Weapon:\n    def __init__(self, name, damage):\n        self.name = name\n        self.damage = damage\n        \n    def attack(self, target, user):\n        target.hp -= self.damage\n\n\nclass MagicWand(Weapon):\n    pass\n    # TODO: ваш код здесь\n\n\ndummy = Target(hp=50)\nwizard = Mage(mana=30)\nwand = MagicWand(name=\"Посох Огня\", damage=15, mana_cost=20)\n\nassert wand.name == \"Посох Огня\", \"Имя должно быть передано родительскому классу\"\nassert wand.damage == 15, \"Урон должен быть передан родительскому классу\"\n\nwand.attack(dummy, wizard)\nassert dummy.hp == 35, \"Урон должен быть нанесен (50 - 15 = 35)\"\nassert wizard.mana == 10, \"Мана должна быть потрачена (30 - 20 = 10)\"\n\nwand.attack(dummy, wizard)\nassert dummy.hp == 35, \"Урон не должен быть нанесен, так как не хватает маны\"\nassert wizard.mana == 10, \"Мана не должна быть потрачена\"",
+      "tests": [
+        "assert wand.name == \"Посох Огня\", \"Имя должно быть передано родительскому классу\"",
+        "assert wand.damage == 15, \"Урон должен быть передан родительскому классу\"",
+        "assert dummy.hp == 35, \"Урон должен быть нанесен (50 - 15 = 35)\"",
+        "assert wizard.mana == 10, \"Мана должна быть потрачена (30 - 20 = 10)\"",
+        "assert dummy.hp == 35, \"Урон не должен быть нанесен, так как не хватает маны\"",
+        "assert wizard.mana == 10, \"Мана не должна быть потрачена\""
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 5
+    },
+    {
+      "id": "python_3_architecture__cell_90",
+      "source_notebook": "python_3_architecture.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+      "code_cell_index": 90,
+      "prompt_cell_index": 89,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nНапишите функцию `filter_items(entities)`, которая принимает список объектов и возвращает новый список, состоящий ТОЛЬКО из тех объектов, которые являются экземплярами класса `Item` или его наследников.",
+      "starter_code": "class Entity:\n    pass\n\nclass Character(Entity):\n    pass\n\nclass Item(Entity):\n    pass\n\nclass Potion(Item):\n    pass\n\ndef filter_items(entities_list):\n    pass\n    # TODO: ваш код здесь\n\n\nsword = Item()\nhero = Character()\nhealth_potion = Potion()\ntree = Entity()\n\nfiltered = filter_items([sword, hero, health_potion, tree])\n\nassert len(filtered) == 2, \"В списке должно остаться ровно 2 объекта\"\nassert sword in filtered, \"Item должен остаться в списке\"\nassert health_potion in filtered, \"Potion (наследник Item) должен остаться в списке\"\nassert hero not in filtered, \"Character не является Item и должен быть отфильтрован\"\nassert tree not in filtered, \"Базовый Entity не является Item\"\n\nprint(\"Все тесты успешно пройдены!\")",
+      "tests": [
+        "assert len(filtered) == 2, \"В списке должно остаться ровно 2 объекта\"",
+        "assert sword in filtered, \"Item должен остаться в списке\"",
+        "assert health_potion in filtered, \"Potion (наследник Item) должен остаться в списке\"",
+        "assert hero not in filtered, \"Character не является Item и должен быть отфильтрован\"",
+        "assert tree not in filtered, \"Базовый Entity не является Item\""
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 6
+    },
+    {
+      "id": "python_4_advanced__cell_44",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 44,
+      "prompt_cell_index": 43,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "words = [\"apple\", \"plea\", \"leap\", \"pale\", \"peal\", \"bat\", \"tab\", \"cat\", \"act\", \"kek\"]\ngiven_word = \"bat\" # выбранное слово\n\n# TODO создайте множество из списка words\nwords_set = # ваш код здесь\n\nassert words_set == {'act', 'apple', 'bat', 'cat', 'kek', 'leap', 'pale', 'peal', 'plea', 'tab'}",
+      "tests": [
+        "assert words_set == {'act', 'apple', 'bat', 'cat', 'kek', 'leap', 'pale', 'peal', 'plea', 'tab'}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_4_advanced__cell_45",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 45,
+      "prompt_cell_index": 43,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO создайте множество из слов у которых совпадает хотя бы одна буква с выбранным словом\nset_1 = # ваш код здесь\n\nassert set_1 == {'act', 'apple', 'bat', 'cat', 'leap', 'pale', 'peal', 'plea', 'tab'}",
+      "tests": [
+        "assert set_1 == {'act', 'apple', 'bat', 'cat', 'leap', 'pale', 'peal', 'plea', 'tab'}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_4_advanced__cell_46",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 46,
+      "prompt_cell_index": 43,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO множество слов, все буквы в которых присутствуют в выбранном слове\nset_2 = # ваш код здесь\nassert set_2 == {'bat', 'tab'}",
+      "tests": [
+        "assert set_2 == {'bat', 'tab'}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "python_4_advanced__cell_47",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 47,
+      "prompt_cell_index": 43,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO множество слов в котором присутствуют все буквы из выбранного слова\nset_3 = # ваш код здесь\nassert set_3 == {'bat', 'tab'}",
+      "tests": [
+        "assert set_3 == {'bat', 'tab'}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "python_4_advanced__cell_59",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 59,
+      "prompt_cell_index": 58,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO перепишите этот код с использованием тернарного оператора в одну строку\nweather = 'rain'\nif weather == 'rain':\n    action = 'take an umbrella'\nelse:\n    action = 'wear sunglasses'\n\nprint(action)",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 5
+    },
+    {
+      "id": "python_4_advanced__cell_72",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 72,
+      "prompt_cell_index": 71,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "data = {\"name\": \"Bob\", \"age\": 30}\n# TODO используйте блок try-except для обработки ошибки KeyError при обращении к несуществующему ключу \"city\"\n# В случае ошибки выведите сообщение \"Ключ не найден\"",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 6
+    },
+    {
+      "id": "python_4_advanced__cell_114",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 114,
+      "prompt_cell_index": 113,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO Напишите программу, которая сохраняет в списке tuples только непустые кортежи, не меняя порядка их следования.\n\ntuples = [(1, 2), (), (3,), ()]\n# ваш код\n\nassert tuples == [(1, 2), (3,)]",
+      "tests": [
+        "assert tuples == [(1, 2), (3,)]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 7
+    },
+    {
+      "id": "python_4_advanced__cell_115",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 115,
+      "prompt_cell_index": 113,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO Функция get_user_info возвращает кортеж. \n# Распакуйте результат вызова функции в три переменные: name, age, is_active.\n\ndef get_user_info():\n    return \"Alice\", 30, True\n\n# ВАШ КОД ЗДЕСЬ\n\nassert name == \"Alice\"\nassert age == 30\nassert is_active is True",
+      "tests": [
+        "assert name == \"Alice\"",
+        "assert age == 30",
+        "assert is_active is True"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 8
+    },
+    {
+      "id": "python_4_advanced__cell_116",
+      "source_notebook": "python_4_advanced.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_4_advanced.ipynb",
+      "code_cell_index": 116,
+      "prompt_cell_index": 113,
+      "title": "Задание",
+      "prompt": "#### Задание",
+      "starter_code": "# TODO Добавьте число 4 в список внутри кортежа, не пересоздавая сам кортеж.\n\ndata = (100, [1, 2, 3])\n\n# ВАШ КОД ЗДЕСЬ\n\n\nassert data == (100, [1, 2, 3, 4])",
+      "tests": [
+        "assert data == (100, [1, 2, 3, 4])"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 9
+    },
+    {
+      "id": "python_5_OOP__cell_3",
+      "source_notebook": "python_5_OOP.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_5_OOP.ipynb",
+      "code_cell_index": 3,
+      "prompt_cell_index": 2,
+      "title": "Переопределение методов (Method Overriding)",
+      "prompt": "#### Переопределение методов (Method Overriding)\n\nСамый частый пример полиморфизма — когда дочерний класс переопределяет метод родительского класса.",
+      "starter_code": "class Animal:\n    def speak(self):\n        pass\n\nclass Dog(Animal):\n    def speak(self):\n        return \"Гав!\"\n\nclass Cat(Animal):\n    def speak(self):\n        return \"Мяу!\"",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_5_OOP__cell_10",
+      "source_notebook": "python_5_OOP.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_5_OOP.ipynb",
+      "code_cell_index": 10,
+      "prompt_cell_index": 9,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nРеализуйте базовый класс `Shape` и два дочерних класса: `Rectangle` и `Circle`.\n\n- У каждого класса должен быть метод `area()`, который возвращает площадь фигуры.\n- `Rectangle` при инициализации принимает ширину и высоту.\n- `Circle` при инициализации принимает радиус.\nДля числа Пи используйте 3.14.",
+      "starter_code": "class Shape:\n    pass\n\nclass Rectangle(Shape):\n    pass\n\nclass Circle(Shape):\n    pass\n\nrect = Rectangle(4, 5)\ncircle = Circle(10)\n\nassert rect.area() == 20\nassert circle.area() == 314.0",
+      "tests": [
+        "assert rect.area() == 20",
+        "assert circle.area() == 314.0"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_5_OOP__cell_19",
+      "source_notebook": "python_5_OOP.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_5_OOP.ipynb",
+      "code_cell_index": 19,
+      "prompt_cell_index": 18,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nРеализуйте класс `Vector`, который представляет вектор на плоскости с координатами `x` и `y`.\n\nДобавьте полиморфизм для оператора сложения: реализуйте метод `__add__`, чтобы два объекта `Vector` можно было складывать с помощью оператора `+`. Результатом должен быть новый объект `Vector` с суммой соответствующих координат.",
+      "starter_code": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    # TODO ваш код здесь\n\nv1 = Vector(2, 3)\nv2 = Vector(4, 1)\nv3 = v1 + v2\n\nassert v3.x == 6\nassert v3.y == 4",
+      "tests": [
+        "assert v3.x == 6",
+        "assert v3.y == 4"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "python_5_OOP__cell_25",
+      "source_notebook": "python_5_OOP.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_5_OOP.ipynb",
+      "code_cell_index": 25,
+      "prompt_cell_index": 24,
+      "title": "Давайте посмотрим, как это выглядит на практике. Сначала мы создадим базовый класс (абстракцию) `BaseBackend`, который заставит всех своих наследников обязательно реализовать методы `load` и `predict`.",
+      "prompt": "Давайте посмотрим, как это выглядит на практике. Сначала мы создадим базовый класс (абстракцию) `BaseBackend`, который заставит всех своих наследников обязательно реализовать методы `load` и `predict`.",
+      "starter_code": "from abc import ABC, abstractmethod\n\nclass BaseBackend(ABC):\n    def __init__(self, path: str, device: str = \"cpu\"):\n        self.path = path\n        self.device = device\n        self.native = None  # Здесь будет храниться оригинальная модель\n\n    @abstractmethod\n    def load(self):\n        \"\"\"Загрузить модель\"\"\"\n        pass\n\n    @abstractmethod\n    def predict(self, X):\n        \"\"\"Сделать предсказание\"\"\"\n        pass\n\nclass SklearnBackend(BaseBackend):\n    def load(self):\n        # В реальности здесь было бы: self.native = joblib.load(self.path)\n        print(f\"Загружаем sklearn модель из {self.path}...\")\n        self.native = \"Sklearn_Model\"\n        return self\n\n    def predict(self, X):\n        # В реальности: return self.native.predict(X)\n        return [f\"Sklearn prediction for {x}\" for x in X]\n\nclass TransformersBackend(BaseBackend):\n    def load(self):\n        # В реальности здесь была бы загрузка модели huggingface\n        print(f\"Загружаем transformers модель из {self.path} на устройство {self.device}...\")\n        self.native = \"Transformers_Model\"\n        return self\n\n    def predict(self, X):\n        # Трансформеры обычно принимают данные иначе, здесь мы скрываем эту разницу\n        return [f\"Transformers prediction for {x}\" for x in X]",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "python_6_advanced+__cell_6",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 6,
+      "prompt_cell_index": 5,
+      "title": "Мы можем создавать собственные менеджеры контекста. Для этого класс должен реализовывать два магических метода:",
+      "prompt": "Мы можем создавать собственные менеджеры контекста. Для этого класс должен реализовывать два магических метода:\n- `__enter__` — вызывается при входе в блок `with` (его результат передается в переменную после `as`).\n- `__exit__` — вызывается при выходе (здесь мы закрываем соединения, даже если внутри блока произошла ошибка).",
+      "starter_code": "class MyDatabaseConnection:\n    def __enter__(self):\n        print('Подключаемся к БД...')\n        return 'Объект подключения (например, курсор)'\n        \n    def __exit__(self, exc_type, exc_value, traceback):\n        # не вдавайтесь в эти аргументы, они нужны для обработки ошибок\n        print('Закрываем соединение с БД...')\n\nwith MyDatabaseConnection() as db:\n    print(f'Работаем: {db}')",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_6_advanced+__cell_8",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 8,
+      "prompt_cell_index": 7,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nНапишите менеджер контекста `Timer`, который измеряет время выполнения блока кода. При входе в блок он должен запоминать текущее время, а при выходе — печатать, сколько секунд выполнялся код.\n\n*Подсказка: используйте модуль `time` и функцию `time.time()` для получения текущего времени.*",
+      "starter_code": "import time\n\nclass Timer:\n    # TODO ваш код здесь\n    pass\n\nwith Timer():\n    print(\"Код выполняется...\")\n    time.sleep(1)\n# Ожидаемый вывод: Код выполнялся примерно 1.0 секунд",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_6_advanced+__cell_19",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 19,
+      "prompt_cell_index": 18,
+      "title": "Напишите lambda-функцию, которая принимает одно число и возвращает его квадрат.",
+      "prompt": "Напишите lambda-функцию, которая принимает одно число и возвращает его квадрат.\nПрисвойте эту функцию переменной `square`.",
+      "starter_code": "square = lambda x: # TODO ваш код здесь\n\nassert square(5) == 25",
+      "tests": [
+        "assert square(5) == 25"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "python_6_advanced+__cell_21",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 21,
+      "prompt_cell_index": 20,
+      "title": "Отфильтруйте список чисел так,",
+      "prompt": "Отфильтруйте список чисел так,\nчтобы в нем остались только четные числа.",
+      "starter_code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\neven_numbers = list(filter(lambda x: None, numbers))  # TODO Ваш код вместо `lambda x: None`\n\nassert even_numbers == [2, 4, 6, 8, 10]",
+      "tests": [
+        "assert even_numbers == [2, 4, 6, 8, 10]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "python_6_advanced+__cell_23",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 23,
+      "prompt_cell_index": 22,
+      "title": "Ниже дан список словарей с информацией о людях.",
+      "prompt": "Ниже дан список словарей с информацией о людях.\n1. Отфильтруйте список, оставив только тех, кто старше 18 лет.\n2. Отсортируйте полученный результат по имени в алфавитном порядке.",
+      "starter_code": "people = [\n    {'name': 'Иван', 'age': 15},\n    {'name': 'Анна', 'age': 22},\n    {'name': 'Борис', 'age': 30},\n    {'name': 'Мария', 'age': 17}\n]\n\nresult = # TODO ваш код здесь\n\nassert result == [{'name': 'Анна', 'age': 22}, {'name': 'Борис', 'age': 30}]",
+      "tests": [
+        "assert result == [{'name': 'Анна', 'age': 22}, {'name': 'Борис', 'age': 30}]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 5
+    },
+    {
+      "id": "python_6_advanced+__cell_28",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 28,
+      "prompt_cell_index": 27,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nНапишите декоратор `@debug`, который перед вызовом функции печатает, с какими аргументами она была вызвана, выполняет функцию, и перед возвратом печатает, что она вернула.",
+      "starter_code": "def debug(func):\n    # TODO ваш код здесь\n    pass\n\n@debug\ndef add(a, b):\n    return a + b\n\nadd(5, 3)\n\n# Ожидаемый вывод:\n# Вызываем add с аргументами: (5, 3) {}\n# Функция вернула: 8",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 6
+    },
+    {
+      "id": "python_6_advanced+__cell_34",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 34,
+      "prompt_cell_index": 33,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nНапишите класс-итератор `EvenNumbers`, который при инициализации принимает список чисел, а при итерации по нему возвращает **только четные** числа из этого списка.\n\nОбязательно используйте методы `__iter__` и `__next__`.",
+      "starter_code": "class EvenNumbers:\n    # TODO ваш код здесь\n    pass\n\nnumbers = [1, 2, 3, 4, 5, 6]\neven_iter = EvenNumbers(numbers)\n\nassert list(even_iter) == [2, 4, 6]",
+      "tests": [
+        "assert list(even_iter) == [2, 4, 6]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 7
+    },
+    {
+      "id": "python_6_advanced+__cell_38",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 38,
+      "prompt_cell_index": 37,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nНапишите генератор `fibonacci(n)`, который будет выдавать первые `n` чисел Фибоначчи. (Они начинаются с 0 и 1, а каждое следующее равно сумме двух предыдущих: 0, 1, 1, 2, 3, 5, 8...)",
+      "starter_code": "def fibonacci(n):\n    # TODO ваш код здесь\n    pass\n\nassert list(fibonacci(7)) == [0, 1, 1, 2, 3, 5, 8]",
+      "tests": [
+        "assert list(fibonacci(7)) == [0, 1, 1, 2, 3, 5, 8]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 8
+    },
+    {
+      "id": "python_6_advanced+__cell_42",
+      "source_notebook": "python_6_advanced+.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+      "code_cell_index": 42,
+      "prompt_cell_index": 41,
+      "title": "Задание",
+      "prompt": "#### Задание\n\nУ вас есть огромный список чисел от 1 до миллиона (он уже создан). Вам нужно найти сумму квадратов всех **нечетных** чисел из этого списка.\n\nНапишите решение в одну строку, используя функцию `sum()` и **генераторное выражение** (в круглых скобках), чтобы не создавать в памяти промежуточный список с квадратами нечетных чисел.",
+      "starter_code": "huge_numbers = range(1, 1000001)  # Исходные данные (range тоже ленивый)\n\n# TODO ваш код здесь (используйте sum и генераторное выражение)\ntotal_sum = 0 \n\nprint(total_sum) # Должно получиться очень большое число :)",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 9
+    },
+    {
+      "id": "python_EXTRA_typing__cell_55",
+      "source_notebook": "python_EXTRA_typing.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_EXTRA_typing.ipynb",
+      "code_cell_index": 55,
+      "prompt_cell_index": 54,
+      "title": "Проверка всегда является *номинальной*, то есть требуется явное указание наследования, иначе `isinstance` будет возвращать `False`.",
+      "prompt": "Проверка всегда является *номинальной*, то есть требуется явное указание наследования, иначе `isinstance` будет возвращать `False`.",
+      "starter_code": "class A: ...\n\nclass B(A): ...\n\nclass C: ...\n\nb = B()\nc = C()\n\nisinstance(b, A)  # True\nisinstance(c, A)  # False",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_EXTRA_typing__cell_62",
+      "source_notebook": "python_EXTRA_typing.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_EXTRA_typing.ipynb",
+      "code_cell_index": 62,
+      "prompt_cell_index": 61,
+      "title": "**Аннотация типов** — это **синтаксис**, придуманный для повышения читаемости кода. Это просто описание (подсказка) типов, которые используют разработчики и статические анализаторы.",
+      "prompt": "**Аннотация типов** — это **синтаксис**, придуманный для повышения читаемости кода. Это просто описание (подсказка) типов, которые используют разработчики и статические анализаторы.\n\nЭто элемент **статической типизации**.",
+      "starter_code": "def foo(s: str) -> str: ...\n\nx: int = 1\ny: float = 3.14",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "python_EXTRA_typing__cell_82",
+      "source_notebook": "python_EXTRA_typing.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_EXTRA_typing.ipynb",
+      "code_cell_index": 82,
+      "prompt_cell_index": 81,
+      "title": "`typing.Protocol` — это специальный инструмент, который позволяет описывать **ожидаемую структуру объекта для статической типизации**. По сути он реализует механизм, *имитирующий* интерфейсы из языков со строгой статической типизацией.",
+      "prompt": "`typing.Protocol` — это специальный инструмент, который позволяет описывать **ожидаемую структуру объекта для статической типизации**. По сути он реализует механизм, *имитирующий* интерфейсы из языков со строгой статической типизацией.\n\n- Задаёт набор методов и атрибутов, которые *должен поддерживать объект*.\n- При этом неважно, откуда объект: наследуется ли он от какого-либо класса или нет.\n\nТот же самый пример с **кошечкой и собачкой**, когда структурное совпадение двух классов **не делает их совместимыми** при номинальной типизации, но благодаря `typing.Protocol` мы *показываем статическому анализу* какая структура должна быть у передаваемого объекта:",
+      "starter_code": "from typing import Protocol\n\nclass Speaker(Protocol):\n    def speak(self): ...\n\nclass Cat:\n    def speak(self):\n        print('meow')\n\nclass Dog:\n    def speak(self):\n        print('wof')\n\ndef voice(x: Speaker):\n    x.speak()\n\nvoice(Cat())  # meow\nvoice(Dog())  # wof",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "python_EXTRA_typing__cell_85",
+      "source_notebook": "python_EXTRA_typing.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_EXTRA_typing.ipynb",
+      "code_cell_index": 85,
+      "prompt_cell_index": 84,
+      "title": "По умолчанию `Protocol` работает только на этапе **статической проверки**. Если нужно использовать `isinstance()` или `issubclass()` **во время выполнения** — требуется декоратор `@runtime_checkable` (иначе выбросит исключение `TypeError`):",
+      "prompt": "По умолчанию `Protocol` работает только на этапе **статической проверки**. Если нужно использовать `isinstance()` или `issubclass()` **во время выполнения** — требуется декоратор `@runtime_checkable` (иначе выбросит исключение `TypeError`):",
+      "starter_code": "from typing import Protocol, runtime_checkable\n\n@runtime_checkable\nclass Speaker(Protocol):\n    def speak(self): ...\n\nclass Cat:\n    def speak(self):\n        print(\"meow\")\n\ndef talk(s: Speaker):\n    s.speak()\n\nisinstance(Cat(), Speaker)  # True",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "python_EXTRA_typing__cell_95",
+      "source_notebook": "python_EXTRA_typing.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/python_EXTRA_typing.ipynb",
+      "code_cell_index": 95,
+      "prompt_cell_index": 94,
+      "title": "<div style=\"",
+      "prompt": "<div style=\"\n  border: 1.5px solid #569CD6;\n  background-color: #1E1E2E;\n  padding: 12px 16px;\n  border-radius: 6px;\n  color: #9CDCFE;\n  width: auto;\n  max-width: 100%;\n  overflow-wrap: break-word;\n  box-sizing: border-box;\n\">\n\n🧠 **Задача**\n\nНиже реализована архитектура модульной системы для решения задачи регрессии. В системе имеются:\n\n1. **Функции потерь** — для вычисления метрик качества модели.\n2. **Регрессионные модели** — реализации алгоритмов регрессии, которые принимают функцию потерь.\n3. **Фабрика моделей** — позволяет динамически связывать конкретную модель с конкретной функцией потери.\n\n</div>",
+      "starter_code": "class MAEFunc:\n    def __call__(self, y_true, y_pred): ...\n\n\nclass RMSEFunc:\n    def __call__(self, y_true, y_pred): ...\n\n\nclass RegressModelA:\n    def __init__(self, loss_func):\n        self.loss_func = loss_func\n\n    def fit(self): ...\n\n    def predict(self): ...\n\n\nclass RegressModelB:\n    def __init__(self, loss_func):\n        self.loss_func = loss_func\n\n    def fit(self): ...\n\n    def predict(self): ...\n\n\nclass RegressFactory:\n    LOSS_FUNCS = {\n        \"MAE\": MAEFunc,\n        \"RMSE\": RMSEFunc\n    }\n\n    MODELS = {\n        \"A\": RegressModelA,\n        \"B\": RegressModelB\n    }\n\n    def __init__(self, model_name):\n        self.model_name = model_name\n    \n    def create_model(self, loss_func_name):\n        loss_cls = RegressFactory.LOSS_FUNCS.get(loss_func_name)\n        model_cls = RegressFactory.MODELS.get(self.model_name)\n\n        if loss_cls is None or model_cls is None:\n            raise ValueError(f\"Unknown loss_func '{loss_func_name}' or model '{self.model_name}'\")\n\n        return model_cls(loss_cls())\n\n\nfactory = RegressFactory(\"A\")\nmodel = factory.create_model(\"MAE\")\nmodel.fit()\nmodel.predict()",
+      "tests": [],
+      "has_asserts": false,
+      "confidence": "medium",
+      "signals": [
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 5
+    },
+    {
+      "id": "analysis_1_stats__cell_7",
+      "source_notebook": "analysis_1_stats.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+      "code_cell_index": 7,
+      "prompt_cell_index": 3,
+      "title": "Очевидные штуки",
+      "prompt": "### Очевидные штуки\n* **Минимум (min)** — наименьшее значение в наборе данных. Показывает нижнюю границу.\n* **Максимум (max)** — наибольшее значение в наборе данных. Показывает верхнюю границу.\n* **Количество (count)** — общее число элементов в выборке. Позволяет оценить объем данных.\n* **Сумма (sum)** — результат сложения всех значений. Часто используется для расчета других метрик, например, среднего.",
+      "starter_code": "def vikings_max(arr):\n\n    res = arr[0]\n    for el in arr:\n        if el > res:\n            res = el\n\n    return res\n\nassert vikings_max([1, 2, 3]) == 3\nassert vikings_max([-1]) == -1\nassert vikings_max(strength_arr) == 9",
+      "tests": [
+        "assert vikings_max([1, 2, 3]) == 3",
+        "assert vikings_max([-1]) == -1",
+        "assert vikings_max(strength_arr) == 9"
+      ],
+      "has_asserts": true,
+      "confidence": "low",
+      "signals": [
+        "has_asserts"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "analysis_1_stats__cell_8",
+      "source_notebook": "analysis_1_stats.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+      "code_cell_index": 8,
+      "prompt_cell_index": 3,
+      "title": "Очевидные штуки",
+      "prompt": "### Очевидные штуки\n* **Минимум (min)** — наименьшее значение в наборе данных. Показывает нижнюю границу.\n* **Максимум (max)** — наибольшее значение в наборе данных. Показывает верхнюю границу.\n* **Количество (count)** — общее число элементов в выборке. Позволяет оценить объем данных.\n* **Сумма (sum)** — результат сложения всех значений. Часто используется для расчета других метрик, например, среднего.",
+      "starter_code": "def vikings_count(arr):\n    count=0\n    for _ in arr:\n        count+=1\n    return count\n\nassert vikings_count([1, 2, 3]) == 3",
+      "tests": [
+        "assert vikings_count([1, 2, 3]) == 3"
+      ],
+      "has_asserts": true,
+      "confidence": "low",
+      "signals": [
+        "has_asserts"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "analysis_1_stats__cell_9",
+      "source_notebook": "analysis_1_stats.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+      "code_cell_index": 9,
+      "prompt_cell_index": 3,
+      "title": "Очевидные штуки",
+      "prompt": "### Очевидные штуки\n* **Минимум (min)** — наименьшее значение в наборе данных. Показывает нижнюю границу.\n* **Максимум (max)** — наибольшее значение в наборе данных. Показывает верхнюю границу.\n* **Количество (count)** — общее число элементов в выборке. Позволяет оценить объем данных.\n* **Сумма (sum)** — результат сложения всех значений. Часто используется для расчета других метрик, например, среднего.",
+      "starter_code": "def vikings_sum(arr):\n    sum_of_clan=0\n    for el in arr:\n        sum_of_clan+=el\n    return sum_of_clan\n\nassert vikings_sum([1, 2, 3]) == 6",
+      "tests": [
+        "assert vikings_sum([1, 2, 3]) == 6"
+      ],
+      "has_asserts": true,
+      "confidence": "low",
+      "signals": [
+        "has_asserts"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "analysis_1_stats__cell_12",
+      "source_notebook": "analysis_1_stats.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+      "code_cell_index": 12,
+      "prompt_cell_index": 11,
+      "title": "Меры центральной тенденции",
+      "prompt": "### Меры центральной тенденции\nЭти метрики помогают найти «типичное» или центральное значение в данных.\n* **Среднее арифметическое (mean)** — сумма всех значений, разделенная на их количество. Чувствительно к выбросам (аномально большим или маленьким значениям).\n* **Медиана (median)** — значение, которое делит упорядоченный набор данных пополам. Половина значений меньше медианы, а половина — больше. В отличие от среднего, медиана устойчива к выбросам.\n* **Мода (mode)** — значение, которое встречается в наборе данных чаще всего.",
+      "starter_code": "def vikings_mean(arr)->float:\n    return vikings_sum(arr) / vikings_count(arr)\n\nassert vikings_mean([1, 2, 3]) == 2.0",
+      "tests": [
+        "assert vikings_mean([1, 2, 3]) == 2.0"
+      ],
+      "has_asserts": true,
+      "confidence": "low",
+      "signals": [
+        "has_asserts"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "analysis_1_stats__cell_13",
+      "source_notebook": "analysis_1_stats.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+      "code_cell_index": 13,
+      "prompt_cell_index": 11,
+      "title": "Меры центральной тенденции",
+      "prompt": "### Меры центральной тенденции\nЭти метрики помогают найти «типичное» или центральное значение в данных.\n* **Среднее арифметическое (mean)** — сумма всех значений, разделенная на их количество. Чувствительно к выбросам (аномально большим или маленьким значениям).\n* **Медиана (median)** — значение, которое делит упорядоченный набор данных пополам. Половина значений меньше медианы, а половина — больше. В отличие от среднего, медиана устойчива к выбросам.\n* **Мода (mode)** — значение, которое встречается в наборе данных чаще всего.",
+      "starter_code": "def vikings_median(arr):\n    \n    arr = sorted(arr)\n    l = vikings_count(arr)\n    if l%2:\n        return arr[l//2]\n    else:\n        return vikings_mean(arr[l//2-1:l//2+1])\n\n\nassert vikings_median([8,1,2,6,4])==4\nassert vikings_median([1,2,3,3,3,4,5,100])==3",
+      "tests": [
+        "assert vikings_median([8,1,2,6,4])==4",
+        "assert vikings_median([1,2,3,3,3,4,5,100])==3"
+      ],
+      "has_asserts": true,
+      "confidence": "low",
+      "signals": [
+        "has_asserts"
+      ],
+      "task_number_in_notebook": 5
+    },
+    {
+      "id": "analysis_2_numpy__cell_30",
+      "source_notebook": "analysis_2_numpy.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_2_numpy.ipynb",
+      "code_cell_index": 30,
+      "prompt_cell_index": 28,
+      "title": "Изменять элементы тоже легко, можно поменять одно значение, а можно сразу целую колонку.",
+      "prompt": "Изменять элементы тоже легко, можно поменять одно значение, а можно сразу целую колонку.",
+      "starter_code": "# TODO поменяйте первый элемент во второй строке массива c на 100\n\n\nassert c[1, 0] == 100",
+      "tests": [
+        "assert c[1, 0] == 100"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "analysis_2_numpy__cell_65",
+      "source_notebook": "analysis_2_numpy.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_2_numpy.ipynb",
+      "code_cell_index": 65,
+      "prompt_cell_index": 60,
+      "title": "В numpy встроены функции для поиска минимумов, максимумов и суммы. Часто мы хотим найти сумму не всего `np.array`, а по строкам или столбцам. Для этого используется аргумент `axis`.",
+      "prompt": "В numpy встроены функции для поиска минимумов, максимумов и суммы. Часто мы хотим найти сумму не всего `np.array`, а по строкам или столбцам. Для этого используется аргумент `axis`.",
+      "starter_code": "# TODO найдите среднее значение всего массива stats (сохраните в переменную mean_val)\nmean_val = \n\nassert mean_val == 3.5",
+      "tests": [
+        "assert mean_val == 3.5"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "analysis_2_numpy__cell_75",
+      "source_notebook": "analysis_2_numpy.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_2_numpy.ipynb",
+      "code_cell_index": 75,
+      "prompt_cell_index": 73,
+      "title": "Можно комбинировать условия с помощью `&` (и) и `|` (или). **Важно:** каждое условие обязательно брать в скобки `()`!",
+      "prompt": "Можно комбинировать условия с помощью `&` (и) и `|` (или). **Важно:** каждое условие обязательно брать в скобки `()`!",
+      "starter_code": "# TODO отфильтруйте массив data, оставив только числа, которые делятся на 20 без остатка\nfiltered_data = \n\nassert np.array_equal(filtered_data, np.array([20, 40, 60]))",
+      "tests": [
+        "assert np.array_equal(filtered_data, np.array([20, 40, 60]))"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 3
+    },
+    {
+      "id": "analysis_2_numpy__cell_81",
+      "source_notebook": "analysis_2_numpy.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_2_numpy.ipynb",
+      "code_cell_index": 81,
+      "prompt_cell_index": 79,
+      "title": "Можно менять форму `np.array`, главное чтобы общее количество элементов оставалось тем же.",
+      "prompt": "Можно менять форму `np.array`, главное чтобы общее количество элементов оставалось тем же.",
+      "starter_code": "# TODO превратите np.array after обратно в вектор (одномерный массив) и сохраните в flat_array\n\n\nassert flat_array.shape == (8,)",
+      "tests": [
+        "assert flat_array.shape == (8,)"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub"
+      ],
+      "task_number_in_notebook": 4
+    },
+    {
+      "id": "analysis_3_pandas__cell_52",
+      "source_notebook": "analysis_3_pandas.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_3_pandas.ipynb",
+      "code_cell_index": 52,
+      "prompt_cell_index": 51,
+      "title": "Задание 1: Свойства и статистики",
+      "prompt": "#### Задание 1: Свойства и статистики\n1. Загрузите таблицу с событиями `df_events.csv` в переменную `df_events_task`.\n2. Сохраните количество строк в `rows_count`.\n3. Посчитайте количество уникальных событий `event_type` и сохраните в `unique_events`.",
+      "starter_code": "df_events_task = ...\nrows_count = ...\nunique_events = ...\n\nassert rows_count == 378299\nassert unique_events == 6",
+      "tests": [
+        "assert rows_count == 378299",
+        "assert unique_events == 6"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "analysis_3_pandas__cell_55",
+      "source_notebook": "analysis_3_pandas.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_3_pandas.ipynb",
+      "code_cell_index": 55,
+      "prompt_cell_index": 54,
+      "title": "Задание 2: Фильтрация",
+      "prompt": "#### Задание 2: Фильтрация\nОставьте в `df_events_task` только события типа `item.added` за дату после `2025-02-10` и сохраните в `screen_views_late`.",
+      "starter_code": "screen_views_late = ...\n\nassert len(screen_views_late) == 27205\nassert screen_views_late.loc[25, 'event_type'] == 'item.added'",
+      "tests": [
+        "assert len(screen_views_late) == 27205",
+        "assert screen_views_late.loc[25, 'event_type'] == 'item.added'"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 2
+    },
+    {
+      "id": "analysis_3_pandas__cell_57",
+      "source_notebook": "analysis_3_pandas.ipynb",
+      "source_path": "content/source/vkat/VKAT-main/analysis_3_pandas.ipynb",
+      "code_cell_index": 57,
+      "prompt_cell_index": 56,
+      "title": "Задание 3: Слияния (Merge)",
+      "prompt": "#### Задание 3: Слияния (Merge)\nПрисоедините таблицу `matching` (файл `df_matching.csv`) по `user_id`, чтобы каждому юзеру в `screen_views_late` была присвоена группа. Какой join нужен?",
+      "starter_code": "screen_views_with_group = ...\n\nassert 'exp_group' in screen_views_with_group.columns\nassert len(screen_views_with_group) == len(screen_views_late)",
+      "tests": [
+        "assert 'exp_group' in screen_views_with_group.columns",
+        "assert len(screen_views_with_group) == len(screen_views_late)"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "has_starter_stub",
+        "near_task_markdown"
+      ],
+      "task_number_in_notebook": 3
+    }
+  ],
+  "diagnostics": {
+    "suspicious_markdown_without_candidate": [
+      {
+        "source_notebook": "python_2_basics.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_2_basics.ipynb",
+        "markdown_cell_index": 10,
+        "next_code_cell_index": 13,
+        "title": "В блокноте удобно что-то быстро потестить, создаёте ячейку, пишете что хотите, запускаете, видите результат. Я постоянно проверяю промежуточно куски кода, не держу в голове досканально как что правильно пишется, а проверяю на ходу. Составляйте конспект в obsidian или прям тут, пробуйте поиграться с кусками кода, модифицируйте и запускайте.",
+        "prompt_excerpt": "В блокноте удобно что-то быстро потестить, создаёте ячейку, пишете что хотите, запускаете, видите результат. Я постоянно проверяю промежуточно куски кода, не держу в голове досканально как что правильно пишется, а проверяю на ходу. Составляйте конспект в obsidian или прям тут, пробуйте поиграться с кусками кода, модифицируйте и запускайте.\n\nПорядок материала в моём курсе я подбираю для упрощения и ускорения вникания, систематизация тут делается чтобы было максимально понятно, а не чтобы создать ",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_2_project.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_2_project.ipynb",
+        "markdown_cell_index": 0,
+        "next_code_cell_index": null,
+        "title": "Проект",
+        "prompt_excerpt": "# Проект\n\nВ качестве проекта мы реализуем игру, которую вы будете совершенствовать в ходе прохождения модуля. В этом блокноте описано пошаговое ТЗ, вы можете скачать его к себе в репозиторий и писать код прямо здесь, или же создать новый файл у себя. После того как запушите выполненное или частично выполненное задание, пишите мне для проверки. Любые вопросы можете также задавать в личке или прямо в комментариях в коде.\n\nДля игры вы можете продумать полностью свой формат, здесь я накидаю скелет с",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_3_architecture.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+        "markdown_cell_index": 0,
+        "next_code_cell_index": 2,
+        "title": "Архитектура проекта",
+        "prompt_excerpt": "# Архитектура проекта\n\nЗадание этого урока будет выполняться по ходу урока, в конце каждой темы я описал как вы можете модифицировать свою игру, используя новые знания",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_3_architecture.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+        "markdown_cell_index": 17,
+        "next_code_cell_index": 19,
+        "title": "Задание по проекту",
+        "prompt_excerpt": "#### Задание по проекту\n\nПобейте свой код на модули:\n- перенесите функции скриптов в файл со скриптами\n- все глобальные переменные в отдельный конфиг файл\n- модифицируйте импорты\n- убедитесь что всё работает",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_3_architecture.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+        "markdown_cell_index": 34,
+        "next_code_cell_index": 36,
+        "title": "Задание по проекту",
+        "prompt_excerpt": "#### Задание по проекту\n\nУпакуйте данные сущностей в вашей игре в классы\n\nПотребуется много модификаций скриптов, но новый способ хранения данных удобнее!\n\nЕсли вы перенесли в другой модуль эти параметры, вы можете сразу создать отдельный файл с классом и красиво импортировать `from Character import Character` или `from entities.Enemy import Enemy`",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_3_architecture.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+        "markdown_cell_index": 51,
+        "next_code_cell_index": 54,
+        "title": "Задание по проекту",
+        "prompt_excerpt": "#### Задание по проекту\nЗапаковать свой функционал игры который взаимодействует с классами, в методы этих классов. Примеры:\n- метод подбора предмета, если у вас есть предметы\n- метод получения опыта\n- метод атаки\n- метод подсчёта урона (учитывает защиту)\n- запаковать способности (активные скиллы) в классы, при создании персов указывать сразу их способности, и метод который эти способности юзает. У класса способности должен быть один общий метод чтобы их можно было одинаково использовать.",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_3_architecture.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+        "markdown_cell_index": 71,
+        "next_code_cell_index": 73,
+        "title": "Задание",
+        "prompt_excerpt": "#### Задание",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_3_architecture.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_3_architecture.ipynb",
+        "markdown_cell_index": 76,
+        "next_code_cell_index": 78,
+        "title": "Задание по проекту",
+        "prompt_excerpt": "#### Задание по проекту\n\nРеализуйте наследование в своём проекте, любым способом:\n- можете как у меня сделать дерево классов, где всё истекает из одной сущности\n- можете сделать просто одно наследование, например класс персонажа (Воин, Маг, Рус, Ящер и тд) будет наследоваться от общего класса Character и тд\n- можете вообще выкатить DLC по теме алхимии и ваша игра станет potion craft\n- или собирать существ по частям как в Necrosmith",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "python_6_advanced+.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/python_6_advanced+.ipynb",
+        "markdown_cell_index": 17,
+        "next_code_cell_index": 19,
+        "title": "Задание",
+        "prompt_excerpt": "#### Задание",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "analysis_1_stats.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/analysis_1_stats.ipynb",
+        "markdown_cell_index": 59,
+        "next_code_cell_index": null,
+        "title": "Задание",
+        "prompt_excerpt": "### Задание\n\nЕсли хотите прям досканально запомнить как это всё работает, а заодно попрактиковаться в всяких фишках питона, можете сделать свой класс, который хранит набор значений, и позволяет проводить все эти манипуляции. Используйте по максимуму dunder-методы. Это не обязательное задание, проверять я его не буду.\n\n1. Создание объекта, из какой-то коллекции сделать экземпляр вашего класса, или создать пустой\n2. Методы получения min, max, mean, sum, count, медиана и мода\n3. Методы получения ра",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "analysis_3_pandas.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/analysis_3_pandas.ipynb",
+        "markdown_cell_index": 50,
+        "next_code_cell_index": 52,
+        "title": "Задание",
+        "prompt_excerpt": "### Задание",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      },
+      {
+        "source_notebook": "analysis_3_pandas.ipynb",
+        "source_path": "content/source/vkat/VKAT-main/analysis_3_pandas.ipynb",
+        "markdown_cell_index": 58,
+        "next_code_cell_index": 59,
+        "title": "Задание 4: Группировка и Агрегация",
+        "prompt_excerpt": "#### Задание 4: Группировка и Агрегация\nСгруппируйте `screen_views_with_group` по `exp_group` и посчитайте количество уникальных пользователей (`user_id`) в каждой группе.",
+        "reason": "task-like markdown did not map to a candidate code cell"
+      }
+    ]
+  }
+}
