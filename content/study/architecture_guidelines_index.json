@@ -1,0 +1,114 @@
+{
+  "title": "Архитектурные рекомендации",
+  "principles_count": 27,
+  "principles": [
+    {
+      "id": "arc001domaindrivendesign",
+      "title": "ARC-001: Domain-Driven Design"
+    },
+    {
+      "id": "arc002evolutionaryarchitecture",
+      "title": "ARC-002: Эволюционная архитектура"
+    },
+    {
+      "id": "arc003simplicitykissyagni",
+      "title": "ARC-003: Простота (KISS и YAGNI)"
+    },
+    {
+      "id": "arc004lowcouplinghighcohesion",
+      "title": "ARC-004: Слабая связанность, высокая связность"
+    },
+    {
+      "id": "arc005automationovermanualgovernance",
+      "title": "ARC-005: Автоматизация вместо ручного управления"
+    },
+    {
+      "id": "arc006ownership",
+      "title": "ARC-006: Владение"
+    },
+    {
+      "id": "arc007architectforscale",
+      "title": "ARC-007: Проектирование для масштабирования"
+    },
+    {
+      "id": "arc008sustainablecostawareness",
+      "title": "ARC-008: Устойчивое осознание стоимости"
+    },
+    {
+      "id": "reliability",
+      "title": "Надёжность"
+    },
+    {
+      "id": "performanceefficiency",
+      "title": "Эффективность производительности"
+    },
+    {
+      "id": "agility",
+      "title": "Гибкость"
+    },
+    {
+      "id": "maintainability",
+      "title": "Сопровождаемость"
+    },
+    {
+      "id": "testability",
+      "title": "Тестируемость"
+    },
+    {
+      "id": "deployability",
+      "title": "Развёртываемость"
+    },
+    {
+      "id": "security",
+      "title": "Безопасность"
+    },
+    {
+      "id": "integrability",
+      "title": "Интегрируемость"
+    },
+    {
+      "id": "limitdependencies",
+      "title": "Ограничение зависимостей"
+    },
+    {
+      "id": "adaptability",
+      "title": "Адаптируемость"
+    },
+    {
+      "id": "coordination",
+      "title": "Координация"
+    },
+    {
+      "id": "servicesgranularity",
+      "title": "Гранулярность сервисов"
+    },
+    {
+      "id": "sharingfunctionality",
+      "title": "Совместное использование функциональности"
+    },
+    {
+      "id": "communication",
+      "title": "Коммуникация"
+    },
+    {
+      "id": "coordination-1",
+      "title": "Координация"
+    },
+    {
+      "id": "storageselection",
+      "title": "Выбор хранилища"
+    },
+    {
+      "id": "diagramguidelines",
+      "title": "Рекомендации по диаграммам"
+    },
+    {
+      "id": "architecturedecisionrecordsadrs",
+      "title": "Architecture Decision Records (ADR)"
+    },
+    {
+      "id": "dhreferencearchitectures",
+      "title": "Эталонные архитектуры"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.streamlit-home/
+.learning_progress.json
+
+# Local scratch / experiments
+test_vault/
+AI_Isaac_Roguelite_Project/
+
+# Source archives kept locally for research, not used by the app
+content/source/home_assignments/
+content/source/preference_model/*_login.html
+
+# VKAT raw course material is large; the app only needs algos_patterns.
+content/source/vkat/VKAT-main/*
+!content/source/vkat/VKAT-main/algos_patterns/
+!content/source/vkat/VKAT-main/algos_patterns/**
