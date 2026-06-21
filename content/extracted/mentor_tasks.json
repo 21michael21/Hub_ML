@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 83,
-    "tasks_with_asserts": 52,
+    "tasks_extracted": 84,
+    "tasks_with_asserts": 53,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 46,
+      "high": 47,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,41 @@
     }
   ],
   "tasks": [
+    {
+      "id": "mlops_monitoring_simple_drift_alert__manual_01",
+      "source_notebook": "manual_mlops_monitoring",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Model monitoring data drift alert",
+      "prompt": "#### MLOps monitoring: simple data drift alert\n\nImplement a tiny monitoring helper. It compares a baseline feature distribution with a current feature distribution.\n\nCreate `simple_drift_alert(baseline_values, current_values, threshold) -> dict`.\n\nReturn:\n\n```python\n{\n    \"baseline_mean\": ...,\n    \"current_mean\": ...,\n    \"delta\": ...,\n    \"alert\": True or False,\n}\n```\n\nUse mean difference as the simple drift signal. Round means and delta to 4 decimals. Keep this educational: no Prometheus, no Grafana, no database, no production monitoring stack.",
+      "starter_code": "def simple_drift_alert(baseline_values: list[float], current_values: list[float], threshold: float) -> dict:\n    ...",
+      "tests": [
+        "stable = simple_drift_alert([2, 3, 2, 3], [2, 3, 3, 2], threshold=1.0)",
+        "drifted = simple_drift_alert([2, 3, 2, 3], [8, 9, 7, 8], threshold=2.0)",
+        "assert set(stable) == {\"baseline_mean\", \"current_mean\", \"delta\", \"alert\"}",
+        "assert stable[\"baseline_mean\"] == 2.5",
+        "assert stable[\"current_mean\"] == 2.5",
+        "assert stable[\"delta\"] == 0.0",
+        "assert stable[\"alert\"] is False",
+        "assert drifted[\"baseline_mean\"] == 2.5",
+        "assert drifted[\"current_mean\"] == 8.0",
+        "assert drifted[\"delta\"] == 5.5",
+        "assert drifted[\"alert\"] is True"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "monitoring",
+        "model monitoring",
+        "drift",
+        "data drift",
+        "alert"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "mlops_serving_predict_order_conversion__manual_01",
       "source_notebook": "manual_mlops_serving",

@@ -1,18 +1,18 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:47:44.880076+00:00`
+Generated: `2026-06-21T21:50:00.747389+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 30/36 pass, 6 fail**
-- Failed rule counts: `{'rule1': 6, 'rule2': 6, 'rule3': 6, 'rule4': 3}`
+Summary: **GATE: 31/36 pass, 5 fail**
+- Failed rule counts: `{'rule1': 5, 'rule2': 5, 'rule3': 5, 'rule4': 2}`
 
 ## python.basics — Python Basics  [PASS]
 
 - rule1 note quality: 100 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 1 practice, 3 task ✓
+- rule4 practice/task: 1 practice, 4 task ✓
 
 ## python.oop — Object-Oriented Python  [PASS]
 
@@ -217,12 +217,12 @@ Summary: **GATE: 30/36 pass, 6 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 1 task ✓
 
-## mlops.monitoring — Monitoring and Data Drift  [FAIL]
+## mlops.monitoring — Monitoring and Data Drift  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## interview.ml_ds_questions — ML/DS Interview Questions  [FAIL]
 

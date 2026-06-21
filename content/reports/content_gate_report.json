@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T21:47:44.880076+00:00",
+  "generated_at": "2026-06-21T21:50:00.747389+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 30,
-    "failed_topics": 6,
+    "passed_topics": 31,
+    "failed_topics": 5,
     "failed_rule_counts": {
-      "rule1": 6,
-      "rule2": 6,
-      "rule3": 6,
-      "rule4": 3
+      "rule1": 5,
+      "rule2": 5,
+      "rule3": 5,
+      "rule4": 2
     },
     "failed_required_topic_ids": [
       "interview.ml_ds_questions",
@@ -49,9 +49,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 3 task",
+          "detail": "1 practice, 4 task",
           "practice_count": 1,
-          "task_count": 3
+          "task_count": 4
         }
       },
       "evidence": {
@@ -79,6 +79,10 @@
           }
         ],
         "tasks": [
+          {
+            "id": "mlops_monitoring_simple_drift_alert__manual_01",
+            "title": "Model monitoring data drift alert"
+          },
           {
             "id": "mlops_serving_predict_order_conversion__manual_01",
             "title": "Model serving API inference predict function"
@@ -1848,43 +1852,54 @@
       "title": "Monitoring and Data Drift",
       "track": "MLOps",
       "required": false,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "05_IT_Resources/MLOps/03_Model_Monitoring_Data_Drift.md",
+            "title": "Model Monitoring Data Drift Monitoring Drift",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "mlops_monitoring_drift_alert_card",
+            "title": "MLOps Monitoring: Data Drift Alert Plan"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "mlops_monitoring_simple_drift_alert__manual_01",
+            "title": "Model monitoring data drift alert"
+          }
+        ]
       }
     },
     {

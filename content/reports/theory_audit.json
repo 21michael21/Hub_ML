@@ -1,8 +1,8 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T21:47:44.198045+00:00",
-    "total_notes": 225,
+    "generated_at": "2026-06-21T21:50:00.128811+00:00",
+    "total_notes": 226,
     "notes_by_section": {
       "00 Atlas": 6,
       "00 Graph": 26,
@@ -11,12 +11,12 @@
       "02 Data Analysis": 18,
       "03 Ml": 22,
       "04 Nlp": 23,
-      "05 It Resources": 63,
+      "05 It Resources": 64,
       "90 Templates": 3,
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 53.4,
+    "average_quality_score": 53.7,
     "missing_core_topics": [],
     "notes_without_frontmatter": [],
     "notes_without_examples": [
@@ -6646,6 +6646,40 @@
       "is_technical_topic": true,
       "generic_heading_count": 0,
       "words_per_heading": 58.9,
+      "quality_score": 100
+    },
+    {
+      "relative_path": "05_IT_Resources/MLOps/03_Model_Monitoring_Data_Drift.md",
+      "section": "05 It Resources",
+      "title": "Model Monitoring Data Drift Monitoring Drift",
+      "frontmatter_fields": [
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "status",
+        "tags",
+        "title",
+        "track"
+      ],
+      "has_frontmatter": true,
+      "word_count": 544,
+      "heading_count": 9,
+      "code_block_count": 1,
+      "wiki_link_count": 1,
+      "external_link_count": 1,
+      "tag_count": 6,
+      "has_examples": true,
+      "has_practice_section": true,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
+      "has_prerequisites": false,
+      "likely_thin_note": false,
+      "likely_ai_dump_or_placeholder": false,
+      "is_technical_topic": true,
+      "generic_heading_count": 0,
+      "words_per_heading": 60.4,
       "quality_score": 100
     },
     {
