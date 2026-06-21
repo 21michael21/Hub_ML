@@ -1,12 +1,12 @@
 # Theory Content Audit
 
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
-Generated: `2026-06-21T21:27:29.706810+00:00`
+Generated: `2026-06-21T21:32:02.989778+00:00`
 
 ## Summary
 
 - Total notes: **221**
-- Average quality score: **52.1 / 100**
+- Average quality score: **52.3 / 100**
 
 ## Notes By Section
 

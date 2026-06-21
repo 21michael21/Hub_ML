@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 79,
-    "tasks_with_asserts": 48,
+    "tasks_extracted": 80,
+    "tasks_with_asserts": 49,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 42,
+      "high": 43,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,41 @@
     }
   ],
   "tasks": [
+    {
+      "id": "nlp_preprocessing_normalize_tokenize__manual_01",
+      "source_notebook": "manual_nlp_preprocessing",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "NLP text preprocessing tokenization pipeline",
+      "prompt": "#### NLP preprocessing: normalize and tokenize text\n\nImplement a tiny text preprocessing pipeline using only Python standard library.\n\nCreate:\n\n1. `normalize_text(text)`: lowercase, replace URLs with `url`, remove punctuation by turning it into spaces, collapse whitespace.\n2. `tokenize(text)`: returns tokens from normalized text.\n3. `tokenized_messages`: token list for each message.\n4. `vocabulary`: sorted unique tokens across all messages.\n\nDo not use external NLP libraries here. This task checks the foundation before vectorization, text classification, transformers, or search.",
+      "starter_code": "messages = [\n    \"Great work!!! Can you send the README?\",\n    \"I can't open the dataset: https://example.com/data\",\n    \"NOT happy with this answer...\",\n    \"Order #123 failed twice :(\",\n]\n\n\ndef normalize_text(text: str) -> str:\n    ...\n\n\ndef tokenize(text: str) -> list[str]:\n    ...\n\n\n# TODO: build tokenized_messages and vocabulary\ntokenized_messages = ...\nvocabulary = ...",
+      "tests": [
+        "assert normalize_text(\"Hello, WORLD!!!\") == \"hello world\"",
+        "assert normalize_text(\"See https://example.com now\") == \"see url now\"",
+        "assert tokenize(\"Great work!!!\") == [\"great\", \"work\"]",
+        "assert tokenized_messages[0] == [\"great\", \"work\", \"can\", \"you\", \"send\", \"the\", \"readme\"]",
+        "assert tokenized_messages[1] == [\"i\", \"can\", \"t\", \"open\", \"the\", \"dataset\", \"url\"]",
+        "assert \"url\" in vocabulary",
+        "assert \"not\" in vocabulary",
+        "assert \"123\" in vocabulary",
+        "assert len(vocabulary) == 21"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "nlp",
+        "text",
+        "text pipeline",
+        "preprocessing",
+        "token",
+        "tokenization",
+        "normalization"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "ml_unsupervised_nearest_centroid__manual_01",
       "source_notebook": "manual_ml_unsupervised",

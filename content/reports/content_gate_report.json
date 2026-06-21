@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:27:30.277596+00:00",
+  "generated_at": "2026-06-21T21:32:03.556707+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 23,
-    "failed_topics": 13,
+    "passed_topics": 24,
+    "failed_topics": 12,
     "failed_rule_counts": {
-      "rule1": 13,
-      "rule2": 13,
-      "rule3": 13,
-      "rule4": 8
+      "rule1": 12,
+      "rule2": 12,
+      "rule3": 12,
+      "rule4": 6
     },
     "failed_required_topic_ids": [
-      "nlp.preprocessing",
       "nlp.vectorization",
       "nlp.transformers",
       "genai.rag",
@@ -1315,43 +1314,54 @@
       "title": "Text Preprocessing",
       "track": "NLP",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "04_NLP/02_Text_Preprocessing.md",
+            "title": "Text Pipeline Tokenization Lemmatization Preprocessing",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "nlp_preprocessing_message_cleaning",
+            "title": "NLP Preprocessing: Clean Interview and User Messages"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "nlp_preprocessing_normalize_tokenize__manual_01",
+            "title": "NLP text preprocessing tokenization pipeline"
+          }
+        ]
       }
     },
     {
@@ -1363,8 +1373,7 @@
       "failed_rules": [
         "rule1",
         "rule2",
-        "rule3",
-        "rule4"
+        "rule3"
       ],
       "rules": {
         "rule1_note_quality": {
@@ -1386,15 +1395,20 @@
           "has_sources_section": false
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
           "task_count": 0
         }
       },
       "evidence": {
         "notes": [],
-        "practice": [],
+        "practice": [
+          {
+            "id": "nlp_preprocessing_message_cleaning",
+            "title": "NLP Preprocessing: Clean Interview and User Messages"
+          }
+        ],
         "tasks": []
       }
     },
@@ -1671,8 +1685,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 0 task",
-          "practice_count": 2,
+          "detail": "3 practice, 0 task",
+          "practice_count": 3,
           "task_count": 0
         }
       },
@@ -1682,6 +1696,10 @@
           {
             "id": "ml_preference_model_take_home",
             "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_preprocessing_message_cleaning",
+            "title": "NLP Preprocessing: Clean Interview and User Messages"
           },
           {
             "id": "nlp_text_classifier_baseline",
