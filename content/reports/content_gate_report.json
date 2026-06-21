@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:08:58.648788+00:00",
+  "generated_at": "2026-06-21T21:12:14.551425+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 18,
-    "failed_topics": 18,
+    "passed_topics": 19,
+    "failed_topics": 17,
     "failed_rule_counts": {
-      "rule1": 18,
-      "rule2": 18,
-      "rule3": 18,
-      "rule4": 11
+      "rule1": 17,
+      "rule2": 17,
+      "rule3": 17,
+      "rule4": 10
     },
     "failed_required_topic_ids": [
-      "stats.hypothesis_ab",
       "math.optimization",
       "ml.supervised",
       "ml.feature_engineering",
@@ -907,43 +906,54 @@
       "title": "Hypothesis Testing and A/B Tests",
       "track": "Statistics",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Stats/04_Hypothesis_AB_Testing.md",
+            "title": "Hypothesis p-value confidence interval AB test",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "stats_hypothesis_ab_scenario_review",
+            "title": "Statistics AB Test Hypothesis Confidence Interval Review"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "stats_hypothesis_ab_conversion_rates__manual_01",
+            "title": "Hypothesis A/B test conversion rate and uplift calculation"
+          }
+        ]
       }
     },
     {

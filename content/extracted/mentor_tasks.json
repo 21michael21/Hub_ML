@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 74,
-    "tasks_with_asserts": 43,
+    "tasks_extracted": 75,
+    "tasks_with_asserts": 44,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 37,
+      "high": 38,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,38 @@
     }
   ],
   "tasks": [
+    {
+      "id": "stats_hypothesis_ab_conversion_rates__manual_01",
+      "source_notebook": "manual_analysis_1_stats",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Hypothesis A/B test conversion rate and uplift calculation",
+      "prompt": "#### Hypothesis and A/B test basics: conversion rates and uplift\n\nCompute simple A/B conversion metrics without pretending to calculate a p-value.\n\nCreate these variables:\n\n1. `rate_a`: conversion rate for group A.\n2. `rate_b`: conversion rate for group B.\n3. `absolute_uplift`: `rate_b - rate_a`.\n4. `relative_uplift`: `absolute_uplift / rate_a`.\n5. `decision_note`: a short string that mentions this sample is too small for a launch decision without uncertainty/test-plan checks.\n\nThis task checks the practical core before hypothesis testing: metric definition, denominator, effect size, and cautious interpretation.",
+      "starter_code": "group_a = [0, 1, 0, 1, 1, 0, 0, 1, 0, 1]\ngroup_b = [1, 1, 0, 1, 1, 1, 0, 1, 1, 1]\n\n# TODO: compute conversion rates\nrate_a = ...\nrate_b = ...\n\n# TODO: compute absolute and relative uplift\nabsolute_uplift = ...\nrelative_uplift = ...\n\n# TODO: write a cautious interpretation, not a fake p-value conclusion\ndecision_note = ...",
+      "tests": [
+        "assert rate_a == 0.5",
+        "assert rate_b == 0.8",
+        "assert round(absolute_uplift, 2) == 0.30",
+        "assert round(relative_uplift, 2) == 0.60",
+        "assert isinstance(decision_note, str) and len(decision_note) >= 40",
+        "assert any(word in decision_note.lower() for word in [\"sample\", \"uncertainty\", \"test\", \"launch\"])",
+        "assert \"p-value\" not in decision_note.lower() or \"not\" in decision_note.lower()"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "hypothesis",
+        "ab test",
+        "a/b",
+        "conversion",
+        "effect size",
+        "uplift"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "sql_select_join_pandas_merge__manual_01",
       "source_notebook": "manual_sql_select_join",
