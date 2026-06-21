@@ -120,6 +120,50 @@ PRACTICE_META = {
     PRACTICE_DOING: {"label": "Практика в работе", "icon": "◐", "class": "status-reading"},
     PRACTICE_DONE: {"label": "Практика готова", "icon": "■", "class": "status-done"},
 }
+NAV_GROUPS: list[tuple[str, list[tuple[str, str, str]]]] = [
+    ("Home", [("Home", "Home", "◧")]),
+    (
+        "Learn",
+        [
+            ("Theory", "Theory", "◎"),
+            ("🎯 Practice", "Practice", "✎"),
+            ("🧭 Theory Quality", "Theory Quality", "◇"),
+            ("Roadmap", "Roadmap", "▤"),
+            ("Progress", "Progress", "▥"),
+        ],
+    ),
+    (
+        "Build",
+        [
+            ("🧪 Data Lab Projects", "Data Lab", "▣"),
+            ("🤖 ML Lab", "ML Lab", "▧"),
+            ("📓 Notebook", "Notebook", "▦"),
+            ("📊 Datasets", "Datasets", "▨"),
+            ("⚡ Scratch", "Scratch", "⌁"),
+        ],
+    ),
+    (
+        "Train",
+        [
+            ("🎯 Tasks", "Tasks", "✓"),
+            ("🧩 Algorithms", "Algorithms", "⌘"),
+            ("🎤 Interviews", "Interviews", "?"),
+        ],
+    ),
+    (
+        "Output",
+        [
+            ("📁 Portfolio", "Portfolio", "□"),
+            ("🧪 Experiments", "Experiments", "◌"),
+            ("🏗 Architecture", "Architecture", "△"),
+            ("🔗 Links Health", "Links Health", "↔"),
+        ],
+    ),
+]
+NAV_LABELS = {tab: label for _, items in NAV_GROUPS for tab, label, _ in items}
+NAV_ICONS = {tab: icon for _, items in NAV_GROUPS for tab, _, icon in items}
+NAV_GROUP_BY_TAB = {tab: group for group, items in NAV_GROUPS for tab, _, _ in items}
+TAB_OPTIONS = list(NAV_LABELS)
 
 
 st.set_page_config(page_title=APP_TITLE, page_icon="📚", layout="wide")
@@ -220,6 +264,31 @@ def inject_styles() -> None:
         border-right: 1px solid var(--border);
     }
 
+    [data-testid="stSidebar"] .stButton > button {
+        width: 100%;
+        justify-content: flex-start;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        color: var(--dim);
+        font-family: var(--font-body);
+        font-size: 0.86rem;
+        padding: 0.38rem 0.62rem;
+        text-align: left;
+        transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+    }
+
+    [data-testid="stSidebar"] .stButton > button:hover {
+        border-color: var(--border);
+        background: var(--surface);
+        color: var(--text);
+    }
+
+    [data-testid="stSidebar"] .stButton > button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
     [data-testid="stHeader"] {
         background: transparent;
     }
@@ -246,6 +315,51 @@ def inject_styles() -> None:
         font-weight: 700;
         letter-spacing: 0;
         padding: 0.15rem 0 0.35rem;
+    }
+
+    .nav-group-label {
+        margin: 1rem 0 0.32rem;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .nav-active-row {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin: 0.14rem 0 0.24rem;
+        border: 1px solid rgba(124,140,248,0.22);
+        border-left: 3px solid var(--accent);
+        border-radius: var(--radius-sm);
+        background: var(--accent-soft);
+        color: var(--text);
+        font-size: 0.86rem;
+        font-weight: 600;
+        padding: 0.42rem 0.6rem;
+    }
+
+    .nav-active-row .nav-ico {
+        color: var(--accent);
+        font-family: var(--font-mono);
+    }
+
+    .breadcrumb-shell {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin: 0 0 1.05rem;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.03em;
+    }
+
+    .breadcrumb-shell strong {
+        color: var(--dim);
+        font-weight: 500;
     }
 
     .note-header {
@@ -2349,8 +2463,6 @@ def ensure_active_state(sections: dict[str, list[dict[str, str]]]) -> None:
 def render_sidebar(sections: dict[str, list[dict[str, str]]]) -> tuple[str, dict[str, str] | None]:
     ensure_active_state(sections)
 
-    st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
-    st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
     st.sidebar.divider()
     st.sidebar.caption("Навигация по базе")
 
@@ -2625,6 +2737,63 @@ def open_note_from_roadmap(note: dict[str, str]) -> None:
 
 def open_tab(tab_name: str) -> None:
     st.session_state["active_tab"] = tab_name
+
+
+def nav_button_label(tab_name: str) -> str:
+    icon = NAV_ICONS.get(tab_name, "·")
+    label = NAV_LABELS.get(tab_name, tab_name)
+    return f"{icon} {label}"
+
+
+def render_nav_active_row(tab_name: str) -> None:
+    icon = NAV_ICONS.get(tab_name, "·")
+    label = NAV_LABELS.get(tab_name, tab_name)
+    st.sidebar.markdown(
+        f"""
+<div class="nav-active-row">
+    <span class="nav-ico">{html.escape(icon)}</span>
+    <span>{html.escape(label)}</span>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_grouped_navigation() -> str:
+    active_tab = st.session_state.get("active_tab", "Home")
+    if active_tab not in TAB_OPTIONS:
+        active_tab = "Home"
+        st.session_state["active_tab"] = active_tab
+
+    st.sidebar.markdown("### Hub_ML")
+    st.sidebar.caption("local ML workstation")
+    for group, items in NAV_GROUPS:
+        st.sidebar.markdown(
+            f'<div class="nav-group-label">{html.escape(group)}</div>',
+            unsafe_allow_html=True,
+        )
+        for tab_name, _, _ in items:
+            if tab_name == active_tab:
+                render_nav_active_row(tab_name)
+                continue
+            st.sidebar.button(
+                nav_button_label(tab_name),
+                key=f"nav_{tab_name}",
+                on_click=open_tab,
+                args=(tab_name,),
+                use_container_width=True,
+            )
+    return active_tab
+
+
+def render_breadcrumb(active_tab: str) -> None:
+    group = NAV_GROUP_BY_TAB.get(active_tab, "Home")
+    label = NAV_LABELS.get(active_tab, active_tab)
+    if active_tab == "Home":
+        text = "<strong>Home</strong>"
+    else:
+        text = f"<strong>{html.escape(group)}</strong><span>/</span><span>{html.escape(label)}</span>"
+    st.markdown(f'<div class="breadcrumb-shell">{text}</div>', unsafe_allow_html=True)
 
 
 def next_practice_card(cards: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -5348,35 +5517,14 @@ def main() -> None:
     architecture_data = load_architecture_guidelines()
     mentor_data = load_mentor_tasks(MENTOR_TASKS_PATH)
     data_lab_projects = scan_data_lab_projects()
-    tab_options = [
-        "Home",
-        "Theory",
-        "🎯 Practice",
-        "🎯 Tasks",
-        "🧪 Data Lab Projects",
-        "📁 Portfolio",
-        "📊 Datasets",
-        "⚡ Scratch",
-        "📓 Notebook",
-        "🧩 Algorithms",
-        "🎤 Interviews",
-        "🏗 Architecture",
-        "🧭 Theory Quality",
-        "Roadmap",
-        "Progress",
-        "🔗 Links Health",
-    ]
-    if st.session_state.get("active_tab") not in tab_options:
+    if st.session_state.get("active_tab") not in TAB_OPTIONS:
         st.session_state["active_tab"] = "Home"
+    st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
+    st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
+    st.sidebar.divider()
+    active_tab = render_grouped_navigation()
     selected_section, selected_note = render_sidebar(sections)
-
-    active_tab = st.radio(
-        "Режим",
-        tab_options,
-        key="active_tab",
-        horizontal=True,
-        label_visibility="collapsed",
-    )
+    render_breadcrumb(active_tab)
 
     if active_tab == "Home":
         render_dashboard(sections, practice_cards, datasets, graph)
@@ -5389,7 +5537,7 @@ def main() -> None:
         render_practice_tab(practice_cards, practice_warnings, note_index, datasets)
     elif active_tab == "🎯 Tasks":
         render_tasks_tab(mentor_data)
-    elif active_tab == "🧪 Data Lab Projects":
+    elif active_tab in {"🧪 Data Lab Projects", "🤖 ML Lab", "🧪 Experiments"}:
         render_data_lab_projects_tab(data_lab_projects, datasets, practice_cards, mentor_data.get("tasks", []), note_index)
     elif active_tab == "📁 Portfolio":
         render_portfolio_tab(practice_cards, data_lab_projects)
