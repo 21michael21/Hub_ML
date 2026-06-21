@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T21:39:49.423688+00:00",
+  "generated_at": "2026-06-21T21:42:28.044518+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 27,
-    "failed_topics": 9,
+    "passed_topics": 28,
+    "failed_topics": 8,
     "failed_rule_counts": {
-      "rule1": 9,
-      "rule2": 9,
-      "rule3": 9,
-      "rule4": 5
+      "rule1": 8,
+      "rule2": 8,
+      "rule3": 8,
+      "rule4": 4
     },
     "failed_required_topic_ids": [
       "mlops.experiments",
@@ -571,8 +571,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "5 practice, 2 task",
-          "practice_count": 5,
+          "detail": "6 practice, 2 task",
+          "practice_count": 6,
           "task_count": 2
         }
       },
@@ -594,16 +594,16 @@
             "title": "EDA Quality Missing Values Drill"
           },
           {
+            "id": "genai_eval_agent_review_card",
+            "title": "LLM Eval and Agent Review Drill"
+          },
+          {
             "id": "math_linear_algebra_numpy_practice",
             "title": "NumPy Matrix and Vector Scoring"
           },
           {
             "id": "sql_select_join_query_reading",
             "title": "SQL SELECT JOIN Query Reading"
-          },
-          {
-            "id": "sql_window_aggregation_practice",
-            "title": "SQL Window Function Aggregation Drill"
           }
         ],
         "tasks": [
@@ -646,8 +646,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 1 task",
-          "practice_count": 1,
+          "detail": "2 practice, 1 task",
+          "practice_count": 2,
           "task_count": 1
         }
       },
@@ -663,6 +663,10 @@
           {
             "id": "data_cleaning_eda_quality_orders",
             "title": "EDA Quality Missing Values Drill"
+          },
+          {
+            "id": "genai_eval_agent_review_card",
+            "title": "LLM Eval and Agent Review Drill"
           }
         ],
         "tasks": [
@@ -1662,42 +1666,48 @@
       "title": "LLM Evaluation, Agents, and Tools",
       "track": "GenAI and RAG",
       "required": false,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
           "task_count": 0
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
+        "notes": [
+          {
+            "path": "04_NLP/GenAI/04_LLM_Evaluation_Agents_Tools.md",
+            "title": "LLM Evaluation Eval Agent Tool Calling",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "genai_eval_agent_review_card",
+            "title": "LLM Eval and Agent Review Drill"
+          }
+        ],
         "tasks": []
       }
     },
