@@ -1,32 +1,32 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T19:28:57.498018+00:00`
+Generated: `2026-06-21T19:48:54.108667+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 0/36 pass, 36 fail**
-- Failed rule counts: `{'rule1': 25, 'rule2': 32, 'rule3': 36, 'rule4': 14}`
+Summary: **GATE: 1/36 pass, 35 fail**
+- Failed rule counts: `{'rule1': 33, 'rule2': 35, 'rule3': 35, 'rule4': 23}`
 
 ## python.basics — Python Basics  [FAIL]
 
-- rule1 note quality: 80 >= 70 ✓
+- rule1 note quality: 75 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag true ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 5 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## python.oop — Object-Oriented Python  [FAIL]
 
 - rule1 note quality: 65 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 8 task ✓
+- rule4 practice/task: 0 practice, 3 task ✓
 
 ## python.typing_architecture — Typing and Architecture  [FAIL]
 
-- rule1 note quality: 95 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag false ✓
-- rule3 sources: header missing, 0 registered URLs ✗
-- rule4 practice/task: 1 practice, 5 task ✓
+- rule1 note quality: 40 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
+- rule3 sources: blocked by rule1/rule2 ✗
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## python.algorithms — Algorithms and Complexity  [FAIL]
 
@@ -37,45 +37,45 @@ Summary: **GATE: 0/36 pass, 36 fail**
 
 ## sql.select_join — SQL Select, Filter, Join  [FAIL]
 
-- rule1 note quality: 95 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag false ✓
-- rule3 sources: header missing, 0 registered URLs ✗
-- rule4 practice/task: 0 practice, 1 task ✓
-
-## sql.aggregation_windows — SQL Aggregations and Window Functions  [FAIL]
-
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
+
+## sql.aggregation_windows — SQL Aggregations and Window Functions  [PASS]
+
+- rule1 note quality: 95 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## git.tools — Git and CLI Workflow  [FAIL]
 
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 3 practice, 0 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## git.reproducibility — Environment and Reproducibility  [FAIL]
 
-- rule1 note quality: 20 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
 
 ## data.pandas_basics — Pandas Basics  [FAIL]
 
-- rule1 note quality: 80 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag true ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 4 practice, 3 task ✓
+- rule4 practice/task: 2 practice, 1 task ✓
 
 ## data.cleaning_eda — Data Cleaning and EDA  [FAIL]
 
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 5 practice, 1 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## data.groupby_merge — GroupBy, Merge, and Aggregation  [FAIL]
 
@@ -86,17 +86,17 @@ Summary: **GATE: 0/36 pass, 36 fail**
 
 ## data.visualization — Data Visualization  [FAIL]
 
-- rule1 note quality: 80 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag true ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 3 practice, 0 task ✓
 
 ## stats.descriptive — Descriptive Statistics  [FAIL]
 
-- rule1 note quality: 80 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag true ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 5 task ✓
+- rule4 practice/task: 0 practice, 2 task ✓
 
 ## stats.probability_distributions — Probability and Distributions  [FAIL]
 
@@ -114,10 +114,10 @@ Summary: **GATE: 0/36 pass, 36 fail**
 
 ## math.linear_algebra — Linear Algebra for ML  [FAIL]
 
-- rule1 note quality: 50 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 5 task ✓
+- rule4 practice/task: 0 practice, 1 task ✓
 
 ## math.optimization — Optimization Basics  [FAIL]
 
@@ -128,49 +128,49 @@ Summary: **GATE: 0/36 pass, 36 fail**
 
 ## ml.supervised — Supervised Learning  [FAIL]
 
-- rule1 note quality: 65 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 0 task ✓
+- rule4 practice/task: 1 practice, 0 task ✓
 
 ## ml.validation_metrics — Validation and Metrics  [FAIL]
 
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 0 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## ml.feature_engineering — Feature Engineering  [FAIL]
 
-- rule1 note quality: 50 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 0 task ✓
+- rule4 practice/task: 1 practice, 0 task ✓
 
 ## ml.unsupervised — Unsupervised Learning  [FAIL]
 
-- rule1 note quality: 50 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
 
 ## nlp.preprocessing — Text Preprocessing  [FAIL]
 
-- rule1 note quality: 65 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 0 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## nlp.vectorization — Vectorization and Classical NLP Baselines  [FAIL]
 
-- rule1 note quality: 65 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 0 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## nlp.transformers — Transformers and Embeddings  [FAIL]
 
-- rule1 note quality: 15 < 70 ✗
+- rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
@@ -187,7 +187,7 @@ Summary: **GATE: 0/36 pass, 36 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 1 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## genai.rag — RAG Basics  [FAIL]
 
@@ -208,7 +208,7 @@ Summary: **GATE: 0/36 pass, 36 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 3 practice, 0 task ✓
+- rule4 practice/task: 2 practice, 0 task ✓
 
 ## mlops.serving — Model Serving Basics  [FAIL]
 
@@ -226,17 +226,17 @@ Summary: **GATE: 0/36 pass, 36 fail**
 
 ## interview.ml_ds_questions — ML/DS Interview Questions  [FAIL]
 
-- rule1 note quality: 85 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag false ✓
-- rule3 sources: header missing, 0 registered URLs ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
+- rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
 
 ## interview.coding — Coding Interview Practice  [FAIL]
 
-- rule1 note quality: 80 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag true ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 33 task ✓
+- rule4 practice/task: 0 practice, 0 task ✗
 
 ## interview.take_home — Take-home Assignments  [FAIL]
 
@@ -247,14 +247,14 @@ Summary: **GATE: 0/36 pass, 36 fail**
 
 ## career.portfolio — Portfolio Artifacts  [FAIL]
 
-- rule1 note quality: 80 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag true ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 6 practice, 0 task ✓
+- rule4 practice/task: 4 practice, 0 task ✓
 
 ## career.resume_remote — Resume and Remote Work Readiness  [FAIL]
 
-- rule1 note quality: 95 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag false ✓
-- rule3 sources: header missing, 0 registered URLs ✗
+- rule1 note quality: 0 < 70 ✗
+- rule2 ai_dump_flag: no qualified note ✗
+- rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗

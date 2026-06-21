@@ -41,6 +41,12 @@ def pattern_hits(text: str, patterns: list[str]) -> list[str]:
     return hits
 
 
+def matches_topic_patterns(text: str, patterns: list[str]) -> bool:
+    hits = pattern_hits(text, patterns)
+    required_hits = 1 if len(patterns) <= 1 else 2
+    return len(hits) >= required_hits
+
+
 def parse_frontmatter(text: str) -> tuple[dict[str, Any], str]:
     match = FRONTMATTER_RE.match(text)
     if not match:
@@ -87,12 +93,12 @@ def note_text(note: dict[str, Any]) -> str:
 
 def matching_notes(topic: dict[str, Any], notes: list[dict[str, Any]]) -> list[dict[str, Any]]:
     patterns = list(topic.get("expected_note_patterns") or [])
-    return [note for note in notes if pattern_hits(note_text(note), patterns)]
+    return [note for note in notes if matches_topic_patterns(note_text(note), patterns)]
 
 
 def matching_items(topic: dict[str, Any], items: list[dict[str, Any]], patterns_key: str) -> list[dict[str, Any]]:
     patterns = list(topic.get(patterns_key) or [])
-    return [item for item in items if pattern_hits(item_text(item), patterns)]
+    return [item for item in items if matches_topic_patterns(item_text(item), patterns)]
 
 
 def registered_urls(resources: list[dict[str, Any]]) -> set[str]:
@@ -222,6 +228,15 @@ def load_matrix(path: Path) -> list[dict[str, Any]]:
     data = load_json(path)
     topics = data.get("topics", []) if isinstance(data, dict) else []
     return [topic for topic in topics if isinstance(topic, dict)]
+
+
+def filter_topics(topics: list[dict[str, Any]], topic_id: str | None) -> list[dict[str, Any]]:
+    if not topic_id:
+        return topics
+    selected = [topic for topic in topics if str(topic.get("id") or "") == topic_id]
+    if not selected:
+        raise SystemExit(f"Topic not found: {topic_id}")
+    return selected
 
 
 def load_practice_items(path: Path) -> list[dict[str, Any]]:
@@ -369,6 +384,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--reaudit", action="store_true")
     parser.add_argument("--vault", default=os.environ.get("VAULT_PATH"))
+    parser.add_argument("--topic", help="Optional coverage topic id to evaluate.")
     return parser.parse_args(argv)
 
 
@@ -377,7 +393,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.reaudit:
         run_reaudit(args.vault)
 
-    topics = load_matrix(Path(args.matrix))
+    topics = filter_topics(load_matrix(Path(args.matrix)), args.topic)
     audit = load_json(args.audit)
     resources = load_json(args.resources)
     practice_items = load_practice_items(Path(args.practice_dir))

@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 64,
-    "tasks_with_asserts": 33,
+    "tasks_extracted": 65,
+    "tasks_with_asserts": 34,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 27,
+      "high": 28,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,39 @@
     }
   ],
   "tasks": [
+    {
+      "id": "sql_aggregation_windows_pandas__manual_01",
+      "source_notebook": "manual_sql_aggregation_windows",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "SQL GROUP BY and window function equivalent in pandas",
+      "prompt": "#### SQL Aggregations and Window Functions\n\nReproduce SQL-style `GROUP BY`, `window function`, and `PARTITION BY` logic with pandas over `datasets/df_orders.csv`.\n\nCreate two variables:\n\n1. `orders_windowed`: original order rows sorted by `user_id`, `event_date`, `order_id`, with columns `order_number_for_user` and `running_order_sum_for_user`.\n2. `user_order_summary`: one row per `user_id` with `orders_count` and `total_order_sum`.\n\nThis is the pandas equivalent of using `GROUP BY user_id` for user-level aggregates and `ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_date, order_id)` plus `SUM(order_sum) OVER (...)` for row-level history features.",
+      "starter_code": "import pandas as pd\n\norders = pd.read_csv(\"datasets/df_orders.csv\")\norders[\"event_date\"] = pd.to_datetime(orders[\"event_date\"])\n\n# TODO: sort by user_id, event_date, order_id and save to orders_windowed\norders_windowed = ...\n\n# TODO: add SQL window function equivalents\n# order_number_for_user = ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_date, order_id)\n# running_order_sum_for_user = SUM(order_sum) OVER (PARTITION BY user_id ORDER BY event_date, order_id)\n\n# TODO: build GROUP BY equivalent with one row per user_id\nuser_order_summary = ...",
+      "tests": [
+        "assert len(orders_windowed) == 38010",
+        "assert len(user_order_summary) == 33831",
+        "assert {\"order_number_for_user\", \"running_order_sum_for_user\"}.issubset(orders_windowed.columns)",
+        "assert {\"user_id\", \"orders_count\", \"total_order_sum\"}.issubset(user_order_summary.columns)",
+        "user2 = orders_windowed.loc[orders_windowed[\"user_id\"].eq(2)].sort_values([\"event_date\", \"order_id\"])",
+        "assert user2[\"order_number_for_user\"].tolist() == [1, 2]",
+        "assert user2[\"running_order_sum_for_user\"].tolist() == [10285.0, 20931.0]",
+        "user2_summary = user_order_summary.loc[user_order_summary[\"user_id\"].eq(2)].iloc[0]",
+        "assert int(user2_summary[\"orders_count\"]) == 2",
+        "assert float(user2_summary[\"total_order_sum\"]) == 20931.0",
+        "assert abs(float(user_order_summary[\"total_order_sum\"].sum()) - float(orders_windowed[\"order_sum\"].sum())) < 1e-6"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "group by",
+        "window function",
+        "partition by"
+      ],
+      "task_number_in_notebook": 4
+    },
     {
       "id": "python_2_basics__cell_20",
       "source_notebook": "python_2_basics.ipynb",

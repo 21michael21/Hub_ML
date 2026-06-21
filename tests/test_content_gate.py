@@ -206,6 +206,70 @@ def test_payload_summarizes_required_failures(tmp_path: Path) -> None:
     assert payload["summary"]["failed_required_topic_ids"] == ["da.pandas_basics"]
 
 
+def test_payload_can_be_filtered_to_one_topic(tmp_path: Path) -> None:
+    vault = tmp_path / "vault"
+    write_note(vault, "# Pandas Basics\n\n## Sources\n\nSource: needs review\n")
+    audit = {"vault": str(vault), "notes": [audit_note()]}
+    extra_topic = {
+        "id": "sql.aggregation_windows",
+        "title": "SQL Aggregations and Window Functions",
+        "track": "SQL",
+        "required": True,
+        "expected_note_patterns": ["window function"],
+        "expected_task_tags": ["window function"],
+        "expected_practice_patterns": ["window function"],
+    }
+
+    from tools.check_content_gate import filter_topics
+
+    filtered = filter_topics([topic(), extra_topic], "sql.aggregation_windows")
+    payload = build_content_gate_payload(
+        topics=filtered,
+        audit=audit,
+        resources=resources(),
+        practice_items=[],
+        task_items=[],
+        threshold=70,
+    )
+
+    assert [item["id"] for item in filtered] == ["sql.aggregation_windows"]
+    assert payload["summary"]["total_topics"] == 1
+    assert payload["topics"][0]["id"] == "sql.aggregation_windows"
+
+
+def test_topic_matching_requires_two_hits_for_multi_pattern_topics(tmp_path: Path) -> None:
+    vault = tmp_path / "vault"
+    write_note(
+        vault,
+        f"# Pandas Basics\n\n## Sources\n\nOfficial docs: {REGISTERED_URL}\n",
+    )
+    audit = {"vault": str(vault), "notes": [audit_note()]}
+    broad_topic = {
+        "id": "python.basics",
+        "title": "Python Basics",
+        "track": "Python",
+        "required": True,
+        "expected_note_patterns": ["python", "function", "dict"],
+        "expected_task_tags": ["python", "function"],
+        "expected_practice_patterns": ["python", "function"],
+    }
+
+    payload = build_content_gate_payload(
+        topics=[broad_topic],
+        audit=audit,
+        resources=resources(),
+        practice_items=[{"id": "function_only", "title": "Function drill", "text": "function"}],
+        task_items=[{"id": "task_function", "title": "Function task", "text": "function", "has_asserts": True}],
+        threshold=70,
+    )
+
+    result = payload["topics"][0]
+    assert result["status"] == "FAIL"
+    assert result["rules"]["rule1_note_quality"]["matched_notes"] == 0
+    assert result["rules"]["rule4_practice_or_task"]["practice_count"] == 0
+    assert result["rules"]["rule4_practice_or_task"]["task_count"] == 0
+
+
 def test_strict_cli_exits_nonzero_when_required_topic_fails(tmp_path: Path) -> None:
     vault = tmp_path / "vault"
     write_note(vault, "# Pandas Basics\n\n## Sources\n\nSource: needs review\n")
