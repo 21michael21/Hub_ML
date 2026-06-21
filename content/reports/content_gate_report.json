@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T20:51:15.530696+00:00",
+  "generated_at": "2026-06-21T21:00:22.329284+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 13,
-    "failed_topics": 23,
+    "passed_topics": 14,
+    "failed_topics": 22,
     "failed_rule_counts": {
-      "rule1": 23,
-      "rule2": 23,
-      "rule3": 23,
+      "rule1": 22,
+      "rule2": 22,
+      "rule3": 22,
       "rule4": 11
     },
     "failed_required_topic_ids": [
-      "data.pandas_basics",
       "data.groupby_merge",
       "data.visualization",
       "stats.descriptive",
@@ -561,30 +560,26 @@
       "title": "Pandas Basics",
       "track": "Data Analysis",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
@@ -594,7 +589,13 @@
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Pandas/01_Pandas_Basics.md",
+            "title": "Pandas Basics: DataFrame, Series, read_csv",
+            "quality_score": 100
+          }
+        ],
         "practice": [
           {
             "id": "data_analysis_orders_eda",

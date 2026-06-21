@@ -1,7 +1,7 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T20:51:15.063919+00:00",
+    "generated_at": "2026-06-21T21:00:21.848046+00:00",
     "total_notes": 218,
     "notes_by_section": {
       "00 Atlas": 6,
@@ -16,7 +16,7 @@
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 50.4,
+    "average_quality_score": 50.5,
     "missing_core_topics": [],
     "notes_without_frontmatter": [],
     "notes_without_examples": [
@@ -3627,32 +3627,37 @@
     {
       "relative_path": "02_Data_Analysis/Pandas/01_Pandas_Basics.md",
       "section": "02 Data Analysis",
-      "title": "Pandas — Основы",
+      "title": "Pandas Basics: DataFrame, Series, read_csv",
       "frontmatter_fields": [
-        "area",
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
         "source",
+        "status",
         "tags",
         "title",
-        "type"
+        "track"
       ],
       "has_frontmatter": true,
-      "word_count": 355,
-      "heading_count": 15,
-      "code_block_count": 2,
+      "word_count": 590,
+      "heading_count": 9,
+      "code_block_count": 1,
       "wiki_link_count": 2,
-      "external_link_count": 2,
-      "tag_count": 4,
+      "external_link_count": 1,
+      "tag_count": 7,
       "has_examples": true,
       "has_practice_section": true,
       "has_sources_section": true,
       "has_portfolio_section": true,
       "has_prerequisites": false,
       "likely_thin_note": false,
-      "likely_ai_dump_or_placeholder": true,
+      "likely_ai_dump_or_placeholder": false,
       "is_technical_topic": true,
       "generic_heading_count": 0,
-      "words_per_heading": 23.7,
-      "quality_score": 80
+      "words_per_heading": 65.6,
+      "quality_score": 100
     },
     {
       "relative_path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
