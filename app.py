@@ -129,21 +129,108 @@ def inject_styles() -> None:
     st.markdown(
         """
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
     :root {
-        --ls-muted: rgba(128, 128, 128, 0.82);
-        --ls-border: rgba(128, 128, 128, 0.22);
-        --ls-soft: rgba(128, 128, 128, 0.10);
-        --ls-softer: rgba(128, 128, 128, 0.06);
-        --ls-link: rgb(87, 156, 255);
-        --ls-link-bg: rgba(87, 156, 255, 0.13);
-        --ls-chip-bg: rgba(128, 128, 128, 0.12);
-        --ls-code-bg: rgba(128, 128, 128, 0.14);
-        --ls-quote-bg: rgba(128, 128, 128, 0.07);
+        --bg: #0D0F14;
+        --surface: #14171F;
+        --surface-2: #1A1F29;
+        --raised: #20262F;
+        --border: #272D38;
+        --border-soft: #1E2430;
+        --text: #E7EAF0;
+        --dim: #9AA3B2;
+        --faint: #5F6877;
+        --accent: #7C8CF8;
+        --accent-soft: rgba(124,140,248,0.14);
+        --pass: #46C265;
+        --warn: #D8A537;
+        --fail: #F0584F;
+        --info: #5AA9FF;
+        --radius: 12px;
+        --radius-sm: 8px;
+        --font-display: "Space Grotesk", sans-serif;
+        --font-body: "IBM Plex Sans", sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+
+        --ls-muted: var(--dim);
+        --ls-border: var(--border);
+        --ls-soft: var(--surface-2);
+        --ls-softer: var(--surface);
+        --ls-link: var(--info);
+        --ls-link-bg: rgba(90,169,255,0.14);
+        --ls-chip-bg: var(--surface-2);
+        --ls-code-bg: var(--raised);
+        --ls-quote-bg: var(--surface-2);
+    }
+
+    html, body, [data-testid="stAppViewContainer"], .stApp {
+        background:
+            radial-gradient(rgba(124,140,248,0.055) 1px, transparent 1px),
+            var(--bg);
+        background-size: 26px 26px, auto;
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.55;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 6px;
+    }
+
+    .mono,
+    .chip,
+    .status-chip,
+    .metric-tile-value,
+    .metric-tile-meta,
+    .section-eyebrow,
+    code,
+    pre {
+        font-family: var(--font-mono);
+    }
+
+    h1, h2, h3, h4,
+    [data-testid="stMarkdownContainer"] h1,
+    [data-testid="stMarkdownContainer"] h2,
+    [data-testid="stMarkdownContainer"] h3,
+    [data-testid="stMarkdownContainer"] h4 {
+        color: var(--text);
+        font-family: var(--font-display);
+        letter-spacing: 0;
+    }
+
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #11141B 0%, var(--bg) 100%);
+        border-right: 1px solid var(--border);
+    }
+
+    [data-testid="stHeader"] {
+        background: transparent;
+    }
+
+    [data-testid="stToolbar"] {
+        color: var(--dim);
     }
 
     .main .block-container {
-        max-width: 980px;
-        padding-top: 2.1rem;
+        max-width: 1120px;
+        padding-top: 2rem;
         padding-bottom: 4rem;
     }
 
@@ -153,8 +240,10 @@ def inject_styles() -> None:
     }
 
     .sidebar-logo {
+        color: var(--text);
+        font-family: var(--font-display);
         font-size: 1.05rem;
-        font-weight: 720;
+        font-weight: 700;
         letter-spacing: 0;
         padding: 0.15rem 0 0.35rem;
     }
@@ -163,7 +252,7 @@ def inject_styles() -> None:
         max-width: 780px;
         margin: 0 auto 1rem auto;
         padding-bottom: 0.85rem;
-        border-bottom: 1px solid var(--ls-border);
+        border-bottom: 1px solid var(--border);
     }
 
     .breadcrumbs {
@@ -187,8 +276,8 @@ def inject_styles() -> None:
         border: 1px solid var(--ls-border);
         border-radius: 999px;
         padding: 0.15rem 0.55rem;
-        background: var(--ls-chip-bg);
-        color: var(--text-color);
+        background: var(--surface-2);
+        color: var(--text);
         font-size: 0.78rem;
         line-height: 1.5;
     }
@@ -234,7 +323,7 @@ def inject_styles() -> None:
 
     div[data-testid="stMarkdownContainer"] pre {
         border: 1px solid var(--ls-border);
-        border-radius: 0.7rem;
+        border-radius: var(--radius-sm);
         background: var(--ls-code-bg);
         overflow-x: auto;
         padding: 1rem;
@@ -286,9 +375,9 @@ def inject_styles() -> None:
         max-width: 780px;
         margin: 0 auto 1.1rem auto;
         padding: 0.85rem 1rem;
-        border: 1px solid var(--ls-border);
-        border-radius: 0.85rem;
-        background: var(--ls-softer);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
     }
 
     .learning-panel-title {
@@ -300,38 +389,44 @@ def inject_styles() -> None:
         display: inline-flex;
         align-items: center;
         gap: 0.32rem;
-        border: 1px solid var(--ls-border);
+        border: 1px solid var(--border);
         border-radius: 999px;
-        padding: 0.16rem 0.6rem;
-        font-size: 0.8rem;
+        padding: 0.18rem 0.62rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
         line-height: 1.5;
-        background: var(--ls-chip-bg);
+        background: var(--surface-2);
     }
 
     .status-reading {
-        color: rgb(250, 176, 84);
-        background: rgba(250, 176, 84, 0.12);
+        color: var(--warn);
+        background: rgba(216,165,55,0.10);
+        border-color: rgba(216,165,55,0.30);
     }
 
     .status-done {
-        color: rgb(73, 201, 126);
-        background: rgba(73, 201, 126, 0.12);
+        color: var(--pass);
+        background: rgba(70,194,101,0.10);
+        border-color: rgba(70,194,101,0.30);
     }
 
     .status-repeat {
-        color: rgb(250, 106, 106);
-        background: rgba(250, 106, 106, 0.12);
+        color: var(--fail);
+        background: rgba(240,88,79,0.10);
+        border-color: rgba(240,88,79,0.30);
     }
 
     .status-not-started {
-        color: var(--ls-muted);
+        color: var(--faint);
     }
 
     .roadmap-card {
         padding: 0.85rem 1rem;
-        border: 1px solid var(--ls-border);
-        border-radius: 0.85rem;
-        background: var(--ls-softer);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
         margin-bottom: 0.75rem;
     }
 
@@ -348,7 +443,7 @@ def inject_styles() -> None:
 
     .section-progress-row {
         padding: 0.55rem 0;
-        border-bottom: 1px solid var(--ls-border);
+        border-bottom: 1px solid var(--border-soft);
     }
 
     .section-progress-row:last-child {
@@ -356,9 +451,9 @@ def inject_styles() -> None:
     }
 
     .link-card {
-        border: 1px solid var(--ls-border);
-        border-radius: 0.75rem;
-        background: var(--ls-softer);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--surface);
         padding: 0.72rem 0.9rem;
         margin: 0.45rem 0;
     }
@@ -379,10 +474,10 @@ def inject_styles() -> None:
     }
 
     .health-row {
-        border: 1px solid var(--ls-border);
-        border-radius: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
         padding: 0.75rem 0.9rem;
-        background: var(--ls-softer);
+        background: var(--surface);
         margin: 0.55rem 0;
     }
 
@@ -390,9 +485,9 @@ def inject_styles() -> None:
         max-width: 780px;
         margin: 0 auto 1rem auto;
         padding: 1rem 1.1rem;
-        border: 1px solid var(--ls-border);
-        border-radius: 0.9rem;
-        background: linear-gradient(135deg, rgba(87, 156, 255, 0.12), rgba(73, 201, 126, 0.08));
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, var(--accent-soft), rgba(70,194,101,0.08));
     }
 
     .today-title {
@@ -402,10 +497,10 @@ def inject_styles() -> None:
     }
 
     .today-card {
-        border: 1px solid var(--ls-border);
-        border-radius: 0.85rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
         padding: 0.85rem 1rem;
-        background: var(--ls-softer);
+        background: var(--surface);
         margin-bottom: 0.75rem;
     }
 
@@ -419,9 +514,9 @@ def inject_styles() -> None:
         max-width: 780px;
         margin: 1.2rem auto;
         padding: 1rem 1.1rem;
-        border: 1px solid var(--ls-border);
-        border-radius: 0.9rem;
-        background: var(--ls-softer);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
     }
 
     .practice-title {
@@ -430,11 +525,11 @@ def inject_styles() -> None:
     }
 
     .practice-output {
-        border-left: 3px solid rgb(73, 201, 126);
+        border-left: 3px solid var(--pass);
         padding: 0.45rem 0.8rem;
         margin: 0.75rem 0;
-        background: rgba(73, 201, 126, 0.08);
-        color: var(--text-color);
+        background: rgba(70,194,101,0.08);
+        color: var(--text);
     }
 
     .practice-checklist {
@@ -444,11 +539,271 @@ def inject_styles() -> None:
 
     .practice-checklist li {
         margin: 0.28rem 0;
-        color: var(--text-color);
+        color: var(--text);
+    }
+
+    .section-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin: 1.4rem 0 0.75rem;
+        color: var(--faint);
+        font-size: 0.69rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .section-eyebrow::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border-soft);
+    }
+
+    .console-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 1rem;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+    }
+
+    .console-card-eyebrow {
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+    }
+
+    .console-card-title {
+        margin-top: 0.4rem;
+        color: var(--text);
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .console-card-body {
+        margin-top: 0.45rem;
+        color: var(--dim);
+        font-size: 0.9rem;
+        line-height: 1.55;
+    }
+
+    .console-card-meta {
+        margin-top: 0.65rem;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+    }
+
+    .metric-tile {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 0.95rem 1rem;
+    }
+
+    .metric-tile-value {
+        color: var(--text);
+        font-size: 1.55rem;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    .metric-tile-total {
+        color: var(--faint);
+        font-size: 0.95rem;
+    }
+
+    .metric-tile-label {
+        margin-top: 0.45rem;
+        color: var(--dim);
+        font-size: 0.82rem;
+    }
+
+    .metric-tile-meta {
+        margin-top: 0.2rem;
+        color: var(--faint);
+        font-size: 0.68rem;
+    }
+
+    .metric-bar {
+        height: 4px;
+        margin-top: 0.75rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--surface-2);
+    }
+
+    .metric-bar-fill {
+        display: block;
+        height: 100%;
+        border-radius: 999px;
+        background: var(--accent);
+    }
+
+    .chip,
+    .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.38rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.18rem 0.58rem;
+        background: var(--surface-2);
+        color: var(--faint);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        line-height: 1.35;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+
+    .chip-dot {
+        width: 0.38rem;
+        height: 0.38rem;
+        border-radius: 999px;
+        background: currentColor;
+    }
+
+    .chip-pass,
+    .chip-done,
+    .chip-ready {
+        color: var(--pass);
+        background: rgba(70,194,101,0.10);
+        border-color: rgba(70,194,101,0.30);
+    }
+
+    .chip-fail,
+    .chip-error,
+    .chip-blocked {
+        color: var(--fail);
+        background: rgba(240,88,79,0.10);
+        border-color: rgba(240,88,79,0.30);
+    }
+
+    .chip-in-progress,
+    .chip-needs-review,
+    .chip-weak {
+        color: var(--warn);
+        background: rgba(216,165,55,0.10);
+        border-color: rgba(216,165,55,0.30);
+    }
+
+    .chip-todo,
+    .chip-not-started {
+        color: var(--faint);
+        background: var(--surface-2);
+        border-color: var(--border);
+    }
+
+    .chip-info {
+        color: var(--info);
+        background: rgba(90,169,255,0.12);
+        border-color: rgba(90,169,255,0.30);
     }
 </style>
         """,
         unsafe_allow_html=True,
+    )
+
+
+STATUS_CHIP_CLASSES = {
+    "PASS": "chip-pass",
+    "FAIL": "chip-fail",
+    "ERROR": "chip-error",
+    "NOT STARTED": "chip-not-started",
+    "IN PROGRESS": "chip-in-progress",
+    "DONE": "chip-done",
+    "NEEDS REVIEW": "chip-needs-review",
+    "READY": "chip-ready",
+    "BLOCKED": "chip-blocked",
+    "TODO": "chip-todo",
+    "WEAK": "chip-weak",
+}
+
+
+def normalize_chip_status(status: str) -> str:
+    normalized = re.sub(r"[_\-]+", " ", str(status or "").strip().upper())
+    aliases = {
+        "PASSED": "PASS",
+        "FAILED": "FAIL",
+        "DOING": "IN PROGRESS",
+        "READING": "IN PROGRESS",
+        "REVIEW": "NEEDS REVIEW",
+        "NOT_STARTED": "NOT STARTED",
+        "NOTSTARTED": "NOT STARTED",
+        "TO DO": "TODO",
+        "COMPLETE": "DONE",
+        "COMPLETED": "DONE",
+    }
+    return aliases.get(normalized, normalized or "TODO")
+
+
+def render_status_chip(status: str) -> str:
+    label = normalize_chip_status(status)
+    css_class = STATUS_CHIP_CLASSES.get(label, "chip-info")
+    return (
+        f'<span class="status-chip {css_class}">'
+        f'<span class="chip-dot"></span>{html.escape(label)}</span>'
+    )
+
+
+def render_section_eyebrow(label: str) -> str:
+    return f'<div class="section-eyebrow">{html.escape(str(label))}</div>'
+
+
+def render_metric_tile(
+    label: str,
+    value: str | int | float,
+    *,
+    total: str | int | float | None = None,
+    progress: float | None = None,
+    meta: str = "",
+) -> str:
+    total_markup = f'<span class="metric-tile-total">/{html.escape(str(total))}</span>' if total is not None else ""
+    bar_markup = ""
+    if progress is not None:
+        width = max(0.0, min(1.0, float(progress))) * 100
+        bar_markup = (
+            '<div class="metric-bar">'
+            f'<span class="metric-bar-fill" style="width: {width:.1f}%"></span>'
+            "</div>"
+        )
+    meta_markup = f'<div class="metric-tile-meta">{html.escape(str(meta))}</div>' if meta else ""
+    return (
+        '<div class="metric-tile">'
+        f'<div class="metric-tile-value">{html.escape(str(value))}{total_markup}</div>'
+        f'<div class="metric-tile-label">{html.escape(str(label))}</div>'
+        f"{meta_markup}{bar_markup}"
+        "</div>"
+    )
+
+
+def render_card(
+    title: str,
+    body: str = "",
+    *,
+    eyebrow: str = "",
+    meta: str = "",
+    status: str = "",
+    extra_class: str = "",
+) -> str:
+    classes = " ".join(["console-card", str(extra_class or "").strip()]).strip()
+    eyebrow_markup = f'<div class="console-card-eyebrow">{html.escape(str(eyebrow))}</div>' if eyebrow else ""
+    status_markup = render_status_chip(status) if status else ""
+    body_markup = f'<div class="console-card-body">{html.escape(str(body))}</div>' if body else ""
+    meta_markup = f'<div class="console-card-meta">{html.escape(str(meta))}</div>' if meta else ""
+    return (
+        f'<div class="{html.escape(classes)}">'
+        f"{eyebrow_markup}"
+        f'<div class="console-card-title">{html.escape(str(title))} {status_markup}</div>'
+        f"{body_markup}{meta_markup}"
+        "</div>"
     )
 
 
