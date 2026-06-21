@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 75,
-    "tasks_with_asserts": 44,
+    "tasks_extracted": 76,
+    "tasks_with_asserts": 45,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 38,
+      "high": 39,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,40 @@
     }
   ],
   "tasks": [
+    {
+      "id": "math_optimization_gradient_descent__manual_01",
+      "source_notebook": "manual_math_optimization",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Optimization gradient descent on a quadratic loss function",
+      "prompt": "#### Optimization: gradient descent on a simple loss function\n\nImplement gradient descent for `f(x) = (x - 3) ** 2`.\n\nCreate these variables:\n\n1. `loss(x)`: returns `(x - 3) ** 2`.\n2. `gradient(x)`: returns the derivative `2 * (x - 3)`.\n3. `x_initial`: starting value `0.0`.\n4. `x_final`: value after 10 gradient descent steps with learning rate `0.2`.\n5. `loss_history`: loss before every update.\n6. `final_loss`: loss at `x_final`.\n\nThis checks the computational core of optimization: loss function, gradient, learning rate, and loss decreasing over steps.",
+      "starter_code": "def loss(x: float) -> float:\n    ...\n\n\ndef gradient(x: float) -> float:\n    ...\n\nx_initial = 0.0\nlearning_rate = 0.2\nsteps = 10\n\n# TODO: run gradient descent and collect loss before each update\nx = x_initial\nloss_history = []\n\n# TODO: save final values\nx_final = ...\nfinal_loss = ...",
+      "tests": [
+        "assert loss(3.0) == 0.0",
+        "assert gradient(0.0) == -6.0",
+        "assert len(loss_history) == 10",
+        "assert abs(x_final - 3.0) < abs(x_initial - 3.0)",
+        "assert abs(x_final - 3.0) < 0.1",
+        "assert final_loss < loss_history[0]",
+        "assert all(later < earlier for earlier, later in zip(loss_history, loss_history[1:]))",
+        "assert round(x_final, 4) == 2.9819",
+        "assert round(final_loss, 6) == 0.000329"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "optimization",
+        "gradient",
+        "loss",
+        "loss function",
+        "derivative",
+        "learning rate"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "stats_hypothesis_ab_conversion_rates__manual_01",
       "source_notebook": "manual_analysis_1_stats",
