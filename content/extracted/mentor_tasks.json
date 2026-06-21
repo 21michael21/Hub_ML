@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 68,
-    "tasks_with_asserts": 37,
+    "tasks_extracted": 69,
+    "tasks_with_asserts": 38,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 31,
+      "high": 32,
       "medium": 31,
       "low": 6
     },
@@ -265,6 +265,38 @@
         "class",
         "object",
         "cell"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "data_cleaning_eda_events__manual_01",
+      "source_notebook": "manual_data_cleaning_eda",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Data cleaning EDA missing values and duplicates",
+      "prompt": "#### Data Cleaning and EDA\n\nCreate a basic data quality report for `datasets/df_events.csv` and build a cleaned event table.\n\nCreate these variables:\n\n1. `required_columns`: `['user_id', 'event_date', 'event_type']`.\n2. `missing_by_column`: missing value counts for every column.\n3. `duplicate_rows`: number of fully duplicated rows before cleaning.\n4. `events_clean`: events after dropping duplicate rows and rows with missing required columns.\n5. `event_type_counts`: event type counts in `events_clean`.\n\nThis checks the core EDA cleaning loop: missing values, duplicates, required columns, and preserving useful event rows.",
+      "starter_code": "import pandas as pd\n\nevents = pd.read_csv(\"datasets/df_events.csv\")\n\n# TODO: define required columns for event-level analysis\nrequired_columns = ...\n\n# TODO: count missing values by column\nmissing_by_column = ...\n\n# TODO: count duplicate rows before cleaning\nduplicate_rows = ...\n\n# TODO: drop duplicate rows and rows missing required columns\nevents_clean = ...\n\n# TODO: convert event_date to datetime and count event types\nevent_type_counts = ...",
+      "tests": [
+        "assert required_columns == [\"user_id\", \"event_date\", \"event_type\"]",
+        "assert int(missing_by_column[\"event_type\"]) == 7615",
+        "assert int(missing_by_column[\"order_id\"]) == 339385",
+        "assert int(duplicate_rows) == 219",
+        "assert len(events_clean) == 370684",
+        "assert int(events_clean[required_columns].isna().sum().sum()) == 0",
+        "assert str(events_clean[\"event_date\"].dtype).startswith(\"datetime64\")",
+        "assert int(event_type_counts[\"main_page.shown\"]) == 110337",
+        "assert int(event_type_counts[\"order.created\"]) == 37998"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "missing",
+        "duplicates",
+        "isna",
+        "df_events"
       ],
       "task_number_in_notebook": 1
     },

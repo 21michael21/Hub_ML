@@ -1,14 +1,14 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T20:22:07.913300+00:00",
-    "total_notes": 212,
+    "generated_at": "2026-06-21T20:24:45.148038+00:00",
+    "total_notes": 213,
     "notes_by_section": {
       "00 Atlas": 6,
       "00 Graph": 26,
       "00 Inbox": 3,
       "01 Python": 52,
-      "02 Data Analysis": 15,
+      "02 Data Analysis": 16,
       "03 Ml": 20,
       "04 Nlp": 21,
       "05 It Resources": 58,
@@ -16,7 +16,7 @@
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 48.8,
+    "average_quality_score": 49.0,
     "missing_core_topics": [
       "Git"
     ],
@@ -3488,6 +3488,40 @@
       "generic_heading_count": 0,
       "words_per_heading": 4.1,
       "quality_score": 75
+    },
+    {
+      "relative_path": "02_Data_Analysis/EDA/01_Data_Cleaning_EDA.md",
+      "section": "02 Data Analysis",
+      "title": "Data Cleaning EDA missing values duplicates data quality exploratory",
+      "frontmatter_fields": [
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "status",
+        "tags",
+        "title",
+        "track"
+      ],
+      "has_frontmatter": true,
+      "word_count": 511,
+      "heading_count": 9,
+      "code_block_count": 1,
+      "wiki_link_count": 0,
+      "external_link_count": 1,
+      "tag_count": 6,
+      "has_examples": true,
+      "has_practice_section": false,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
+      "has_prerequisites": false,
+      "likely_thin_note": false,
+      "likely_ai_dump_or_placeholder": false,
+      "is_technical_topic": true,
+      "generic_heading_count": 0,
+      "words_per_heading": 56.8,
+      "quality_score": 95
     },
     {
       "relative_path": "02_Data_Analysis/Numpy/01_Numpy_Basics.md",

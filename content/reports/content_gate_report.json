@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T20:22:08.380062+00:00",
+  "generated_at": "2026-06-21T20:24:45.660130+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 5,
-    "failed_topics": 31,
+    "passed_topics": 6,
+    "failed_topics": 30,
     "failed_rule_counts": {
-      "rule1": 29,
-      "rule2": 31,
-      "rule3": 31,
-      "rule4": 20
+      "rule1": 28,
+      "rule2": 30,
+      "rule3": 30,
+      "rule4": 19
     },
     "failed_required_topic_ids": [
       "python.basics",
@@ -20,7 +20,6 @@
       "git.tools",
       "git.reproducibility",
       "data.pandas_basics",
-      "data.cleaning_eda",
       "data.groupby_merge",
       "data.visualization",
       "stats.descriptive",
@@ -543,9 +542,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "3 practice, 1 task",
-          "practice_count": 3,
-          "task_count": 1
+          "detail": "4 practice, 2 task",
+          "practice_count": 4,
+          "task_count": 2
         }
       },
       "evidence": {
@@ -554,6 +553,10 @@
           {
             "id": "data_analysis_orders_eda",
             "title": "Data Analysis: EDA по заказам"
+          },
+          {
+            "id": "data_cleaning_eda_quality_orders",
+            "title": "EDA Quality Missing Values Drill"
           },
           {
             "id": "math_linear_algebra_numpy_practice",
@@ -566,6 +569,10 @@
         ],
         "tasks": [
           {
+            "id": "data_cleaning_eda_events__manual_01",
+            "title": "Data cleaning EDA missing values and duplicates"
+          },
+          {
             "id": "analysis_3_pandas__cell_52",
             "title": "Задание 1: Свойства и статистики"
           }
@@ -577,43 +584,54 @@
       "title": "Data Cleaning and EDA",
       "track": "Data Analysis",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "02_Data_Analysis/EDA/01_Data_Cleaning_EDA.md",
+            "title": "Data Cleaning EDA missing values duplicates data quality exploratory",
+            "quality_score": 95
+          }
+        ],
+        "practice": [
+          {
+            "id": "data_cleaning_eda_quality_orders",
+            "title": "EDA Quality Missing Values Drill"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "data_cleaning_eda_events__manual_01",
+            "title": "Data cleaning EDA missing values and duplicates"
+          }
+        ]
       }
     },
     {

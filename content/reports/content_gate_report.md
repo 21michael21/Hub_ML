@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:22:08.380062+00:00`
+Generated: `2026-06-21T20:24:45.660130+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 5/36 pass, 31 fail**
-- Failed rule counts: `{'rule1': 29, 'rule2': 31, 'rule3': 31, 'rule4': 20}`
+Summary: **GATE: 6/36 pass, 30 fail**
+- Failed rule counts: `{'rule1': 28, 'rule2': 30, 'rule3': 30, 'rule4': 19}`
 
 ## python.basics — Python Basics  [FAIL]
 
@@ -68,14 +68,14 @@ Summary: **GATE: 5/36 pass, 31 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 3 practice, 1 task ✓
+- rule4 practice/task: 4 practice, 2 task ✓
 
-## data.cleaning_eda — Data Cleaning and EDA  [FAIL]
+## data.cleaning_eda — Data Cleaning and EDA  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 95 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## data.groupby_merge — GroupBy, Merge, and Aggregation  [FAIL]
 
