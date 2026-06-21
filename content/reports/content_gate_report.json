@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:21:35.181026+00:00",
+  "generated_at": "2026-06-21T21:24:54.275857+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 21,
-    "failed_topics": 15,
+    "passed_topics": 22,
+    "failed_topics": 14,
     "failed_rule_counts": {
-      "rule1": 15,
-      "rule2": 15,
-      "rule3": 15,
+      "rule1": 14,
+      "rule2": 14,
+      "rule3": 14,
       "rule4": 9
     },
     "failed_required_topic_ids": [
-      "ml.feature_engineering",
       "nlp.preprocessing",
       "nlp.vectorization",
       "nlp.transformers",
@@ -1198,41 +1197,47 @@
       "title": "Feature Engineering",
       "track": "Classic ML",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 0 task",
-          "practice_count": 2,
-          "task_count": 0
+          "detail": "3 practice, 1 task",
+          "practice_count": 3,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "03_ML/07_Feature_Engineering.md",
+            "title": "Feature Engineering Encoding Scaling Missing Values",
+            "quality_score": 100
+          }
+        ],
         "practice": [
+          {
+            "id": "ml_feature_engineering_feature_table",
+            "title": "Feature Engineering: Build a Baseline Feature Table"
+          },
           {
             "id": "ml_preference_model_take_home",
             "title": "ML Take-home: Preference Model"
@@ -1242,7 +1247,12 @@
             "title": "Supervised Learning: Target, Features, Baseline"
           }
         ],
-        "tasks": []
+        "tasks": [
+          {
+            "id": "ml_feature_engineering_event_table__manual_01",
+            "title": "Feature engineering encoding scaling event feature table"
+          }
+        ]
       }
     },
     {

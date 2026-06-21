@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 77,
-    "tasks_with_asserts": 46,
+    "tasks_extracted": 78,
+    "tasks_with_asserts": 47,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 40,
+      "high": 41,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,40 @@
     }
   ],
   "tasks": [
+    {
+      "id": "ml_feature_engineering_event_table__manual_01",
+      "source_notebook": "manual_ml_feature_engineering",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Feature engineering encoding scaling event feature table",
+      "prompt": "#### Feature Engineering: user-level event feature table\n\nBuild a small feature table from raw event records.\n\nCreate:\n\n1. `feature_rows`: one dictionary per `user_id`, sorted by user_id.\n2. Each row must include `events_total`, `view_item_count`, `add_item_count`, and `has_missing_event_type`.\n3. `encoded_columns`: a sorted list of event-count feature names that would become model columns.\n4. `leakage_candidates`: list of raw columns that would need timing review before model training.\n\nThis checks the computational core of feature engineering: raw rows -> aggregations -> simple encoding-style columns -> leakage awareness. Scaling is not needed for count features here, but the task title includes it because scaling belongs to the same preprocessing decision checklist.",
+      "starter_code": "events = [\n    {\"user_id\": 1, \"event_type\": \"view_item\", \"event_value\": 10},\n    {\"user_id\": 1, \"event_type\": \"add_item\", \"event_value\": 20},\n    {\"user_id\": 1, \"event_type\": \"view_item\", \"event_value\": None},\n    {\"user_id\": 2, \"event_type\": \"view_item\", \"event_value\": 5},\n    {\"user_id\": 2, \"event_type\": None, \"event_value\": 7},\n    {\"user_id\": 3, \"event_type\": \"purchase\", \"event_value\": 99},\n]\n\n# TODO: build one row per user_id\nfeature_rows = ...\nencoded_columns = ...\nleakage_candidates = ...",
+      "tests": [
+        "assert isinstance(feature_rows, list)",
+        "assert [row[\"user_id\"] for row in feature_rows] == [1, 2, 3]",
+        "assert feature_rows[0][\"events_total\"] == 3",
+        "assert feature_rows[0][\"view_item_count\"] == 2",
+        "assert feature_rows[0][\"add_item_count\"] == 1",
+        "assert feature_rows[1][\"has_missing_event_type\"] == 1",
+        "assert feature_rows[2][\"purchase_count\"] == 1",
+        "assert encoded_columns == [\"add_item_count\", \"purchase_count\", \"view_item_count\"]",
+        "assert \"event_value\" in leakage_candidates"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "feature engineering",
+        "feature",
+        "encoding",
+        "scaling",
+        "missing values",
+        "leakage"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "ml_supervised_rule_based_baseline__manual_01",
       "source_notebook": "manual_ml_supervised",
