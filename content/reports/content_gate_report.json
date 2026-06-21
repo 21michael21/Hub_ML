@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-21T19:48:54.108667+00:00",
+  "generated_at": "2026-06-21T20:13:55.651054+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 1,
-    "failed_topics": 35,
+    "passed_topics": 2,
+    "failed_topics": 34,
     "failed_rule_counts": {
-      "rule1": 33,
-      "rule2": 35,
-      "rule3": 35,
+      "rule1": 32,
+      "rule2": 34,
+      "rule3": 34,
       "rule4": 23
     },
     "failed_required_topic_ids": [
@@ -27,7 +27,6 @@
       "stats.descriptive",
       "stats.probability_distributions",
       "stats.hypothesis_ab",
-      "math.linear_algebra",
       "math.optimization",
       "ml.supervised",
       "ml.validation_metrics",
@@ -542,8 +541,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 1 task",
-          "practice_count": 2,
+          "detail": "3 practice, 1 task",
+          "practice_count": 3,
           "task_count": 1
         }
       },
@@ -553,6 +552,10 @@
           {
             "id": "data_analysis_orders_eda",
             "title": "Data Analysis: EDA по заказам"
+          },
+          {
+            "id": "math_linear_algebra_numpy_practice",
+            "title": "NumPy Matrix and Vector Scoring"
           },
           {
             "id": "sql_window_aggregation_practice",
@@ -869,42 +872,53 @@
       "title": "Linear Algebra for ML",
       "track": "Math for ML",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "0 practice, 1 task",
-          "practice_count": 0,
-          "task_count": 1
+          "detail": "1 practice, 2 task",
+          "practice_count": 1,
+          "task_count": 2
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
+        "notes": [
+          {
+            "path": "03_ML/Math/01_Linear_Algebra_for_ML.md",
+            "title": "Linear Algebra for ML with matrix, vector, dot product, numpy",
+            "quality_score": 95
+          }
+        ],
+        "practice": [
+          {
+            "id": "math_linear_algebra_numpy_practice",
+            "title": "NumPy Matrix and Vector Scoring"
+          }
+        ],
         "tasks": [
+          {
+            "id": "math_linear_algebra_numpy__manual_01",
+            "title": "NumPy matrix, vector, and dot product sanity check"
+          },
           {
             "id": "analysis_2_numpy__cell_65",
             "title": "В numpy встроены функции для поиска минимумов, максимумов и суммы. Часто мы хотим найти сумму не всего `np.array`, а по строкам или столбцам. Для этого используется аргумент `axis`."

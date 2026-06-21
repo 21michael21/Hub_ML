@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 65,
-    "tasks_with_asserts": 34,
+    "tasks_extracted": 66,
+    "tasks_with_asserts": 35,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 28,
+      "high": 29,
       "medium": 31,
       "low": 6
     },
@@ -178,6 +178,36 @@
         "partition by"
       ],
       "task_number_in_notebook": 4
+    },
+    {
+      "id": "math_linear_algebra_numpy__manual_01",
+      "source_notebook": "manual_math_linear_algebra_numpy",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "NumPy matrix, vector, and dot product sanity check",
+      "prompt": "#### Linear Algebra for ML: NumPy Matrix and Vector\n\nBuild a small feature matrix from `datasets/df_orders.csv` and calculate a linear score with NumPy.\n\nCreate these variables:\n\n1. `X`: a NumPy matrix from the first 100 rows and columns `order_sum`, `commission`, `delivery_fee`.\n2. `w`: the NumPy vector `np.array([0.001, 0.01, -0.002])`.\n3. `scores`: the matrix-vector score `X @ w + bias` with `bias = 0.5`.\n4. `first_score_manual`: the same score for the first row using `np.dot`.\n\nThis task checks the computational core behind linear algebra for ML: matrix shape, vector shape, dot product, and matrix-vector multiplication.",
+      "starter_code": "import numpy as np\nimport pandas as pd\n\norders = pd.read_csv(\"datasets/df_orders.csv\").head(100)\nfeature_columns = [\"order_sum\", \"commission\", \"delivery_fee\"]\n\n# TODO: build a numeric NumPy matrix with shape (100, 3)\nX = ...\n\n# TODO: create this exact vector with one coefficient per feature\nw = np.array([0.001, 0.01, -0.002])\nbias = 0.5\n\n# TODO: calculate scores with matrix-vector multiplication\nscores = ...\n\n# TODO: manually calculate the first row score via dot product\nfirst_score_manual = ...",
+      "tests": [
+        "assert X.shape == (100, 3)",
+        "assert w.shape == (3,)",
+        "assert scores.shape == (100,)",
+        "assert abs(float(first_score_manual) - float(scores[0])) < 1e-9",
+        "assert abs(float(scores[0]) - 20.995) < 1e-9",
+        "assert abs(float(scores[1]) - 16.846) < 1e-9"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "analysis_2_numpy",
+        "matrix",
+        "vector",
+        "numpy",
+        "dot product"
+      ],
+      "task_number_in_notebook": 1
     },
     {
       "id": "python_2_basics__cell_20",

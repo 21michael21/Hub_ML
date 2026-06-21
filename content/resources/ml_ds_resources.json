@@ -142,5 +142,23 @@
     "related_hubml_modules": ["Theory", "ML Lab"],
     "expected_output": ["note", "project"],
     "notes": "Clear supervised ML fundamentals and evaluation explanations for baseline projects."
+  },
+  {
+    "id": "mathematics_for_ml",
+    "title": "Mathematics for Machine Learning",
+    "track": "Math for ML",
+    "subtrack": "linear_algebra",
+    "type": "book",
+    "language": "en",
+    "level": "intermediate",
+    "cost": "free",
+    "access": "open",
+    "url": "https://mml-book.com",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "linear_algebra",
+    "related_hubml_modules": ["Theory", "Practice", "Tasks", "ML Lab", "Notebook"],
+    "expected_output": ["note", "practice_card", "mentor_task"],
+    "notes": "Reference for vectors, matrices, dot products, and the linear algebra vocabulary needed for ML baselines."
   }
 ]

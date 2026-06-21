@@ -1,22 +1,22 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T19:48:50.923747+00:00",
-    "total_notes": 208,
+    "generated_at": "2026-06-21T20:13:55.026653+00:00",
+    "total_notes": 209,
     "notes_by_section": {
       "00 Atlas": 6,
       "00 Graph": 26,
       "00 Inbox": 3,
       "01 Python": 51,
       "02 Data Analysis": 15,
-      "03 Ml": 19,
+      "03 Ml": 20,
       "04 Nlp": 19,
       "05 It Resources": 58,
       "90 Templates": 3,
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 47.9,
+    "average_quality_score": 48.1,
     "missing_core_topics": [
       "Git"
     ],
@@ -4256,6 +4256,40 @@
       "generic_heading_count": 0,
       "words_per_heading": 26.6,
       "quality_score": 40
+    },
+    {
+      "relative_path": "03_ML/Math/01_Linear_Algebra_for_ML.md",
+      "section": "03 Ml",
+      "title": "Linear Algebra for ML with matrix, vector, dot product, numpy",
+      "frontmatter_fields": [
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "status",
+        "tags",
+        "title",
+        "track"
+      ],
+      "has_frontmatter": true,
+      "word_count": 605,
+      "heading_count": 12,
+      "code_block_count": 3,
+      "wiki_link_count": 0,
+      "external_link_count": 1,
+      "tag_count": 6,
+      "has_examples": true,
+      "has_practice_section": false,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
+      "has_prerequisites": false,
+      "likely_thin_note": false,
+      "likely_ai_dump_or_placeholder": false,
+      "is_technical_topic": true,
+      "generic_heading_count": 0,
+      "words_per_heading": 50.4,
+      "quality_score": 95
     },
     {
       "relative_path": "04_NLP/00_Index.md",

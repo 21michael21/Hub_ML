@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T19:48:54.108667+00:00`
+Generated: `2026-06-21T20:13:55.651054+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 1/36 pass, 35 fail**
-- Failed rule counts: `{'rule1': 33, 'rule2': 35, 'rule3': 35, 'rule4': 23}`
+Summary: **GATE: 2/36 pass, 34 fail**
+- Failed rule counts: `{'rule1': 32, 'rule2': 34, 'rule3': 34, 'rule4': 23}`
 
 ## python.basics — Python Basics  [FAIL]
 
@@ -68,7 +68,7 @@ Summary: **GATE: 1/36 pass, 35 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 1 task ✓
+- rule4 practice/task: 3 practice, 1 task ✓
 
 ## data.cleaning_eda — Data Cleaning and EDA  [FAIL]
 
@@ -112,12 +112,12 @@ Summary: **GATE: 1/36 pass, 35 fail**
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
 
-## math.linear_algebra — Linear Algebra for ML  [FAIL]
+## math.linear_algebra — Linear Algebra for ML  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 1 task ✓
+- rule1 note quality: 95 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 2 task ✓
 
 ## math.optimization — Optimization Basics  [FAIL]
 
