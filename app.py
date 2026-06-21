@@ -1003,6 +1003,10 @@ def render_section_eyebrow(label: str) -> str:
     return f'<div class="section-eyebrow">{html.escape(str(label))}</div>'
 
 
+def render_section_eyebrow_block(label: str) -> None:
+    st.markdown(render_section_eyebrow(label), unsafe_allow_html=True)
+
+
 def render_metric_tile(
     label: str,
     value: str | int | float,
@@ -1359,9 +1363,22 @@ def today_notes(sections: dict[str, list[dict[str, str]]], limit: int = 3) -> li
     return candidates[:limit]
 
 
-def safe_widget_key(prefix: str, value: str) -> str:
-    cleaned = re.sub(r"[^a-zA-Z0-9_]+", "_", value)
-    return f"{prefix}_{cleaned[:90]}"
+def safe_widget_key(*parts: object) -> str:
+    raw_parts: list[str] = []
+    for part in parts:
+        if part is None:
+            continue
+        text = str(part).strip()
+        if text:
+            raw_parts.append(text)
+    raw_key = "_".join(raw_parts) or "widget"
+    cleaned = re.sub(r"[^a-zA-Z0-9]+", "_", raw_key).strip("_")
+    if not cleaned:
+        cleaned = "widget"
+    if len(cleaned) <= 110:
+        return cleaned
+    digest = hashlib.sha1(raw_key.encode("utf-8")).hexdigest()[:10]
+    return f"{cleaned[:96].rstrip('_')}_{digest}"
 
 
 def note_title(note: dict[str, str], frontmatter: dict[str, Any] | None = None) -> str:
@@ -2872,6 +2889,42 @@ def open_note_from_roadmap(note: dict[str, str]) -> None:
     st.session_state["active_tab"] = "Theory"
 
 
+def normalize_home_note_target(note: dict[str, str]) -> dict[str, str]:
+    relative_path = str(note.get("relative_path") or note.get("display_name") or note.get("path") or "").strip()
+    if note.get("section_key") and note.get("display_name"):
+        label = link_path_label(note)
+    elif note.get("section_label") and note.get("display_name"):
+        label = f"{note['section_label']} / {note['display_name']}"
+    else:
+        label = relative_path
+    return {
+        "kind": "learn",
+        "label": label,
+        "path": relative_path,
+        "tab": "Theory",
+    }
+
+
+def note_from_relative_path_in_sections(
+    relative_path: str,
+    sections: dict[str, list[dict[str, str]]],
+) -> dict[str, str] | None:
+    wanted = str(relative_path or "").strip().casefold()
+    if not wanted:
+        return None
+    for note in all_notes(sections):
+        if str(note.get("relative_path", "")).casefold() == wanted:
+            return note
+    return None
+
+
+def open_theory_note_path(relative_path: str, sections: dict[str, list[dict[str, str]]]) -> None:
+    note = note_from_relative_path_in_sections(relative_path, sections)
+    if note is not None:
+        set_active_note(note, push_history=False)
+    st.session_state["active_tab"] = "Theory"
+
+
 def open_tab(tab_name: str) -> None:
     st.session_state["active_tab"] = tab_name
 
@@ -3082,6 +3135,7 @@ def render_dashboard(
     project_stats = data_lab_projects_progress(data_lab_projects)
     experiment_records = experiment_records_for_projects(data_lab_projects)
     quality_avg = theory_quality_average(audit_report)
+    next_note_target = normalize_home_note_target(next_note) if next_note else None
 
     st.markdown("# Hub_ML")
     st.caption("Engineering console for local ML practice: learn, build, train, and ship portfolio artifacts.")
@@ -3115,34 +3169,34 @@ def render_dashboard(
     else:
         resume_cards.append(render_card("Projects clear", "All required project milestones are complete.", eyebrow="Next project milestone", status="PASS"))
 
-    if next_note:
+    if next_note and next_note_target:
         resume_cards.append(
             render_card(
-                link_path_label(next_note),
+                next_note_target["label"],
                 f"{len(notes)} notes in vault",
                 eyebrow="Next theory note",
-                meta=next_note["relative_path"],
+                meta=next_note_target["path"],
                 status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
             )
         )
     else:
         resume_cards.append(render_card("Theory clear", f"{total_notes} notes reviewed.", eyebrow="Next theory note", status="PASS"))
 
-    st.markdown(render_section_eyebrow("Resume"))
+    render_section_eyebrow_block("Resume")
     st.markdown(f'<div class="home-resume-grid">{"".join(resume_cards)}</div>', unsafe_allow_html=True)
 
-    st.markdown(render_section_eyebrow("Today"))
+    render_section_eyebrow_block("Today")
     today_count = 0
-    if next_note and today_count < 4:
+    if next_note and next_note_target and today_count < 4:
         render_today_plan_row(
-            kind="learn",
-            title=link_path_label(next_note),
-            meta=next_note["relative_path"],
+            kind=next_note_target["kind"],
+            title=next_note_target["label"],
+            meta=next_note_target["path"],
             status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
             button_label="Open theory note",
             button_key="home_today_note",
-            on_click=open_note_from_roadmap,
-            args=(next_note,),
+            on_click=open_theory_note_path,
+            args=(next_note_target["path"], sections),
         )
         today_count += 1
     if next_card and today_count < 4:
@@ -3211,7 +3265,7 @@ def render_dashboard(
     if today_count == 0:
         st.markdown('<div class="empty-state-line">No suggested action found. Open Projects or Theory to choose the next move.</div>', unsafe_allow_html=True)
 
-    st.markdown(render_section_eyebrow("Status"))
+    render_section_eyebrow_block("Status")
     task_ratio = mentor_stats["done"] / mentor_stats["total"] if mentor_stats["total"] else 0.0
     project_ratio = project_stats["projects_done"] / project_stats["projects_total"] if project_stats["projects_total"] else 0.0
     metric_tiles = [
@@ -3250,7 +3304,7 @@ def render_dashboard(
         metric_tiles.append(render_metric_tile("Theory quality avg", "—", meta="Missing theory audit report", status="WEAK"))
     st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
-    st.markdown(render_section_eyebrow("Needs Attention"))
+    render_section_eyebrow_block("Needs Attention")
     attention: list[str] = []
     if not audit_report:
         attention.append("Theory audit report is missing. Run the audit manually from Theory Quality.")
