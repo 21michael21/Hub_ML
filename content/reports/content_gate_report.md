@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:13:55.651054+00:00`
+Generated: `2026-06-21T20:16:11.531698+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 2/36 pass, 34 fail**
-- Failed rule counts: `{'rule1': 32, 'rule2': 34, 'rule3': 34, 'rule4': 23}`
+Summary: **GATE: 3/36 pass, 33 fail**
+- Failed rule counts: `{'rule1': 31, 'rule2': 33, 'rule3': 33, 'rule4': 22}`
 
 ## python.basics — Python Basics  [FAIL]
 
@@ -175,12 +175,12 @@ Summary: **GATE: 2/36 pass, 34 fail**
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
 
-## genai.prompting — Prompt Engineering  [FAIL]
+## genai.prompting — Prompt Engineering  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 0 task ✓
 
 ## genai.embeddings_search — Embeddings and Vector Search  [FAIL]
 

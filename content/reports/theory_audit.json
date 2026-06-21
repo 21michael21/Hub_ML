@@ -1,8 +1,8 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T20:13:55.026653+00:00",
-    "total_notes": 209,
+    "generated_at": "2026-06-21T20:16:08.088569+00:00",
+    "total_notes": 210,
     "notes_by_section": {
       "00 Atlas": 6,
       "00 Graph": 26,
@@ -10,13 +10,13 @@
       "01 Python": 51,
       "02 Data Analysis": 15,
       "03 Ml": 20,
-      "04 Nlp": 19,
+      "04 Nlp": 20,
       "05 It Resources": 58,
       "90 Templates": 3,
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 48.1,
+    "average_quality_score": 48.4,
     "missing_core_topics": [
       "Git"
     ],
@@ -4839,6 +4839,40 @@
       "generic_heading_count": 0,
       "words_per_heading": 30.3,
       "quality_score": 70
+    },
+    {
+      "relative_path": "04_NLP/GenAI/01_Prompt_Engineering_LLM.md",
+      "section": "04 Nlp",
+      "title": "Prompt Engineering for LLM Practice",
+      "frontmatter_fields": [
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "status",
+        "tags",
+        "title",
+        "track"
+      ],
+      "has_frontmatter": true,
+      "word_count": 517,
+      "heading_count": 9,
+      "code_block_count": 2,
+      "wiki_link_count": 0,
+      "external_link_count": 1,
+      "tag_count": 4,
+      "has_examples": true,
+      "has_practice_section": true,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
+      "has_prerequisites": false,
+      "likely_thin_note": false,
+      "likely_ai_dump_or_placeholder": false,
+      "is_technical_topic": true,
+      "generic_heading_count": 0,
+      "words_per_heading": 57.4,
+      "quality_score": 100
     },
     {
       "relative_path": "05_IT_Resources/00_Analytics_QA_Map.md",

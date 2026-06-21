@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T20:13:55.651054+00:00",
+  "generated_at": "2026-06-21T20:16:11.531698+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 2,
-    "failed_topics": 34,
+    "passed_topics": 3,
+    "failed_topics": 33,
     "failed_rule_counts": {
-      "rule1": 32,
-      "rule2": 34,
-      "rule3": 34,
-      "rule4": 23
+      "rule1": 31,
+      "rule2": 33,
+      "rule3": 33,
+      "rule4": 22
     },
     "failed_required_topic_ids": [
       "python.basics",
@@ -34,7 +34,6 @@
       "nlp.preprocessing",
       "nlp.vectorization",
       "nlp.transformers",
-      "genai.prompting",
       "genai.embeddings_search",
       "genai.rag",
       "mlops.experiments",
@@ -1291,42 +1290,48 @@
       "title": "Prompt Engineering",
       "track": "GenAI and RAG",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
           "task_count": 0
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
+        "notes": [
+          {
+            "path": "04_NLP/GenAI/01_Prompt_Engineering_LLM.md",
+            "title": "Prompt Engineering for LLM Practice",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "genai_prompt_llm_practice",
+            "title": "LLM Prompt Review Drill"
+          }
+        ],
         "tasks": []
       }
     },
