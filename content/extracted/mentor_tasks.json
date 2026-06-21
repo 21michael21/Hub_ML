@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 67,
-    "tasks_with_asserts": 36,
+    "tasks_extracted": 68,
+    "tasks_with_asserts": 37,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 30,
+      "high": 31,
       "medium": 31,
       "low": 6
     },
@@ -233,6 +233,38 @@
         "embedding",
         "similarity",
         "vector"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "python_oop_order_history__manual_01",
+      "source_notebook": "manual_python_5_OOP",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Python OOP class behavior over order history",
+      "prompt": "#### Python OOP: class and object behavior\n\nImplement a `UserOrderHistory` class and test it on `datasets/df_orders.csv`.\n\nThe class should:\n\n1. Store `user_id` and a list of orders.\n2. Support `add_order(order_id, order_sum)`.\n3. Expose `order_count`, `total_order_sum`, and `average_order_sum`.\n4. Return a dictionary from `summary()` with `user_id`, `orders_count`, and `total_order_sum`.\n5. Build an instance from rows for one user.\n\nThis checks real OOP behavior: state, methods, object independence, and a small public interface.",
+      "starter_code": "import pandas as pd\n\norders = pd.read_csv(\"datasets/df_orders.csv\")\n\nclass UserOrderHistory:\n    # TODO: implement __init__, add_order, properties, summary, and from_dataframe\n    pass\n\nuser2_history = UserOrderHistory.from_dataframe(orders, user_id=2)\nuser3_history = UserOrderHistory.from_dataframe(orders, user_id=3)",
+      "tests": [
+        "assert user2_history.user_id == 2",
+        "assert user2_history.order_count == 2",
+        "assert user2_history.total_order_sum == 20931.0",
+        "assert user2_history.average_order_sum == 10465.5",
+        "assert user2_history.summary() == {\"user_id\": 2, \"orders_count\": 2, \"total_order_sum\": 20931.0}",
+        "assert user3_history.user_id == 3",
+        "assert user3_history.order_count == 1",
+        "assert user3_history.total_order_sum == 9913.0",
+        "assert user2_history.orders is not user3_history.orders"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "python_5_OOP",
+        "class",
+        "object",
+        "cell"
       ],
       "task_number_in_notebook": 1
     },

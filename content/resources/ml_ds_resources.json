@@ -160,5 +160,23 @@
     "related_hubml_modules": ["Theory", "Practice", "Tasks", "ML Lab", "Notebook"],
     "expected_output": ["note", "practice_card", "mentor_task"],
     "notes": "Reference for vectors, matrices, dot products, and the linear algebra vocabulary needed for ML baselines."
+  },
+  {
+    "id": "python_official_tutorial",
+    "title": "Python Official Tutorial",
+    "track": "Python",
+    "subtrack": "core_language",
+    "type": "docs",
+    "language": "en",
+    "level": "beginner",
+    "cost": "free",
+    "access": "open",
+    "url": "https://docs.python.org/3/tutorial/",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "python_foundations",
+    "related_hubml_modules": ["Theory", "Practice", "Tasks", "Notebook"],
+    "expected_output": ["note", "practice_card", "mentor_task"],
+    "notes": "Official Python tutorial for classes, modules, functions, data structures, and language basics."
   }
 ]

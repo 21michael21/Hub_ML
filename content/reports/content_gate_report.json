@@ -1,20 +1,19 @@
 {
-  "generated_at": "2026-06-21T20:19:19.929962+00:00",
+  "generated_at": "2026-06-21T20:22:08.380062+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 4,
-    "failed_topics": 32,
+    "passed_topics": 5,
+    "failed_topics": 31,
     "failed_rule_counts": {
-      "rule1": 30,
-      "rule2": 32,
-      "rule3": 32,
+      "rule1": 29,
+      "rule2": 31,
+      "rule3": 31,
       "rule4": 20
     },
     "failed_required_topic_ids": [
       "python.basics",
-      "python.oop",
       "python.typing_architecture",
       "python.algorithms",
       "sql.select_join",
@@ -109,40 +108,41 @@
       "title": "Object-Oriented Python",
       "track": "Python",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "65 < 70",
-          "best_score": 65,
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
           "threshold": 70,
-          "matched_notes": 9
+          "matched_notes": 10
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "0 practice, 3 task",
-          "practice_count": 0,
-          "task_count": 3
+          "detail": "1 practice, 4 task",
+          "practice_count": 1,
+          "task_count": 4
         }
       },
       "evidence": {
         "notes": [
+          {
+            "path": "01_Python/OOP/08_Python_OOP_Class_Object.md",
+            "title": "Python OOP class object design",
+            "quality_score": 95
+          },
           {
             "path": "01_Python/OOP/07_OOP_Course_Article.md",
             "title": "Python OOP Course Article",
@@ -162,15 +162,19 @@
             "path": "01_Python/OOP/01_OOP_Basics.md",
             "title": "ООП: объект, класс, состояние",
             "quality_score": 50
-          },
-          {
-            "path": "01_Python/OOP/02_Methods_Init_Self.md",
-            "title": "Методы, __init__ и self",
-            "quality_score": 50
           }
         ],
-        "practice": [],
+        "practice": [
+          {
+            "id": "python_oop_refactor_order_history",
+            "title": "Python OOP Refactor: Order History Object"
+          }
+        ],
         "tasks": [
+          {
+            "id": "python_oop_order_history__manual_01",
+            "title": "Python OOP class behavior over order history"
+          },
           {
             "id": "python_3_architecture__cell_48",
             "title": "Задание"

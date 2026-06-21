@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:19:19.929962+00:00`
+Generated: `2026-06-21T20:22:08.380062+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 4/36 pass, 32 fail**
-- Failed rule counts: `{'rule1': 30, 'rule2': 32, 'rule3': 32, 'rule4': 20}`
+Summary: **GATE: 5/36 pass, 31 fail**
+- Failed rule counts: `{'rule1': 29, 'rule2': 31, 'rule3': 31, 'rule4': 20}`
 
 ## python.basics — Python Basics  [FAIL]
 
@@ -14,12 +14,12 @@ Summary: **GATE: 4/36 pass, 32 fail**
 - rule3 sources: blocked by rule1/rule2 ✗
 - rule4 practice/task: 0 practice, 0 task ✗
 
-## python.oop — Object-Oriented Python  [FAIL]
+## python.oop — Object-Oriented Python  [PASS]
 
-- rule1 note quality: 65 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 3 task ✓
+- rule1 note quality: 95 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 4 task ✓
 
 ## python.typing_architecture — Typing and Architecture  [FAIL]
 
