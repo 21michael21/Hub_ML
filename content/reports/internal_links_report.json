@@ -1,0 +1,1643 @@
+{
+  "generated_at": "2026-06-21T22:27:28.642218+00:00",
+  "metadata": {
+    "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
+    "notes": 226,
+    "tasks": 53,
+    "projects": 4,
+    "practice_cards": 33,
+    "datasets": 3,
+    "reports": 6
+  },
+  "summary": {
+    "total": 116,
+    "passing": 106,
+    "broken": 10
+  },
+  "targets": [
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Home next theory note: 00_Atlas/00_Knowledge_Map.md",
+        "target_id": "",
+        "path": "00_Atlas/00_Knowledge_Map.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "home"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "00_atlas/00_knowledge_map.md"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Home next mentor task: Задание",
+        "target_id": "python_4_advanced__cell_44",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "home"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "python_4_advanced__cell_44"
+    },
+    {
+      "target": {
+        "kind": "project",
+        "label": "Home next project: Orders Conversion Baseline Classifier",
+        "target_id": "orders_conversion_baseline_classifier",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "home"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Home next project milestone: Define the target",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "define_target",
+        "source": "home"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::define_target"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Home next practice card: Data Analysis: EDA по заказам",
+        "target_id": "data_analysis_orders_eda",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "home"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_analysis_orders_eda"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Home dataset shortcut: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "home"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders Conversion Baseline Classifier theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/pandas/02_pandas_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders Conversion Baseline Classifier theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/01_vkat_analysis_data.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders Conversion Baseline Classifier theory: 02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/stats/02_statistics_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders Conversion Baseline Classifier theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/portfolio_output_guide.md"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Orders Conversion Baseline Classifier practice: data_analysis_orders_eda",
+        "target_id": "data_analysis_orders_eda",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_analysis_orders_eda"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Orders Conversion Baseline Classifier task: analysis_3_pandas",
+        "target_id": "analysis_3_pandas",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_3_pandas",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Orders Conversion Baseline Classifier task: analysis_1_stats",
+        "target_id": "analysis_1_stats",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_1_stats",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Orders Conversion Baseline Classifier dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Orders Conversion Baseline Classifier dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Define the target",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "define_target",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::define_target"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Prepare the modeling table",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "prepare_dataset",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::prepare_dataset"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Create simple features",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "create_features",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::create_features"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Make a train/test split",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "train_test_split",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::train_test_split"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Train a baseline model",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "baseline_model",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::baseline_model"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Evaluate classification metrics",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "evaluate_metrics",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::evaluate_metrics"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Do basic error analysis",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "error_analysis",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::error_analysis"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders Conversion Baseline Classifier milestone: Write the model card",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "model_card",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_conversion_baseline_classifier::model_card"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Events Funnel Analysis theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/pandas/02_pandas_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Events Funnel Analysis theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/01_vkat_analysis_data.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Events Funnel Analysis theory: 02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/02_product_analytics_flow.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Events Funnel Analysis theory: 00_Graph/22_Product_Analytics.md",
+        "target_id": "",
+        "path": "00_Graph/22_Product_Analytics.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "00_graph/22_product_analytics.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Events Funnel Analysis theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/portfolio_output_guide.md"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Events Funnel Analysis practice: data_analysis_orders_eda",
+        "target_id": "data_analysis_orders_eda",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_analysis_orders_eda"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Events Funnel Analysis task: analysis_3_pandas",
+        "target_id": "analysis_3_pandas",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_3_pandas",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Events Funnel Analysis dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Events Funnel Analysis dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Events Funnel Analysis milestone: Map event types",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "map_events",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::map_events"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Events Funnel Analysis milestone: Count unique users by step",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "count_users",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::count_users"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Events Funnel Analysis milestone: Calculate conversion rates",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "conversion_rates",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::conversion_rates"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Events Funnel Analysis milestone: Visualize the funnel",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "visualize_funnel",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::visualize_funnel"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Events Funnel Analysis milestone: Write the funnel summary",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "funnel_summary",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::funnel_summary"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/01_vkat_analysis_data.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/02_product_analytics_flow.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/stats/02_statistics_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/pandas/02_pandas_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Matching Quality Dashboard theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/portfolio_output_guide.md"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Matching Quality Dashboard practice: data_analysis_orders_eda",
+        "target_id": "data_analysis_orders_eda",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_analysis_orders_eda"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Matching Quality Dashboard practice: data_visualization_orders_daily_line",
+        "target_id": "data_visualization_orders_daily_line",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_visualization_orders_daily_line"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Matching Quality Dashboard task: analysis_3_pandas",
+        "target_id": "analysis_3_pandas",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_3_pandas",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Matching Quality Dashboard task: analysis_1_stats",
+        "target_id": "analysis_1_stats",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_1_stats",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Matching Quality Dashboard dataset: df_matching.csv",
+        "target_id": "df_matching.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_matching.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Matching Quality Dashboard dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Matching Quality Dashboard dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Matching Quality Dashboard milestone: Inspect matching data",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "inspect_matching",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "matching_quality_dashboard::inspect_matching"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Matching Quality Dashboard milestone: Check user assignment uniqueness",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "check_uniqueness",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "matching_quality_dashboard::check_uniqueness"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Matching Quality Dashboard milestone: Join matching to orders",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "join_orders",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "matching_quality_dashboard::join_orders"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Matching Quality Dashboard milestone: Create quality dashboard visuals",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "quality_visuals",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "matching_quality_dashboard::quality_visuals"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Matching Quality Dashboard milestone: Write dashboard summary",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "dashboard_summary",
+        "source": "project:matching_quality_dashboard"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "matching_quality_dashboard::dashboard_summary"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders EDA Report theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/pandas/02_pandas_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders EDA Report theory: 02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/visualization/02_visualization_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders EDA Report theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/01_vkat_analysis_data.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Orders EDA Report theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/portfolio_output_guide.md"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Orders EDA Report practice: data_analysis_orders_eda",
+        "target_id": "data_analysis_orders_eda",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_analysis_orders_eda"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Orders EDA Report practice: data_visualization_orders_daily_line",
+        "target_id": "data_visualization_orders_daily_line",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_visualization_orders_daily_line"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Orders EDA Report practice: data_visualization_commission_histogram",
+        "target_id": "data_visualization_commission_histogram",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_visualization_commission_histogram"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Orders EDA Report practice: data_visualization_commission_boxplot",
+        "target_id": "data_visualization_commission_boxplot",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_visualization_commission_boxplot"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Orders EDA Report task: analysis_3_pandas",
+        "target_id": "analysis_3_pandas",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_3_pandas",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Orders EDA Report task: analysis_1_stats",
+        "target_id": "analysis_1_stats",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": false,
+      "reason": "task not found: analysis_1_stats",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Orders EDA Report dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders EDA Report milestone: Read the dataset context",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "read_context",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_eda_report::read_context"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders EDA Report milestone: Run basic quality checks",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "quality_checks",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_eda_report::quality_checks"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders EDA Report milestone: Calculate core order metrics",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "core_metrics",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_eda_report::core_metrics"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders EDA Report milestone: Create two portfolio-ready charts",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "visualize_orders",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_eda_report::visualize_orders"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Orders EDA Report milestone: Write the mini report",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "write_report",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "orders_eda_report::write_report"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Data Analysis: EDA по заказам related note: 00_Graph/20_Data_Analysis_Path",
+        "target_id": "",
+        "path": "00_Graph/20_Data_Analysis_Path",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_analysis_orders_eda"
+      },
+      "exists": false,
+      "reason": "theory note not found: 00_Graph/20_Data_Analysis_Path",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Data Analysis: EDA по заказам dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_analysis_orders_eda"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "EDA Quality Missing Values Drill related note: 02_Data_Analysis/EDA/01_Data_Cleaning_EDA.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/EDA/01_Data_Cleaning_EDA.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_cleaning_eda_quality_orders"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/eda/01_data_cleaning_eda.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "EDA Quality Missing Values Drill dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_cleaning_eda_quality_orders"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Visualization: boxplot комиссии по стоимости доставки dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_visualization_commission_boxplot"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Visualization: распределение комиссии dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_visualization_commission_histogram"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Visualization: динамика суммы заказов по дням dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:data_visualization_orders_daily_line"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Embedding Semantic Search Drill related note: 04_NLP/GenAI/02_Embedding_Vector_Search_Semantic_Search.md",
+        "target_id": "",
+        "path": "04_NLP/GenAI/02_Embedding_Vector_Search_Semantic_Search.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:genai_embedding_semantic_search_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/genai/02_embedding_vector_search_semantic_search.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "LLM Eval and Agent Review Drill related note: 04_NLP/GenAI/04_LLM_Evaluation_Agents_Tools.md",
+        "target_id": "",
+        "path": "04_NLP/GenAI/04_LLM_Evaluation_Agents_Tools.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:genai_eval_agent_review_card"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/genai/04_llm_evaluation_agents_tools.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "LLM Prompt Review Drill related note: 04_NLP/GenAI/01_Prompt_Engineering_LLM.md",
+        "target_id": "",
+        "path": "04_NLP/GenAI/01_Prompt_Engineering_LLM.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:genai_prompt_llm_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/genai/01_prompt_engineering_llm.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "RAG Retrieval Citation Drill related note: 04_NLP/GenAI/03_RAG_Retrieval_Augmented_Generation.md",
+        "target_id": "",
+        "path": "04_NLP/GenAI/03_RAG_Retrieval_Augmented_Generation.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:genai_rag_citation_drill"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/genai/03_rag_retrieval_augmented_generation.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Git Reproducibility Setup Runbook related note: 05_IT_Resources/Git/Reproducible_Environment.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Git/Reproducible_Environment.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:git_reproducibility_setup_runbook"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/git/reproducible_environment.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Git Tools: Commit README Practice related note: 05_IT_Resources/Git/Git_CLI_Workflow.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Git/Git_CLI_Workflow.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:git_tools_commit_readme_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/git/git_cli_workflow.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "NumPy Matrix and Vector Scoring related note: 03_Ml/Math/01_Linear_Algebra_for_ML.md",
+        "target_id": "",
+        "path": "03_Ml/Math/01_Linear_Algebra_for_ML.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:math_linear_algebra_numpy_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "03_ml/math/01_linear_algebra_for_ml.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "NumPy Matrix and Vector Scoring dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:math_linear_algebra_numpy_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Math Optimization: Quadratic Gradient Descent related note: 03_ML/Math/02_Optimization_Basics.md",
+        "target_id": "",
+        "path": "03_ML/Math/02_Optimization_Basics.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:math_optimization_quadratic_gradient_descent"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "03_ml/math/02_optimization_basics.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Feature Engineering: Build a Baseline Feature Table related note: 03_ML/07_Feature_Engineering.md",
+        "target_id": "",
+        "path": "03_ML/07_Feature_Engineering.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:ml_feature_engineering_feature_table"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "03_ml/07_feature_engineering.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Feature Engineering: Build a Baseline Feature Table dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:ml_feature_engineering_feature_table"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Supervised Learning: Target, Features, Baseline related note: 03_ML/12_Supervised_Learning_Course_Article.md",
+        "target_id": "",
+        "path": "03_ML/12_Supervised_Learning_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:ml_supervised_target_features_baseline"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "03_ml/12_supervised_learning_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Unsupervised Learning: User Segmentation Sketch related note: 03_ML/14_Unsupervised_Learning_Course_Article.md",
+        "target_id": "",
+        "path": "03_ML/14_Unsupervised_Learning_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:ml_unsupervised_user_segmentation"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "03_ml/14_unsupervised_learning_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Unsupervised Learning: User Segmentation Sketch dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:ml_unsupervised_user_segmentation"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Baseline Validation Metrics Drill related note: 03_ML/Validation/01_Validation_Metrics.md",
+        "target_id": "",
+        "path": "03_ML/Validation/01_Validation_Metrics.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:ml_validation_metrics_baseline_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "03_ml/validation/01_validation_metrics.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "MLOps Experiment Log: Baseline Comparison related note: 05_IT_Resources/MLOps/01_Experiment_Tracking.md",
+        "target_id": "",
+        "path": "05_IT_Resources/MLOps/01_Experiment_Tracking.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:mlops_experiment_log_baseline_comparison"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/mlops/01_experiment_tracking.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "MLOps Monitoring: Data Drift Alert Plan related note: 05_IT_Resources/MLOps/03_Model_Monitoring_Data_Drift.md",
+        "target_id": "",
+        "path": "05_IT_Resources/MLOps/03_Model_Monitoring_Data_Drift.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:mlops_monitoring_drift_alert_card"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/mlops/03_model_monitoring_data_drift.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "MLOps Serving: Predict Function Contract related note: 05_IT_Resources/MLOps/02_Model_Serving_Basics.md",
+        "target_id": "",
+        "path": "05_IT_Resources/MLOps/02_Model_Serving_Basics.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:mlops_serving_predict_function_contract"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/mlops/02_model_serving_basics.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "NLP Preprocessing: Clean Interview and User Messages related note: 04_NLP/02_Text_Preprocessing.md",
+        "target_id": "",
+        "path": "04_NLP/02_Text_Preprocessing.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:nlp_preprocessing_message_cleaning"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/02_text_preprocessing.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "NLP: baseline классификатора текста related note: 00_Graph/40_NLP_Path",
+        "target_id": "",
+        "path": "00_Graph/40_NLP_Path",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:nlp_text_classifier_baseline"
+      },
+      "exists": false,
+      "reason": "theory note not found: 00_Graph/40_NLP_Path",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "NLP Transformer Pipeline Explainer related note: 04_NLP/12_Transformers_Course_Article.md",
+        "target_id": "",
+        "path": "04_NLP/12_Transformers_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:nlp_transformer_pipeline_explainer"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/12_transformers_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "NLP Vectorization: Bag of Words Baseline related note: 04_NLP/13_Text_Representations_Course_Article.md",
+        "target_id": "",
+        "path": "04_NLP/13_Text_Representations_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:nlp_vectorization_bag_of_words"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "04_nlp/13_text_representations_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Python Algorithms: Hashmap Complexity Drill related note: 01_Python/Algorithms/00_Algorithms_Map.md",
+        "target_id": "",
+        "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:python_algorithms_hashmap_complexity_drill"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "01_python/algorithms/00_algorithms_map.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Python Basics: User Event Structures related note: 01_Python/Core/03_Collections.md",
+        "target_id": "",
+        "path": "01_Python/Core/03_Collections.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:python_basics_user_event_structures"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "01_python/core/03_collections.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Python OOP Refactor: Order History Object related note: 01_Python/OOP/08_Python_OOP_Class_Object.md",
+        "target_id": "",
+        "path": "01_Python/OOP/08_Python_OOP_Class_Object.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:python_oop_refactor_order_history"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "01_python/oop/08_python_oop_class_object.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Python OOP Refactor: Order History Object dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:python_oop_refactor_order_history"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Python: refactor event summarizer related note: 00_Graph/11_Python_Core",
+        "target_id": "",
+        "path": "00_Graph/11_Python_Core",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:python_refactor_user_events"
+      },
+      "exists": false,
+      "reason": "theory note not found: 00_Graph/11_Python_Core",
+      "resolved": ""
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Python Typing Architecture Refactor related note: 01_Python/Architecture/05_Typing_Architecture.md",
+        "target_id": "",
+        "path": "01_Python/Architecture/05_Typing_Architecture.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:python_typing_architecture_refactor"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "01_python/architecture/05_typing_architecture.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "SQL SELECT JOIN Query Reading related note: 05_IT_Resources/SQL/SQL_Select_Join.md",
+        "target_id": "",
+        "path": "05_IT_Resources/SQL/SQL_Select_Join.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:sql_select_join_query_reading"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/sql/sql_select_join.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "SQL SELECT JOIN Query Reading dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:sql_select_join_query_reading"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "SQL Window Function Aggregation Drill related note: 05_IT_Resources/SQL/SQL_Aggregations_Windows.md",
+        "target_id": "",
+        "path": "05_IT_Resources/SQL/SQL_Aggregations_Windows.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:sql_window_aggregation_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/sql/sql_aggregations_windows.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "SQL Window Function Aggregation Drill dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:sql_window_aggregation_practice"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Statistics AB Test Hypothesis Confidence Interval Review related note: 02_Data_Analysis/Stats/04_Hypothesis_AB_Testing.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Stats/04_Hypothesis_AB_Testing.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:stats_hypothesis_ab_scenario_review"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/stats/04_hypothesis_ab_testing.md"
+    },
+    {
+      "target": {
+        "kind": "report",
+        "label": "Report file: content/reports/content_gate_report.json",
+        "target_id": "",
+        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/content_gate_report.json",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "reports"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/content_gate_report.json"
+    },
+    {
+      "target": {
+        "kind": "report",
+        "label": "Report file: content/reports/content_gate_report.md",
+        "target_id": "",
+        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/content_gate_report.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "reports"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/content_gate_report.md"
+    },
+    {
+      "target": {
+        "kind": "report",
+        "label": "Report file: content/reports/coverage_report.json",
+        "target_id": "",
+        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/coverage_report.json",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "reports"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/coverage_report.json"
+    },
+    {
+      "target": {
+        "kind": "report",
+        "label": "Report file: content/reports/coverage_report.md",
+        "target_id": "",
+        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/coverage_report.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "reports"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/coverage_report.md"
+    },
+    {
+      "target": {
+        "kind": "report",
+        "label": "Report file: content/reports/theory_audit.json",
+        "target_id": "",
+        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/theory_audit.json",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "reports"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/theory_audit.json"
+    },
+    {
+      "target": {
+        "kind": "report",
+        "label": "Report file: content/reports/theory_audit.md",
+        "target_id": "",
+        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/theory_audit.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "reports"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/theory_audit.md"
+    }
+  ]
+}
