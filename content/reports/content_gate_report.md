@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:24:54.275857+00:00`
+Generated: `2026-06-21T21:27:30.277596+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 22/36 pass, 14 fail**
-- Failed rule counts: `{'rule1': 14, 'rule2': 14, 'rule3': 14, 'rule4': 9}`
+Summary: **GATE: 23/36 pass, 13 fail**
+- Failed rule counts: `{'rule1': 13, 'rule2': 13, 'rule3': 13, 'rule4': 8}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -147,12 +147,12 @@ Summary: **GATE: 22/36 pass, 14 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 3 practice, 1 task ✓
 
-## ml.unsupervised — Unsupervised Learning  [FAIL]
+## ml.unsupervised — Unsupervised Learning  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## nlp.preprocessing — Text Preprocessing  [FAIL]
 

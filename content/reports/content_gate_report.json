@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T21:24:54.275857+00:00",
+  "generated_at": "2026-06-21T21:27:30.277596+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 22,
-    "failed_topics": 14,
+    "passed_topics": 23,
+    "failed_topics": 13,
     "failed_rule_counts": {
-      "rule1": 14,
-      "rule2": 14,
-      "rule3": 14,
-      "rule4": 9
+      "rule1": 13,
+      "rule2": 13,
+      "rule3": 13,
+      "rule4": 8
     },
     "failed_required_topic_ids": [
       "nlp.preprocessing",
@@ -1260,43 +1260,54 @@
       "title": "Unsupervised Learning",
       "track": "Classic ML",
       "required": false,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "03_ML/14_Unsupervised_Learning_Course_Article.md",
+            "title": "Unsupervised Learning Clustering PCA Dimensionality",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "ml_unsupervised_user_segmentation",
+            "title": "Unsupervised Learning: User Segmentation Sketch"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "ml_unsupervised_nearest_centroid__manual_01",
+            "title": "Unsupervised learning clustering PCA nearest centroid"
+          }
+        ]
       }
     },
     {

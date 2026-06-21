@@ -198,6 +198,24 @@
     "notes": "Clear supervised ML fundamentals and evaluation explanations for baseline projects."
   },
   {
+    "id": "scikit_learn_clustering",
+    "title": "Scikit-learn Clustering Documentation",
+    "track": "Classic ML",
+    "subtrack": "unsupervised_learning",
+    "type": "docs",
+    "language": "en",
+    "level": "intermediate",
+    "cost": "free",
+    "access": "open",
+    "url": "https://scikit-learn.org/stable/modules/clustering.html",
+    "priority": "support",
+    "status": "active",
+    "recommended_stage": "unsupervised_learning",
+    "related_hubml_modules": ["Theory", "Practice", "Tasks", "ML Lab", "Notebook"],
+    "expected_output": ["note", "practice_card", "mentor_task"],
+    "notes": "Reference for clustering algorithms, assumptions, and evaluation caveats in unsupervised learning."
+  },
+  {
     "id": "mathematics_for_ml",
     "title": "Mathematics for Machine Learning",
     "track": "Math for ML",

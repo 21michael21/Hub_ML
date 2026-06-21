@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 78,
-    "tasks_with_asserts": 47,
+    "tasks_extracted": 79,
+    "tasks_with_asserts": 48,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 41,
+      "high": 42,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,36 @@
     }
   ],
   "tasks": [
+    {
+      "id": "ml_unsupervised_nearest_centroid__manual_01",
+      "source_notebook": "manual_ml_unsupervised",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Unsupervised learning clustering PCA nearest centroid",
+      "prompt": "#### Unsupervised Learning: nearest-centroid clustering assignment\n\nImplement the assignment step for a tiny clustering example. There is no target column here: points are assigned to the nearest centroid by distance.\n\nCreate:\n\n1. `squared_distance(point, centroid)`: squared Euclidean distance for 2D tuples.\n2. `assign_cluster(point, centroids)`: returns the nearest centroid label.\n3. `assignments`: mapping from point id to cluster label.\n4. `cluster_counts`: count of points per cluster.\n\nThis checks clustering intuition without adding a clustering UI or extra dependency. PCA/dimensionality reduction is a separate unsupervised idea; this task focuses on the clustering core.",
+      "starter_code": "points = {\n    \"u1\": (2.0, 0.0),\n    \"u2\": (3.0, 0.0),\n    \"u3\": (11.0, 2.0),\n    \"u4\": (12.0, 3.0),\n}\ncentroids = {\n    \"low_activity\": (2.0, 0.0),\n    \"active_buyers\": (12.0, 3.0),\n}\n\n\ndef squared_distance(point: tuple[float, float], centroid: tuple[float, float]) -> float:\n    ...\n\n\ndef assign_cluster(point: tuple[float, float], centroids: dict[str, tuple[float, float]]) -> str:\n    ...\n\n\n# TODO: assign each point and count clusters\nassignments = ...\ncluster_counts = ...",
+      "tests": [
+        "assert squared_distance((2.0, 0.0), (2.0, 0.0)) == 0.0",
+        "assert squared_distance((3.0, 0.0), (2.0, 0.0)) == 1.0",
+        "assert assign_cluster((2.5, 0.0), centroids) == \"low_activity\"",
+        "assert assign_cluster((11.5, 2.5), centroids) == \"active_buyers\"",
+        "assert assignments == {\"u1\": \"low_activity\", \"u2\": \"low_activity\", \"u3\": \"active_buyers\", \"u4\": \"active_buyers\"}",
+        "assert cluster_counts == {\"active_buyers\": 2, \"low_activity\": 2}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "unsupervised learning",
+        "clustering",
+        "pca",
+        "dimensionality",
+        "nearest centroid"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "ml_feature_engineering_event_table__manual_01",
       "source_notebook": "manual_ml_feature_engineering",
