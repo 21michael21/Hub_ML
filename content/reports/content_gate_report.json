@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:37:03.873445+00:00",
+  "generated_at": "2026-06-21T21:39:49.423688+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 26,
-    "failed_topics": 10,
+    "passed_topics": 27,
+    "failed_topics": 9,
     "failed_rule_counts": {
-      "rule1": 10,
-      "rule2": 10,
-      "rule3": 10,
+      "rule1": 9,
+      "rule2": 9,
+      "rule3": 9,
       "rule4": 5
     },
     "failed_required_topic_ids": [
-      "genai.rag",
       "mlops.experiments",
       "mlops.serving",
       "interview.ml_ds_questions",
@@ -1605,44 +1604,50 @@
       "title": "RAG Basics",
       "track": "GenAI and RAG",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 0 task",
-          "practice_count": 2,
+          "detail": "3 practice, 0 task",
+          "practice_count": 3,
           "task_count": 0
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "04_NLP/GenAI/03_RAG_Retrieval_Augmented_Generation.md",
+            "title": "RAG Retrieval Augmented Generation Chunking Retriever",
+            "quality_score": 100
+          }
+        ],
         "practice": [
           {
             "id": "genai_embedding_semantic_search_practice",
             "title": "Embedding Semantic Search Drill"
+          },
+          {
+            "id": "genai_rag_citation_drill",
+            "title": "RAG Retrieval Citation Drill"
           },
           {
             "id": "nlp_transformer_pipeline_explainer",

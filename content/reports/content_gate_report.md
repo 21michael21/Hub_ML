@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:37:03.873445+00:00`
+Generated: `2026-06-21T21:39:49.423688+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 26/36 pass, 10 fail**
-- Failed rule counts: `{'rule1': 10, 'rule2': 10, 'rule3': 10, 'rule4': 5}`
+Summary: **GATE: 27/36 pass, 9 fail**
+- Failed rule counts: `{'rule1': 9, 'rule2': 9, 'rule3': 9, 'rule4': 5}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -189,12 +189,12 @@ Summary: **GATE: 26/36 pass, 10 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 2 practice, 1 task ✓
 
-## genai.rag — RAG Basics  [FAIL]
+## genai.rag — RAG Basics  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 0 task ✓
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 3 practice, 0 task ✓
 
 ## genai.evaluation_agents — LLM Evaluation, Agents, and Tools  [FAIL]
 

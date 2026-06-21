@@ -1,8 +1,8 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T21:37:03.235878+00:00",
-    "total_notes": 221,
+    "generated_at": "2026-06-21T21:39:48.802565+00:00",
+    "total_notes": 222,
     "notes_by_section": {
       "00 Atlas": 6,
       "00 Graph": 26,
@@ -10,13 +10,13 @@
       "01 Python": 53,
       "02 Data Analysis": 18,
       "03 Ml": 22,
-      "04 Nlp": 21,
+      "04 Nlp": 22,
       "05 It Resources": 61,
       "90 Templates": 3,
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 52.6,
+    "average_quality_score": 52.8,
     "missing_core_topics": [],
     "notes_without_frontmatter": [],
     "notes_without_examples": [
@@ -5193,6 +5193,40 @@
       "generic_heading_count": 0,
       "words_per_heading": 59.3,
       "quality_score": 95
+    },
+    {
+      "relative_path": "04_NLP/GenAI/03_RAG_Retrieval_Augmented_Generation.md",
+      "section": "04 Nlp",
+      "title": "RAG Retrieval Augmented Generation Chunking Retriever",
+      "frontmatter_fields": [
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "status",
+        "tags",
+        "title",
+        "track"
+      ],
+      "has_frontmatter": true,
+      "word_count": 557,
+      "heading_count": 9,
+      "code_block_count": 5,
+      "wiki_link_count": 1,
+      "external_link_count": 1,
+      "tag_count": 6,
+      "has_examples": true,
+      "has_practice_section": true,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
+      "has_prerequisites": false,
+      "likely_thin_note": false,
+      "likely_ai_dump_or_placeholder": false,
+      "is_technical_topic": true,
+      "generic_heading_count": 0,
+      "words_per_heading": 61.9,
+      "quality_score": 100
     },
     {
       "relative_path": "05_IT_Resources/00_Analytics_QA_Map.md",
