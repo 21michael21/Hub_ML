@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:40:19.754466+00:00`
+Generated: `2026-06-21T20:43:32.672966+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 9/36 pass, 27 fail**
-- Failed rule counts: `{'rule1': 26, 'rule2': 27, 'rule3': 27, 'rule4': 16}`
+Summary: **GATE: 10/36 pass, 26 fail**
+- Failed rule counts: `{'rule1': 26, 'rule2': 26, 'rule3': 26, 'rule4': 14}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -28,12 +28,12 @@ Summary: **GATE: 9/36 pass, 27 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 1 task ✓
 
-## python.algorithms — Algorithms and Complexity  [FAIL]
+## python.algorithms — Algorithms and Complexity  [PASS]
 
-- rule1 note quality: 80 >= 70 ✓
-- rule2 ai_dump_flag: ai_dump_flag true ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## sql.select_join — SQL Select, Filter, Join  [FAIL]
 
@@ -236,7 +236,7 @@ Summary: **GATE: 9/36 pass, 27 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule4 practice/task: 0 practice, 1 task ✓
 
 ## interview.take_home — Take-home Assignments  [FAIL]
 

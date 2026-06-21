@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T20:40:19.754466+00:00",
+  "generated_at": "2026-06-21T20:43:32.672966+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 9,
-    "failed_topics": 27,
+    "passed_topics": 10,
+    "failed_topics": 26,
     "failed_rule_counts": {
       "rule1": 26,
-      "rule2": 27,
-      "rule3": 27,
-      "rule4": 16
+      "rule2": 26,
+      "rule3": 26,
+      "rule4": 14
     },
     "failed_required_topic_ids": [
-      "python.algorithms",
       "sql.select_join",
       "git.tools",
       "git.reproducibility",
@@ -276,40 +275,41 @@
       "title": "Algorithms and Complexity",
       "track": "Python",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
           "passed": true,
-          "detail": "80 >= 70",
-          "best_score": 80,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 5
+          "matched_notes": 6
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "ai_dump_flag true",
-          "ai_dump_flag": true
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
         "notes": [
+          {
+            "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+            "title": "Python Algorithms: Big O, Hashmap, Two Pointers, Sliding Window, Stack, Recursion",
+            "quality_score": 100
+          },
           {
             "path": "01_Python/Algorithms/01_Big_O.md",
             "title": "Big O Notation",
@@ -329,15 +329,20 @@
             "path": "01_Python/Algorithms/06_Sliding_Window.md",
             "title": "Sliding Window Паттерн",
             "quality_score": 50
-          },
-          {
-            "path": "01_Python/Algorithms/07_Stack.md",
-            "title": "Stack Паттерн",
-            "quality_score": 50
           }
         ],
-        "practice": [],
-        "tasks": []
+        "practice": [
+          {
+            "id": "python_algorithms_hashmap_complexity_drill",
+            "title": "Python Algorithms: Hashmap Complexity Drill"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "python_algorithms_sliding_window__manual_01",
+            "title": "Algorithms sliding window max window sum"
+          }
+        ]
       }
     },
     {
@@ -1736,8 +1741,7 @@
       "failed_rules": [
         "rule1",
         "rule2",
-        "rule3",
-        "rule4"
+        "rule3"
       ],
       "rules": {
         "rule1_note_quality": {
@@ -1759,16 +1763,21 @@
           "has_sources_section": false
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
+          "passed": true,
+          "detail": "0 practice, 1 task",
           "practice_count": 0,
-          "task_count": 0
+          "task_count": 1
         }
       },
       "evidence": {
         "notes": [],
         "practice": [],
-        "tasks": []
+        "tasks": [
+          {
+            "id": "python_algorithms_sliding_window__manual_01",
+            "title": "Algorithms sliding window max window sum"
+          }
+        ]
       }
     },
     {
