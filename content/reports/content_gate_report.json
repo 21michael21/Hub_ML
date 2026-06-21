@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T20:49:22.197017+00:00",
+  "generated_at": "2026-06-21T20:51:15.530696+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 12,
-    "failed_topics": 24,
+    "passed_topics": 13,
+    "failed_topics": 23,
     "failed_rule_counts": {
-      "rule1": 24,
-      "rule2": 24,
-      "rule3": 24,
-      "rule4": 12
+      "rule1": 23,
+      "rule2": 23,
+      "rule3": 23,
+      "rule4": 11
     },
     "failed_required_topic_ids": [
-      "git.reproducibility",
       "data.pandas_basics",
       "data.groupby_merge",
       "data.visualization",
@@ -481,8 +480,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 0 task",
-          "practice_count": 1,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
           "task_count": 0
         }
       },
@@ -496,6 +495,10 @@
         ],
         "practice": [
           {
+            "id": "git_reproducibility_setup_runbook",
+            "title": "Git Reproducibility Setup Runbook"
+          },
+          {
             "id": "git_tools_commit_readme_practice",
             "title": "Git Tools: Commit README Practice"
           }
@@ -508,42 +511,48 @@
       "title": "Environment and Reproducibility",
       "track": "Git and Tools",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
           "task_count": 0
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
+        "notes": [
+          {
+            "path": "05_IT_Resources/Git/Reproducible_Environment.md",
+            "title": "Requirements venv environment reproducibility and dependency workflow",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "git_reproducibility_setup_runbook",
+            "title": "Git Reproducibility Setup Runbook"
+          }
+        ],
         "tasks": []
       }
     },
