@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T20:27:08.133339+00:00",
+  "generated_at": "2026-06-21T20:37:43.815736+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 7,
-    "failed_topics": 29,
+    "passed_topics": 8,
+    "failed_topics": 28,
     "failed_rule_counts": {
       "rule1": 27,
-      "rule2": 29,
-      "rule3": 29,
-      "rule4": 18
+      "rule2": 28,
+      "rule3": 28,
+      "rule4": 17
     },
     "failed_required_topic_ids": [
-      "python.basics",
       "python.typing_architecture",
       "python.algorithms",
       "sql.select_join",
@@ -47,44 +46,40 @@
       "title": "Python Basics",
       "track": "Python",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
           "passed": true,
-          "detail": "75 >= 70",
-          "best_score": 75,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
           "matched_notes": 3
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "ai_dump_flag true",
-          "ai_dump_flag": true
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
         "notes": [
           {
             "path": "01_Python/Core/03_Collections.md",
-            "title": "Коллекции: list, dict, set, tuple",
-            "quality_score": 75
+            "title": "Python Basics: list, dict, function",
+            "quality_score": 100
           },
           {
             "path": "01_Python/Core/07_Core_Course_Article.md",
@@ -97,8 +92,18 @@
             "quality_score": 35
           }
         ],
-        "practice": [],
-        "tasks": []
+        "practice": [
+          {
+            "id": "python_basics_user_event_structures",
+            "title": "Python Basics: User Event Structures"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "python_basics_user_events__manual_01",
+            "title": "Python basics list dict loop function over user events"
+          }
+        ]
       }
     },
     {

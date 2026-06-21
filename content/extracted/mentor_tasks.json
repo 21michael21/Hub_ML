@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 70,
-    "tasks_with_asserts": 39,
+    "tasks_extracted": 71,
+    "tasks_with_asserts": 40,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 33,
+      "high": 34,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,37 @@
     }
   ],
   "tasks": [
+    {
+      "id": "python_basics_user_events__manual_01",
+      "source_notebook": "manual_python_2_basics",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Python basics list dict loop function over user events",
+      "prompt": "#### Python Basics: list, dict, loop, function\n\nImplement `summarize_user_events(records)` for a small list of event dictionaries.\n\nThe function should return a dictionary keyed by `user_id`. Each value should contain:\n\n1. `events`: total number of records for the user.\n2. `purchases`: number of records where `event_type == \"purchase\"`.\n3. `revenue`: sum of `price` for purchase records only.\n\nThis task checks the Python core pattern from VKAT basics: list of dict records, a loop, conditional logic, and a reusable function.",
+      "starter_code": "events = [\n    {\"user_id\": 1, \"event_type\": \"view\", \"price\": 0},\n    {\"user_id\": 1, \"event_type\": \"purchase\", \"price\": 1200},\n    {\"user_id\": 2, \"event_type\": \"view\", \"price\": 0},\n    {\"user_id\": 2, \"event_type\": \"purchase\", \"price\": 800},\n    {\"user_id\": 2, \"event_type\": \"purchase\", \"price\": 300},\n]\n\n# TODO: write a function that loops over a list of dict records\ndef summarize_user_events(records):\n    ...\n\nsummary = summarize_user_events(events)",
+      "tests": [
+        "assert isinstance(summary, dict)",
+        "assert set(summary) == {1, 2}",
+        "assert summary[1] == {\"events\": 2, \"purchases\": 1, \"revenue\": 1200}",
+        "assert summary[2] == {\"events\": 3, \"purchases\": 2, \"revenue\": 1100}",
+        "assert summarize_user_events([]) == {}",
+        "assert callable(summarize_user_events)"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "python_2_basics",
+        "function",
+        "list",
+        "dict",
+        "loop",
+        "user events"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "sql_aggregation_windows_pandas__manual_01",
       "source_notebook": "manual_sql_aggregation_windows",

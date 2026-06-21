@@ -1,7 +1,7 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T20:27:07.659772+00:00",
+    "generated_at": "2026-06-21T20:37:43.381655+00:00",
     "total_notes": 214,
     "notes_by_section": {
       "00 Atlas": 6,
@@ -16,7 +16,7 @@
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 49.2,
+    "average_quality_score": 49.3,
     "missing_core_topics": [
       "Git"
     ],
@@ -2693,31 +2693,37 @@
     {
       "relative_path": "01_Python/Core/03_Collections.md",
       "section": "01 Python",
-      "title": "Коллекции: list, dict, set, tuple",
+      "title": "Python Basics: list, dict, function",
       "frontmatter_fields": [
-        "area",
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
         "source",
+        "status",
         "tags",
-        "type"
+        "title",
+        "track"
       ],
       "has_frontmatter": true,
-      "word_count": 273,
-      "heading_count": 72,
-      "code_block_count": 10,
-      "wiki_link_count": 1,
-      "external_link_count": 2,
-      "tag_count": 2,
+      "word_count": 661,
+      "heading_count": 9,
+      "code_block_count": 1,
+      "wiki_link_count": 0,
+      "external_link_count": 1,
+      "tag_count": 6,
       "has_examples": true,
-      "has_practice_section": false,
-      "has_sources_section": false,
-      "has_portfolio_section": false,
+      "has_practice_section": true,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
       "has_prerequisites": false,
       "likely_thin_note": false,
-      "likely_ai_dump_or_placeholder": true,
+      "likely_ai_dump_or_placeholder": false,
       "is_technical_topic": true,
       "generic_heading_count": 0,
-      "words_per_heading": 3.8,
-      "quality_score": 75
+      "words_per_heading": 73.4,
+      "quality_score": 100
     },
     {
       "relative_path": "01_Python/Core/04_Control_Flow.md",
