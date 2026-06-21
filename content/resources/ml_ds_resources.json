@@ -108,6 +108,24 @@
     "notes": "Official pandas documentation for DataFrame, groupby, merge, and EDA notes."
   },
   {
+    "id": "matplotlib_pyplot_tutorial",
+    "title": "Matplotlib Pyplot Tutorial",
+    "track": "Data Analysis",
+    "subtrack": "visualization",
+    "type": "docs",
+    "language": "en",
+    "level": "beginner",
+    "cost": "free",
+    "access": "open",
+    "url": "https://matplotlib.org/stable/tutorials/pyplot.html",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "data_visualization",
+    "related_hubml_modules": ["Theory", "Practice", "Notebook", "Portfolio"],
+    "expected_output": ["note", "practice_card", "portfolio_chart"],
+    "notes": "Official matplotlib pyplot tutorial for basic line, bar, histogram, and chart labeling practice."
+  },
+  {
     "id": "scikit_learn_tutorials",
     "title": "Scikit-learn Tutorials",
     "track": "Classic ML",
