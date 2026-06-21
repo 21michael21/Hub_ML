@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 66,
-    "tasks_with_asserts": 35,
+    "tasks_extracted": 67,
+    "tasks_with_asserts": 36,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 29,
+      "high": 30,
       "medium": 31,
       "low": 6
     },
@@ -206,6 +206,33 @@
         "vector",
         "numpy",
         "dot product"
+      ],
+      "task_number_in_notebook": 1
+    },
+    {
+      "id": "genai_embedding_similarity_numpy__manual_01",
+      "source_notebook": "manual_genai_embeddings_search",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Toy embedding similarity and vector search with NumPy",
+      "prompt": "#### Embedding, similarity, and vector search\n\nImplement a tiny semantic search ranking with toy embedding vectors. Do not call any AI API and do not use a vector database.\n\nCreate these variables:\n\n1. `similarities`: a dictionary mapping each document id to cosine similarity with `query_vector`.\n2. `ranked_doc_ids`: document ids sorted from most similar to least similar.\n3. `top_doc_id`: the first item in `ranked_doc_ids`.\n\nThis task checks the computational core behind embedding search: vector shape, cosine similarity, and ranking.",
+      "starter_code": "import numpy as np\n\ndoc_vectors = {\n    \"refund_policy\": np.array([1.0, 0.0, 0.0]),\n    \"delivery_delay\": np.array([0.0, 1.0, 0.0]),\n    \"account_security\": np.array([0.0, 0.0, 1.0]),\n    \"promo_codes\": np.array([0.7, 0.2, 0.0]),\n}\nquery_vector = np.array([0.9, 0.1, 0.0])\n\n# TODO: implement cosine similarity for two vectors\n\ndef cosine_similarity(a, b):\n    ...\n\n# TODO: score every document against the query vector\nsimilarities = ...\n\n# TODO: rank document ids from highest similarity to lowest similarity\nranked_doc_ids = ...\ntop_doc_id = ...",
+      "tests": [
+        "assert set(similarities) == set(doc_vectors)",
+        "assert ranked_doc_ids == [\"refund_policy\", \"promo_codes\", \"delivery_delay\", \"account_security\"]",
+        "assert top_doc_id == \"refund_policy\"",
+        "assert abs(float(similarities[\"refund_policy\"]) - 0.9938837346736189) < 1e-9",
+        "assert similarities[\"refund_policy\"] > similarities[\"promo_codes\"] > similarities[\"delivery_delay\"] > similarities[\"account_security\"]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "embedding",
+        "similarity",
+        "vector"
       ],
       "task_number_in_notebook": 1
     },

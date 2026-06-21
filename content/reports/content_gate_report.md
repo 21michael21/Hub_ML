@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:16:11.531698+00:00`
+Generated: `2026-06-21T20:19:19.929962+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 3/36 pass, 33 fail**
-- Failed rule counts: `{'rule1': 31, 'rule2': 33, 'rule3': 33, 'rule4': 22}`
+Summary: **GATE: 4/36 pass, 32 fail**
+- Failed rule counts: `{'rule1': 30, 'rule2': 32, 'rule3': 32, 'rule4': 20}`
 
 ## python.basics — Python Basics  [FAIL]
 
@@ -117,7 +117,7 @@ Summary: **GATE: 3/36 pass, 33 fail**
 - rule1 note quality: 95 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 1 practice, 2 task ✓
+- rule4 practice/task: 2 practice, 3 task ✓
 
 ## math.optimization — Optimization Basics  [FAIL]
 
@@ -182,19 +182,19 @@ Summary: **GATE: 3/36 pass, 33 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 0 task ✓
 
-## genai.embeddings_search — Embeddings and Vector Search  [FAIL]
+## genai.embeddings_search — Embeddings and Vector Search  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 95 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## genai.rag — RAG Basics  [FAIL]
 
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule4 practice/task: 1 practice, 0 task ✓
 
 ## genai.evaluation_agents — LLM Evaluation, Agents, and Tools  [FAIL]
 
