@@ -1,0 +1,2263 @@
+{
+  "generated_at": "2026-06-21T19:28:57.498018+00:00",
+  "threshold": 70,
+  "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
+  "summary": {
+    "total_topics": 36,
+    "passed_topics": 0,
+    "failed_topics": 36,
+    "failed_rule_counts": {
+      "rule1": 25,
+      "rule2": 32,
+      "rule3": 36,
+      "rule4": 14
+    },
+    "failed_required_topic_ids": [
+      "python.basics",
+      "python.oop",
+      "python.typing_architecture",
+      "python.algorithms",
+      "sql.select_join",
+      "sql.aggregation_windows",
+      "git.tools",
+      "git.reproducibility",
+      "data.pandas_basics",
+      "data.cleaning_eda",
+      "data.groupby_merge",
+      "data.visualization",
+      "stats.descriptive",
+      "stats.probability_distributions",
+      "stats.hypothesis_ab",
+      "math.linear_algebra",
+      "math.optimization",
+      "ml.supervised",
+      "ml.validation_metrics",
+      "ml.feature_engineering",
+      "nlp.preprocessing",
+      "nlp.vectorization",
+      "nlp.transformers",
+      "genai.prompting",
+      "genai.embeddings_search",
+      "genai.rag",
+      "mlops.experiments",
+      "mlops.serving",
+      "interview.ml_ds_questions",
+      "interview.coding",
+      "interview.take_home",
+      "career.portfolio",
+      "career.resume_remote"
+    ]
+  },
+  "topics": [
+    {
+      "id": "python.basics",
+      "title": "Python Basics",
+      "track": "Python",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 52
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 5 task",
+          "practice_count": 1,
+          "task_count": 5
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+            "title": "Algorithms Map",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/01_Big_O.md",
+            "title": "Big O Notation",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/02_Python_Builtins_Complexity.md",
+            "title": "Сложность встроенных операций Python",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/04_Hash_Map.md",
+            "title": "Hash Map Паттерн",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/02_Python_Theory_Deep_Dive.md",
+            "title": "Python Theory Deep Dive",
+            "quality_score": 75
+          }
+        ],
+        "practice": [
+          {
+            "id": "python_refactor_user_events",
+            "title": "Python: refactor event summarizer"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "python_2_basics__cell_60",
+            "title": "`+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл."
+          },
+          {
+            "id": "python_2_basics__cell_77",
+            "title": "Данные можно приводить из одного типа в другой"
+          },
+          {
+            "id": "python_6_advanced+__cell_21",
+            "title": "Отфильтруйте список чисел так,"
+          },
+          {
+            "id": "python_6_advanced+__cell_34",
+            "title": "Задание"
+          },
+          {
+            "id": "python_6_advanced+__cell_38",
+            "title": "Задание"
+          }
+        ]
+      }
+    },
+    {
+      "id": "python.oop",
+      "title": "Object-Oriented Python",
+      "track": "Python",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "65 < 70",
+          "best_score": 65,
+          "threshold": 70,
+          "matched_notes": 9
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 8 task",
+          "practice_count": 1,
+          "task_count": 8
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "01_Python/OOP/07_OOP_Course_Article.md",
+            "title": "Python OOP Course Article",
+            "quality_score": 65
+          },
+          {
+            "path": "01_Python/OOP/03_Encapsulation_Inheritance.md",
+            "title": "Инкапсуляция и наследование",
+            "quality_score": 55
+          },
+          {
+            "path": "01_Python/OOP/04_Polymorphism_Duck_Typing.md",
+            "title": "Полиморфизм и duck typing",
+            "quality_score": 55
+          },
+          {
+            "path": "01_Python/OOP/01_OOP_Basics.md",
+            "title": "ООП: объект, класс, состояние",
+            "quality_score": 50
+          },
+          {
+            "path": "01_Python/OOP/02_Methods_Init_Self.md",
+            "title": "Методы, __init__ и self",
+            "quality_score": 50
+          }
+        ],
+        "practice": [
+          {
+            "id": "python_refactor_user_events",
+            "title": "Python: refactor event summarizer"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "python_3_architecture__cell_48",
+            "title": "Задание"
+          },
+          {
+            "id": "python_3_architecture__cell_50",
+            "title": "Реализуйте методы:"
+          },
+          {
+            "id": "python_3_architecture__cell_73",
+            "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:"
+          },
+          {
+            "id": "python_3_architecture__cell_75",
+            "title": "У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`."
+          },
+          {
+            "id": "python_3_architecture__cell_90",
+            "title": "Задание"
+          }
+        ]
+      }
+    },
+    {
+      "id": "python.typing_architecture",
+      "title": "Typing and Architecture",
+      "track": "Python",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
+          "threshold": 70,
+          "matched_notes": 13
+        },
+        "rule2_ai_dump_flag": {
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "header missing, 0 registered URLs",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 5 task",
+          "practice_count": 1,
+          "task_count": 5
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "05_IT_Resources/Architecture_Guidelines.md",
+            "title": "Architecture Guidelines",
+            "quality_score": 95
+          },
+          {
+            "path": "01_Python/Architecture/01_Modules_Imports.md",
+            "title": "Модули и импорты",
+            "quality_score": 75
+          },
+          {
+            "path": "01_Python/OOP/04_Polymorphism_Duck_Typing.md",
+            "title": "Полиморфизм и duck typing",
+            "quality_score": 55
+          },
+          {
+            "path": "01_Python/Architecture/02_Project_Structure.md",
+            "title": "Структура проекта",
+            "quality_score": 50
+          },
+          {
+            "path": "01_Python/Architecture/03_Main_Guard.md",
+            "title": "if __name__ == '__main__'",
+            "quality_score": 50
+          }
+        ],
+        "practice": [
+          {
+            "id": "python_refactor_user_events",
+            "title": "Python: refactor event summarizer"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "python_3_architecture__cell_48",
+            "title": "Задание"
+          },
+          {
+            "id": "python_3_architecture__cell_50",
+            "title": "Реализуйте методы:"
+          },
+          {
+            "id": "python_3_architecture__cell_73",
+            "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:"
+          },
+          {
+            "id": "python_3_architecture__cell_75",
+            "title": "У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`."
+          },
+          {
+            "id": "python_3_architecture__cell_90",
+            "title": "Задание"
+          }
+        ]
+      }
+    },
+    {
+      "id": "python.algorithms",
+      "title": "Algorithms and Complexity",
+      "track": "Python",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 15
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "00_Graph/14_Python_Algorithms.md",
+            "title": "Python Algorithms",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+            "title": "Algorithms Map",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/01_Big_O.md",
+            "title": "Big O Notation",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/02_Python_Builtins_Complexity.md",
+            "title": "Сложность встроенных операций Python",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/04_Hash_Map.md",
+            "title": "Hash Map Паттерн",
+            "quality_score": 80
+          }
+        ],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "sql.select_join",
+      "title": "SQL Select, Filter, Join",
+      "track": "SQL",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
+          "threshold": 70,
+          "matched_notes": 1
+        },
+        "rule2_ai_dump_flag": {
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "header missing, 0 registered URLs",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "0 practice, 1 task",
+          "practice_count": 0,
+          "task_count": 1
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "05_IT_Resources/Database_SQL.md",
+            "title": "🗄️ Database & SQL",
+            "quality_score": 95
+          }
+        ],
+        "practice": [],
+        "tasks": [
+          {
+            "id": "analysis_3_pandas__cell_57",
+            "title": "Задание 3: Слияния (Merge)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sql.aggregation_windows",
+      "title": "SQL Aggregations and Window Functions",
+      "track": "SQL",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "git.tools",
+      "title": "Git and CLI Workflow",
+      "track": "Git and Tools",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "3 practice, 0 task",
+          "practice_count": 3,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          },
+          {
+            "id": "python_refactor_user_events",
+            "title": "Python: refactor event summarizer"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "git.reproducibility",
+      "title": "Environment and Reproducibility",
+      "track": "Git and Tools",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "20 < 70",
+          "best_score": 20,
+          "threshold": 70,
+          "matched_notes": 1
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "01_Python/01_Setup.md",
+            "title": "Setup (VS Code + venv)",
+            "quality_score": 20
+          }
+        ],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "data.pandas_basics",
+      "title": "Pandas Basics",
+      "track": "Data Analysis",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 2
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "4 practice, 3 task",
+          "practice_count": 4,
+          "task_count": 3
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Pandas/01_Pandas_Basics.md",
+            "title": "Pandas — Основы",
+            "quality_score": 80
+          },
+          {
+            "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+            "title": "Pandas Course Article",
+            "quality_score": 80
+          }
+        ],
+        "practice": [
+          {
+            "id": "data_analysis_orders_eda",
+            "title": "Data Analysis: EDA по заказам"
+          },
+          {
+            "id": "data_visualization_commission_boxplot",
+            "title": "Visualization: boxplot комиссии по стоимости доставки"
+          },
+          {
+            "id": "data_visualization_commission_histogram",
+            "title": "Visualization: распределение комиссии"
+          },
+          {
+            "id": "data_visualization_orders_daily_line",
+            "title": "Visualization: динамика суммы заказов по дням"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "analysis_3_pandas__cell_52",
+            "title": "Задание 1: Свойства и статистики"
+          },
+          {
+            "id": "analysis_3_pandas__cell_55",
+            "title": "Задание 2: Фильтрация"
+          },
+          {
+            "id": "analysis_3_pandas__cell_57",
+            "title": "Задание 3: Слияния (Merge)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "data.cleaning_eda",
+      "title": "Data Cleaning and EDA",
+      "track": "Data Analysis",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "5 practice, 1 task",
+          "practice_count": 5,
+          "task_count": 1
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "data_analysis_orders_eda",
+            "title": "Data Analysis: EDA по заказам"
+          },
+          {
+            "id": "data_visualization_commission_boxplot",
+            "title": "Visualization: boxplot комиссии по стоимости доставки"
+          },
+          {
+            "id": "data_visualization_commission_histogram",
+            "title": "Visualization: распределение комиссии"
+          },
+          {
+            "id": "data_visualization_orders_daily_line",
+            "title": "Visualization: динамика суммы заказов по дням"
+          },
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "analysis_3_pandas__cell_52",
+            "title": "Задание 1: Свойства и статистики"
+          }
+        ]
+      }
+    },
+    {
+      "id": "data.groupby_merge",
+      "title": "GroupBy, Merge, and Aggregation",
+      "track": "Data Analysis",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "data_visualization_orders_daily_line",
+            "title": "Visualization: динамика суммы заказов по дням"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "analysis_3_pandas__cell_57",
+            "title": "Задание 3: Слияния (Merge)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "data.visualization",
+      "title": "Data Visualization",
+      "track": "Data Analysis",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 2
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "3 practice, 0 task",
+          "practice_count": 3,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Visualization/01_Visualization_Basics.md",
+            "title": "Визуализация — Основы",
+            "quality_score": 80
+          },
+          {
+            "path": "02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
+            "title": "Visualization Course Article",
+            "quality_score": 80
+          }
+        ],
+        "practice": [
+          {
+            "id": "data_visualization_commission_boxplot",
+            "title": "Visualization: boxplot комиссии по стоимости доставки"
+          },
+          {
+            "id": "data_visualization_commission_histogram",
+            "title": "Visualization: распределение комиссии"
+          },
+          {
+            "id": "data_visualization_orders_daily_line",
+            "title": "Visualization: динамика суммы заказов по дням"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "stats.descriptive",
+      "title": "Descriptive Statistics",
+      "track": "Statistics",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 1
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 5 task",
+          "practice_count": 1,
+          "task_count": 5
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+            "title": "Statistics Course Article",
+            "quality_score": 80
+          }
+        ],
+        "practice": [
+          {
+            "id": "data_analysis_orders_eda",
+            "title": "Data Analysis: EDA по заказам"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "analysis_1_stats__cell_7",
+            "title": "Очевидные штуки"
+          },
+          {
+            "id": "analysis_1_stats__cell_8",
+            "title": "Очевидные штуки"
+          },
+          {
+            "id": "analysis_1_stats__cell_9",
+            "title": "Очевидные штуки"
+          },
+          {
+            "id": "analysis_1_stats__cell_12",
+            "title": "Меры центральной тенденции"
+          },
+          {
+            "id": "analysis_1_stats__cell_13",
+            "title": "Меры центральной тенденции"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stats.probability_distributions",
+      "title": "Probability and Distributions",
+      "track": "Statistics",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "data_visualization_commission_histogram",
+            "title": "Visualization: распределение комиссии"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "stats.hypothesis_ab",
+      "title": "Hypothesis Testing and A/B Tests",
+      "track": "Statistics",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "math.linear_algebra",
+      "title": "Linear Algebra for ML",
+      "track": "Math for ML",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "50 < 70",
+          "best_score": 50,
+          "threshold": 70,
+          "matched_notes": 2
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "0 practice, 5 task",
+          "practice_count": 0,
+          "task_count": 5
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Numpy/01_Numpy_Basics.md",
+            "title": "NumPy — Основы",
+            "quality_score": 50
+          },
+          {
+            "path": "02_Data_Analysis/Numpy/02_Numpy_Course_Article.md",
+            "title": "NumPy Course Article",
+            "quality_score": 40
+          }
+        ],
+        "practice": [],
+        "tasks": [
+          {
+            "id": "python_5_OOP__cell_19",
+            "title": "Задание"
+          },
+          {
+            "id": "analysis_2_numpy__cell_30",
+            "title": "Изменять элементы тоже легко, можно поменять одно значение, а можно сразу целую колонку."
+          },
+          {
+            "id": "analysis_2_numpy__cell_65",
+            "title": "В numpy встроены функции для поиска минимумов, максимумов и суммы. Часто мы хотим найти сумму не всего `np.array`, а по строкам или столбцам. Для этого используется аргумент `axis`."
+          },
+          {
+            "id": "analysis_2_numpy__cell_75",
+            "title": "Можно комбинировать условия с помощью `&` (и) и `|` (или). **Важно:** каждое условие обязательно брать в скобки `()`!"
+          },
+          {
+            "id": "analysis_2_numpy__cell_81",
+            "title": "Можно менять форму `np.array`, главное чтобы общее количество элементов оставалось тем же."
+          }
+        ]
+      }
+    },
+    {
+      "id": "math.optimization",
+      "title": "Optimization Basics",
+      "track": "Math for ML",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "ml.supervised",
+      "title": "Supervised Learning",
+      "track": "Classic ML",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "65 < 70",
+          "best_score": 65,
+          "threshold": 70,
+          "matched_notes": 3
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "03_ML/12_Supervised_Learning_Course_Article.md",
+            "title": "Supervised Learning Course Article",
+            "quality_score": 65
+          },
+          {
+            "path": "03_ML/01_Supervised_Learning_Map.md",
+            "title": "Supervised Learning Map",
+            "quality_score": 15
+          },
+          {
+            "path": "00_Graph/31_Supervised_Learning.md",
+            "title": "Supervised Learning",
+            "quality_score": 0
+          }
+        ],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "ml.validation_metrics",
+      "title": "Validation and Metrics",
+      "track": "Classic ML",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "ml.feature_engineering",
+      "title": "Feature Engineering",
+      "track": "Classic ML",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "50 < 70",
+          "best_score": 50,
+          "threshold": 70,
+          "matched_notes": 1
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "03_ML/07_Feature_Engineering.md",
+            "title": "Feature Engineering — Подготовка признаков",
+            "quality_score": 50
+          }
+        ],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "ml.unsupervised",
+      "title": "Unsupervised Learning",
+      "track": "Classic ML",
+      "required": false,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "50 < 70",
+          "best_score": 50,
+          "threshold": 70,
+          "matched_notes": 4
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "03_ML/06_Clustering.md",
+            "title": "Clustering — Группировка данных",
+            "quality_score": 50
+          },
+          {
+            "path": "03_ML/14_Unsupervised_Learning_Course_Article.md",
+            "title": "Unsupervised Learning Course Article",
+            "quality_score": 40
+          },
+          {
+            "path": "03_ML/02_Unsupervised_Learning_Map.md",
+            "title": "Unsupervised Learning Map",
+            "quality_score": 15
+          },
+          {
+            "path": "00_Graph/32_Unsupervised_Learning.md",
+            "title": "Unsupervised Learning",
+            "quality_score": 0
+          }
+        ],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "nlp.preprocessing",
+      "title": "Text Preprocessing",
+      "track": "NLP",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "65 < 70",
+          "best_score": 65,
+          "threshold": 70,
+          "matched_notes": 4
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "04_NLP/11_Text_Pipeline_Course_Article.md",
+            "title": "Text Pipeline Course Article",
+            "quality_score": 65
+          },
+          {
+            "path": "04_NLP/02_Text_Preprocessing.md",
+            "title": "Text Preprocessing — Очистка текста",
+            "quality_score": 50
+          },
+          {
+            "path": "04_NLP/01_Text_Pipeline_Map.md",
+            "title": "Text Pipeline Map",
+            "quality_score": 15
+          },
+          {
+            "path": "00_Graph/41_Text_Pipeline.md",
+            "title": "Text Pipeline",
+            "quality_score": 0
+          }
+        ],
+        "practice": [
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "nlp.vectorization",
+      "title": "Vectorization and Classical NLP Baselines",
+      "track": "NLP",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "65 < 70",
+          "best_score": 65,
+          "threshold": 70,
+          "matched_notes": 4
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "04_NLP/13_Text_Representations_Course_Article.md",
+            "title": "Text Representations Course Article",
+            "quality_score": 65
+          },
+          {
+            "path": "04_NLP/03_Bag_of_Words.md",
+            "title": "Bag of Words — Представление текста как вектора",
+            "quality_score": 50
+          },
+          {
+            "path": "04_NLP/02_Text_Representations_Map.md",
+            "title": "Text Representations Map",
+            "quality_score": 15
+          },
+          {
+            "path": "00_Graph/42_Text_Representations.md",
+            "title": "Text Representations",
+            "quality_score": 0
+          }
+        ],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "nlp.transformers",
+      "title": "Transformers and Embeddings",
+      "track": "NLP",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "15 < 70",
+          "best_score": 15,
+          "threshold": 70,
+          "matched_notes": 2
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "04_NLP/03_Deep_NLP_Map.md",
+            "title": "Deep NLP Map",
+            "quality_score": 15
+          },
+          {
+            "path": "00_Graph/43_Deep_NLP.md",
+            "title": "Deep NLP",
+            "quality_score": 0
+          }
+        ],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "genai.prompting",
+      "title": "Prompt Engineering",
+      "track": "GenAI and RAG",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "genai.embeddings_search",
+      "title": "Embeddings and Vector Search",
+      "track": "GenAI and RAG",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "0 practice, 1 task",
+          "practice_count": 0,
+          "task_count": 1
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": [
+          {
+            "id": "python_5_OOP__cell_19",
+            "title": "Задание"
+          }
+        ]
+      }
+    },
+    {
+      "id": "genai.rag",
+      "title": "RAG Basics",
+      "track": "GenAI and RAG",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "genai.evaluation_agents",
+      "title": "LLM Evaluation, Agents, and Tools",
+      "track": "GenAI and RAG",
+      "required": false,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "mlops.experiments",
+      "title": "Experiment Tracking",
+      "track": "MLOps",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "3 practice, 0 task",
+          "practice_count": 3,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          },
+          {
+            "id": "python_refactor_user_events",
+            "title": "Python: refactor event summarizer"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "mlops.serving",
+      "title": "Model Serving Basics",
+      "track": "MLOps",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "mlops.monitoring",
+      "title": "Monitoring and Data Drift",
+      "track": "MLOps",
+      "required": false,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "interview.ml_ds_questions",
+      "title": "ML/DS Interview Questions",
+      "track": "Interview Prep",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "85 >= 70",
+          "best_score": 85,
+          "threshold": 70,
+          "matched_notes": 3
+        },
+        "rule2_ai_dump_flag": {
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "header missing, 0 registered URLs",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "05_IT_Resources/Soft_Skill_Interview.md",
+            "title": "💬 Soft Skills Interview",
+            "quality_score": 85
+          },
+          {
+            "path": "05_IT_Resources/Interview_Thinking_Frameworks.md",
+            "title": "Interview Thinking Frameworks",
+            "quality_score": 65
+          },
+          {
+            "path": "05_IT_Resources/Questions_To_Company.md",
+            "title": "❓ Questions to Company",
+            "quality_score": 40
+          }
+        ],
+        "practice": [],
+        "tasks": []
+      }
+    },
+    {
+      "id": "interview.coding",
+      "title": "Coding Interview Practice",
+      "track": "Interview Prep",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 14
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "0 practice, 33 task",
+          "practice_count": 0,
+          "task_count": 33
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "00_Graph/14_Python_Algorithms.md",
+            "title": "Python Algorithms",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/00_Algorithms_Map.md",
+            "title": "Algorithms Map",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/01_Big_O.md",
+            "title": "Big O Notation",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/02_Python_Builtins_Complexity.md",
+            "title": "Сложность встроенных операций Python",
+            "quality_score": 80
+          },
+          {
+            "path": "01_Python/Algorithms/04_Hash_Map.md",
+            "title": "Hash Map Паттерн",
+            "quality_score": 80
+          }
+        ],
+        "practice": [],
+        "tasks": [
+          {
+            "id": "python_2_basics__cell_60",
+            "title": "`+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл."
+          },
+          {
+            "id": "python_2_basics__cell_77",
+            "title": "Данные можно приводить из одного типа в другой"
+          },
+          {
+            "id": "python_3_architecture__cell_48",
+            "title": "Задание"
+          },
+          {
+            "id": "python_3_architecture__cell_50",
+            "title": "Реализуйте методы:"
+          },
+          {
+            "id": "python_3_architecture__cell_73",
+            "title": "Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:"
+          }
+        ]
+      }
+    },
+    {
+      "id": "interview.take_home",
+      "title": "Take-home Assignments",
+      "track": "Interview Prep",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule1",
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": false,
+          "detail": "0 < 70",
+          "best_score": 0,
+          "threshold": 70,
+          "matched_notes": 0
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "no qualified note",
+          "ai_dump_flag": null
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [],
+        "practice": [
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "career.portfolio",
+      "title": "Portfolio Artifacts",
+      "track": "Portfolio and Career",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule2",
+        "rule3"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "80 >= 70",
+          "best_score": 80,
+          "threshold": 70,
+          "matched_notes": 2
+        },
+        "rule2_ai_dump_flag": {
+          "passed": false,
+          "detail": "ai_dump_flag true",
+          "ai_dump_flag": true
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "blocked by rule1/rule2",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "6 practice, 0 task",
+          "practice_count": 6,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+            "title": "Portfolio Output Guide",
+            "quality_score": 80
+          },
+          {
+            "path": "README.md",
+            "title": "Obsidian Vault",
+            "quality_score": 15
+          }
+        ],
+        "practice": [
+          {
+            "id": "data_visualization_commission_boxplot",
+            "title": "Visualization: boxplot комиссии по стоимости доставки"
+          },
+          {
+            "id": "data_visualization_commission_histogram",
+            "title": "Visualization: распределение комиссии"
+          },
+          {
+            "id": "data_visualization_orders_daily_line",
+            "title": "Visualization: динамика суммы заказов по дням"
+          },
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "nlp_text_classifier_baseline",
+            "title": "NLP: baseline классификатора текста"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "career.resume_remote",
+      "title": "Resume and Remote Work Readiness",
+      "track": "Portfolio and Career",
+      "required": true,
+      "status": "FAIL",
+      "failed_rules": [
+        "rule3",
+        "rule4"
+      ],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
+          "threshold": 70,
+          "matched_notes": 7
+        },
+        "rule2_ai_dump_flag": {
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
+        },
+        "rule3_sources": {
+          "passed": false,
+          "detail": "header missing, 0 registered URLs",
+          "registered_url_count": 0,
+          "has_sources_section": false
+        },
+        "rule4_practice_or_task": {
+          "passed": false,
+          "detail": "0 practice, 0 task",
+          "practice_count": 0,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "05_IT_Resources/FAQ_Currency_Remote.md",
+            "title": "💰 FAQ - Currency Remote",
+            "quality_score": 95
+          },
+          {
+            "path": "05_IT_Resources/00_ML_DS_IT_Map.md",
+            "title": "🤖 ML/DS Career Map",
+            "quality_score": 45
+          },
+          {
+            "path": "05_IT_Resources/00_Python_IT_Map.md",
+            "title": "🐍 Python Career Map",
+            "quality_score": 45
+          },
+          {
+            "path": "05_IT_Resources/Golang_USD_Remote_Jobs.md",
+            "title": "💼 Golang - USD Remote",
+            "quality_score": 40
+          },
+          {
+            "path": "05_IT_Resources/00_Golang_Map.md",
+            "title": "🐹 Golang Career Map",
+            "quality_score": 30
+          }
+        ],
+        "practice": [],
+        "tasks": []
+      }
+    }
+  ]
+}

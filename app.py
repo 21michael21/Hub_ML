@@ -99,6 +99,7 @@ ARCHITECTURE_GUIDELINES_INDEX_PATH = PROJECT_ROOT / "content" / "study" / "archi
 MENTOR_TASKS_PATH = PROJECT_ROOT / "content" / "extracted" / "mentor_tasks.json"
 THEORY_AUDIT_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "theory_audit.json"
 COVERAGE_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "coverage_report.json"
+CONTENT_GATE_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "content_gate_report.json"
 DATA_LAB_PROJECTS_DIR = PROJECT_ROOT / "content" / "projects" / "data_lab"
 ML_LAB_PROJECTS_DIR = PROJECT_ROOT / "content" / "projects" / "ml_lab"
 PROJECT_RECIPE_DIRS = (DATA_LAB_PROJECTS_DIR, ML_LAB_PROJECTS_DIR)
@@ -5207,6 +5208,7 @@ def render_theory_quality_tab(note_index: dict[str, Any]) -> None:
 ```bash
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/audit_theory_notes.py --vault "$VAULT_PATH"
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_coverage.py --vault "$VAULT_PATH"
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit --vault "$VAULT_PATH"
 ```
 
 Если `VAULT_PATH` не задан, подставь абсолютный путь к Obsidian vault через `--vault`.
@@ -5319,6 +5321,43 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_coverage.py --vault "$VAU
     if track_rows:
         st.markdown("##### Coverage By Track")
         st.dataframe(track_rows, use_container_width=True, hide_index=True)
+
+    st.markdown("#### Content Quality Gate")
+    gate_report = load_json_report(CONTENT_GATE_REPORT_PATH)
+    if not gate_report:
+        st.info(
+            "Content gate report не найден. Запусти вручную: "
+            "`PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit --vault \"$VAULT_PATH\"`"
+        )
+        return
+
+    gate_summary = gate_report.get("summary") if isinstance(gate_report.get("summary"), dict) else {}
+    gate_cols = st.columns(4)
+    gate_cols[0].metric("Gate PASS", gate_summary.get("passed_topics", 0))
+    gate_cols[1].metric("Gate FAIL", gate_summary.get("failed_topics", 0))
+    gate_cols[2].metric("Required failed", len(gate_summary.get("failed_required_topic_ids", []) or []))
+    gate_cols[3].metric("Threshold", gate_report.get("threshold", "—"))
+    if gate_report.get("generated_at"):
+        st.caption(f"Content gate generated: {gate_report['generated_at']}")
+
+    failed_counts = gate_summary.get("failed_rule_counts") or {}
+    if failed_counts:
+        st.caption("Failed rule counts: " + " · ".join(f"{html.escape(str(key))}: {html.escape(str(value))}" for key, value in failed_counts.items()))
+
+    gate_topics = [topic for topic in gate_report.get("topics", []) if isinstance(topic, dict)]
+    if gate_topics:
+        for topic in gate_topics[:36]:
+            status = str(topic.get("status") or "FAIL")
+            failed_rules = ", ".join(str(rule) for rule in topic.get("failed_rules", []) or []) or "none"
+            st.markdown(
+                f"""
+<div class="health-row">
+    <div class="link-label">{render_status_chip(status)} {html.escape(str(topic.get("id") or ""))} — {html.escape(str(topic.get("title") or ""))}</div>
+    <div class="link-path">failed rules: {html.escape(failed_rules)}</div>
+</div>
+                """,
+                unsafe_allow_html=True,
+            )
 
 
 def render_datasets_tab(
