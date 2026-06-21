@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T20:24:45.660130+00:00",
+  "generated_at": "2026-06-21T20:27:08.133339+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 6,
-    "failed_topics": 30,
+    "passed_topics": 7,
+    "failed_topics": 29,
     "failed_rule_counts": {
-      "rule1": 28,
-      "rule2": 30,
-      "rule3": 30,
-      "rule4": 19
+      "rule1": 27,
+      "rule2": 29,
+      "rule3": 29,
+      "rule4": 18
     },
     "failed_required_topic_ids": [
       "python.basics",
@@ -27,7 +27,6 @@
       "stats.hypothesis_ab",
       "math.optimization",
       "ml.supervised",
-      "ml.validation_metrics",
       "ml.feature_engineering",
       "nlp.preprocessing",
       "nlp.vectorization",
@@ -1030,8 +1029,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 0 task",
-          "practice_count": 1,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
           "task_count": 0
         }
       },
@@ -1041,6 +1040,10 @@
           {
             "id": "ml_preference_model_take_home",
             "title": "ML Take-home: Preference Model"
+          },
+          {
+            "id": "ml_validation_metrics_baseline_practice",
+            "title": "Baseline Validation Metrics Drill"
           }
         ],
         "tasks": []
@@ -1051,43 +1054,54 @@
       "title": "Validation and Metrics",
       "track": "Classic ML",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "95 >= 70",
+          "best_score": 95,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "03_ML/Validation/01_Validation_Metrics.md",
+            "title": "ML validation metric train test precision recall roc auc",
+            "quality_score": 95
+          }
+        ],
+        "practice": [
+          {
+            "id": "ml_validation_metrics_baseline_practice",
+            "title": "Baseline Validation Metrics Drill"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "ml_validation_metrics_manual_01",
+            "title": "Classification validation metrics from confusion counts"
+          }
+        ]
       }
     },
     {
