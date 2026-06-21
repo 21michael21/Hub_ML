@@ -759,6 +759,137 @@ def inject_styles() -> None:
         background: var(--accent);
     }
 
+    .metric-fill-pass,
+    .metric-fill-done,
+    .metric-fill-ready {
+        background: var(--pass);
+    }
+
+    .metric-fill-warn,
+    .metric-fill-in-progress,
+    .metric-fill-weak {
+        background: var(--warn);
+    }
+
+    .metric-fill-fail,
+    .metric-fill-error,
+    .metric-fill-blocked {
+        background: var(--fail);
+    }
+
+    .metric-fill-info {
+        background: var(--info);
+    }
+
+    .home-resume-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .home-metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.85rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .today-plan-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        align-items: center;
+        gap: 0.75rem;
+        border-bottom: 1px solid var(--border-soft);
+        padding: 0.72rem 0;
+    }
+
+    .today-plan-row:last-child {
+        border-bottom: 0;
+    }
+
+    .type-tag {
+        min-width: 4.3rem;
+        border-radius: 6px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 0.64rem;
+        letter-spacing: 0.07em;
+        padding: 0.18rem 0.45rem;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .type-tag-build {
+        background: rgba(90,169,255,0.12);
+        color: var(--info);
+    }
+
+    .type-tag-train {
+        background: rgba(216,165,55,0.12);
+        color: var(--warn);
+    }
+
+    .today-plan-title {
+        color: var(--text);
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .today-plan-meta {
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        margin-top: 0.14rem;
+    }
+
+    .attention-list {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 0.35rem 0;
+    }
+
+    .attention-item {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.65rem;
+        padding: 0.62rem 0.85rem;
+        color: var(--dim);
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    .attention-item:last-child {
+        border-bottom: 0;
+    }
+
+    .attention-marker {
+        color: var(--warn);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+    }
+
+    .empty-state-line {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--dim);
+        padding: 0.85rem 1rem;
+    }
+
+    @media (max-width: 900px) {
+        .home-resume-grid,
+        .home-metric-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .today-plan-row {
+            grid-template-columns: 1fr;
+            align-items: start;
+        }
+    }
+
     .chip,
     .status-chip {
         display: inline-flex;
@@ -878,14 +1009,19 @@ def render_metric_tile(
     total: str | int | float | None = None,
     progress: float | None = None,
     meta: str = "",
+    status: str = "",
 ) -> str:
     total_markup = f'<span class="metric-tile-total">/{html.escape(str(total))}</span>' if total is not None else ""
     bar_markup = ""
     if progress is not None:
         width = max(0.0, min(1.0, float(progress))) * 100
+        fill_class = ""
+        if status:
+            fill_status = normalize_chip_status(status).lower().replace(" ", "-")
+            fill_class = f" metric-fill-{html.escape(fill_status)}"
         bar_markup = (
             '<div class="metric-bar">'
-            f'<span class="metric-bar-fill" style="width: {width:.1f}%"></span>'
+            f'<span class="metric-bar-fill{fill_class}" style="width: {width:.1f}%"></span>'
             "</div>"
         )
     meta_markup = f'<div class="metric-tile-meta">{html.escape(str(meta))}</div>' if meta else ""
@@ -2815,123 +2951,332 @@ def next_practice_card(cards: list[dict[str, Any]]) -> dict[str, Any] | None:
     )[0]
 
 
+def open_data_lab_project(project_id: str) -> None:
+    st.session_state["selected_data_lab_project"] = project_id
+    st.session_state["active_tab"] = "🧪 Data Lab Projects"
+
+
+def open_algorithm_lesson(lesson_id: str) -> None:
+    st.session_state["selected_algorithm_lesson"] = lesson_id
+    st.session_state["active_tab"] = "🧩 Algorithms"
+
+
+def next_mentor_task(tasks: list[dict[str, Any]]) -> dict[str, Any] | None:
+    candidates = [
+        task
+        for task in tasks
+        if task.get("confidence") != "low" and get_mentor_task_status(task["id"]) != STATUS_DONE
+    ]
+    return candidates[0] if candidates else None
+
+
+def next_project_milestone(projects: list[dict[str, Any]]) -> dict[str, Any] | None:
+    for project in projects:
+        completed = completed_milestone_ids(get_data_lab_project_record(project["id"]))
+        for milestone in project.get("milestones", []):
+            if not isinstance(milestone, dict):
+                continue
+            milestone_id = str(milestone.get("id") or "")
+            if milestone_id and milestone_id not in completed:
+                return {"project": project, "milestone": milestone}
+    return None
+
+
+def experiment_records_for_projects(projects: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for project in projects:
+        workspace_path = project_workspace_path(project, USER_PROJECTS_DIR)
+        records_path = experiment_records_path(workspace_path)
+        for record in load_experiment_records(records_path):
+            records.append({**record, "project_title": project.get("title", project.get("id", ""))})
+    records.sort(key=lambda record: str(record.get("timestamp") or ""), reverse=True)
+    return records
+
+
+def first_algorithm_to_practice(lessons: list[dict[str, Any]]) -> dict[str, Any] | None:
+    return next((lesson for lesson in lessons if get_algorithm_status(lesson["id"]) != STATUS_DONE), None)
+
+
+def first_interview_prompt(interview_data: dict[str, Any]) -> dict[str, str] | None:
+    for company in interview_data.get("companies", []):
+        questions = company.get("questions") or []
+        if questions:
+            return {"company": str(company.get("company") or "Interview"), "text": str(questions[0])}
+    return None
+
+
+def theory_quality_average(audit_report: dict[str, Any]) -> float | None:
+    summary = theory_summary(audit_report)
+    value = summary.get("average_quality_score")
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def render_today_plan_row(
+    *,
+    kind: str,
+    title: str,
+    meta: str,
+    status: str,
+    button_label: str,
+    button_key: str,
+    on_click: Any,
+    args: tuple[Any, ...] = (),
+) -> None:
+    kind_class = {
+        "learn": "type-tag",
+        "build": "type-tag type-tag-build",
+        "train": "type-tag type-tag-train",
+    }.get(kind, "type-tag")
+    st.markdown(
+        f"""
+<div class="today-plan-row">
+    <span class="{kind_class}">{html.escape(kind)}</span>
+    <span>
+        <div class="today-plan-title">{html.escape(title)}</div>
+        <div class="today-plan-meta">{html.escape(meta)}</div>
+    </span>
+    <span>{render_status_chip(status)}</span>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.button(button_label, key=button_key, on_click=on_click, args=args, use_container_width=True)
+
+
+def render_attention_item(label: str, marker: str = "WARN") -> str:
+    return (
+        '<div class="attention-item">'
+        f'<span class="attention-marker">{html.escape(marker)}</span>'
+        f'<span>{html.escape(label)}</span>'
+        "</div>"
+    )
+
+
 def render_dashboard(
     sections: dict[str, list[dict[str, str]]],
     practice_cards: list[dict[str, Any]],
     datasets: list[dict[str, Any]],
     graph: dict[str, Any],
+    mentor_data: dict[str, Any],
+    data_lab_projects: list[dict[str, Any]],
+    algorithm_lessons: list[dict[str, Any]],
+    interview_data: dict[str, Any],
+    audit_report: dict[str, Any],
+    coverage_report: dict[str, Any],
 ) -> None:
     notes = all_notes(sections)
     total_notes = len(notes)
-    done_notes = sum(1 for note in notes if get_note_status(note) == STATUS_DONE)
-    reading_notes = sum(1 for note in notes if get_note_status(note) == STATUS_READING)
-    practice_stats = practice_progress(practice_cards)
-    output_stats = portfolio_progress(practice_cards)
     next_note = find_next_note(sections)
     next_card = next_practice_card(practice_cards)
+    mentor_tasks = mentor_data.get("tasks", [])
+    next_task = next_mentor_task(mentor_tasks)
+    project_step = next_project_milestone(data_lab_projects)
+    next_algorithm = first_algorithm_to_practice(algorithm_lessons)
+    interview_prompt = first_interview_prompt(interview_data)
     graph_summary = graph["summary"]
+    mentor_stats = mentor_tasks_progress(mentor_tasks)
+    project_stats = data_lab_projects_progress(data_lab_projects)
+    experiment_records = experiment_records_for_projects(data_lab_projects)
+    quality_avg = theory_quality_average(audit_report)
 
-    st.markdown("### Home")
-    st.markdown("Рабочий пульт: где ты сейчас, что делать дальше, и куда быстро перейти.")
+    st.markdown("# Hub_ML")
+    st.caption("Engineering console for local ML practice: learn, build, train, and ship portfolio artifacts.")
 
-    metric_cols = st.columns(5)
-    metric_cols[0].metric("Заметки", f"{done_notes}/{total_notes}", f"{reading_notes} читаю")
-    metric_cols[1].metric("Практика", f"{practice_stats[PRACTICE_DONE]}/{practice_stats['total']}")
-    metric_cols[2].metric("Outputs", f"{output_stats['with_outputs']}/{output_stats['total']}")
-    metric_cols[3].metric("Датасеты", len(datasets))
-    metric_cols[4].metric("Битые ссылки", graph_summary["broken"])
-
-    st.markdown("#### Следующий разумный шаг")
-    step_cols = st.columns(2)
-    with step_cols[0]:
-        if next_note:
-            st.markdown(
-                f"""
-<div class="learning-panel">
-    <div class="learning-panel-title">Теория</div>
-    <div class="muted-small">{html.escape(link_path_label(next_note))}</div>
-    <div style="margin-top: 0.55rem;">{status_badge(get_note_status(next_note))}</div>
-</div>
-                """,
-                unsafe_allow_html=True,
+    resume_cards: list[str] = []
+    if next_task:
+        resume_cards.append(
+            render_card(
+                next_task["title"],
+                f"{next_task['notebook_label']} · confidence {next_task['confidence']}",
+                eyebrow="Next mentor task",
+                meta=f"{mentor_stats['done']}/{mentor_stats['total']} solved",
+                status="TODO",
             )
-            st.button(
-                "Открыть заметку",
-                key="home_open_next_note",
-                on_click=open_note_from_roadmap,
-                args=(next_note,),
-                use_container_width=True,
-            )
-        else:
-            st.success("Все заметки закрыты по статусу.")
-
-    with step_cols[1]:
-        if next_card:
-            st.markdown(
-                f"""
-<div class="learning-panel">
-    <div class="learning-panel-title">Практика</div>
-    <div class="muted-small">{html.escape(next_card["section"])} · {html.escape(next_card["difficulty"])} · {html.escape(next_card["est_time"])}</div>
-    <div style="margin-top: 0.35rem;">{html.escape(next_card["title"])}</div>
-    <div style="margin-top: 0.55rem;">{practice_badge(get_card_status(next_card))}</div>
-</div>
-                """,
-                unsafe_allow_html=True,
-            )
-            st.button(
-                "Открыть карточку",
-                key="home_open_next_card",
-                on_click=open_practice_card,
-                args=(next_card["id"],),
-                use_container_width=True,
-            )
-        else:
-            st.success("Все карточки практики готовы.")
-
-    st.markdown("#### Быстрые переходы")
-    quick_links = [
-        ("Theory", "Theory"),
-        ("Practice", "🎯 Practice"),
-        ("Tasks", "🎯 Tasks"),
-        ("Data Lab", "🧪 Data Lab Projects"),
-        ("Portfolio", "📁 Portfolio"),
-        ("Datasets", "📊 Datasets"),
-        ("Scratch", "⚡ Scratch"),
-        ("Notebook", "📓 Notebook"),
-        ("Algorithms", "🧩 Algorithms"),
-        ("Interviews", "🎤 Interviews"),
-        ("Architecture", "🏗 Architecture"),
-        ("Quality", "🧭 Theory Quality"),
-        ("Roadmap", "Roadmap"),
-        ("Links", "🔗 Links Health"),
-    ]
-    quick_cols = st.columns(len(quick_links))
-    for col, (label, tab_name) in zip(quick_cols, quick_links, strict=True):
-        col.button(
-            label,
-            key=f"home_tab_{tab_name}",
-            on_click=open_tab,
-            args=(tab_name,),
-            use_container_width=True,
         )
+    else:
+        resume_cards.append(render_card("Mentor tasks clear", "No open checkable mentor task.", eyebrow="Next mentor task", status="PASS"))
 
-    st.markdown("#### Разделы базы")
-    for section_key, section_notes in sections.items():
-        stats = section_progress(section_notes)
-        total = stats["total"]
-        ratio = stats[STATUS_DONE] / total if total else 0.0
+    if project_step:
+        project = project_step["project"]
+        milestone = project_step["milestone"]
+        resume_cards.append(
+            render_card(
+                str(milestone.get("title") or milestone.get("id") or "Project milestone"),
+                str(project.get("title") or project.get("id") or "Project"),
+                eyebrow="Next project milestone",
+                meta=f"type: {milestone.get('type', 'milestone')}",
+                status="IN PROGRESS",
+            )
+        )
+    else:
+        resume_cards.append(render_card("Projects clear", "All required project milestones are complete.", eyebrow="Next project milestone", status="PASS"))
+
+    if next_note:
+        resume_cards.append(
+            render_card(
+                link_path_label(next_note),
+                f"{len(notes)} notes in vault",
+                eyebrow="Next theory note",
+                meta=next_note["relative_path"],
+                status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
+            )
+        )
+    else:
+        resume_cards.append(render_card("Theory clear", f"{total_notes} notes reviewed.", eyebrow="Next theory note", status="PASS"))
+
+    st.markdown(render_section_eyebrow("Resume"))
+    st.markdown(f'<div class="home-resume-grid">{"".join(resume_cards)}</div>', unsafe_allow_html=True)
+
+    st.markdown(render_section_eyebrow("Today"))
+    today_count = 0
+    if next_note and today_count < 4:
+        render_today_plan_row(
+            kind="learn",
+            title=link_path_label(next_note),
+            meta=next_note["relative_path"],
+            status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
+            button_label="Open theory note",
+            button_key="home_today_note",
+            on_click=open_note_from_roadmap,
+            args=(next_note,),
+        )
+        today_count += 1
+    if next_card and today_count < 4:
+        render_today_plan_row(
+            kind="learn",
+            title=next_card["title"],
+            meta=f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
+            status="IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
+            button_label="Open practice card",
+            button_key="home_today_practice",
+            on_click=open_practice_card,
+            args=(next_card["id"],),
+        )
+        today_count += 1
+    if project_step and today_count < 4:
+        project = project_step["project"]
+        milestone = project_step["milestone"]
+        render_today_plan_row(
+            kind="build",
+            title=str(milestone.get("title") or milestone.get("id") or "Project milestone"),
+            meta=str(project.get("title") or project.get("id") or "Project"),
+            status="IN PROGRESS",
+            button_label="Open project",
+            button_key="home_today_project",
+            on_click=open_data_lab_project,
+            args=(project["id"],),
+        )
+        today_count += 1
+    if next_task and today_count < 4:
+        render_today_plan_row(
+            kind="train",
+            title=next_task["title"],
+            meta=next_task["notebook_label"],
+            status="TODO",
+            button_label="Open task",
+            button_key="home_today_task",
+            on_click=open_mentor_task,
+            args=(next_task,),
+        )
+        today_count += 1
+    if next_algorithm and today_count < 4:
+        render_today_plan_row(
+            kind="train",
+            title=next_algorithm["title"],
+            meta="Algorithms Lab",
+            status="TODO",
+            button_label="Open algorithm",
+            button_key="home_today_algorithm",
+            on_click=open_algorithm_lesson,
+            args=(next_algorithm["id"],),
+        )
+        today_count += 1
+    if today_count == 0 and interview_prompt:
+        render_today_plan_row(
+            kind="train",
+            title=f"Interview prompt: {interview_prompt['company']}",
+            meta=interview_prompt["text"][:120],
+            status="TODO",
+            button_label="Open interviews",
+            button_key="home_today_interview",
+            on_click=open_tab,
+            args=("🎤 Interviews",),
+        )
+        today_count += 1
+    if today_count == 0:
+        st.markdown('<div class="empty-state-line">No suggested action found. Open Projects or Theory to choose the next move.</div>', unsafe_allow_html=True)
+
+    st.markdown(render_section_eyebrow("Status"))
+    task_ratio = mentor_stats["done"] / mentor_stats["total"] if mentor_stats["total"] else 0.0
+    project_ratio = project_stats["projects_done"] / project_stats["projects_total"] if project_stats["projects_total"] else 0.0
+    metric_tiles = [
+        render_metric_tile(
+            "Tasks passed",
+            mentor_stats["done"],
+            total=mentor_stats["total"],
+            progress=task_ratio,
+            status="PASS" if task_ratio == 1 else "IN PROGRESS",
+        ),
+        render_metric_tile(
+            "Projects done",
+            project_stats["projects_done"],
+            total=project_stats["projects_total"],
+            progress=project_ratio,
+            meta=f"{project_stats['milestones_done']}/{project_stats['milestones_total']} milestones",
+            status="PASS" if project_ratio == 1 and project_stats["projects_total"] else "IN PROGRESS",
+        ),
+    ]
+    if experiment_records:
+        latest = experiment_records[0].get("timestamp", "")
+        metric_tiles.append(render_metric_tile("Experiment runs", len(experiment_records), meta=f"latest: {latest[:10]}", status="INFO"))
+    else:
+        metric_tiles.append(render_metric_tile("Experiment runs", "—", meta="No saved experiment records", status="WEAK"))
+    if quality_avg is not None:
+        metric_tiles.append(
+            render_metric_tile(
+                "Theory quality avg",
+                f"{quality_avg:.1f}",
+                total=100,
+                progress=quality_avg / 100,
+                status="PASS" if quality_avg >= 70 else "WEAK",
+            )
+        )
+    else:
+        metric_tiles.append(render_metric_tile("Theory quality avg", "—", meta="Missing theory audit report", status="WEAK"))
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
+
+    st.markdown(render_section_eyebrow("Needs Attention"))
+    attention: list[str] = []
+    if not audit_report:
+        attention.append("Theory audit report is missing. Run the audit manually from Theory Quality.")
+    if not coverage_report:
+        attention.append("Coverage report is missing. Run coverage check manually.")
+    if audit_report:
+        weak = [note for note in weakest_notes(audit_report, limit=20) if int(note.get("quality_score") or 0) < 45]
+        if weak:
+            attention.append(f"{len(weak)} weak theory notes in the current audit top 20.")
+    incomplete_milestones = project_stats["milestones_total"] - project_stats["milestones_done"]
+    if incomplete_milestones:
+        attention.append(f"{incomplete_milestones} project milestones are still open.")
+    if not experiment_records:
+        attention.append("No experiment records saved yet. Log a real run from the Classic ML project.")
+    if graph_summary.get("broken"):
+        attention.append(f"{graph_summary['broken']} broken Obsidian links need review.")
+    if not datasets:
+        attention.append("No datasets detected in datasets/. Add CSV files before data work.")
+
+    if attention:
         st.markdown(
-            f"""
-<div class="section-progress-row">
-    <strong>{html.escape(humanize_section_name(section_key))}</strong>
-    <div class="muted-small">
-        {stats[STATUS_DONE]}/{total} готово · {stats[STATUS_READING]} читаю · {stats[STATUS_REPEAT]} повторить
-    </div>
-</div>
-            """,
+            '<div class="attention-list">'
+            + "".join(render_attention_item(item) for item in attention)
+            + "</div>",
             unsafe_allow_html=True,
         )
-        st.progress(ratio)
+    else:
+        st.success("No immediate attention items from existing reports and progress.")
 
 
 def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
@@ -5527,7 +5872,18 @@ def main() -> None:
     render_breadcrumb(active_tab)
 
     if active_tab == "Home":
-        render_dashboard(sections, practice_cards, datasets, graph)
+        render_dashboard(
+            sections,
+            practice_cards,
+            datasets,
+            graph,
+            mentor_data,
+            data_lab_projects,
+            algorithm_lessons,
+            interview_data,
+            load_json_report(THEORY_AUDIT_REPORT_PATH),
+            load_json_report(COVERAGE_REPORT_PATH),
+        )
     elif active_tab == "Theory":
         if selected_note is None:
             st.info("Выберите заметку в сайдбаре.")
