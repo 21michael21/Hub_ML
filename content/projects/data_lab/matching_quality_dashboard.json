@@ -1,14 +1,28 @@
 {
   "id": "matching_quality_dashboard",
-  "title": "Matching Quality Dashboard",
+  "title": "Dashboard качества matching",
   "level": "junior",
   "track": "Data Lab",
-  "datasets": ["df_matching.csv", "df_events.csv", "df_orders.csv"],
-  "skills": ["pandas", "data quality", "A/B group checks", "joins", "dashboard thinking"],
+  "datasets": [
+    "df_matching.csv",
+    "df_events.csv",
+    "df_orders.csv"
+  ],
+  "skills": [
+    "pandas",
+    "data quality",
+    "A/B group checks",
+    "joins",
+    "dashboard thinking"
+  ],
   "estimated_time": "3-4 ч",
-  "goal": "Check whether matching/experiment assignment data is usable: group sizes, duplicate users, date coverage, and joins to events/orders.",
-  "business_context": "Before comparing product groups, the team must trust that users are assigned correctly and that joins do not create obvious data problems.",
-  "prerequisites": ["VKAT Analysis Data", "Product Analytics Flow", "Statistics Basics"],
+  "goal": "Проверить, пригодны ли данные matching/experiment assignment: размеры групп, дубликаты пользователей, покрытие по датам и join с events/orders.",
+  "business_context": "Перед сравнением продуктовых групп команда должна доверять assignment-таблице и понимать, что join не создаёт очевидных проблем данных.",
+  "prerequisites": [
+    "VKAT Analysis Data",
+    "Product Analytics Flow",
+    "Statistics Basics"
+  ],
   "related_theory_paths": [
     "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
     "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
@@ -20,93 +34,110 @@
     "data_analysis_orders_eda",
     "data_visualization_orders_daily_line"
   ],
-  "related_task_ids": ["analysis_3_pandas", "analysis_1_stats"],
-  "related_dataset_names": ["df_matching.csv", "df_events.csv", "df_orders.csv"],
+  "related_task_ids": [
+    "analysis_3_pandas",
+    "analysis_1_stats"
+  ],
+  "related_dataset_names": [
+    "df_matching.csv",
+    "df_events.csv",
+    "df_orders.csv"
+  ],
   "related_portfolio_templates": [
     {
-      "title": "Matching quality dashboard writeup",
-      "what_to_write": "Describe assignment quality, group sizes, duplicate users, join coverage, and which checks are needed before any A/B conclusion.",
-      "chart_or_table": "Include a group-size bar chart, an average order by group chart/table, and a small data-quality checklist.",
-      "readme_bullet": "Built a matching-quality dashboard in pandas/matplotlib, validating experiment assignment data before deeper product comparison."
+      "title": "Writeup по matching quality dashboard",
+      "what_to_write": "Опиши качество assignment, размеры групп, дубликаты пользователей, покрытие join и проверки, которые нужны перед любым A/B-выводом.",
+      "chart_or_table": "Добавь bar chart размеров групп, chart/table среднего заказа по группам и короткий data-quality checklist.",
+      "readme_bullet": "Собрал matching-quality dashboard на pandas/matplotlib и проверил experiment assignment data перед более глубоким сравнением групп."
     }
   ],
   "milestones": [
     {
       "id": "inspect_matching",
-      "title": "Inspect matching data",
+      "title": "Изучить matching data",
       "type": "code",
-      "description": "Load df_matching.csv and inspect shape, columns, missing values, group sizes, and date range.",
-      "dataset_hints": ["df_matching.csv contains user_id, exp_group, and event_date."],
+      "description": "Загрузи df_matching.csv и проверь shape, columns, missing values, размеры групп и диапазон дат.",
+      "dataset_hints": [
+        "df_matching.csv содержит user_id, exp_group и event_date."
+      ],
       "starter_code": "import pandas as pd\n\nmatching = pd.read_csv(\"datasets/df_matching.csv\")\nprint(matching.shape)\nprint(matching.columns.tolist())\nprint(matching.isna().sum())\nprint(matching[\"exp_group\"].value_counts())\nprint(matching[\"event_date\"].min(), matching[\"event_date\"].max())",
       "checklist": [
-        "I checked missing values.",
-        "I checked group sizes.",
-        "I checked date range.",
-        "I wrote one quality concern or confirmed none found."
+        "Я проверил пропуски.",
+        "Я проверил размеры групп.",
+        "Я проверил диапазон дат.",
+        "Я записал одну проблему качества или подтвердил, что явных проблем нет."
       ],
-      "portfolio_output": "Matching dataset quality summary."
+      "portfolio_output": "Summary качества matching dataset."
     },
     {
       "id": "check_uniqueness",
-      "title": "Check user assignment uniqueness",
+      "title": "Проверить уникальность assignment",
       "type": "code",
-      "description": "Verify whether each user appears once and whether any user has multiple experiment groups.",
-      "dataset_hints": ["Use groupby user_id and nunique exp_group."],
+      "description": "Проверь, встречается ли каждый user один раз и нет ли пользователей сразу в нескольких experiment groups.",
+      "dataset_hints": [
+        "Используй groupby user_id и nunique exp_group."
+      ],
       "starter_code": "user_rows = matching.groupby(\"user_id\").size()\nuser_groups = matching.groupby(\"user_id\")[\"exp_group\"].nunique()\nprint(\"duplicate user rows:\", int((user_rows > 1).sum()))\nprint(\"users in multiple groups:\", int((user_groups > 1).sum()))",
       "checklist": [
-        "I checked duplicate user rows.",
-        "I checked users in multiple groups.",
-        "I explained whether the assignment table is safe to join."
+        "Я проверил duplicate user rows.",
+        "Я проверил users in multiple groups.",
+        "Я объяснил, безопасна ли assignment table для join."
       ],
-      "portfolio_output": "Uniqueness checks and interpretation."
+      "portfolio_output": "Uniqueness checks и интерпретация."
     },
     {
       "id": "join_orders",
-      "title": "Join matching to orders",
+      "title": "Сделать join matching с orders",
       "type": "code",
-      "description": "Join experiment groups to orders and calculate group-level order metrics. Focus on data sanity, not causal claims.",
-      "dataset_hints": ["Use user_id and left/inner join deliberately."],
+      "description": "Соедини experiment groups с заказами и посчитай group-level order metrics. Фокус на sanity check данных, а не на causal claims.",
+      "dataset_hints": [
+        "Используй user_id и осознанно выбери left/inner join."
+      ],
       "starter_code": "orders = pd.read_csv(\"datasets/df_orders.csv\")\norders_with_group = orders.merge(matching[[\"user_id\", \"exp_group\"]], on=\"user_id\", how=\"left\")\nprint(orders_with_group[\"exp_group\"].isna().sum())\nsummary = orders_with_group.groupby(\"exp_group\", as_index=False).agg(\n    users=(\"user_id\", \"nunique\"),\n    orders=(\"order_id\", \"nunique\"),\n    revenue=(\"order_sum\", \"sum\"),\n    avg_order=(\"order_sum\", \"mean\"),\n)\nprint(summary)",
       "checklist": [
-        "I checked missing experiment groups after join.",
-        "I calculated users, orders, revenue, and average order.",
-        "I avoided causal language."
+        "Я проверил missing experiment groups после join.",
+        "Я посчитал users, orders, revenue и average order.",
+        "Я избегал causal language."
       ],
       "portfolio_output": "Group-level order sanity table."
     },
     {
       "id": "quality_visuals",
-      "title": "Create quality dashboard visuals",
+      "title": "Построить dashboard visuals качества",
       "type": "visualization",
-      "description": "Create two simple charts: group size bar chart and average order by group. Keep them clear and honest.",
-      "dataset_hints": ["Use matching and orders_with_group summaries."],
+      "description": "Построй два простых графика: group size bar chart и average order by group. Сделай их понятными и честными.",
+      "dataset_hints": [
+        "Используй summaries matching и orders_with_group."
+      ],
       "starter_code": "import matplotlib.pyplot as plt\n\ngroup_sizes = matching[\"exp_group\"].value_counts().sort_index()\nax = group_sizes.plot(kind=\"bar\", figsize=(7, 4))\nax.set_title(\"Experiment group sizes\")\nax.set_xlabel(\"Group\")\nax.set_ylabel(\"Users\")\nplt.tight_layout()\nplt.show()\n\nax = summary.plot(x=\"exp_group\", y=\"avg_order\", kind=\"bar\", legend=False, figsize=(7, 4))\nax.set_title(\"Average order by experiment group\")\nax.set_xlabel(\"Group\")\nax.set_ylabel(\"Average order\")\nplt.tight_layout()\nplt.show()",
       "checklist": [
-        "Charts have titles and axis labels.",
-        "Group labels are readable.",
-        "The chart text does not claim impact without a test."
+        "У графиков есть заголовки и подписи осей.",
+        "Group labels читаемы.",
+        "Текст графика не утверждает impact без статистической проверки."
       ],
-      "portfolio_output": "Two dashboard-style quality charts."
+      "portfolio_output": "Два dashboard-style quality charts."
     },
     {
       "id": "dashboard_summary",
-      "title": "Write dashboard summary",
+      "title": "Написать dashboard summary",
       "type": "reflection",
-      "description": "Summarize whether matching data is safe for deeper group comparison and what should be checked before A/B conclusions.",
-      "dataset_hints": ["Mention uniqueness, group balance, join coverage, and metric limitations."],
+      "description": "Сформулируй, безопасны ли matching data для более глубокого сравнения групп и что нужно проверить перед A/B conclusions.",
+      "dataset_hints": [
+        "Упомяни uniqueness, group balance, join coverage и ограничения метрик."
+      ],
       "checklist": [
-        "I stated whether matching quality is acceptable.",
-        "I listed risks before causal comparison.",
-        "I suggested the next experiment-analysis step."
+        "Я написал, приемлемо ли качество matching.",
+        "Я перечислил риски перед causal comparison.",
+        "Я предложил следующий шаг experiment analysis."
       ],
       "portfolio_output": "Matching Quality Dashboard summary."
     }
   ],
   "deliverables": [
-    "Matching quality table",
+    "Таблица качества matching",
     "Group-level order summary",
-    "Two charts",
+    "Два графика",
     "Dashboard-style written summary"
   ],
-  "portfolio_prompt": "Write a dashboard-style case study showing whether experiment matching data is ready for analysis, including group balance, uniqueness checks, join coverage, and limitations."
+  "portfolio_prompt": "Напиши dashboard-style case study: готовы ли experiment matching data к анализу, включая баланс групп, uniqueness checks, join coverage и ограничения."
 }

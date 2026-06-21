@@ -3138,7 +3138,7 @@ def render_dashboard(
     next_note_target = normalize_home_note_target(next_note) if next_note else None
 
     st.markdown("# Hub_ML")
-    st.caption("Engineering console for local ML practice: learn, build, train, and ship portfolio artifacts.")
+    st.caption("Инженерная консоль для локальной ML-практики: учиться, собирать проекты, тренироваться и готовить portfolio artifacts.")
 
     resume_cards: list[str] = []
     if next_task:
@@ -3146,13 +3146,13 @@ def render_dashboard(
             render_card(
                 next_task["title"],
                 f"{next_task['notebook_label']} · confidence {next_task['confidence']}",
-                eyebrow="Next mentor task",
-                meta=f"{mentor_stats['done']}/{mentor_stats['total']} solved",
+                eyebrow="Следующая задача ментора",
+                meta=f"решено: {mentor_stats['done']}/{mentor_stats['total']}",
                 status="TODO",
             )
         )
     else:
-        resume_cards.append(render_card("Mentor tasks clear", "No open checkable mentor task.", eyebrow="Next mentor task", status="PASS"))
+        resume_cards.append(render_card("Задачи ментора закрыты", "Нет открытой проверяемой задачи.", eyebrow="Следующая задача ментора", status="PASS"))
 
     if project_step:
         project = project_step["project"]
@@ -3161,31 +3161,31 @@ def render_dashboard(
             render_card(
                 str(milestone.get("title") or milestone.get("id") or "Project milestone"),
                 str(project.get("title") or project.get("id") or "Project"),
-                eyebrow="Next project milestone",
-                meta=f"type: {milestone.get('type', 'milestone')}",
+                eyebrow="Следующий milestone проекта",
+                meta=f"тип: {milestone.get('type', 'milestone')}",
                 status="IN PROGRESS",
             )
         )
     else:
-        resume_cards.append(render_card("Projects clear", "All required project milestones are complete.", eyebrow="Next project milestone", status="PASS"))
+        resume_cards.append(render_card("Проекты закрыты", "Все обязательные milestones завершены.", eyebrow="Следующий milestone проекта", status="PASS"))
 
     if next_note and next_note_target:
         resume_cards.append(
             render_card(
                 next_note_target["label"],
-                f"{len(notes)} notes in vault",
-                eyebrow="Next theory note",
+                f"заметок в vault: {len(notes)}",
+                eyebrow="Следующая theory note",
                 meta=next_note_target["path"],
                 status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
             )
         )
     else:
-        resume_cards.append(render_card("Theory clear", f"{total_notes} notes reviewed.", eyebrow="Next theory note", status="PASS"))
+        resume_cards.append(render_card("Теория закрыта", f"просмотрено заметок: {total_notes}", eyebrow="Следующая theory note", status="PASS"))
 
-    render_section_eyebrow_block("Resume")
+    render_section_eyebrow_block("Продолжить")
     st.markdown(f'<div class="home-resume-grid">{"".join(resume_cards)}</div>', unsafe_allow_html=True)
 
-    render_section_eyebrow_block("Today")
+    render_section_eyebrow_block("План на сегодня")
     today_count = 0
     if next_note and next_note_target and today_count < 4:
         render_today_plan_row(
@@ -3193,7 +3193,7 @@ def render_dashboard(
             title=next_note_target["label"],
             meta=next_note_target["path"],
             status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
-            button_label="Open theory note",
+            button_label="Открыть теорию",
             button_key="home_today_note",
             on_click=open_theory_note_path,
             args=(next_note_target["path"], sections),
@@ -3205,7 +3205,7 @@ def render_dashboard(
             title=next_card["title"],
             meta=f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
             status="IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
-            button_label="Open practice card",
+            button_label="Открыть практику",
             button_key="home_today_practice",
             on_click=open_practice_card,
             args=(next_card["id"],),
@@ -3220,7 +3220,7 @@ def render_dashboard(
             title=str(milestone.get("title") or milestone.get("id") or "Project milestone"),
             meta=str(project.get("title") or project.get("id") or "Project"),
             status="IN PROGRESS",
-            button_label="Open project",
+            button_label="Открыть проект",
             button_key="home_today_project",
             on_click=open_project_tab,
             args=(project["id"], project_tab),
@@ -3232,7 +3232,7 @@ def render_dashboard(
             title=next_task["title"],
             meta=next_task["notebook_label"],
             status="TODO",
-            button_label="Open task",
+            button_label="Открыть задачу",
             button_key="home_today_task",
             on_click=open_mentor_task,
             args=(next_task,),
@@ -3244,7 +3244,7 @@ def render_dashboard(
             title=next_algorithm["title"],
             meta="Algorithms Lab",
             status="TODO",
-            button_label="Open algorithm",
+            button_label="Открыть алгоритм",
             button_key="home_today_algorithm",
             on_click=open_algorithm_lesson,
             args=(next_algorithm["id"],),
@@ -3253,47 +3253,47 @@ def render_dashboard(
     if today_count == 0 and interview_prompt:
         render_today_plan_row(
             kind="train",
-            title=f"Interview prompt: {interview_prompt['company']}",
+            title=f"Interview-вопрос: {interview_prompt['company']}",
             meta=interview_prompt["text"][:120],
             status="TODO",
-            button_label="Open interviews",
+            button_label="Открыть Interviews",
             button_key="home_today_interview",
             on_click=open_tab,
             args=("🎤 Interviews",),
         )
         today_count += 1
     if today_count == 0:
-        st.markdown('<div class="empty-state-line">No suggested action found. Open Projects or Theory to choose the next move.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="empty-state-line">Нет готового следующего шага. Открой Projects или Theory и выбери направление.</div>', unsafe_allow_html=True)
 
-    render_section_eyebrow_block("Status")
+    render_section_eyebrow_block("Статус")
     task_ratio = mentor_stats["done"] / mentor_stats["total"] if mentor_stats["total"] else 0.0
     project_ratio = project_stats["projects_done"] / project_stats["projects_total"] if project_stats["projects_total"] else 0.0
     metric_tiles = [
         render_metric_tile(
-            "Tasks passed",
+            "Задачи решены",
             mentor_stats["done"],
             total=mentor_stats["total"],
             progress=task_ratio,
             status="PASS" if task_ratio == 1 else "IN PROGRESS",
         ),
         render_metric_tile(
-            "Projects done",
+            "Проекты завершены",
             project_stats["projects_done"],
             total=project_stats["projects_total"],
             progress=project_ratio,
-            meta=f"{project_stats['milestones_done']}/{project_stats['milestones_total']} milestones",
+            meta=f"milestones: {project_stats['milestones_done']}/{project_stats['milestones_total']}",
             status="PASS" if project_ratio == 1 and project_stats["projects_total"] else "IN PROGRESS",
         ),
     ]
     if experiment_records:
         latest = experiment_records[0].get("timestamp", "")
-        metric_tiles.append(render_metric_tile("Experiment runs", len(experiment_records), meta=f"latest: {latest[:10]}", status="INFO"))
+        metric_tiles.append(render_metric_tile("Experiment runs", len(experiment_records), meta=f"последний: {latest[:10]}", status="INFO"))
     else:
-        metric_tiles.append(render_metric_tile("Experiment runs", "—", meta="No saved experiment records", status="WEAK"))
+        metric_tiles.append(render_metric_tile("Experiment runs", "—", meta="нет сохранённых запусков", status="WEAK"))
     if quality_avg is not None:
         metric_tiles.append(
             render_metric_tile(
-                "Theory quality avg",
+                "Среднее качество теории",
                 f"{quality_avg:.1f}",
                 total=100,
                 progress=quality_avg / 100,
@@ -3301,28 +3301,28 @@ def render_dashboard(
             )
         )
     else:
-        metric_tiles.append(render_metric_tile("Theory quality avg", "—", meta="Missing theory audit report", status="WEAK"))
+        metric_tiles.append(render_metric_tile("Среднее качество теории", "—", meta="нет theory audit report", status="WEAK"))
     st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
-    render_section_eyebrow_block("Needs Attention")
+    render_section_eyebrow_block("Требует внимания")
     attention: list[str] = []
     if not audit_report:
-        attention.append("Theory audit report is missing. Run the audit manually from Theory Quality.")
+        attention.append("Нет theory audit report. Запусти аудит вручную из Theory Quality.")
     if not coverage_report:
-        attention.append("Coverage report is missing. Run coverage check manually.")
+        attention.append("Нет coverage report. Запусти coverage check вручную.")
     if audit_report:
         weak = [note for note in weakest_notes(audit_report, limit=20) if int(note.get("quality_score") or 0) < 45]
         if weak:
-            attention.append(f"{len(weak)} weak theory notes in the current audit top 20.")
+            attention.append(f"В текущем audit top 20 есть слабые theory notes: {len(weak)}.")
     incomplete_milestones = project_stats["milestones_total"] - project_stats["milestones_done"]
     if incomplete_milestones:
-        attention.append(f"{incomplete_milestones} project milestones are still open.")
+        attention.append(f"Открытые project milestones: {incomplete_milestones}.")
     if not experiment_records:
-        attention.append("No experiment records saved yet. Log a real run from the Classic ML project.")
+        attention.append("Пока нет experiment records. Сохрани реальный run из Classic ML project.")
     if graph_summary.get("broken"):
-        attention.append(f"{graph_summary['broken']} broken Obsidian links need review.")
+        attention.append(f"Broken Obsidian links требуют проверки: {graph_summary['broken']}.")
     if not datasets:
-        attention.append("No datasets detected in datasets/. Add CSV files before data work.")
+        attention.append("В datasets/ не найдены CSV. Добавь данные перед Data Lab.")
 
     if attention:
         st.markdown(
@@ -3332,7 +3332,7 @@ def render_dashboard(
             unsafe_allow_html=True,
         )
     else:
-        st.success("No immediate attention items from existing reports and progress.")
+        st.success("По текущим reports и progress нет срочных проблем.")
 
 
 def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:

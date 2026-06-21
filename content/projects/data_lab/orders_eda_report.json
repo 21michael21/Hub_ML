@@ -1,14 +1,27 @@
 {
   "id": "orders_eda_report",
-  "title": "Orders EDA Report",
-  "level": "beginner",
+  "title": "EDA-отчёт по заказам",
+  "level": "начальный",
   "track": "Data Lab",
-  "datasets": ["df_orders.csv"],
-  "skills": ["pandas", "EDA", "data quality", "visualization", "portfolio writing"],
+  "datasets": [
+    "df_orders.csv"
+  ],
+  "skills": [
+    "pandas",
+    "EDA",
+    "data quality",
+    "visualization",
+    "portfolio writing"
+  ],
   "estimated_time": "2-3 ч",
-  "goal": "Build a concise exploratory analysis report for orders data: quality checks, core metrics, one revenue trend, one distribution chart, and clear next steps.",
-  "business_context": "A product team wants to understand order volume, revenue, commission, delivery fee behavior, and whether the data is clean enough for deeper analysis.",
-  "prerequisites": ["Pandas Basics", "Visualization Basics", "VKAT Analysis Data", "Portfolio Output Guide"],
+  "goal": "Собрать короткий EDA-отчёт по заказам: проверить качество данных, посчитать основные метрики, построить тренд выручки, график распределения и выписать следующие шаги.",
+  "business_context": "Продуктовая команда хочет понять объём заказов, выручку, комиссию, delivery fee и достаточно ли данные чистые для более глубокого анализа.",
+  "prerequisites": [
+    "Pandas Basics",
+    "Visualization Basics",
+    "VKAT Analysis Data",
+    "Portfolio Output Guide"
+  ],
   "related_theory_paths": [
     "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
     "02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
@@ -21,94 +34,109 @@
     "data_visualization_commission_histogram",
     "data_visualization_commission_boxplot"
   ],
-  "related_task_ids": ["analysis_3_pandas", "analysis_1_stats"],
-  "related_dataset_names": ["df_orders.csv"],
+  "related_task_ids": [
+    "analysis_3_pandas",
+    "analysis_1_stats"
+  ],
+  "related_dataset_names": [
+    "df_orders.csv"
+  ],
   "related_portfolio_templates": [
     {
-      "title": "Orders EDA mini report",
-      "what_to_write": "Write a short Markdown report with goal, dataset shape, quality checks, core metrics, two chart interpretations, limitations, and next steps.",
-      "chart_or_table": "Include a daily revenue line chart, a commission or order_sum distribution chart, and a compact metric table.",
-      "readme_bullet": "Built an orders EDA report in pandas/matplotlib, validating data quality and summarizing revenue, commission, and next analytical steps."
+      "title": "Мини-отчёт по заказам",
+      "what_to_write": "Напиши короткий Markdown-отчёт: цель, размер датасета, проверки качества, ключевые метрики, интерпретация двух графиков, ограничения и следующие шаги.",
+      "chart_or_table": "Добавь line chart дневной выручки, distribution chart для commission или order_sum и компактную таблицу метрик.",
+      "readme_bullet": "Собрал EDA-отчёт по заказам на pandas/matplotlib: проверил качество данных и описал выручку, комиссию и следующие аналитические шаги."
     }
   ],
   "milestones": [
     {
       "id": "read_context",
-      "title": "Read the dataset context",
+      "title": "Разобраться в контексте датасета",
       "type": "reading",
-      "description": "Review what one row in df_orders.csv means and which columns represent money, users, orders, and dates.",
-      "dataset_hints": ["df_orders.csv"],
-      "checklist": [
-        "I can explain order_id, user_id, event_date, order_sum, commission, and delivery_fee.",
-        "I know which columns are numeric metrics.",
-        "I know which column is the time dimension."
+      "description": "Проверь, что означает одна строка в df_orders.csv и какие колонки отвечают за деньги, пользователей, заказы и даты.",
+      "dataset_hints": [
+        "df_orders.csv"
       ],
-      "portfolio_output": "Short data dictionary for df_orders.csv."
+      "checklist": [
+        "Я могу объяснить order_id, user_id, event_date, order_sum, commission и delivery_fee.",
+        "Я понимаю, какие колонки являются числовыми метриками.",
+        "Я понимаю, какая колонка задаёт временное измерение."
+      ],
+      "portfolio_output": "Короткий data dictionary для df_orders.csv."
     },
     {
       "id": "quality_checks",
-      "title": "Run basic quality checks",
+      "title": "Провести базовые проверки качества",
       "type": "code",
-      "description": "Load the dataset and check shape, missing values, duplicates, numeric ranges, and date range.",
-      "dataset_hints": ["Use pd.read_csv('datasets/df_orders.csv')."],
+      "description": "Загрузи датасет и проверь shape, пропуски, дубликаты, диапазоны числовых значений и диапазон дат.",
+      "dataset_hints": [
+        "Используй pd.read_csv(\"datasets/df_orders.csv\")."
+      ],
       "starter_code": "import pandas as pd\n\norders = pd.read_csv(\"datasets/df_orders.csv\")\nprint(orders.shape)\nprint(orders.dtypes)\nprint(orders.isna().sum())\nprint(\"duplicate order_id:\", orders[\"order_id\"].duplicated().sum())\nprint(orders[[\"order_sum\", \"commission\", \"delivery_fee\"]].describe())",
       "checklist": [
-        "I checked missing values.",
-        "I checked duplicate order IDs.",
-        "I checked whether money fields have suspicious values.",
-        "I wrote down at least one data quality limitation."
+        "Я проверил пропуски.",
+        "Я проверил дубликаты order_id.",
+        "Я проверил, нет ли подозрительных значений в денежных полях.",
+        "Я записал хотя бы одно ограничение по качеству данных."
       ],
-      "portfolio_output": "Quality checks table and short interpretation."
+      "portfolio_output": "Таблица quality checks и короткая интерпретация."
     },
     {
       "id": "core_metrics",
-      "title": "Calculate core order metrics",
+      "title": "Посчитать основные метрики заказов",
       "type": "code",
-      "description": "Calculate total orders, unique users, total revenue, total commission, average order value, and delivery fee summary.",
-      "dataset_hints": ["Use order_id for orders and user_id for customers."],
+      "description": "Посчитай число заказов, уникальных пользователей, общую выручку, комиссию, average order value и summary по delivery fee.",
+      "dataset_hints": [
+        "Используй order_id для заказов и user_id для клиентов."
+      ],
       "starter_code": "metrics = {\n    \"orders\": orders[\"order_id\"].nunique(),\n    \"users\": orders[\"user_id\"].nunique(),\n    \"revenue\": orders[\"order_sum\"].sum(),\n    \"commission\": orders[\"commission\"].sum(),\n    \"avg_order\": orders[\"order_sum\"].mean(),\n}\nprint(metrics)",
       "checklist": [
-        "Metrics use the right denominator.",
-        "Money metrics are rounded/readable.",
-        "I can explain what each metric means."
+        "Метрики используют правильный знаменатель.",
+        "Денежные метрики округлены и читаемы.",
+        "Я могу объяснить смысл каждой метрики."
       ],
-      "portfolio_output": "Core metrics block for the report."
+      "portfolio_output": "Блок core metrics для отчёта."
     },
     {
       "id": "visualize_orders",
-      "title": "Create two portfolio-ready charts",
+      "title": "Построить два portfolio-ready графика",
       "type": "visualization",
-      "description": "Create a revenue-over-time line chart and one distribution chart for order_sum or commission.",
-      "dataset_hints": ["df_orders.csv has event_date, order_sum, commission, and delivery_fee."],
+      "description": "Построй line chart выручки по времени и один distribution chart для order_sum или commission.",
+      "dataset_hints": [
+        "В df_orders.csv есть event_date, order_sum, commission и delivery_fee."
+      ],
       "starter_code": "import matplotlib.pyplot as plt\n\ndaily = orders.groupby(\"event_date\", as_index=False)[\"order_sum\"].sum().sort_values(\"event_date\")\nax = daily.plot(x=\"event_date\", y=\"order_sum\", figsize=(10, 4), legend=False)\nax.set_title(\"Daily order revenue\")\nax.set_xlabel(\"Date\")\nax.set_ylabel(\"Revenue\")\nplt.xticks(rotation=45)\nplt.tight_layout()\nplt.show()\n\nax = orders[\"commission\"].hist(bins=40)\nax.set_title(\"Commission distribution\")\nax.set_xlabel(\"Commission\")\nax.set_ylabel(\"Orders\")\nplt.tight_layout()\nplt.show()",
       "checklist": [
-        "Both charts have titles.",
-        "Axes are labeled.",
-        "Chart type matches the question.",
-        "I wrote one insight under each chart."
+        "У обоих графиков есть заголовки.",
+        "Оси подписаны.",
+        "Тип графика соответствует вопросу.",
+        "Под каждым графиком написан один вывод."
       ],
-      "portfolio_output": "Two charts with written explanation."
+      "portfolio_output": "Два графика с письменным объяснением."
     },
     {
       "id": "write_report",
-      "title": "Write the mini report",
+      "title": "Написать мини-отчёт",
       "type": "reflection",
-      "description": "Turn the analysis into a short report with goal, data, checks, metrics, charts, insights, limitations, and next steps.",
-      "dataset_hints": ["Use the Portfolio Output Guide template."],
-      "checklist": [
-        "The report has a clear goal.",
-        "The report has at least three findings.",
-        "Limitations are honest.",
-        "Next steps are concrete."
+      "description": "Преврати анализ в короткий отчёт: цель, данные, проверки, метрики, графики, выводы, ограничения и следующие шаги.",
+      "dataset_hints": [
+        "Используй шаблон Portfolio Output Guide."
       ],
-      "portfolio_output": "Final Orders EDA mini report."
+      "checklist": [
+        "В отчёте есть понятная цель.",
+        "В отчёте есть минимум три наблюдения.",
+        "Ограничения написаны честно.",
+        "Следующие шаги конкретны."
+      ],
+      "portfolio_output": "Финальный мини-отчёт Orders EDA."
     }
   ],
   "deliverables": [
-    "Notebook or script with reproducible EDA",
-    "Mini report in Markdown",
-    "Two charts with explanations",
-    "One resume-ready bullet"
+    "Notebook или script с воспроизводимым EDA",
+    "Мини-отчёт в Markdown",
+    "Два графика с объяснениями",
+    "Один resume-ready bullet"
   ],
-  "portfolio_prompt": "Write a portfolio case study explaining what the orders data shows about revenue, commission, data quality, and what you would investigate next."
+  "portfolio_prompt": "Напиши portfolio case study: что данные заказов показывают про выручку, комиссию и качество данных, а также что стоит исследовать следующим шагом."
 }

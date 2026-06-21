@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
 import pytest
 
 pytest.importorskip("playwright.sync_api")
 
+from core.datasets.registry import scan_datasets
 from playwright.sync_api import Page, expect
 
 
+ROOT = Path(__file__).resolve().parents[2]
 RUNTIME_ERROR_MARKERS = ("Traceback", "TypeError", "Exception")
 
 
@@ -27,7 +30,7 @@ def open_app(page: Page, app_url: str) -> None:
     page.goto(app_url, wait_until="domcontentloaded", timeout=20_000)
     expect(page.locator("body")).to_contain_text("Hub_ML", timeout=30_000)
     expect(page.locator("body")).to_contain_text("local ML workstation", timeout=30_000)
-    expect(page.locator("body")).to_contain_text("Open theory note", timeout=30_000)
+    expect(page.locator("body")).to_contain_text("Открыть теорию", timeout=30_000)
 
 
 def click_nav(page: Page, label_fragment: str) -> None:
@@ -87,13 +90,13 @@ def test_data_lab_projects_no_widget_key_crash(page: Page, streamlit_app_url: st
     assert "safe_widget_key" not in text
     assert "takes 2 positional arguments" not in text
     assert "TypeError" not in text
-    assert re.search(r"Orders Conversion Baseline Classifier|Orders EDA Report|Project Catalog", text)
+    assert re.search(r"Baseline classifier конверсии заказов|EDA-отчёт по заказам|Project Catalog", text)
 
 
 def test_home_links_do_not_break(page: Page, streamlit_app_url: str) -> None:
     open_app(page, streamlit_app_url)
 
-    open_note = page.get_by_role("button", name="Open theory note")
+    open_note = page.get_by_role("button", name="Открыть теорию")
     expect(open_note).to_have_count(1, timeout=10_000)
     open_note.click()
     page.wait_for_timeout(800)
@@ -106,8 +109,10 @@ def test_datasets_visible(page: Page, streamlit_app_url: str) -> None:
     open_app(page, streamlit_app_url)
     click_nav(page, "Datasets")
 
-    for dataset_name in ("df_events.csv", "df_matching.csv", "df_orders.csv"):
-        assert page.get_by_text(dataset_name, exact=True).count() > 0
+    assert_no_runtime_errors(page)
+    expect(page.locator("body")).to_contain_text("CSV-файлы из папки", timeout=10_000)
+    dataset_names = {dataset["name"] for dataset in scan_datasets(ROOT / "datasets")}
+    assert {"df_events.csv", "df_matching.csv", "df_orders.csv"}.issubset(dataset_names)
 
 
 def test_tasks_page_smoke(page: Page, streamlit_app_url: str) -> None:
