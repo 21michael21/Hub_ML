@@ -36,6 +36,24 @@
     "notes": "Interactive prompt engineering curriculum useful for guided manual practice cards."
   },
   {
+    "id": "made_with_ml_mlops",
+    "title": "Made With ML MLOps Course",
+    "track": "MLOps",
+    "subtrack": "mlops_foundations",
+    "type": "course",
+    "language": "en",
+    "level": "intermediate",
+    "cost": "free",
+    "access": "open",
+    "url": "https://madewithml.com/courses/mlops/",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "mlops_foundations",
+    "related_hubml_modules": ["Theory", "Practice", "ML Lab", "Experiments", "Portfolio"],
+    "expected_output": ["note", "practice_card", "mentor_task"],
+    "notes": "Practical MLOps reference for experiment tracking, reproducibility, model iteration, and production-minded workflows."
+  },
+  {
     "id": "practice_window_functions",
     "title": "Practice Window Functions",
     "track": "SQL",

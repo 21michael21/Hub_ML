@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 81,
-    "tasks_with_asserts": 50,
+    "tasks_extracted": 82,
+    "tasks_with_asserts": 51,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 44,
+      "high": 45,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,42 @@
     }
   ],
   "tasks": [
+    {
+      "id": "mlops_experiment_tracking_jsonl_roundtrip__manual_01",
+      "source_notebook": "manual_mlops_experiments",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Experiment tracking MLflow local JSONL roundtrip",
+      "prompt": "#### MLOps experiment tracking: local JSONL roundtrip\n\nUse the existing Hub_ML experiment tracker helpers to save and load one tiny experiment record. Do not write to `user_projects/`; use a temporary path.\n\nCreate:\n\n1. `experiments_path`: a temporary JSONL path.\n2. `record`: a completed experiment record for `orders_conversion_baseline_classifier`.\n3. `saved_record`: result of `save_experiment_record(record, experiments_path)`.\n4. `loaded_records`: result of `load_experiment_records(experiments_path)`.\n5. `comparison`: result of `compare_experiments(loaded_records, \"accuracy\")`.\n\nThis checks local-first experiment tracking and reproducibility habits without adding MLflow, a database, or external tracking.",
+      "starter_code": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nfrom core.experiments.tracker import (\n    compare_experiments,\n    load_experiment_records,\n    save_experiment_record,\n)\n\n# Keep temp_dir alive until tests finish.\ntemp_dir = TemporaryDirectory()\nexperiments_path = Path(temp_dir.name) / \"experiments.jsonl\"\n\n# TODO: create record and save/load/compare it\nrecord = ...\nsaved_record = ...\nloaded_records = ...\ncomparison = ...",
+      "tests": [
+        "assert experiments_path.name == \"experiments.jsonl\"",
+        "assert saved_record[\"project_id\"] == \"orders_conversion_baseline_classifier\"",
+        "assert saved_record[\"model_name\"] == \"majority_baseline\"",
+        "assert saved_record[\"metrics\"] == {\"accuracy\": 0.62}",
+        "assert len(loaded_records) == 1",
+        "assert loaded_records[0][\"target_column\"] == \"converted\"",
+        "assert loaded_records[0][\"dataset_names\"] == [\"df_events.csv\", \"df_orders.csv\"]",
+        "assert comparison[0][\"metric\"] == \"accuracy\"",
+        "assert comparison[0][\"value\"] == 0.62",
+        "assert comparison[0][\"model_name\"] == \"majority_baseline\""
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "experiment",
+        "tracking",
+        "experiment tracking",
+        "experiment log",
+        "reproducibility",
+        "mlflow",
+        "jsonl"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "nlp_vectorization_count_vectors__manual_01",
       "source_notebook": "manual_nlp_vectorization",
