@@ -1,7 +1,7 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T21:32:02.989778+00:00",
+    "generated_at": "2026-06-21T21:34:44.711046+00:00",
     "total_notes": 221,
     "notes_by_section": {
       "00 Atlas": 6,
@@ -16,7 +16,7 @@
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 52.3,
+    "average_quality_score": 52.4,
     "missing_core_topics": [],
     "notes_without_frontmatter": [],
     "notes_without_examples": [
@@ -173,7 +173,6 @@
       "04_NLP/10_NLP_Theory_Deep_Dive.md",
       "04_NLP/11_Text_Pipeline_Course_Article.md",
       "04_NLP/12_Transformers_Course_Article.md",
-      "04_NLP/13_Text_Representations_Course_Article.md",
       "04_NLP/14_NLP_Tasks_Course_Article.md",
       "05_IT_Resources/00_Analytics_QA_Map.md",
       "05_IT_Resources/00_Golang_Map.md",
@@ -5063,31 +5062,36 @@
     {
       "relative_path": "04_NLP/13_Text_Representations_Course_Article.md",
       "section": "04 Nlp",
-      "title": "Text Representations Course Article",
+      "title": "TFIDF CountVectorizer Text Representations Bag of Words",
       "frontmatter_fields": [
-        "area",
-        "cluster",
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "status",
         "tags",
-        "type"
+        "title",
+        "track"
       ],
       "has_frontmatter": true,
-      "word_count": 298,
-      "heading_count": 10,
-      "code_block_count": 5,
-      "wiki_link_count": 5,
-      "external_link_count": 0,
+      "word_count": 637,
+      "heading_count": 11,
+      "code_block_count": 2,
+      "wiki_link_count": 1,
+      "external_link_count": 1,
       "tag_count": 6,
       "has_examples": true,
-      "has_practice_section": false,
-      "has_sources_section": false,
-      "has_portfolio_section": false,
+      "has_practice_section": true,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
       "has_prerequisites": false,
       "likely_thin_note": false,
-      "likely_ai_dump_or_placeholder": true,
+      "likely_ai_dump_or_placeholder": false,
       "is_technical_topic": true,
       "generic_heading_count": 0,
-      "words_per_heading": 29.8,
-      "quality_score": 65
+      "words_per_heading": 57.9,
+      "quality_score": 100
     },
     {
       "relative_path": "04_NLP/14_NLP_Tasks_Course_Article.md",

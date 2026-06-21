@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:32:03.556707+00:00`
+Generated: `2026-06-21T21:34:45.304216+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 24/36 pass, 12 fail**
-- Failed rule counts: `{'rule1': 12, 'rule2': 12, 'rule3': 12, 'rule4': 6}`
+Summary: **GATE: 25/36 pass, 11 fail**
+- Failed rule counts: `{'rule1': 11, 'rule2': 11, 'rule3': 11, 'rule4': 6}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -117,7 +117,7 @@ Summary: **GATE: 24/36 pass, 12 fail**
 - rule1 note quality: 95 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 2 practice, 3 task ✓
+- rule4 practice/task: 3 practice, 4 task ✓
 
 ## math.optimization — Optimization Basics  [PASS]
 
@@ -159,14 +159,14 @@ Summary: **GATE: 24/36 pass, 12 fail**
 - rule1 note quality: 100 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 1 practice, 1 task ✓
+- rule4 practice/task: 2 practice, 2 task ✓
 
-## nlp.vectorization — Vectorization and Classical NLP Baselines  [FAIL]
+## nlp.vectorization — Vectorization and Classical NLP Baselines  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 0 task ✓
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 2 practice, 1 task ✓
 
 ## nlp.transformers — Transformers and Embeddings  [FAIL]
 

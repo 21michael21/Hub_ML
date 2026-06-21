@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:32:03.556707+00:00",
+  "generated_at": "2026-06-21T21:34:45.304216+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 24,
-    "failed_topics": 12,
+    "passed_topics": 25,
+    "failed_topics": 11,
     "failed_rule_counts": {
-      "rule1": 12,
-      "rule2": 12,
-      "rule3": 12,
+      "rule1": 11,
+      "rule2": 11,
+      "rule3": 11,
       "rule4": 6
     },
     "failed_required_topic_ids": [
-      "nlp.vectorization",
       "nlp.transformers",
       "genai.rag",
       "mlops.experiments",
@@ -980,9 +979,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 3 task",
-          "practice_count": 2,
-          "task_count": 3
+          "detail": "3 practice, 4 task",
+          "practice_count": 3,
+          "task_count": 4
         }
       },
       "evidence": {
@@ -1001,9 +1000,17 @@
           {
             "id": "math_linear_algebra_numpy_practice",
             "title": "NumPy Matrix and Vector Scoring"
+          },
+          {
+            "id": "nlp_vectorization_bag_of_words",
+            "title": "NLP Vectorization: Bag of Words Baseline"
           }
         ],
         "tasks": [
+          {
+            "id": "nlp_vectorization_count_vectors__manual_01",
+            "title": "NLP TFIDF CountVectorizer vectorizer count vectors"
+          },
           {
             "id": "math_linear_algebra_numpy__manual_01",
             "title": "NumPy matrix, vector, and dot product sanity check"
@@ -1337,9 +1344,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 1 task",
-          "practice_count": 1,
-          "task_count": 1
+          "detail": "2 practice, 2 task",
+          "practice_count": 2,
+          "task_count": 2
         }
       },
       "evidence": {
@@ -1354,9 +1361,17 @@
           {
             "id": "nlp_preprocessing_message_cleaning",
             "title": "NLP Preprocessing: Clean Interview and User Messages"
+          },
+          {
+            "id": "nlp_vectorization_bag_of_words",
+            "title": "NLP Vectorization: Bag of Words Baseline"
           }
         ],
         "tasks": [
+          {
+            "id": "nlp_vectorization_count_vectors__manual_01",
+            "title": "NLP TFIDF CountVectorizer vectorizer count vectors"
+          },
           {
             "id": "nlp_preprocessing_normalize_tokenize__manual_01",
             "title": "NLP text preprocessing tokenization pipeline"
@@ -1369,47 +1384,58 @@
       "title": "Vectorization and Classical NLP Baselines",
       "track": "NLP",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 0 task",
-          "practice_count": 1,
-          "task_count": 0
+          "detail": "2 practice, 1 task",
+          "practice_count": 2,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "04_NLP/13_Text_Representations_Course_Article.md",
+            "title": "TFIDF CountVectorizer Text Representations Bag of Words",
+            "quality_score": 100
+          }
+        ],
         "practice": [
           {
             "id": "nlp_preprocessing_message_cleaning",
             "title": "NLP Preprocessing: Clean Interview and User Messages"
+          },
+          {
+            "id": "nlp_vectorization_bag_of_words",
+            "title": "NLP Vectorization: Bag of Words Baseline"
           }
         ],
-        "tasks": []
+        "tasks": [
+          {
+            "id": "nlp_vectorization_count_vectors__manual_01",
+            "title": "NLP TFIDF CountVectorizer vectorizer count vectors"
+          }
+        ]
       }
     },
     {

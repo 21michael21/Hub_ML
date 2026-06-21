@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 80,
-    "tasks_with_asserts": 49,
+    "tasks_extracted": 81,
+    "tasks_with_asserts": 50,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 43,
+      "high": 44,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,40 @@
     }
   ],
   "tasks": [
+    {
+      "id": "nlp_vectorization_count_vectors__manual_01",
+      "source_notebook": "manual_nlp_vectorization",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "NLP TFIDF CountVectorizer vectorizer count vectors",
+      "prompt": "#### NLP vectorization: vocabulary and count vectors\n\nImplement simple count vectorization without sklearn.\n\nCreate:\n\n1. `tokenize(text)`: lowercase and split text on whitespace.\n2. `build_vocabulary(documents)`: sorted unique tokens.\n3. `vectorize_document(text, vocabulary)`: count vector using vocabulary order.\n4. `matrix`: count vectors for all documents.\n5. `token_to_index`: mapping from token to column index.\n\nThis task checks the core idea behind CountVectorizer and the matrix used before TF-IDF or text classifier baselines.",
+      "starter_code": "documents = [\n    \"good movie good acting\",\n    \"bad movie slow plot\",\n    \"good film strong plot\",\n]\n\n\ndef tokenize(text: str) -> list[str]:\n    ...\n\n\ndef build_vocabulary(documents: list[str]) -> list[str]:\n    ...\n\n\ndef vectorize_document(text: str, vocabulary: list[str]) -> list[int]:\n    ...\n\n\n# TODO: build vocabulary, token_to_index, and matrix\nvocabulary = ...\ntoken_to_index = ...\nmatrix = ...",
+      "tests": [
+        "assert tokenize(\"Good MOVIE\") == [\"good\", \"movie\"]",
+        "assert vocabulary == [\"acting\", \"bad\", \"film\", \"good\", \"movie\", \"plot\", \"slow\", \"strong\"]",
+        "assert token_to_index[\"good\"] == 3",
+        "assert vectorize_document(\"good movie good acting\", vocabulary) == [1, 0, 0, 2, 1, 0, 0, 0]",
+        "assert matrix[0] == [1, 0, 0, 2, 1, 0, 0, 0]",
+        "assert matrix[1] == [0, 1, 0, 0, 1, 1, 1, 0]",
+        "assert matrix[2] == [0, 0, 1, 1, 0, 1, 0, 1]",
+        "assert len(matrix) == 3",
+        "assert all(len(row) == len(vocabulary) for row in matrix)"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "nlp",
+        "tfidf",
+        "countvectorizer",
+        "vectorizer",
+        "bag of words",
+        "text representations"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "nlp_preprocessing_normalize_tokenize__manual_01",
       "source_notebook": "manual_nlp_preprocessing",
