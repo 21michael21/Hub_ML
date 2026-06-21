@@ -90,6 +90,24 @@
     "notes": "Book companion for online experiments; useful for A/B testing intuition and practical experiment risks."
   },
   {
+    "id": "openintro_statistics",
+    "title": "OpenIntro Statistics",
+    "track": "Statistics",
+    "subtrack": "descriptive_statistics",
+    "type": "book",
+    "language": "en",
+    "level": "beginner",
+    "cost": "free",
+    "access": "open",
+    "url": "https://www.openintro.org/book/os/",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "descriptive_statistics",
+    "related_hubml_modules": ["Theory", "Practice", "Tasks", "Data Lab", "Notebook"],
+    "expected_output": ["note", "practice_card", "mentor_task"],
+    "notes": "Introductory statistics reference for descriptive statistics, distributions, sampling, and inference foundations."
+  },
+  {
     "id": "pandas_user_guide",
     "title": "Pandas User Guide",
     "track": "Data Analysis",

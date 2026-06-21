@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:04:41.945539+00:00",
+  "generated_at": "2026-06-21T21:07:01.091771+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 16,
-    "failed_topics": 20,
+    "passed_topics": 17,
+    "failed_topics": 19,
     "failed_rule_counts": {
-      "rule1": 20,
-      "rule2": 20,
-      "rule3": 20,
+      "rule1": 19,
+      "rule2": 19,
+      "rule3": 19,
       "rule4": 11
     },
     "failed_required_topic_ids": [
-      "stats.descriptive",
       "stats.probability_distributions",
       "stats.hypothesis_ab",
       "math.optimization",
@@ -805,30 +804,26 @@
       "title": "Descriptive Statistics",
       "track": "Statistics",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
@@ -838,7 +833,13 @@
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "02_Data_Analysis/Stats/01_Stats_Basics.md",
+            "title": "Descriptive Statistics: mean median quantile describe",
+            "quality_score": 100
+          }
+        ],
         "practice": [],
         "tasks": [
           {

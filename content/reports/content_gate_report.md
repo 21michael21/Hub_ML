@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:04:41.945539+00:00`
+Generated: `2026-06-21T21:07:01.091771+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 16/36 pass, 20 fail**
-- Failed rule counts: `{'rule1': 20, 'rule2': 20, 'rule3': 20, 'rule4': 11}`
+Summary: **GATE: 17/36 pass, 19 fail**
+- Failed rule counts: `{'rule1': 19, 'rule2': 19, 'rule3': 19, 'rule4': 11}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -91,11 +91,11 @@ Summary: **GATE: 16/36 pass, 20 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 3 practice, 0 task ✓
 
-## stats.descriptive — Descriptive Statistics  [FAIL]
+## stats.descriptive — Descriptive Statistics  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 0 practice, 2 task ✓
 
 ## stats.probability_distributions — Probability and Distributions  [FAIL]
