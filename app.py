@@ -2951,9 +2951,9 @@ def next_practice_card(cards: list[dict[str, Any]]) -> dict[str, Any] | None:
     )[0]
 
 
-def open_data_lab_project(project_id: str) -> None:
+def open_project_tab(project_id: str, tab_name: str = "🧪 Data Lab Projects") -> None:
     st.session_state["selected_data_lab_project"] = project_id
-    st.session_state["active_tab"] = "🧪 Data Lab Projects"
+    st.session_state["active_tab"] = tab_name
 
 
 def open_algorithm_lesson(lesson_id: str) -> None:
@@ -3159,6 +3159,7 @@ def render_dashboard(
     if project_step and today_count < 4:
         project = project_step["project"]
         milestone = project_step["milestone"]
+        project_tab = "🤖 ML Lab" if str(project.get("track") or "").casefold() == "classic ml" else "🧪 Data Lab Projects"
         render_today_plan_row(
             kind="build",
             title=str(milestone.get("title") or milestone.get("id") or "Project milestone"),
@@ -3166,8 +3167,8 @@ def render_dashboard(
             status="IN PROGRESS",
             button_label="Open project",
             button_key="home_today_project",
-            on_click=open_data_lab_project,
-            args=(project["id"],),
+            on_click=open_project_tab,
+            args=(project["id"], project_tab),
         )
         today_count += 1
     if next_task and today_count < 4:
@@ -4299,14 +4300,15 @@ def render_data_lab_projects_tab(
     practice_cards: list[dict[str, Any]],
     mentor_tasks: list[dict[str, Any]],
     note_index: dict[str, Any],
+    *,
+    title: str = "🧪 Data Lab Projects",
+    description: str = "End-to-end проекты: от датасета и анализа до графиков, выводов и portfolio output. Код пока запускай в Notebook вручную.",
 ) -> None:
-    st.markdown("### 🧪 Data Lab Projects")
-    st.markdown(
-        "End-to-end проекты: от датасета и анализа до графиков, выводов и portfolio output. Код пока запускай в Notebook вручную."
-    )
+    st.markdown(f"### {title}")
+    st.markdown(description)
 
     if not projects:
-        st.info("Data Lab project recipes не найдены.")
+        st.info("Project recipes не найдены. Add project JSON recipes under content/projects/.")
         return
 
     stats = data_lab_projects_progress(projects)
@@ -4331,6 +4333,59 @@ def render_data_lab_projects_tab(
     selected_project = next(project for project in projects if project["id"] == selected_id)
     with detail_col:
         render_data_lab_project_detail(selected_project, datasets, practice_cards, mentor_tasks, note_index)
+
+
+def render_experiments_tab(projects: list[dict[str, Any]]) -> None:
+    st.markdown("### 🧪 Experiments")
+    st.markdown(
+        "Read-only log of local ML experiment records saved from project workspaces. "
+        "No training runs here; save real metrics from ML Lab."
+    )
+
+    records = experiment_records_for_projects(projects)
+    if not records:
+        st.markdown(
+            '<div class="empty-state-line">No experiment runs found. Open ML Lab and save a real experiment summary after a Notebook run.</div>',
+            unsafe_allow_html=True,
+        )
+        st.button(
+            "Open ML Lab",
+            key="experiments_empty_open_ml_lab",
+            on_click=open_tab,
+            args=("🤖 ML Lab",),
+            use_container_width=True,
+        )
+        return
+
+    summary = summarize_experiments(records)
+    metric_tiles = [
+        render_metric_tile("Runs", summary["total"], status="INFO"),
+        render_metric_tile("Completed", summary["by_status"].get("completed", 0), status="PASS"),
+        render_metric_tile("Failed", summary["by_status"].get("failed", 0), status="FAIL"),
+        render_metric_tile("Metrics tracked", len(summary["metric_names"]), meta=", ".join(summary["metric_names"][:3]), status="READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
+
+    metric_options = summary["metric_names"] or list(SUPPORTED_METRICS)
+    selected_metric = st.selectbox("Compare by metric", metric_options, key="experiments_compare_metric")
+    comparison = compare_experiments(records, selected_metric)
+    st.dataframe(comparison, use_container_width=True, hide_index=True)
+
+    rows = []
+    for record in records:
+        metrics = record.get("metrics") if isinstance(record.get("metrics"), dict) else {}
+        rows.append(
+            {
+                "timestamp": record.get("timestamp", ""),
+                "project": record.get("project_title", record.get("project_id", "")),
+                "status": record.get("status", ""),
+                "model": record.get("model_name", ""),
+                "metrics": json.dumps(metrics, ensure_ascii=False, sort_keys=True),
+                "notes": record.get("notes", ""),
+            }
+        )
+    st.markdown("#### Experiment records")
+    st.dataframe(rows, use_container_width=True, hide_index=True)
 
 
 def artifact_markup(artifact: str) -> str:
@@ -5861,7 +5916,13 @@ def main() -> None:
     interview_data = load_interview_questions()
     architecture_data = load_architecture_guidelines()
     mentor_data = load_mentor_tasks(MENTOR_TASKS_PATH)
-    data_lab_projects = scan_data_lab_projects()
+    project_recipes = scan_data_lab_projects()
+    data_lab_projects = [
+        project for project in project_recipes if str(project.get("track") or "").casefold() == "data lab"
+    ]
+    ml_lab_projects = [
+        project for project in project_recipes if str(project.get("track") or "").casefold() == "classic ml"
+    ]
     if st.session_state.get("active_tab") not in TAB_OPTIONS:
         st.session_state["active_tab"] = "Home"
     st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
@@ -5878,7 +5939,7 @@ def main() -> None:
             datasets,
             graph,
             mentor_data,
-            data_lab_projects,
+            project_recipes,
             algorithm_lessons,
             interview_data,
             load_json_report(THEORY_AUDIT_REPORT_PATH),
@@ -5893,10 +5954,22 @@ def main() -> None:
         render_practice_tab(practice_cards, practice_warnings, note_index, datasets)
     elif active_tab == "🎯 Tasks":
         render_tasks_tab(mentor_data)
-    elif active_tab in {"🧪 Data Lab Projects", "🤖 ML Lab", "🧪 Experiments"}:
+    elif active_tab == "🧪 Data Lab Projects":
         render_data_lab_projects_tab(data_lab_projects, datasets, practice_cards, mentor_data.get("tasks", []), note_index)
+    elif active_tab == "🤖 ML Lab":
+        render_data_lab_projects_tab(
+            ml_lab_projects,
+            datasets,
+            practice_cards,
+            mentor_data.get("tasks", []),
+            note_index,
+            title="🤖 ML Lab",
+            description="Classic ML projects: baseline modeling, leakage checks, metrics, model cards, and experiment logs.",
+        )
+    elif active_tab == "🧪 Experiments":
+        render_experiments_tab(project_recipes)
     elif active_tab == "📁 Portfolio":
-        render_portfolio_tab(practice_cards, data_lab_projects)
+        render_portfolio_tab(practice_cards, project_recipes)
     elif active_tab == "📊 Datasets":
         render_datasets_tab(datasets, practice_cards)
     elif active_tab == "⚡ Scratch":
@@ -5914,7 +5987,7 @@ def main() -> None:
     elif active_tab == "Roadmap":
         render_roadmap(sections)
     elif active_tab == "Progress":
-        render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []), data_lab_projects)
+        render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []), project_recipes)
     else:
         render_links_health(graph)
 
