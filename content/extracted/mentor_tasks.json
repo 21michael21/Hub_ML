@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 76,
-    "tasks_with_asserts": 45,
+    "tasks_extracted": 77,
+    "tasks_with_asserts": 46,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 39,
+      "high": 40,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,37 @@
     }
   ],
   "tasks": [
+    {
+      "id": "ml_supervised_rule_based_baseline__manual_01",
+      "source_notebook": "manual_ml_supervised",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Supervised learning rule-based classification baseline",
+      "prompt": "#### Supervised Learning: rule-based baseline classifier\n\nBuild a tiny supervised-learning baseline without any ML framework.\n\nYou are given examples with two features:\n\n- `events_count`: how many events a user produced;\n- `viewed_pricing`: whether the user viewed pricing.\n\nThe target is `converted`.\n\nCreate:\n\n1. `predict_one(example)`: returns `1` if `events_count >= 4` or `viewed_pricing == 1`, otherwise `0`.\n2. `predictions`: predicted labels for all examples.\n3. `accuracy`: share of correct predictions.\n4. `confusion`: dictionary with keys `tp`, `tn`, `fp`, `fn`.\n\nThis checks the baseline mindset: define features, target, predictions, and a metric before reaching for a complex model.",
+      "starter_code": "examples = [\n    {\"events_count\": 1, \"viewed_pricing\": 0, \"converted\": 0},\n    {\"events_count\": 2, \"viewed_pricing\": 0, \"converted\": 0},\n    {\"events_count\": 3, \"viewed_pricing\": 1, \"converted\": 1},\n    {\"events_count\": 5, \"viewed_pricing\": 1, \"converted\": 1},\n    {\"events_count\": 1, \"viewed_pricing\": 1, \"converted\": 0},\n    {\"events_count\": 6, \"viewed_pricing\": 0, \"converted\": 1},\n]\n\n\ndef predict_one(example: dict) -> int:\n    ...\n\n\n# TODO: generate predictions and calculate accuracy/confusion\npredictions = ...\naccuracy = ...\nconfusion = ...",
+      "tests": [
+        "assert predict_one({\"events_count\": 0, \"viewed_pricing\": 0}) == 0",
+        "assert predict_one({\"events_count\": 4, \"viewed_pricing\": 0}) == 1",
+        "assert predict_one({\"events_count\": 1, \"viewed_pricing\": 1}) == 1",
+        "assert predictions == [0, 0, 1, 1, 1, 1]",
+        "assert round(accuracy, 4) == 0.8333",
+        "assert confusion == {\"tp\": 3, \"tn\": 2, \"fp\": 1, \"fn\": 0}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "supervised learning",
+        "classification",
+        "baseline",
+        "features",
+        "target",
+        "accuracy"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "math_optimization_gradient_descent__manual_01",
       "source_notebook": "manual_math_optimization",

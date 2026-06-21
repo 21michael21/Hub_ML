@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:17:28.447457+00:00`
+Generated: `2026-06-21T21:21:35.181026+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 20/36 pass, 16 fail**
-- Failed rule counts: `{'rule1': 16, 'rule2': 16, 'rule3': 16, 'rule4': 9}`
+Summary: **GATE: 21/36 pass, 15 fail**
+- Failed rule counts: `{'rule1': 15, 'rule2': 15, 'rule3': 15, 'rule4': 9}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -126,26 +126,26 @@ Summary: **GATE: 20/36 pass, 16 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 1 task ✓
 
-## ml.supervised — Supervised Learning  [FAIL]
+## ml.supervised — Supervised Learning  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 2 practice, 0 task ✓
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 3 practice, 0 task ✓
 
 ## ml.validation_metrics — Validation and Metrics  [PASS]
 
 - rule1 note quality: 95 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 1 practice, 1 task ✓
+- rule4 practice/task: 2 practice, 1 task ✓
 
 ## ml.feature_engineering — Feature Engineering  [FAIL]
 
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 0 task ✓
+- rule4 practice/task: 2 practice, 0 task ✓
 
 ## ml.unsupervised — Unsupervised Learning  [FAIL]
 
