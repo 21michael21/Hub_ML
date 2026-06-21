@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 71,
-    "tasks_with_asserts": 40,
+    "tasks_extracted": 72,
+    "tasks_with_asserts": 41,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 34,
+      "high": 35,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,37 @@
     }
   ],
   "tasks": [
+    {
+      "id": "python_typing_architecture_normalize_event__manual_01",
+      "source_notebook": "manual_python_3_architecture_python_EXTRA_typing",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Typed Python architecture normalize event function",
+      "prompt": "#### Python typing and architecture: typed normalization boundary\n\nImplement a small typed boundary for raw user event records.\n\nCreate these objects:\n\n1. `Event`: a frozen dataclass with fields `user_id: int`, `event_type: str`, and `amount: float`.\n2. `normalize_event(raw)`: a typed function that converts one raw dictionary into an `Event`.\n3. `normalize_events(records)`: a typed function that converts a list of raw dictionaries into a list of `Event` objects.\n\nThis task checks the practical core of `python_3_architecture` and `python_EXTRA_typing`: function signatures, typed structures, module boundaries, and a small testable interface.",
+      "starter_code": "from dataclasses import dataclass\nfrom typing import Any\n\nraw_events = [\n    {\"user_id\": \"10\", \"event_type\": \" Purchase \", \"amount\": \"1200\"},\n    {\"user_id\": 11, \"event_type\": \"view\"},\n]\n\n# TODO: create a frozen dataclass for normalized events\n@dataclass(frozen=True)\nclass Event:\n    ...\n\n# TODO: implement a typed function that normalizes one raw dict\n\ndef normalize_event(raw: dict[str, Any]) -> Event:\n    ...\n\n# TODO: implement a typed function that normalizes many rows\n\ndef normalize_events(records: list[dict[str, Any]]) -> list[Event]:\n    ...\n\nnormalized_events = normalize_events(raw_events)",
+      "tests": [
+        "assert normalized_events == [Event(user_id=10, event_type=\"purchase\", amount=1200.0), Event(user_id=11, event_type=\"view\", amount=0.0)]",
+        "assert normalize_event({\"user_id\": \"7\", \"event_type\": \" VIEW \", \"amount\": 3}) == Event(user_id=7, event_type=\"view\", amount=3.0)",
+        "assert normalize_events([]) == []",
+        "assert Event.__dataclass_params__.frozen is True",
+        "assert normalize_event.__annotations__[\"raw\"] == dict[str, Any]",
+        "assert normalize_events.__annotations__[\"records\"] == list[dict[str, Any]]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "python_3_architecture",
+        "python_EXTRA_typing",
+        "typing",
+        "architecture",
+        "function signature",
+        "dataclass"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "python_basics_user_events__manual_01",
       "source_notebook": "manual_python_2_basics",
