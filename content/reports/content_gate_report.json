@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T20:43:32.672966+00:00",
+  "generated_at": "2026-06-21T20:46:56.387268+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 10,
-    "failed_topics": 26,
+    "passed_topics": 11,
+    "failed_topics": 25,
     "failed_rule_counts": {
-      "rule1": 26,
-      "rule2": 26,
-      "rule3": 26,
-      "rule4": 14
+      "rule1": 25,
+      "rule2": 25,
+      "rule3": 25,
+      "rule4": 13
     },
     "failed_required_topic_ids": [
-      "sql.select_join",
       "git.tools",
       "git.reproducibility",
       "data.pandas_basics",
@@ -350,43 +349,54 @@
       "title": "SQL Select, Filter, Join",
       "track": "SQL",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "05_IT_Resources/SQL/SQL_Select_Join.md",
+            "title": "SQL Select Join Where: fundamentals for DS and ML",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "sql_select_join_query_reading",
+            "title": "SQL SELECT JOIN Query Reading"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "sql_select_join_pandas_merge__manual_01",
+            "title": "SQL SELECT JOIN WHERE equivalent with pandas merge"
+          }
+        ]
       }
     },
     {
@@ -564,8 +574,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "4 practice, 2 task",
-          "practice_count": 4,
+          "detail": "5 practice, 2 task",
+          "practice_count": 5,
           "task_count": 2
         }
       },
@@ -583,6 +593,10 @@
           {
             "id": "math_linear_algebra_numpy_practice",
             "title": "NumPy Matrix and Vector Scoring"
+          },
+          {
+            "id": "sql_select_join_query_reading",
+            "title": "SQL SELECT JOIN Query Reading"
           },
           {
             "id": "sql_window_aggregation_practice",
@@ -688,9 +702,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 1 task",
+          "detail": "1 practice, 2 task",
           "practice_count": 1,
-          "task_count": 1
+          "task_count": 2
         }
       },
       "evidence": {
@@ -702,6 +716,10 @@
           }
         ],
         "tasks": [
+          {
+            "id": "sql_select_join_pandas_merge__manual_01",
+            "title": "SQL SELECT JOIN WHERE equivalent with pandas merge"
+          },
           {
             "id": "analysis_3_pandas__cell_57",
             "title": "Задание 3: Слияния (Merge)"

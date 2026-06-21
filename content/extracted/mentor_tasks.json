@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 73,
-    "tasks_with_asserts": 42,
+    "tasks_extracted": 74,
+    "tasks_with_asserts": 43,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 36,
+      "high": 37,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,41 @@
     }
   ],
   "tasks": [
+    {
+      "id": "sql_select_join_pandas_merge__manual_01",
+      "source_notebook": "manual_sql_select_join",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "SQL SELECT JOIN WHERE equivalent with pandas merge",
+      "prompt": "#### SQL SELECT, JOIN, WHERE via pandas merge\n\nPractice a SQL concept locally without adding a SQL runner.\n\nUse `datasets/df_orders.csv` as the base `orders` table and `datasets/df_matching.csv` as the `matching` table.\n\nCreate these variables:\n\n1. `orders_with_group`: inner join equivalent of `orders` and `matching[[\"user_id\", \"exp_group\"]]` on `user_id`.\n2. `large_orders`: SELECT-like output with only `order_id`, `user_id`, `order_sum`, and `exp_group`, filtered where `order_sum > 10000`.\n3. `orders_left_join`: left join equivalent, used to check whether all orders have a matching experiment group.\n\nThis checks the SQL fundamentals pattern: SELECT columns, JOIN by key, WHERE filter, and join row-count sanity checks.",
+      "starter_code": "import pandas as pd\n\norders = pd.read_csv(\"datasets/df_orders.csv\")\nmatching = pd.read_csv(\"datasets/df_matching.csv\")\n\n# TODO: SQL INNER JOIN equivalent on user_id\norders_with_group = ...\n\n# TODO: SQL SELECT + WHERE equivalent\nlarge_orders = ...\n\n# TODO: SQL LEFT JOIN equivalent for row-count and missing-match checks\norders_left_join = ...",
+      "tests": [
+        "assert len(orders) == 38010",
+        "assert len(matching) == 100000",
+        "assert len(orders_with_group) == 38010",
+        "assert len(orders_left_join) == 38010",
+        "assert int(orders_left_join[\"exp_group\"].isna().sum()) == 0",
+        "assert {\"order_id\", \"user_id\", \"order_sum\", \"exp_group\"}.issubset(orders_with_group.columns)",
+        "assert list(large_orders.columns) == [\"order_id\", \"user_id\", \"order_sum\", \"exp_group\"]",
+        "assert int((large_orders[\"order_sum\"] > 10000).sum()) == len(large_orders)",
+        "assert len(large_orders) == 18896",
+        "assert orders_with_group[\"exp_group\"].value_counts().to_dict() == {\"A\": 19874, \"B\": 18136}",
+        "assert orders_with_group.loc[orders_with_group[\"user_id\"].eq(2), \"exp_group\"].tolist() == [\"A\", \"A\"]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "sql",
+        "select",
+        "join",
+        "where",
+        "pandas merge"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "python_algorithms_sliding_window__manual_01",
       "source_notebook": "manual_algos_patterns",

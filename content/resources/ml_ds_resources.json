@@ -54,6 +54,24 @@
     "notes": "Hands-on SQL window function drills suitable for the SQL coverage gap."
   },
   {
+    "id": "sql_select_join_tutorial",
+    "title": "SQL Tutorial: SELECT, WHERE, JOIN",
+    "track": "SQL",
+    "subtrack": "select_join",
+    "type": "guide",
+    "language": "en",
+    "level": "beginner",
+    "cost": "free",
+    "access": "open",
+    "url": "https://www.sqltutorial.org/",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "sql_foundations",
+    "related_hubml_modules": ["Theory", "Practice", "Tasks", "Data Lab"],
+    "expected_output": ["note", "practice_card", "mentor_task"],
+    "notes": "Beginner SQL reference for SELECT, WHERE, and JOIN fundamentals."
+  },
+  {
     "id": "experiment_guide",
     "title": "Trustworthy Online Controlled Experiments",
     "track": "Statistics",

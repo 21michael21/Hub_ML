@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:43:32.672966+00:00`
+Generated: `2026-06-21T20:46:56.387268+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 10/36 pass, 26 fail**
-- Failed rule counts: `{'rule1': 26, 'rule2': 26, 'rule3': 26, 'rule4': 14}`
+Summary: **GATE: 11/36 pass, 25 fail**
+- Failed rule counts: `{'rule1': 25, 'rule2': 25, 'rule3': 25, 'rule4': 13}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -35,12 +35,12 @@ Summary: **GATE: 10/36 pass, 26 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 1 task ✓
 
-## sql.select_join — SQL Select, Filter, Join  [FAIL]
+## sql.select_join — SQL Select, Filter, Join  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## sql.aggregation_windows — SQL Aggregations and Window Functions  [PASS]
 
@@ -68,7 +68,7 @@ Summary: **GATE: 10/36 pass, 26 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 4 practice, 2 task ✓
+- rule4 practice/task: 5 practice, 2 task ✓
 
 ## data.cleaning_eda — Data Cleaning and EDA  [PASS]
 
@@ -82,7 +82,7 @@ Summary: **GATE: 10/36 pass, 26 fail**
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 1 practice, 1 task ✓
+- rule4 practice/task: 1 practice, 2 task ✓
 
 ## data.visualization — Data Visualization  [FAIL]
 
