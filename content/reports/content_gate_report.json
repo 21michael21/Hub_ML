@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:45:23.804293+00:00",
+  "generated_at": "2026-06-21T21:47:44.880076+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 29,
-    "failed_topics": 7,
+    "passed_topics": 30,
+    "failed_topics": 6,
     "failed_rule_counts": {
-      "rule1": 7,
-      "rule2": 7,
-      "rule3": 7,
-      "rule4": 4
+      "rule1": 6,
+      "rule2": 6,
+      "rule3": 6,
+      "rule4": 3
     },
     "failed_required_topic_ids": [
-      "mlops.serving",
       "interview.ml_ds_questions",
       "interview.coding",
       "interview.take_home",
@@ -50,9 +49,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 2 task",
+          "detail": "1 practice, 3 task",
           "practice_count": 1,
-          "task_count": 2
+          "task_count": 3
         }
       },
       "evidence": {
@@ -80,6 +79,10 @@
           }
         ],
         "tasks": [
+          {
+            "id": "mlops_serving_predict_order_conversion__manual_01",
+            "title": "Model serving API inference predict function"
+          },
           {
             "id": "python_typing_architecture_normalize_event__manual_01",
             "title": "Typed Python architecture normalize event function"
@@ -1790,43 +1793,54 @@
       "title": "Model Serving Basics",
       "track": "MLOps",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
+          "passed": true,
+          "detail": "1 practice, 1 task",
+          "practice_count": 1,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
+        "notes": [
+          {
+            "path": "05_IT_Resources/MLOps/02_Model_Serving_Basics.md",
+            "title": "Model Serving API Inference Batch Prediction",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "mlops_serving_predict_function_contract",
+            "title": "MLOps Serving: Predict Function Contract"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "mlops_serving_predict_order_conversion__manual_01",
+            "title": "Model serving API inference predict function"
+          }
+        ]
       }
     },
     {

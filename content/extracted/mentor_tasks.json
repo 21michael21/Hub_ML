@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 82,
-    "tasks_with_asserts": 51,
+    "tasks_extracted": 83,
+    "tasks_with_asserts": 52,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 45,
+      "high": 46,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,42 @@
     }
   ],
   "tasks": [
+    {
+      "id": "mlops_serving_predict_order_conversion__manual_01",
+      "source_notebook": "manual_mlops_serving",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Model serving API inference predict function",
+      "prompt": "#### MLOps serving: plain predict function\n\nImplement a local inference function. Do not start a server and do not use FastAPI.\n\nCreate `predict_order_conversion(features: dict) -> dict`.\n\nRules:\n\n1. Read `events_total` from features, default `0`.\n2. Read `viewed_pricing` from features, default `0`.\n3. Compute `score = min(1.0, 0.15 + 0.08 * events_total + 0.35 * viewed_pricing)`.\n4. `prediction = 1` if `score >= 0.5`, else `0`.\n5. Return a dictionary with keys `prediction`, `score`, and `model_version`.\n6. `model_version` must be `rule-baseline-v1`.\n\nThis checks model serving basics: input schema, inference function, output schema, and versioned output without adding an API server.",
+      "starter_code": "def predict_order_conversion(features: dict) -> dict:\n    ...",
+      "tests": [
+        "low = predict_order_conversion({\"events_total\": 1, \"viewed_pricing\": 0})",
+        "high = predict_order_conversion({\"events_total\": 5, \"viewed_pricing\": 1})",
+        "assert set(low) == {\"prediction\", \"score\", \"model_version\"}",
+        "assert set(high) == {\"prediction\", \"score\", \"model_version\"}",
+        "assert low[\"prediction\"] == 0",
+        "assert high[\"prediction\"] == 1",
+        "assert isinstance(high[\"score\"], float)",
+        "assert 0.0 <= low[\"score\"] <= 1.0",
+        "assert 0.0 <= high[\"score\"] <= 1.0",
+        "assert high[\"model_version\"] == \"rule-baseline-v1\"",
+        "assert predict_order_conversion({})[\"prediction\"] == 0"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "serving",
+        "model serving",
+        "inference",
+        "api",
+        "batch prediction",
+        "predict"
+      ],
+      "task_number_in_notebook": 1
+    },
     {
       "id": "mlops_experiment_tracking_jsonl_roundtrip__manual_01",
       "source_notebook": "manual_mlops_experiments",

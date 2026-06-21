@@ -1,18 +1,18 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T21:45:23.804293+00:00`
+Generated: `2026-06-21T21:47:44.880076+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 29/36 pass, 7 fail**
-- Failed rule counts: `{'rule1': 7, 'rule2': 7, 'rule3': 7, 'rule4': 4}`
+Summary: **GATE: 30/36 pass, 6 fail**
+- Failed rule counts: `{'rule1': 6, 'rule2': 6, 'rule3': 6, 'rule4': 3}`
 
 ## python.basics — Python Basics  [PASS]
 
 - rule1 note quality: 100 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 1 practice, 2 task ✓
+- rule4 practice/task: 1 practice, 3 task ✓
 
 ## python.oop — Object-Oriented Python  [PASS]
 
@@ -210,12 +210,12 @@ Summary: **GATE: 29/36 pass, 7 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 4 practice, 1 task ✓
 
-## mlops.serving — Model Serving Basics  [FAIL]
+## mlops.serving — Model Serving Basics  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 1 task ✓
 
 ## mlops.monitoring — Monitoring and Data Drift  [FAIL]
 
