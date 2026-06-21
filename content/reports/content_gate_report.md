@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-21T20:46:56.387268+00:00`
+Generated: `2026-06-21T20:49:22.197017+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 11/36 pass, 25 fail**
-- Failed rule counts: `{'rule1': 25, 'rule2': 25, 'rule3': 25, 'rule4': 13}`
+Summary: **GATE: 12/36 pass, 24 fail**
+- Failed rule counts: `{'rule1': 24, 'rule2': 24, 'rule3': 24, 'rule4': 12}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -49,12 +49,12 @@ Summary: **GATE: 11/36 pass, 25 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 1 task ✓
 
-## git.tools — Git and CLI Workflow  [FAIL]
+## git.tools — Git and CLI Workflow  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 0 task ✓
 
 ## git.reproducibility — Environment and Reproducibility  [FAIL]
 

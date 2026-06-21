@@ -1,12 +1,12 @@
 # Theory Content Audit
 
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
-Generated: `2026-06-21T20:46:55.877844+00:00`
+Generated: `2026-06-21T20:49:21.709850+00:00`
 
 ## Summary
 
-- Total notes: **216**
-- Average quality score: **49.9 / 100**
+- Total notes: **217**
+- Average quality score: **50.1 / 100**
 
 ## Notes By Section
 
@@ -19,7 +19,7 @@ Generated: `2026-06-21T20:46:55.877844+00:00`
 | 02 Data Analysis | 16 |
 | 03 Ml | 21 |
 | 04 Nlp | 21 |
-| 05 It Resources | 59 |
+| 05 It Resources | 60 |
 | 90 Templates | 3 |
 | 99 Meta | 6 |
 | Без раздела | 2 |
@@ -51,7 +51,7 @@ Generated: `2026-06-21T20:46:55.877844+00:00`
 
 ## Missing Core Topics
 
-- Git
+_No missing core topics detected by filename/title heuristics._
 
 ## Notes Without Frontmatter
 
@@ -169,7 +169,6 @@ _None._
 - Add examples/code snippets to technical notes that currently have no examples.
 - Add source/reference sections to notes that are copied, AI-generated, or important for interviews.
 - Add practice and portfolio sections to notes that should become job-ready learning material.
-- Create or connect missing core topics: Git.
 
 ## Heuristic Notes
 

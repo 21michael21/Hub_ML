@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T20:46:56.387268+00:00",
+  "generated_at": "2026-06-21T20:49:22.197017+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 11,
-    "failed_topics": 25,
+    "passed_topics": 12,
+    "failed_topics": 24,
     "failed_rule_counts": {
-      "rule1": 25,
-      "rule2": 25,
-      "rule3": 25,
-      "rule4": 13
+      "rule1": 24,
+      "rule2": 24,
+      "rule3": 24,
+      "rule4": 12
     },
     "failed_required_topic_ids": [
-      "git.tools",
       "git.reproducibility",
       "data.pandas_basics",
       "data.groupby_merge",
@@ -459,42 +458,48 @@
       "title": "Git and CLI Workflow",
       "track": "Git and Tools",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
+          "passed": true,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
           "task_count": 0
         }
       },
       "evidence": {
-        "notes": [],
-        "practice": [],
+        "notes": [
+          {
+            "path": "05_IT_Resources/Git/Git_CLI_Workflow.md",
+            "title": "Git CLI Workflow: status, diff, commit, branch, merge, pull request",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "git_tools_commit_readme_practice",
+            "title": "Git Tools: Commit README Practice"
+          }
+        ],
         "tasks": []
       }
     },

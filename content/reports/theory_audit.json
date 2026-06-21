@@ -1,8 +1,8 @@
 {
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
-    "generated_at": "2026-06-21T20:46:55.877844+00:00",
-    "total_notes": 216,
+    "generated_at": "2026-06-21T20:49:21.709850+00:00",
+    "total_notes": 217,
     "notes_by_section": {
       "00 Atlas": 6,
       "00 Graph": 26,
@@ -11,15 +11,13 @@
       "02 Data Analysis": 16,
       "03 Ml": 21,
       "04 Nlp": 21,
-      "05 It Resources": 59,
+      "05 It Resources": 60,
       "90 Templates": 3,
       "99 Meta": 6,
       "Без раздела": 2
     },
-    "average_quality_score": 49.9,
-    "missing_core_topics": [
-      "Git"
-    ],
+    "average_quality_score": 50.1,
+    "missing_core_topics": [],
     "notes_without_frontmatter": [],
     "notes_without_examples": [
       "00_Atlas/00_Knowledge_Map.md",
@@ -5953,6 +5951,41 @@
       "generic_heading_count": 0,
       "words_per_heading": 2338.0,
       "quality_score": 95
+    },
+    {
+      "relative_path": "05_IT_Resources/Git/Git_CLI_Workflow.md",
+      "section": "05 It Resources",
+      "title": "Git CLI Workflow: status, diff, commit, branch, merge, pull request",
+      "frontmatter_fields": [
+        "level",
+        "prerequisites",
+        "related_practice",
+        "related_projects",
+        "related_tasks",
+        "source",
+        "status",
+        "tags",
+        "title",
+        "track"
+      ],
+      "has_frontmatter": true,
+      "word_count": 623,
+      "heading_count": 9,
+      "code_block_count": 2,
+      "wiki_link_count": 0,
+      "external_link_count": 1,
+      "tag_count": 8,
+      "has_examples": true,
+      "has_practice_section": true,
+      "has_sources_section": true,
+      "has_portfolio_section": true,
+      "has_prerequisites": false,
+      "likely_thin_note": false,
+      "likely_ai_dump_or_placeholder": false,
+      "is_technical_topic": true,
+      "generic_heading_count": 0,
+      "words_per_heading": 69.2,
+      "quality_score": 100
     },
     {
       "relative_path": "05_IT_Resources/Golang_Homework.md",

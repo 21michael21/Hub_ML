@@ -196,5 +196,23 @@
     "related_hubml_modules": ["Theory", "Practice", "Tasks", "Notebook"],
     "expected_output": ["note", "practice_card", "mentor_task"],
     "notes": "Official Python tutorial for classes, modules, functions, data structures, and language basics."
+  },
+  {
+    "id": "pro_git_book",
+    "title": "Pro Git Book",
+    "track": "Git and Tools",
+    "subtrack": "git_cli_workflow",
+    "type": "book",
+    "language": "en",
+    "level": "beginner",
+    "cost": "free",
+    "access": "open",
+    "url": "https://git-scm.com/book/en/v2",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "git_foundations",
+    "related_hubml_modules": ["Theory", "Practice", "Portfolio"],
+    "expected_output": ["note", "practice_card", "portfolio_artifact"],
+    "notes": "Officially hosted Pro Git book for Git basics, branching, merging, and daily CLI workflow."
   }
 ]
