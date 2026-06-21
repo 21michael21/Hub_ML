@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-21T21:34:45.304216+00:00",
+  "generated_at": "2026-06-21T21:37:03.873445+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 25,
-    "failed_topics": 11,
+    "passed_topics": 26,
+    "failed_topics": 10,
     "failed_rule_counts": {
-      "rule1": 11,
-      "rule2": 11,
-      "rule3": 11,
-      "rule4": 6
+      "rule1": 10,
+      "rule2": 10,
+      "rule3": 10,
+      "rule4": 5
     },
     "failed_required_topic_ids": [
-      "nlp.transformers",
       "genai.rag",
       "mlops.experiments",
       "mlops.serving",
@@ -1443,50 +1442,6 @@
       "title": "Transformers and Embeddings",
       "track": "NLP",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
-      "rules": {
-        "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
-          "threshold": 70,
-          "matched_notes": 0
-        },
-        "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
-        },
-        "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
-        },
-        "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
-        }
-      },
-      "evidence": {
-        "notes": [],
-        "practice": [],
-        "tasks": []
-      }
-    },
-    {
-      "id": "genai.prompting",
-      "title": "Prompt Engineering",
-      "track": "GenAI and RAG",
-      "required": true,
       "status": "PASS",
       "failed_rules": [],
       "rules": {
@@ -1518,6 +1473,56 @@
       "evidence": {
         "notes": [
           {
+            "path": "04_NLP/12_Transformers_Course_Article.md",
+            "title": "Transformer Embedding BERT Attention Deep NLP",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "nlp_transformer_pipeline_explainer",
+            "title": "NLP Transformer Pipeline Explainer"
+          }
+        ],
+        "tasks": []
+      }
+    },
+    {
+      "id": "genai.prompting",
+      "title": "Prompt Engineering",
+      "track": "GenAI and RAG",
+      "required": true,
+      "status": "PASS",
+      "failed_rules": [],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
+          "threshold": 70,
+          "matched_notes": 1
+        },
+        "rule2_ai_dump_flag": {
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
+        },
+        "rule3_sources": {
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
+          "task_count": 0
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
             "path": "04_NLP/GenAI/01_Prompt_Engineering_LLM.md",
             "title": "Prompt Engineering for LLM Practice",
             "quality_score": 100
@@ -1527,6 +1532,10 @@
           {
             "id": "genai_prompt_llm_practice",
             "title": "LLM Prompt Review Drill"
+          },
+          {
+            "id": "nlp_transformer_pipeline_explainer",
+            "title": "NLP Transformer Pipeline Explainer"
           }
         ],
         "tasks": []
@@ -1560,8 +1569,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 1 task",
-          "practice_count": 1,
+          "detail": "2 practice, 1 task",
+          "practice_count": 2,
           "task_count": 1
         }
       },
@@ -1577,6 +1586,10 @@
           {
             "id": "genai_embedding_semantic_search_practice",
             "title": "Embedding Semantic Search Drill"
+          },
+          {
+            "id": "nlp_transformer_pipeline_explainer",
+            "title": "NLP Transformer Pipeline Explainer"
           }
         ],
         "tasks": [
@@ -1619,8 +1632,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 0 task",
-          "practice_count": 1,
+          "detail": "2 practice, 0 task",
+          "practice_count": 2,
           "task_count": 0
         }
       },
@@ -1630,6 +1643,10 @@
           {
             "id": "genai_embedding_semantic_search_practice",
             "title": "Embedding Semantic Search Drill"
+          },
+          {
+            "id": "nlp_transformer_pipeline_explainer",
+            "title": "NLP Transformer Pipeline Explainer"
           }
         ],
         "tasks": []
