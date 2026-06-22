@@ -5094,6 +5094,28 @@ def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[di
 def render_algorithm_result(result: dict[str, Any]) -> None:
     elapsed = float(result.get("elapsed") or 0.0)
     if result.get("timed_out"):
+        chip = "ERROR"
+        title = "Таймаут"
+        message = f"Процесс остановлен после {elapsed:.2f} сек."
+    elif result.get("exit_code") == 0:
+        chip = "PASS"
+        title = "Тесты прошли"
+        message = f"Все встроенные assert-проверки прошли за {elapsed:.2f} сек."
+    else:
+        chip = "FAIL"
+        title = "Тесты упали"
+        message = f"Exit code: {result.get('exit_code')}"
+    st.markdown(
+        render_card(
+            title,
+            message,
+            eyebrow="Run result",
+            status=chip,
+            extra_class="run-result",
+        ),
+        unsafe_allow_html=True,
+    )
+    if result.get("timed_out"):
         st.error(f"⏱ Таймаут после {elapsed:.2f} сек. Процесс остановлен.")
     elif result.get("exit_code") == 0:
         st.success(f"✅ Все тесты прошли за {elapsed:.2f} сек.")
@@ -5195,9 +5217,17 @@ def render_algorithm_self_review(lesson: dict[str, Any], mode: str, last_result:
 
 def render_algorithm_attempt_review(lesson: dict[str, Any]) -> None:
     attempts = get_algorithm_attempts(lesson["id"])
-    st.markdown("#### Saved attempts")
+    render_section_eyebrow_block("Saved attempts")
     if not attempts:
-        st.info("No attempts saved yet.")
+        st.markdown(
+            render_card(
+                "Попыток пока нет",
+                "Сохрани self-review после Practice или Timed Mock, чтобы видеть историю.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
     st.dataframe(
         [
@@ -5217,20 +5247,42 @@ def render_algorithm_attempt_review(lesson: dict[str, Any]) -> None:
 
 
 def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
-    st.markdown("### 🧩 Algorithms Lab")
     st.markdown(
-        "Livecoding-тренажер по файлам ментора: теория из docstring, эталонный код и запуск встроенных assert-тестов."
+        render_card(
+            "🧩 Algorithms Lab",
+            "Livecoding-тренажер по файлам ментора: теория из docstring, эталонный код и запуск встроенных assert-тестов.",
+            eyebrow="Train cluster",
+            status="READY" if lessons else "TODO",
+        ),
+        unsafe_allow_html=True,
     )
 
     if not lessons:
-        st.info("Папка algos_patterns/ не найдена или в ней нет .py уроков.")
+        st.markdown(
+            render_card(
+                "Алгоритмы не найдены",
+                "Проверь папку content/source/vkat/VKAT-main/algos_patterns.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     stats = algorithm_progress(lessons)
-    metric_cols = st.columns(3)
-    metric_cols[0].metric("Уроков", stats["total"])
-    metric_cols[1].metric("Пройдено", stats["done"])
-    metric_cols[2].metric("Осталось", stats["todo"])
+    done_ratio = stats["done"] / stats["total"] if stats["total"] else 0.0
+    metric_tiles = [
+        render_metric_tile("Уроков", stats["total"], status="INFO"),
+        render_metric_tile(
+            "Пройдено",
+            stats["done"],
+            total=stats["total"],
+            progress=done_ratio,
+            status="PASS" if done_ratio == 1 else "IN PROGRESS",
+        ),
+        render_metric_tile("Осталось", stats["todo"], status="TODO" if stats["todo"] else "READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
     mode = st.radio(
         "Mode",
@@ -5260,13 +5312,12 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     expected_complexity = extract_expected_complexity(lesson_text)
 
     st.markdown(
-        f"""
-<div class="today-card">
-    <div class="today-card-title">{html.escape(lesson["title"])}</div>
-    <div class="muted-small">{html.escape(lesson["id"])} · difficulty: {html.escape(difficulty)} · expected: {html.escape(expected_complexity)}</div>
-    <div style="margin-top: 0.45rem;">{status_badge(status)}</div>
-</div>
-        """,
+        render_card(
+            str(lesson["title"]),
+            f"{lesson['id']} · difficulty: {difficulty} · expected: {expected_complexity}",
+            eyebrow="Selected pattern",
+            status=note_status_to_chip(status),
+        ),
         unsafe_allow_html=True,
     )
 
@@ -5277,25 +5328,33 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
     if mode == "Timed Mock":
         render_timed_mock_controls("algorithm", lesson["id"])
 
-    st.markdown("#### Теория")
+    render_section_eyebrow_block("Теория")
     docstring = str(lesson.get("docstring") or "").strip()
     if docstring:
         st.markdown(f"```text\n{docstring}\n```")
     else:
-        st.info("Верхний модульный docstring не найден.")
+        st.markdown(
+            render_card(
+                "Docstring не найден",
+                "Открой эталонный код ниже и используй README/комментарии файла как источник.",
+                eyebrow="Empty state",
+                status="WEAK",
+            ),
+            unsafe_allow_html=True,
+        )
 
     with st.expander("Эталонный код", expanded=False):
         st.code(str(lesson.get("code") or ""), language="python")
 
     if mode in {"Practice", "Timed Mock"}:
-        st.markdown("#### Practice Setup")
+        render_section_eyebrow_block("Practice Setup")
         st.caption("Starter code: use the lesson templates/functions as your starting point. Run built-in tests when ready.")
         st.code(str(lesson.get("code") or ""), language="python")
         tests_preview = extract_algorithm_tests_preview(str(lesson.get("code") or ""))
         if tests_preview:
             with st.expander("Tests preview", expanded=False):
                 st.code(tests_preview, language="python")
-        st.markdown("##### Edge case checklist")
+        render_section_eyebrow_block("Edge case checklist")
         for item in ["empty input", "single element", "duplicates", "negative values", "already sorted / reverse sorted"]:
             st.checkbox(item, key=safe_widget_key("algo_edge", lesson["id"], mode, item))
         st.text_area(
