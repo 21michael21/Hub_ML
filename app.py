@@ -5592,7 +5592,18 @@ def render_interview_question_practice(
     question_id = interview_question_id(company, kind, index, text)
     attempts = get_interview_attempts(question_id)
     repeat_label = " · repeat later" if attempts and attempts[-1].get("repeat_later") else ""
-    st.markdown(f"{index}. {text}")
+    latest_rating = attempts[-1].get("self_rating", 0) if attempts else 0
+    card_status = "WEAK" if attempts and attempts[-1].get("repeat_later") else ("READY" if attempts else "TODO")
+    st.markdown(
+        render_card(
+            f"{index}. {text}",
+            f"{company} · {kind}",
+            eyebrow="Interview prompt",
+            meta=f"rating: {latest_rating}/5 · attempts: {len(attempts)}{repeat_label}" if attempts else "No attempts saved yet.",
+            status=card_status,
+        ),
+        unsafe_allow_html=True,
+    )
     if attempts:
         latest = attempts[-1]
         st.caption(
@@ -5645,21 +5656,50 @@ def render_interview_question_practice(
                 use_container_width=True,
                 hide_index=True,
             )
+    elif mode == "Review":
+        st.markdown(
+            render_card(
+                "Попыток пока нет",
+                "Ответь на вопрос в Practice или Timed Mock, чтобы он появился в Review.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def render_interviews_tab(interview_data: dict[str, Any]) -> None:
-    st.markdown("### 🎤 Interviews")
-    st.markdown("Вопросы и задачи с ML/DS собеседований, сгруппированные по компаниям.")
+    st.markdown(
+        render_card(
+            "🎤 Interviews",
+            "Вопросы и задачи с ML/DS собеседований, сгруппированные по компаниям.",
+            eyebrow="Train cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
 
     companies = interview_data.get("companies", [])
     if not companies:
-        st.info("Файл с вопросами пока не найден или не распарсился.")
+        st.markdown(
+            render_card(
+                "Вопросы не найдены",
+                "Проверь content/interview_questions/ml_ds_interview_questions.json.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
-    metric_cols = st.columns(3)
-    metric_cols[0].metric("Компаний", interview_data.get("total_companies", len(companies)))
-    metric_cols[1].metric("Вопросов", interview_data.get("total_questions", 0))
-    metric_cols[2].metric("Задач", interview_data.get("total_tasks", 0))
+    arena_stats = interview_arena_progress_summary()
+    metric_tiles = [
+        render_metric_tile("Компаний", interview_data.get("total_companies", len(companies)), status="INFO"),
+        render_metric_tile("Вопросов", interview_data.get("total_questions", 0), status="INFO"),
+        render_metric_tile("Задач", interview_data.get("total_tasks", 0), status="INFO"),
+        render_metric_tile("Repeat later", arena_stats["questions_repeat_later"], status="WEAK" if arena_stats["questions_repeat_later"] else "READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
     mode = st.radio(
         "Mode",
@@ -5687,7 +5727,15 @@ def render_interviews_tab(interview_data: dict[str, Any]) -> None:
         filtered.append(entry)
 
     if not filtered:
-        st.info("По такому фильтру вопросов нет.")
+        st.markdown(
+            render_card(
+                "По такому фильтру вопросов нет",
+                "Очисти поиск или выбери другую компанию.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     for entry in filtered:
@@ -5699,17 +5747,17 @@ def render_interviews_tab(interview_data: dict[str, Any]) -> None:
             expanded=selected_company != "Все",
         ):
             if relevance:
-                st.caption(f"Актуальность: {relevance}")
+                st.markdown(render_status_chip("READY") + f" <span class='muted-small'>Актуальность: {html.escape(str(relevance))}</span>", unsafe_allow_html=True)
             if questions:
-                st.markdown("#### Вопросы")
+                render_section_eyebrow_block("Вопросы")
                 for index, question in enumerate(questions, start=1):
                     render_interview_question_practice(entry["company"], "question", index, question, mode)
             if tasks:
-                st.markdown("#### Задачи")
+                render_section_eyebrow_block("Задачи")
                 for index, task in enumerate(tasks, start=1):
                     render_interview_question_practice(entry["company"], "task", index, task, mode)
             if entry.get("notes"):
-                st.markdown("#### Дополнительно")
+                render_section_eyebrow_block("Дополнительно")
                 for note in entry["notes"]:
                     st.markdown(f"- {note}")
 
