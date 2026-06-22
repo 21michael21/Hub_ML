@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 87,
-    "tasks_with_asserts": 56,
+    "tasks_extracted": 88,
+    "tasks_with_asserts": 57,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 50,
+      "high": 51,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,43 @@
     }
   ],
   "tasks": [
+    {
+      "id": "career_resume_remote_bullet_structure__manual_01",
+      "source_notebook": "manual_career_resume_remote",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Resume remote career bullet structure validator",
+      "prompt": "#### Resume remote career: bullet structure validator\n\nРеализуйте `validate_resume_bullet(bullet, evidence)`. Функция должна проверить, что resume bullet содержит action verb, technical method и artifact/result, а evidence содержит project и artifact.\n\nЭто не проверка fake business impact и не генерация опыта. Это маленькая career/remote задача на честную структуру bullet.",
+      "starter_code": "def validate_resume_bullet(bullet: str, evidence: dict) -> dict:\n    # TODO: validate action verb + method + artifact/result + evidence fields\n    ...\n\nstrong_bullet = \"Built a reproducible orders EDA case study with pandas and matplotlib, documented limitations in a GitHub README.\"\nstrong_evidence = {\"project\": \"Orders EDA Report\", \"artifact\": \"README.md\", \"method\": \"pandas matplotlib\"}\n\nweak_bullet = \"Worked on data.\"\nweak_evidence = {\"project\": \"\", \"artifact\": \"\"}\n\nstrong = validate_resume_bullet(strong_bullet, strong_evidence)\nweak = validate_resume_bullet(weak_bullet, weak_evidence)\n\nassert strong[\"ok\"] is True\nassert strong[\"missing\"] == []\nassert weak[\"ok\"] is False\nassert \"technical_method\" in weak[\"missing\"]\nassert \"artifact_or_result\" in weak[\"missing\"]\nassert \"evidence_project\" in weak[\"missing\"]\nassert \"evidence_artifact\" in weak[\"missing\"]",
+      "tests": [
+        "strong_bullet = \"Built a reproducible orders EDA case study with pandas and matplotlib, documented limitations in a GitHub README.\"",
+        "strong_evidence = {\"project\": \"Orders EDA Report\", \"artifact\": \"README.md\", \"method\": \"pandas matplotlib\"}",
+        "weak_bullet = \"Worked on data.\"",
+        "weak_evidence = {\"project\": \"\", \"artifact\": \"\"}",
+        "strong = validate_resume_bullet(strong_bullet, strong_evidence)",
+        "weak = validate_resume_bullet(weak_bullet, weak_evidence)",
+        "assert strong[\"ok\"] is True",
+        "assert strong[\"missing\"] == []",
+        "assert weak[\"ok\"] is False",
+        "assert \"technical_method\" in weak[\"missing\"]",
+        "assert \"artifact_or_result\" in weak[\"missing\"]",
+        "assert \"evidence_project\" in weak[\"missing\"]",
+        "assert \"evidence_artifact\" in weak[\"missing\"]"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "resume",
+        "career",
+        "remote",
+        "bullet",
+        "evidence"
+      ],
+      "task_number_in_notebook": null
+    },
     {
       "id": "career_portfolio_readme_sections__manual_01",
       "source_notebook": "manual_career_portfolio",

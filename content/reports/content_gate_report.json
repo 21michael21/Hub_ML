@@ -1,19 +1,13 @@
 {
-  "generated_at": "2026-06-22T21:15:46.176985+00:00",
+  "generated_at": "2026-06-22T21:18:56.829687+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 35,
-    "failed_topics": 1,
-    "failed_rule_counts": {
-      "rule1": 1,
-      "rule2": 1,
-      "rule3": 1
-    },
-    "failed_required_topic_ids": [
-      "career.resume_remote"
-    ]
+    "passed_topics": 36,
+    "failed_topics": 0,
+    "failed_rule_counts": {},
+    "failed_required_topic_ids": []
   },
   "topics": [
     {
@@ -476,8 +470,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 0 task",
-          "practice_count": 2,
+          "detail": "3 practice, 0 task",
+          "practice_count": 3,
           "task_count": 0
         }
       },
@@ -490,6 +484,10 @@
           }
         ],
         "practice": [
+          {
+            "id": "career_resume_remote_bullets",
+            "title": "Resume Remote Career: Honest Hub_ML Bullets"
+          },
           {
             "id": "git_reproducibility_setup_runbook",
             "title": "Git Reproducibility Setup Runbook"
@@ -1772,8 +1770,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "6 practice, 1 task",
-          "practice_count": 6,
+          "detail": "7 practice, 1 task",
+          "practice_count": 7,
           "task_count": 1
         }
       },
@@ -1791,6 +1789,10 @@
             "title": "Portfolio README Case Study"
           },
           {
+            "id": "career_resume_remote_bullets",
+            "title": "Resume Remote Career: Honest Hub_ML Bullets"
+          },
+          {
             "id": "interview_take_home_df_orders_plan",
             "title": "ML Take-home: Orders Analysis Submission Plan"
           },
@@ -1801,10 +1803,6 @@
           {
             "id": "mlops_experiment_log_baseline_comparison",
             "title": "MLOps Experiment Log: Baseline Comparison"
-          },
-          {
-            "id": "nlp_preprocessing_message_cleaning",
-            "title": "NLP Preprocessing: Clean Interview and User Messages"
           }
         ],
         "tasks": [
@@ -2121,9 +2119,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "5 practice, 1 task",
-          "practice_count": 5,
-          "task_count": 1
+          "detail": "6 practice, 2 task",
+          "practice_count": 6,
+          "task_count": 2
         }
       },
       "evidence": {
@@ -2140,6 +2138,10 @@
             "title": "Portfolio README Case Study"
           },
           {
+            "id": "career_resume_remote_bullets",
+            "title": "Resume Remote Career: Honest Hub_ML Bullets"
+          },
+          {
             "id": "data_visualization_commission_boxplot",
             "title": "Visualization: boxplot комиссии по стоимости доставки"
           },
@@ -2150,13 +2152,13 @@
           {
             "id": "data_visualization_orders_daily_line",
             "title": "Visualization: динамика суммы заказов по дням"
-          },
-          {
-            "id": "ml_preference_model_take_home",
-            "title": "ML Take-home: Preference Model"
           }
         ],
         "tasks": [
+          {
+            "id": "career_resume_remote_bullet_structure__manual_01",
+            "title": "Resume remote career bullet structure validator"
+          },
           {
             "id": "career_portfolio_readme_sections__manual_01",
             "title": "Portfolio README artifact section validator"
@@ -2169,47 +2171,58 @@
       "title": "Resume and Remote Work Readiness",
       "track": "Portfolio and Career",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "2 registered URLs",
+          "registered_url_count": 2,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 0 task",
-          "practice_count": 1,
-          "task_count": 0
+          "detail": "2 practice, 1 task",
+          "practice_count": 2,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "05_IT_Resources/Resume_Remote_Career_Guide.md",
+            "title": "Resume Remote Career Guide",
+            "quality_score": 100
+          }
+        ],
         "practice": [
           {
             "id": "career_portfolio_readme_case_study",
             "title": "Portfolio README Case Study"
+          },
+          {
+            "id": "career_resume_remote_bullets",
+            "title": "Resume Remote Career: Honest Hub_ML Bullets"
           }
         ],
-        "tasks": []
+        "tasks": [
+          {
+            "id": "career_resume_remote_bullet_structure__manual_01",
+            "title": "Resume remote career bullet structure validator"
+          }
+        ]
       }
     }
   ]
