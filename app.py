@@ -1355,6 +1355,7 @@ def render_card(
     meta: str = "",
     status: str = "",
     extra_class: str = "",
+    content_html: str = "",
 ) -> str:
     classes = " ".join(["console-card", str(extra_class or "").strip()]).strip()
     eyebrow_markup = f'<div class="console-card-eyebrow">{html.escape(str(eyebrow))}</div>' if eyebrow else ""
@@ -1365,7 +1366,7 @@ def render_card(
         f'<div class="{html.escape(classes)}">'
         f"{eyebrow_markup}"
         f'<div class="console-card-title">{html.escape(str(title))} {status_markup}</div>'
-        f"{body_markup}{meta_markup}"
+        f"{body_markup}{meta_markup}{content_html}"
         "</div>"
     )
 
@@ -4169,9 +4170,8 @@ def render_readiness_badge(readiness: dict[str, Any]) -> str:
 
 def render_project_progress_badge(stats: dict[str, Any]) -> str:
     label = f"{stats['done']}/{stats['total']} milestones"
-    css_class = "status-done" if stats["total"] and stats["done"] == stats["total"] else "status-reading"
-    icon = "■" if css_class == "status-done" else "◐"
-    return f'<span class="status-pill {css_class}">{icon} {html.escape(label)}</span>'
+    status = "PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS"
+    return f"{render_status_chip(status)} <span class='muted-small'>{html.escape(label)}</span>"
 
 
 def render_data_lab_project_card(project: dict[str, Any]) -> None:
@@ -4179,17 +4179,22 @@ def render_data_lab_project_card(project: dict[str, Any]) -> None:
     datasets = ", ".join(project.get("datasets", [])) or "no datasets"
     skills = " · ".join(project.get("skills", [])[:4])
     st.markdown(
-        f"""
-<div class="today-card">
-    <div class="today-card-title">{html.escape(project["title"])}</div>
-    <div class="muted-small">{html.escape(project["level"])} · {html.escape(datasets)}</div>
-    <div class="muted-small">{html.escape(skills)}</div>
-    <div style="margin-top: 0.5rem;">{render_project_progress_badge(stats)}</div>
-</div>
-        """,
+        render_card(
+            str(project["title"]),
+            f"{project['level']} · {datasets}",
+            eyebrow="Project",
+            meta=skills,
+            status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
+            content_html=render_metric_tile(
+                "Milestones",
+                stats["done"],
+                total=stats["total"],
+                progress=stats["ratio"],
+                status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
+            ),
+        ),
         unsafe_allow_html=True,
     )
-    st.progress(stats["ratio"])
     st.button(
         "Открыть проект",
         key=f"data_lab_select_{project['id']}",
@@ -4204,6 +4209,17 @@ def project_milestone_widget_key(project_id: str, milestone_id: str, suffix: str
 
 
 def render_project_milestone_result(result: dict[str, Any]) -> None:
+    classification = str(result.get("classification") or classify_task_result(result))
+    elapsed = float(result.get("elapsed") or 0)
+    st.markdown(
+        f"""
+<div class="run-result console-card">
+    <div class="console-card-eyebrow">Milestone result</div>
+    <div class="console-card-title">{render_status_chip(classification)} <span class="muted-small">kernel · {elapsed:.2f}s</span></div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
     render_mentor_task_result(result)
     rich_outputs = [
         output
@@ -4225,7 +4241,15 @@ def render_project_code_runner(project: dict[str, Any], milestone: dict[str, Any
     if code_key not in st.session_state:
         st.session_state[code_key] = str(record.get("solution_code") or starter_code)
 
-    st.markdown("##### Solution code")
+    st.markdown(
+        """
+<div class="console-panel">
+    <div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>python · project milestone</span></div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    render_section_eyebrow_block("Solution code")
     use_plain_editor = st.session_state.get("project_milestones_plain_editor", False) or st_ace is None
     if st_ace is not None and not use_plain_editor:
         code = st_ace(
@@ -4252,8 +4276,20 @@ def render_project_code_runner(project: dict[str, Any], milestone: dict[str, Any
     if button_cols[0].button("▶ Run milestone", key=f"{code_key}_run", use_container_width=True):
         solution_code = str(st.session_state.get(code_key, ""))
         script = build_mentor_task_script(solution_code, test_code)
+        loading_slot = st.empty()
         with st.spinner("Running in the existing Jupyter kernel..."):
+            loading_slot.markdown(
+                """
+<div class="skeleton console-card">
+    <div class="sk" style="width: 42%"></div>
+    <div class="sk" style="width: 76%"></div>
+    <div class="sk" style="width: 58%"></div>
+</div>
+                """,
+                unsafe_allow_html=True,
+            )
             result = run_code_in_notebook_kernel_sync(script)
+        loading_slot.empty()
         classification = classify_task_result(result)
         updates: dict[str, Any] = {
             "solution_code": solution_code,
@@ -4705,17 +4741,32 @@ def render_data_lab_project_detail(
     note_index: dict[str, Any],
 ) -> None:
     stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
-    st.markdown(f"### {project['title']}")
-    st.markdown(project["goal"])
-    st.progress(stats["ratio"])
-    st.caption(f"{stats['done']}/{stats['total']} milestones · {project.get('estimated_time', '')}")
+    st.markdown(
+        render_card(
+            str(project["title"]),
+            str(project["goal"]),
+            eyebrow="Project detail",
+            meta=f"{stats['done']}/{stats['total']} milestones · {project.get('estimated_time', '')}",
+            status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
+            content_html=render_metric_tile(
+                "Milestone progress",
+                stats["done"],
+                total=stats["total"],
+                progress=stats["ratio"],
+                status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
+            ),
+        ),
+        unsafe_allow_html=True,
+    )
 
-    meta_cols = st.columns(3)
-    meta_cols[0].metric("Level", project.get("level", "—"))
-    meta_cols[1].metric("Datasets", len(project.get("datasets", [])))
-    meta_cols[2].metric("Skills", len(project.get("skills", [])))
+    detail_tiles = [
+        render_metric_tile("Level", project.get("level", "—"), status="INFO"),
+        render_metric_tile("Datasets", len(project.get("datasets", [])), status="INFO"),
+        render_metric_tile("Skills", len(project.get("skills", [])), status="READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(detail_tiles)}</div>', unsafe_allow_html=True)
 
-    st.markdown("#### Business Context")
+    render_section_eyebrow_block("Business Context")
     st.markdown(project.get("business_context") or "No business context provided.")
 
     render_data_lab_before_start(
@@ -4726,7 +4777,7 @@ def render_data_lab_project_detail(
         datasets=datasets,
     )
 
-    st.markdown("#### Datasets")
+    render_section_eyebrow_block("Datasets")
     dataset_cols = st.columns(max(1, min(3, len(project.get("datasets", [])) or 1)))
     for index, dataset_name in enumerate(project.get("datasets", [])):
         col = dataset_cols[index % len(dataset_cols)]
@@ -4748,14 +4799,14 @@ def render_data_lab_project_detail(
             )
 
     if project.get("prerequisites"):
-        st.markdown("#### Prerequisites")
+        render_section_eyebrow_block("Prerequisites")
         st.markdown("\n".join(f"- {item}" for item in project["prerequisites"]))
 
-    st.markdown("#### Milestones")
+    render_section_eyebrow_block("Milestones")
     for milestone in project.get("milestones", []):
         render_data_lab_milestone(project, milestone)
 
-    st.markdown("#### Deliverables")
+    render_section_eyebrow_block("Deliverables")
     st.markdown("\n".join(f"- {item}" for item in project.get("deliverables", [])))
 
     render_data_lab_portfolio_output(project)
@@ -4774,20 +4825,49 @@ def render_data_lab_projects_tab(
     title: str = "🧪 Data Lab Projects",
     description: str = "End-to-end проекты: от датасета и анализа до графиков, выводов и portfolio output. Код пока запускай в Notebook вручную.",
 ) -> None:
-    st.markdown(f"### {title}")
-    st.markdown(description)
+    st.markdown(
+        render_card(
+            title,
+            description,
+            eyebrow="Build cluster",
+            status="READY" if projects else "TODO",
+        ),
+        unsafe_allow_html=True,
+    )
 
     if not projects:
-        st.info("Project recipes не найдены. Add project JSON recipes under content/projects/.")
+        st.markdown(
+            render_card(
+                "Project recipes не найдены",
+                "Добавь JSON recipes under content/projects/, чтобы собрать Data Lab catalog.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     stats = data_lab_projects_progress(projects)
-    metric_cols = st.columns(3)
-    metric_cols[0].metric("Проектов", stats["projects_total"])
-    metric_cols[1].metric("Проекты готовы", f"{stats['projects_done']}/{stats['projects_total']}")
-    metric_cols[2].metric("Milestones", f"{stats['milestones_done']}/{stats['milestones_total']}")
     milestone_ratio = stats["milestones_done"] / stats["milestones_total"] if stats["milestones_total"] else 0.0
-    st.progress(milestone_ratio)
+    project_ratio = stats["projects_done"] / stats["projects_total"] if stats["projects_total"] else 0.0
+    tiles = [
+        render_metric_tile("Проектов", stats["projects_total"], status="INFO"),
+        render_metric_tile(
+            "Проекты готовы",
+            stats["projects_done"],
+            total=stats["projects_total"],
+            progress=project_ratio,
+            status="PASS" if project_ratio == 1 else "IN PROGRESS",
+        ),
+        render_metric_tile(
+            "Milestones",
+            stats["milestones_done"],
+            total=stats["milestones_total"],
+            progress=milestone_ratio,
+            status="PASS" if milestone_ratio == 1 else "IN PROGRESS",
+        ),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(tiles)}</div>', unsafe_allow_html=True)
 
     selected_id = st.session_state.get("selected_data_lab_project")
     if selected_id not in {project["id"] for project in projects}:
@@ -4796,7 +4876,7 @@ def render_data_lab_projects_tab(
 
     list_col, detail_col = st.columns([0.38, 0.62])
     with list_col:
-        st.markdown("#### Project Catalog")
+        render_section_eyebrow_block("Project Catalog")
         for project in projects:
             render_data_lab_project_card(project)
 
