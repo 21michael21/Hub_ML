@@ -3837,16 +3837,12 @@ def render_external_links(links: list[str]) -> None:
 def render_practice_card_summary(card: dict[str, Any]) -> None:
     dataset = f" · dataset: {card['dataset']}" if card.get("dataset") else ""
     st.markdown(
-        f"""
-<div class="today-card">
-    <div class="today-card-title">{html.escape(card["title"])}</div>
-    <div class="muted-small">
-        {html.escape(card["section"])} · {html.escape(card["difficulty"])} ·
-        {html.escape(card["est_time"])}{html.escape(dataset)}
-    </div>
-    <div style="margin-top: 0.45rem;">{practice_badge(get_card_status(card))}</div>
-</div>
-        """,
+        render_card(
+            str(card["title"]),
+            f"{card['section']} · {card['difficulty']} · {card['est_time']}{dataset}",
+            eyebrow="Practice card",
+            status=practice_status_to_chip(get_card_status(card)),
+        ),
         unsafe_allow_html=True,
     )
 
@@ -3880,16 +3876,16 @@ def render_portfolio_output_form(card: dict[str, Any]) -> None:
     st.session_state.setdefault(artifact_key, str(record.get("artifact", "")))
     st.session_state.setdefault(reflection_key, str(record.get("reflection", "")))
 
-    st.markdown("#### Portfolio output")
+    render_section_eyebrow_block("Portfolio output")
     if flash_message == "saved":
         st.success("Output сохранён.")
     st.markdown(
-        """
-<div class="practice-panel">
-    <div class="practice-title">Что останется после задачи</div>
-    <div class="muted-small">Коротко зафиксируй результат, путь к артефакту и вывод. Это не проверка, а след работы.</div>
-</div>
-        """,
+        render_card(
+            "Что останется после задачи",
+            "Коротко зафиксируй результат, путь к артефакту и вывод. Это не проверка, а след работы.",
+            eyebrow="Output",
+            status="READY" if output_has_content(record) else "TODO",
+        ),
         unsafe_allow_html=True,
     )
     st.text_area("Что сделал", key=summary_key, height=90)
@@ -3930,7 +3926,15 @@ def render_practice_detail(
     if card.get("dataset"):
         chips["dataset"] = card["dataset"]
 
-    st.markdown(f"### {card['title']}")
+    st.markdown(
+        render_card(
+            str(card["title"]),
+            f"{card['section']} · {card['difficulty']} · {card['est_time']}",
+            eyebrow="Practice detail",
+            status=practice_status_to_chip(get_card_status(card)),
+        ),
+        unsafe_allow_html=True,
+    )
     st.markdown(render_frontmatter_chips(chips), unsafe_allow_html=True)
     render_external_links(card.get("links", []))
 
@@ -3944,7 +3948,15 @@ def render_practice_detail(
             use_container_width=True,
         )
     elif card.get("related_note"):
-        st.warning(f"Связанная заметка не найдена: {card['related_note']}")
+        st.markdown(
+            render_card(
+                "Связанная заметка не найдена",
+                str(card["related_note"]),
+                eyebrow="Needs review",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
 
     if card.get("dataset"):
         dataset = find_dataset_record(card["dataset"], datasets)
@@ -3965,8 +3977,17 @@ def render_practice_detail(
             disabled=dataset is None,
         )
         if dataset is None:
-            st.caption(f"Файл {card['dataset']} пока не найден в datasets/.")
+            st.markdown(
+                render_card(
+                    "Dataset не найден",
+                    f"Файл {card['dataset']} пока не найден в datasets/.",
+                    eyebrow="Needs review",
+                    status="NEEDS REVIEW",
+                ),
+                unsafe_allow_html=True,
+            )
 
+    render_section_eyebrow_block("Инструкция")
     st.markdown(card["body"], unsafe_allow_html=False)
 
     status = get_card_status(card)
@@ -4005,23 +4026,53 @@ def render_practice_tab(
     note_index: dict[str, Any],
     datasets: list[dict[str, Any]],
 ) -> None:
-    st.markdown("### 🎯 Practice")
     st.markdown(
-        "Карточки превращают теорию в действие: инструкция, ресурсы, самопроверка и портфолио-выход."
+        render_card(
+            "🎯 Practice",
+            "Карточки превращают теорию в действие: инструкция, ресурсы, самопроверка и портфолио-выход.",
+            eyebrow="Learn cluster",
+            status="READY" if cards else "TODO",
+        ),
+        unsafe_allow_html=True,
     )
 
     for warning in warnings:
-        st.warning(warning)
+        st.markdown(
+            render_card(
+                "Practice warning",
+                warning,
+                eyebrow="Needs review",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
 
     if not cards:
-        st.info("Папка practice/ пуста или пока не создана. Добавьте markdown-карточки рядом с приложением.")
+        st.markdown(
+            render_card(
+                "Practice cards не найдены",
+                "Добавь markdown-карточки в practice/, чтобы связать теорию с действием.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     stats = practice_progress(cards)
-    metric_cols = st.columns(3)
-    metric_cols[0].metric("Карточек", stats["total"])
-    metric_cols[1].metric("В работе", stats[PRACTICE_DOING])
-    metric_cols[2].metric("Сделано", stats[PRACTICE_DONE])
+    done_ratio = stats[PRACTICE_DONE] / stats["total"] if stats["total"] else 0.0
+    metric_tiles = [
+        render_metric_tile("Карточек", stats["total"], status="INFO"),
+        render_metric_tile("В работе", stats[PRACTICE_DOING], status="IN PROGRESS"),
+        render_metric_tile(
+            "Сделано",
+            stats[PRACTICE_DONE],
+            total=stats["total"],
+            progress=done_ratio,
+            status="PASS" if done_ratio == 1 else "IN PROGRESS",
+        ),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
     sections = ["Все"] + sorted({card["section"] for card in cards}, key=str.casefold)
     difficulties = ["Все", "easy", "medium", "hard"]
@@ -4037,7 +4088,15 @@ def render_practice_tab(
     ]
 
     if not filtered:
-        st.info("По таким фильтрам карточек нет.")
+        st.markdown(
+            render_card(
+                "По таким фильтрам карточек нет",
+                "Смени section/difficulty или сбрось фильтры на «Все».",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     selected_id = st.session_state.get("selected_practice_card")
@@ -4047,7 +4106,7 @@ def render_practice_tab(
 
     list_col, detail_col = st.columns([0.38, 0.62], gap="large")
     with list_col:
-        st.markdown("#### Карточки")
+        render_section_eyebrow_block("Карточки")
         for card in filtered:
             render_practice_card_summary(card)
             st.button(
