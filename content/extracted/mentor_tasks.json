@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 85,
-    "tasks_with_asserts": 54,
+    "tasks_extracted": 86,
+    "tasks_with_asserts": 55,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 48,
+      "high": 49,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,37 @@
     }
   ],
   "tasks": [
+    {
+      "id": "interview_take_home_readme_template__manual_01",
+      "source_notebook": "manual_interview_take_home",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "ML take-home homework README template validator",
+      "prompt": "#### ML take-home: README template validator\n\nРеализуйте `validate_take_home_readme(markdown)`. Функция должна проверить, что README-шаблон для take-home содержит обязательные разделы: Problem, Data, Approach, Metrics, Results, Limitations, Next Steps, Reproducibility.\n\nЭто не fake solution и не проверка бизнес-результатов. Это маленькая homework/take-home задача на структуру финальной отправки.",
+      "starter_code": "def validate_take_home_readme(markdown: str) -> dict:\n    # TODO: detect required section headings in markdown text\n    ...\n\nvalid_readme = \"\"\"\n# Orders Take-home\n\n## Problem\nPredict conversion risk.\n\n## Data\nUse df_orders.csv and df_events.csv.\n\n## Approach\nEDA plus baseline.\n\n## Metrics\nAccuracy and recall.\n\n## Results\nTo be filled after running the analysis.\n\n## Limitations\nNo causal claim.\n\n## Next Steps\nReview leakage and error cases.\n\n## Reproducibility\nRun with requirements.txt.\n\"\"\"\n\nmissing_readme = \"\"\"\n# Orders Take-home\n\n## Problem\nPredict conversion risk.\n\n## Data\nUse df_orders.csv.\n\"\"\"\n\nvalid = validate_take_home_readme(valid_readme)\nmissing = validate_take_home_readme(missing_readme)\n\nassert valid[\"ok\"] is True\nassert valid[\"missing\"] == []\nassert missing[\"ok\"] is False\nassert set(missing[\"missing\"]) == {\"approach\", \"metrics\", \"results\", \"limitations\", \"next steps\", \"reproducibility\"}",
+      "tests": [
+        "valid_readme = \"\"\"\n# Orders Take-home\n\n## Problem\nPredict conversion risk.\n\n## Data\nUse df_orders.csv and df_events.csv.\n\n## Approach\nEDA plus baseline.\n\n## Metrics\nAccuracy and recall.\n\n## Results\nTo be filled after running the analysis.\n\n## Limitations\nNo causal claim.\n\n## Next Steps\nReview leakage and error cases.\n\n## Reproducibility\nRun with requirements.txt.\n\"\"\"",
+        "missing_readme = \"\"\"\n# Orders Take-home\n\n## Problem\nPredict conversion risk.\n\n## Data\nUse df_orders.csv.\n\"\"\"",
+        "valid = validate_take_home_readme(valid_readme)",
+        "missing = validate_take_home_readme(missing_readme)",
+        "assert valid[\"ok\"] is True",
+        "assert valid[\"missing\"] == []",
+        "assert missing[\"ok\"] is False",
+        "assert set(missing[\"missing\"]) == {\"approach\", \"metrics\", \"results\", \"limitations\", \"next steps\", \"reproducibility\"}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "take-home",
+        "homework",
+        "readme",
+        "submission"
+      ],
+      "task_number_in_notebook": null
+    },
     {
       "id": "interview_coding_two_sum_hashmap__manual_01",
       "source_notebook": "manual_interview_coding",

@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-06-22T21:07:19.312609+00:00",
+  "generated_at": "2026-06-22T21:12:14.820645+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 33,
-    "failed_topics": 3,
+    "passed_topics": 34,
+    "failed_topics": 2,
     "failed_rule_counts": {
-      "rule1": 3,
-      "rule2": 3,
-      "rule3": 3,
+      "rule1": 2,
+      "rule2": 2,
+      "rule3": 2,
       "rule4": 1
     },
     "failed_required_topic_ids": [
-      "interview.take_home",
       "career.portfolio",
       "career.resume_remote"
     ]
@@ -583,8 +582,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "6 practice, 2 task",
-          "practice_count": 6,
+          "detail": "7 practice, 2 task",
+          "practice_count": 7,
           "task_count": 2
         }
       },
@@ -610,12 +609,12 @@
             "title": "LLM Eval and Agent Review Drill"
           },
           {
-            "id": "math_linear_algebra_numpy_practice",
-            "title": "NumPy Matrix and Vector Scoring"
+            "id": "interview_take_home_df_orders_plan",
+            "title": "ML Take-home: Orders Analysis Submission Plan"
           },
           {
-            "id": "sql_select_join_query_reading",
-            "title": "SQL SELECT JOIN Query Reading"
+            "id": "math_linear_algebra_numpy_practice",
+            "title": "NumPy Matrix and Vector Scoring"
           }
         ],
         "tasks": [
@@ -658,9 +657,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "2 practice, 1 task",
-          "practice_count": 2,
-          "task_count": 1
+          "detail": "3 practice, 2 task",
+          "practice_count": 3,
+          "task_count": 2
         }
       },
       "evidence": {
@@ -679,9 +678,17 @@
           {
             "id": "genai_eval_agent_review_card",
             "title": "LLM Eval and Agent Review Drill"
+          },
+          {
+            "id": "interview_take_home_df_orders_plan",
+            "title": "ML Take-home: Orders Analysis Submission Plan"
           }
         ],
         "tasks": [
+          {
+            "id": "interview_take_home_readme_template__manual_01",
+            "title": "ML take-home homework README template validator"
+          },
           {
             "id": "data_cleaning_eda_events__manual_01",
             "title": "Data cleaning EDA missing values and duplicates"
@@ -1123,8 +1130,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "3 practice, 0 task",
-          "practice_count": 3,
+          "detail": "4 practice, 0 task",
+          "practice_count": 4,
           "task_count": 0
         }
       },
@@ -1137,6 +1144,10 @@
           }
         ],
         "practice": [
+          {
+            "id": "interview_take_home_df_orders_plan",
+            "title": "ML Take-home: Orders Analysis Submission Plan"
+          },
           {
             "id": "ml_preference_model_take_home",
             "title": "ML Take-home: Preference Model"
@@ -1244,8 +1255,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "4 practice, 1 task",
-          "practice_count": 4,
+          "detail": "5 practice, 1 task",
+          "practice_count": 5,
           "task_count": 1
         }
       },
@@ -1258,6 +1269,10 @@
           }
         ],
         "practice": [
+          {
+            "id": "interview_take_home_df_orders_plan",
+            "title": "ML Take-home: Orders Analysis Submission Plan"
+          },
           {
             "id": "ml_feature_engineering_feature_table",
             "title": "Feature Engineering: Build a Baseline Feature Table"
@@ -1759,8 +1774,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "4 practice, 1 task",
-          "practice_count": 4,
+          "detail": "5 practice, 1 task",
+          "practice_count": 5,
           "task_count": 1
         }
       },
@@ -1773,6 +1788,10 @@
           }
         ],
         "practice": [
+          {
+            "id": "interview_take_home_df_orders_plan",
+            "title": "ML Take-home: Orders Analysis Submission Plan"
+          },
           {
             "id": "ml_preference_model_take_home",
             "title": "ML Take-home: Preference Model"
@@ -2022,47 +2041,58 @@
       "title": "Take-home Assignments",
       "track": "Interview Prep",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "3 registered URLs",
+          "registered_url_count": 3,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 0 task",
-          "practice_count": 1,
-          "task_count": 0
+          "detail": "2 practice, 1 task",
+          "practice_count": 2,
+          "task_count": 1
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "05_IT_Resources/ML_Take_Home_Assignment_Guide.md",
+            "title": "ML Take-home Assignment Guide",
+            "quality_score": 100
+          }
+        ],
         "practice": [
+          {
+            "id": "interview_take_home_df_orders_plan",
+            "title": "ML Take-home: Orders Analysis Submission Plan"
+          },
           {
             "id": "ml_preference_model_take_home",
             "title": "ML Take-home: Preference Model"
           }
         ],
-        "tasks": []
+        "tasks": [
+          {
+            "id": "interview_take_home_readme_template__manual_01",
+            "title": "ML take-home homework README template validator"
+          }
+        ]
       }
     },
     {
