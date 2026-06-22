@@ -348,20 +348,141 @@ def inject_styles() -> None:
         font-family: var(--f-mono);
     }
 
+    .ide-topbar,
     .breadcrumb-shell {
         display: flex;
         align-items: center;
-        gap: 0.45rem;
-        margin: 0 0 1.05rem;
+        justify-content: space-between;
+        gap: var(--s2);
+        min-height: 42px;
+        margin: 0 0 var(--s3);
+        border: 1px solid var(--border-soft);
+        border-radius: var(--r-sm);
+        background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0)), var(--surface);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+        padding: 0.55rem 0.72rem;
         color: var(--faint);
-        font-family: var(--font-mono);
+        font-family: var(--f-mono);
         font-size: 0.74rem;
         letter-spacing: 0.03em;
     }
 
+    .ide-topbar-left,
+    .ide-topbar-right {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+    }
+
+    .ide-topbar-left {
+        gap: 0.45rem;
+    }
+
+    .ide-topbar-right {
+        flex: 0 0 auto;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--raised);
+        color: var(--dim);
+        padding: 0.22rem 0.58rem;
+    }
+
+    .ide-topbar strong,
     .breadcrumb-shell strong {
         color: var(--dim);
         font-weight: 500;
+    }
+
+    .ide-topbar .sep {
+        color: var(--faint);
+    }
+
+    .ide-topbar .ctx {
+        color: var(--text);
+    }
+
+    .ide-statusbar {
+        position: sticky;
+        bottom: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s2);
+        margin-top: var(--s4);
+        border: 1px solid var(--border-soft);
+        border-radius: var(--r-sm);
+        background: rgba(18,21,29,0.96);
+        color: var(--dim);
+        font-family: var(--f-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.02em;
+        padding: 0.46rem 0.66rem;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 -10px 26px rgba(0,0,0,0.24);
+    }
+
+    .ide-statusbar-left,
+    .ide-statusbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.62rem;
+        min-width: 0;
+    }
+
+    .ide-statusbar-left {
+        flex-wrap: wrap;
+    }
+
+    .ide-statusbar-right {
+        margin-left: auto;
+        color: var(--faint);
+        text-align: right;
+    }
+
+    .ide-statusbar-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.32rem;
+        white-space: nowrap;
+    }
+
+    .ide-statusbar-dot {
+        width: 0.42rem;
+        height: 0.42rem;
+        border-radius: 999px;
+        background: var(--faint);
+        box-shadow: 0 0 0 3px rgba(106,115,130,0.12);
+    }
+
+    .ide-statusbar-dot.busy {
+        background: var(--warn);
+        box-shadow: 0 0 0 3px rgba(229,178,58,0.16);
+        animation: pulse 1.2s var(--ease) infinite;
+    }
+
+    .ide-statusbar-dot.idle {
+        background: var(--pass);
+        box-shadow: 0 0 0 3px rgba(79,208,106,0.14);
+    }
+
+    .ide-statusbar-dot.dead,
+    .ide-statusbar-dot.error {
+        background: var(--fail);
+        box-shadow: 0 0 0 3px rgba(255,94,84,0.14);
+    }
+
+    @media (max-width: 760px) {
+        .ide-topbar,
+        .ide-statusbar {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .ide-topbar-right,
+        .ide-statusbar-right {
+            margin-left: 0;
+        }
     }
 
     .note-header {
@@ -3102,10 +3223,83 @@ def render_breadcrumb(active_tab: str) -> None:
     group = NAV_GROUP_BY_TAB.get(active_tab, "Home")
     label = NAV_LABELS.get(active_tab, active_tab)
     if active_tab == "Home":
-        text = "<strong>Home</strong>"
+        crumb = '<strong>cluster</strong><span class="sep">/</span><span class="ctx">Home</span>'
     else:
-        text = f"<strong>{html.escape(group)}</strong><span>/</span><span>{html.escape(label)}</span>"
-    st.markdown(f'<div class="breadcrumb-shell">{text}</div>', unsafe_allow_html=True)
+        crumb = (
+            f"<strong>cluster</strong><span class=\"sep\">/</span>"
+            f"<span>{html.escape(group)}</span><span class=\"sep\">/</span>"
+            f"<span class=\"ctx\">{html.escape(label)}</span>"
+        )
+    st.markdown(
+        f"""
+<div class="ide-topbar breadcrumb-shell">
+    <div class="ide-topbar-left">{crumb}</div>
+    <div class="ide-topbar-right">Jump to anything… ⌘K</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def git_branch_from_head(git_dir: Path | None = None) -> str:
+    git_dir = git_dir or PROJECT_ROOT / ".git"
+    head_path = git_dir / "HEAD"
+    try:
+        head = head_path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return "main"
+    if head.startswith("ref:"):
+        return Path(head.removeprefix("ref:").strip()).name or "main"
+    return head[:7] if head else "main"
+
+
+def content_gate_status(report_path: Path = CONTENT_GATE_REPORT_PATH) -> str:
+    try:
+        payload = json.loads(report_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return "GATE n/a"
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        return "GATE n/a"
+    passed = summary.get("passed_topics")
+    total = summary.get("total_topics", 36)
+    if isinstance(passed, list):
+        passed = len(passed)
+    try:
+        return f"GATE {int(passed)}/{int(total)}"
+    except (TypeError, ValueError):
+        return "GATE n/a"
+
+
+def notebook_kernel_status_label() -> str:
+    kernel_state = st.session_state.get("notebook_kernel_state")
+    if not isinstance(kernel_state, dict):
+        return "unknown"
+    status = str(kernel_state.get("status") or "unknown").lower()
+    if status in {"idle", "busy", "dead", "error"}:
+        return status
+    return "unknown"
+
+
+def render_status_bar() -> None:
+    kernel_status = notebook_kernel_status_label()
+    branch = git_branch_from_head()
+    gate = content_gate_status()
+    python_label = f"python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+    st.markdown(
+        f"""
+<div class="ide-statusbar">
+    <div class="ide-statusbar-left">
+        <span class="ide-statusbar-item"><span class="ide-statusbar-dot {html.escape(kernel_status)}"></span>kernel {html.escape(kernel_status)}</span>
+        <span class="ide-statusbar-item">git {html.escape(branch)}</span>
+        <span class="ide-statusbar-item">{html.escape(gate)}</span>
+        <span class="ide-statusbar-item">{html.escape(python_label)}</span>
+    </div>
+    <div class="ide-statusbar-right">local-first · код виден · без фейковых метрик</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def next_practice_card(cards: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -6121,6 +6315,7 @@ def main() -> None:
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
         st.info("Markdown-файлы не найдены")
         render_help()
+        render_status_bar()
         return
 
     note_index = build_note_index(sections)
@@ -6163,6 +6358,7 @@ def main() -> None:
     elif active_tab == "Theory":
         if selected_note is None:
             st.info("Выберите заметку в сайдбаре.")
+            render_status_bar()
             return
         render_note(selected_section, selected_note, resolved_vault, note_index, graph, sections, practice_cards)
     elif active_tab == "🎯 Practice":
@@ -6205,6 +6401,7 @@ def main() -> None:
         render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []), project_recipes)
     else:
         render_links_health(graph)
+    render_status_bar()
 
 
 if __name__ == "__main__":
