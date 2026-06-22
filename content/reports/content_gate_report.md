@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-22T12:31:24.208413+00:00`
+Generated: `2026-06-22T21:03:48.340287+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 32/36 pass, 4 fail**
-- Failed rule counts: `{'rule1': 4, 'rule2': 4, 'rule3': 4, 'rule4': 2}`
+Summary: **GATE: 33/36 pass, 3 fail**
+- Failed rule counts: `{'rule1': 3, 'rule2': 3, 'rule3': 3, 'rule4': 1}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -224,12 +224,12 @@ Summary: **GATE: 32/36 pass, 4 fail**
 - rule3 sources: 1 registered URLs ✓
 - rule4 practice/task: 1 practice, 1 task ✓
 
-## interview.ml_ds_questions — ML/DS Interview Questions  [FAIL]
+## interview.ml_ds_questions — ML/DS Interview Questions  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 1 registered URLs ✓
+- rule4 practice/task: 1 practice, 0 task ✓
 
 ## interview.coding — Coding Interview Practice  [PASS]
 
