@@ -17,7 +17,7 @@ REQUIRED_FIELDS = ("id", "title", "track", "type", "language", "cost", "url")
 ENUMS = {
     "type": {"course", "guide", "book", "interactive", "video", "paper", "docs", "cheatsheet"},
     "language": {"en", "ru", "multi"},
-    "level": {"beginner", "intermediate", "advanced"},
+    "level": {"beginner", "junior", "intermediate", "advanced"},
     "cost": {"free", "freemium", "paid"},
     "access": {"open", "signup", "trial"},
     "priority": {"core", "support", "deep_dive", "later"},
