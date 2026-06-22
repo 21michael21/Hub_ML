@@ -5388,13 +5388,8 @@ def select_mentor_task(task_id: str) -> None:
 def mentor_task_badge(task: dict[str, Any]) -> str:
     status = get_mentor_task_status(task["id"])
     confidence = str(task["confidence"])
-    confidence_class = "status-repeat" if confidence == "low" else "status-reading"
     confidence_label = "требует ревью" if confidence == "low" else confidence
-    return (
-        status_badge(status)
-        + " "
-        + f'<span class="status-pill {confidence_class}">{html.escape(confidence_label)}</span>'
-    )
+    return f"{render_status_chip(note_status_to_chip(status))} {render_status_chip('NEEDS REVIEW' if confidence == 'low' else 'READY')} <span class='muted-small'>{html.escape(confidence_label)}</span>"
 
 
 def render_mentor_task_summary(task: dict[str, Any]) -> None:
@@ -5413,6 +5408,24 @@ def render_mentor_task_summary(task: dict[str, Any]) -> None:
 def render_mentor_task_result(result: dict[str, Any]) -> None:
     classification = str(result.get("classification") or classify_task_result(result))
     elapsed = float(result.get("elapsed") or 0)
+    message_by_class = {
+        "PASS": "Все assert-проверки прошли.",
+        "FAIL": "Код запустился, но ожидаемые значения не совпали с assert-проверками.",
+        "ERROR": "Код упал до прохождения проверок. Исправьте runtime-ошибку и запустите снова.",
+        "TIMEOUT": "Выполнение заняло слишком много времени и было прервано.",
+        "KERNEL_BUSY": "Jupyter-ядро уже выполняет другую ячейку или задачу.",
+    }
+    chip = classification if classification in {"PASS", "FAIL", "ERROR"} else ("ERROR" if classification == "TIMEOUT" else "BLOCKED")
+    st.markdown(
+        render_card(
+            f"{classification or 'UNKNOWN'} · {elapsed:.2f}s",
+            message_by_class.get(classification, "Проверь вывод и traceback ниже."),
+            eyebrow="Task result",
+            status=chip,
+            extra_class="run-result",
+        ),
+        unsafe_allow_html=True,
+    )
 
     if classification == "PASS":
         st.success(f"✅ Решено · {float(result.get('elapsed') or 0):.2f}s")
@@ -5451,6 +5464,31 @@ def render_mentor_task_result(result: dict[str, Any]) -> None:
         st.caption("Код не напечатал stdout, но assert-проверки прошли.")
 
 
+def render_kernel_panel_header(label: str = "python · kernel") -> None:
+    kernel_status = notebook_kernel_status_label()
+    st.markdown(
+        f"""
+<div class="console-panel">
+    <div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>{html.escape(label)} {html.escape(kernel_status)}</span></div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_kernel_loading_skeleton(slot: Any) -> None:
+    slot.markdown(
+        """
+<div class="skeleton console-card">
+    <div class="sk" style="width: 38%"></div>
+    <div class="sk" style="width: 82%"></div>
+    <div class="sk" style="width: 64%"></div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_mentor_task_detail(task: dict[str, Any]) -> None:
     code_key = f"mentor_task_code_{task['id']}"
     result_key = f"mentor_task_result_{task['id']}"
@@ -5476,7 +5514,8 @@ def render_mentor_task_detail(task: dict[str, Any]) -> None:
             st.code("\n".join(task["tests"]), language="python")
 
     with right_col:
-        st.markdown("#### Решение")
+        render_kernel_panel_header("python · kernel")
+        render_section_eyebrow_block("Решение")
         use_plain_editor = st.session_state.get("tasks_plain_editor", False) or st_ace is None
         if st_ace is not None and not use_plain_editor:
             code = st_ace(
@@ -5499,8 +5538,11 @@ def render_mentor_task_detail(task: dict[str, Any]) -> None:
                 task["test_code"],
                 task.get("setup_code", ""),
             )
+            loading_slot = st.empty()
             with st.spinner("Запускаю в Jupyter-ядре и проверяю assert..."):
+                render_kernel_loading_skeleton(loading_slot)
                 result = run_code_in_notebook_kernel_sync(final_script)
+            loading_slot.empty()
             st.session_state[result_key] = result
             if classify_task_result(result) == "PASS":
                 set_mentor_task_status(task["id"], STATUS_DONE, result)
@@ -5514,22 +5556,40 @@ def render_mentor_task_detail(task: dict[str, Any]) -> None:
 
 
 def render_tasks_tab(mentor_data: dict[str, Any]) -> None:
-    st.markdown("### 🎯 Tasks")
-    st.markdown("Автопроверяемые задачи из ноутбуков ментора. В работу берутся только задания с `assert`.")
+    st.markdown(
+        render_card(
+            "🎯 Tasks",
+            "Автопроверяемые задачи из ноутбуков ментора. В работу берутся только задания с `assert`.",
+            eyebrow="Train cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
 
     tasks = mentor_data.get("tasks", [])
     if not tasks:
-        st.info("Файл `content/extracted/mentor_tasks.json` не найден или в нём нет автопроверяемых задач.")
+        st.markdown(
+            render_card(
+                "Автозадачи не найдены",
+                "Файл content/extracted/mentor_tasks.json отсутствует или не содержит checkable tasks.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     normal_tasks = [task for task in tasks if task["confidence"] in {"high", "medium"}]
     review_tasks = [task for task in tasks if task["confidence"] == "low"]
     stats = mentor_tasks_progress(tasks)
-    metric_cols = st.columns(4)
-    metric_cols[0].metric("Автозадач", len(tasks))
-    metric_cols[1].metric("В работе", len(normal_tasks))
-    metric_cols[2].metric("Решено", f"{stats['done']}/{stats['total']}")
-    metric_cols[3].metric("На ревью", len(review_tasks))
+    solved_ratio = stats["done"] / stats["total"] if stats["total"] else 0.0
+    metric_tiles = [
+        render_metric_tile("Автозадач", len(tasks), status="INFO"),
+        render_metric_tile("В работе", len(normal_tasks), status="IN PROGRESS"),
+        render_metric_tile("Решено", stats["done"], total=stats["total"], progress=solved_ratio, status="PASS" if solved_ratio == 1 else "IN PROGRESS"),
+        render_metric_tile("На ревью", len(review_tasks), status="NEEDS REVIEW" if review_tasks else "READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
     notebook_options = ["Все"] + sorted({task["notebook_label"] for task in normal_tasks}, key=str.casefold)
     confidence_options = ["Все", "high", "medium"]
@@ -5552,7 +5612,15 @@ def render_tasks_tab(mentor_data: dict[str, Any]) -> None:
         st.session_state["selected_mentor_task"] = selected_id
 
     if not filtered:
-        st.info("По этим фильтрам задач нет.")
+        st.markdown(
+            render_card(
+                "По этим фильтрам задач нет",
+                "Смени notebook/confidence или открой секцию low-confidence ниже.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
     else:
         list_col, detail_col = st.columns([0.36, 0.64], gap="large")
         with list_col:
