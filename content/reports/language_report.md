@@ -1,6 +1,6 @@
 # Russian Content Language Report
 
-Generated: `2026-06-21T22:34:58.889453+00:00`
+Generated: `2026-06-22T12:31:24.134216+00:00`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
 ## Policy
@@ -10,8 +10,8 @@ Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
 ## Summary
 
-- Total files: 263
-- ru_ok: 137
+- Total files: 264
+- ru_ok: 138
 - mixed_ok: 50
 - code_or_source_only: 1
 - too_much_english: 75

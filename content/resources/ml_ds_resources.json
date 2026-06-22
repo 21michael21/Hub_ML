@@ -286,5 +286,23 @@
     "related_hubml_modules": ["Theory", "Practice", "Portfolio"],
     "expected_output": ["note", "practice_card", "portfolio_artifact"],
     "notes": "Officially hosted Pro Git book for Git basics, branching, merging, and daily CLI workflow."
+  },
+  {
+    "id": "leetcode_top_interview_questions",
+    "title": "LeetCode Top Interview Questions",
+    "track": "Interview Prep",
+    "subtrack": "coding_interview",
+    "type": "interactive",
+    "language": "en",
+    "level": "beginner",
+    "cost": "freemium",
+    "access": "open",
+    "url": "https://leetcode.com/explore/interview/card/top-interview-questions-easy/",
+    "priority": "core",
+    "status": "active",
+    "recommended_stage": "coding_interview_practice",
+    "related_hubml_modules": ["Theory", "Practice", "Tasks"],
+    "expected_output": ["note", "practice_card", "mock_interview_log"],
+    "notes": "Structured coding interview drills for arrays, strings, hash maps, trees, and common live-coding patterns."
   }
 ]

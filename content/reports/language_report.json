@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-21T22:34:58.889453+00:00",
+  "generated_at": "2026-06-22T12:31:24.134216+00:00",
   "policy": {
     "required_language": "Russian learning explanations",
     "allowed_english": [
@@ -13,11 +13,11 @@
   },
   "metadata": {
     "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
-    "total_files": 263
+    "total_files": 264
   },
   "summary": {
-    "total": 263,
-    "ru_ok": 137,
+    "total": 264,
+    "ru_ok": 138,
     "mixed_ok": 50,
     "code_or_source_only": 1,
     "too_much_english": 75
@@ -1661,6 +1661,14 @@
       "cyrillic_letters": 146,
       "latin_letters": 94,
       "russian_ratio": 0.608,
+      "reason": "russian prose dominates"
+    },
+    {
+      "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Coding_Interview_Algorithms_Practice.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 1233,
+      "latin_letters": 461,
+      "russian_ratio": 0.728,
       "reason": "russian prose dominates"
     },
     {

@@ -1,20 +1,19 @@
 {
-  "generated_at": "2026-06-21T21:50:00.747389+00:00",
+  "generated_at": "2026-06-22T12:31:24.208413+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 31,
-    "failed_topics": 5,
+    "passed_topics": 32,
+    "failed_topics": 4,
     "failed_rule_counts": {
-      "rule1": 5,
-      "rule2": 5,
-      "rule3": 5,
+      "rule1": 4,
+      "rule2": 4,
+      "rule3": 4,
       "rule4": 2
     },
     "failed_required_topic_ids": [
       "interview.ml_ds_questions",
-      "interview.coding",
       "interview.take_home",
       "career.portfolio",
       "career.resume_remote"
@@ -1951,30 +1950,26 @@
       "title": "Coding Interview Practice",
       "track": "Interview Prep",
       "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3"
-      ],
+      "status": "PASS",
+      "failed_rules": [],
       "rules": {
         "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
           "threshold": 70,
-          "matched_notes": 0
+          "matched_notes": 1
         },
         "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
         },
         "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
+          "passed": true,
+          "detail": "1 registered URLs",
+          "registered_url_count": 1,
+          "has_sources_section": true
         },
         "rule4_practice_or_task": {
           "passed": true,
@@ -1984,7 +1979,13 @@
         }
       },
       "evidence": {
-        "notes": [],
+        "notes": [
+          {
+            "path": "05_IT_Resources/Coding_Interview_Algorithms_Practice.md",
+            "title": "Coding Interview Mock Interview Algorithms Practice",
+            "quality_score": 100
+          }
+        ],
         "practice": [],
         "tasks": [
           {
