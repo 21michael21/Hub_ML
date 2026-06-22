@@ -1,11 +1,11 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-22T21:12:14.820645+00:00`
+Generated: `2026-06-22T21:15:46.176985+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
-Summary: **GATE: 34/36 pass, 2 fail**
-- Failed rule counts: `{'rule1': 2, 'rule2': 2, 'rule3': 2, 'rule4': 1}`
+Summary: **GATE: 35/36 pass, 1 fail**
+- Failed rule counts: `{'rule1': 1, 'rule2': 1, 'rule3': 1}`
 
 ## python.basics — Python Basics  [PASS]
 
@@ -208,7 +208,7 @@ Summary: **GATE: 34/36 pass, 2 fail**
 - rule1 note quality: 100 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 5 practice, 1 task ✓
+- rule4 practice/task: 6 practice, 1 task ✓
 
 ## mlops.serving — Model Serving Basics  [PASS]
 
@@ -245,16 +245,16 @@ Summary: **GATE: 34/36 pass, 2 fail**
 - rule3 sources: 3 registered URLs ✓
 - rule4 practice/task: 2 practice, 1 task ✓
 
-## career.portfolio — Portfolio Artifacts  [FAIL]
+## career.portfolio — Portfolio Artifacts  [PASS]
 
-- rule1 note quality: 0 < 70 ✗
-- rule2 ai_dump_flag: no qualified note ✗
-- rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 4 practice, 0 task ✓
+- rule1 note quality: 100 >= 70 ✓
+- rule2 ai_dump_flag: ai_dump_flag false ✓
+- rule3 sources: 2 registered URLs ✓
+- rule4 practice/task: 5 practice, 1 task ✓
 
 ## career.resume_remote — Resume and Remote Work Readiness  [FAIL]
 
 - rule1 note quality: 0 < 70 ✗
 - rule2 ai_dump_flag: no qualified note ✗
 - rule3 sources: blocked by rule1/rule2 ✗
-- rule4 practice/task: 0 practice, 0 task ✗
+- rule4 practice/task: 1 practice, 0 task ✓

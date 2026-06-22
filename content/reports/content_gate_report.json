@@ -1,19 +1,17 @@
 {
-  "generated_at": "2026-06-22T21:12:14.820645+00:00",
+  "generated_at": "2026-06-22T21:15:46.176985+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
     "total_topics": 36,
-    "passed_topics": 34,
-    "failed_topics": 2,
+    "passed_topics": 35,
+    "failed_topics": 1,
     "failed_rule_counts": {
-      "rule1": 2,
-      "rule2": 2,
-      "rule3": 2,
-      "rule4": 1
+      "rule1": 1,
+      "rule2": 1,
+      "rule3": 1
     },
     "failed_required_topic_ids": [
-      "career.portfolio",
       "career.resume_remote"
     ]
   },
@@ -1774,8 +1772,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "5 practice, 1 task",
-          "practice_count": 5,
+          "detail": "6 practice, 1 task",
+          "practice_count": 6,
           "task_count": 1
         }
       },
@@ -1788,6 +1786,10 @@
           }
         ],
         "practice": [
+          {
+            "id": "career_portfolio_readme_case_study",
+            "title": "Portfolio README Case Study"
+          },
           {
             "id": "interview_take_home_df_orders_plan",
             "title": "ML Take-home: Orders Analysis Submission Plan"
@@ -1803,10 +1805,6 @@
           {
             "id": "nlp_preprocessing_message_cleaning",
             "title": "NLP Preprocessing: Clean Interview and User Messages"
-          },
-          {
-            "id": "nlp_text_classifier_baseline",
-            "title": "NLP: baseline классификатора текста"
           }
         ],
         "tasks": [
@@ -2100,6 +2098,77 @@
       "title": "Portfolio Artifacts",
       "track": "Portfolio and Career",
       "required": true,
+      "status": "PASS",
+      "failed_rules": [],
+      "rules": {
+        "rule1_note_quality": {
+          "passed": true,
+          "detail": "100 >= 70",
+          "best_score": 100,
+          "threshold": 70,
+          "matched_notes": 1
+        },
+        "rule2_ai_dump_flag": {
+          "passed": true,
+          "detail": "ai_dump_flag false",
+          "ai_dump_flag": false
+        },
+        "rule3_sources": {
+          "passed": true,
+          "detail": "2 registered URLs",
+          "registered_url_count": 2,
+          "has_sources_section": true
+        },
+        "rule4_practice_or_task": {
+          "passed": true,
+          "detail": "5 practice, 1 task",
+          "practice_count": 5,
+          "task_count": 1
+        }
+      },
+      "evidence": {
+        "notes": [
+          {
+            "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+            "title": "Portfolio Case Study README Artifact Guide",
+            "quality_score": 100
+          }
+        ],
+        "practice": [
+          {
+            "id": "career_portfolio_readme_case_study",
+            "title": "Portfolio README Case Study"
+          },
+          {
+            "id": "data_visualization_commission_boxplot",
+            "title": "Visualization: boxplot комиссии по стоимости доставки"
+          },
+          {
+            "id": "data_visualization_commission_histogram",
+            "title": "Visualization: распределение комиссии"
+          },
+          {
+            "id": "data_visualization_orders_daily_line",
+            "title": "Visualization: динамика суммы заказов по дням"
+          },
+          {
+            "id": "ml_preference_model_take_home",
+            "title": "ML Take-home: Preference Model"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "career_portfolio_readme_sections__manual_01",
+            "title": "Portfolio README artifact section validator"
+          }
+        ]
+      }
+    },
+    {
+      "id": "career.resume_remote",
+      "title": "Resume and Remote Work Readiness",
+      "track": "Portfolio and Career",
+      "required": true,
       "status": "FAIL",
       "failed_rules": [
         "rule1",
@@ -2127,8 +2196,8 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "4 practice, 0 task",
-          "practice_count": 4,
+          "detail": "1 practice, 0 task",
+          "practice_count": 1,
           "task_count": 0
         }
       },
@@ -2136,66 +2205,10 @@
         "notes": [],
         "practice": [
           {
-            "id": "data_visualization_commission_boxplot",
-            "title": "Visualization: boxplot комиссии по стоимости доставки"
-          },
-          {
-            "id": "data_visualization_commission_histogram",
-            "title": "Visualization: распределение комиссии"
-          },
-          {
-            "id": "data_visualization_orders_daily_line",
-            "title": "Visualization: динамика суммы заказов по дням"
-          },
-          {
-            "id": "ml_preference_model_take_home",
-            "title": "ML Take-home: Preference Model"
+            "id": "career_portfolio_readme_case_study",
+            "title": "Portfolio README Case Study"
           }
         ],
-        "tasks": []
-      }
-    },
-    {
-      "id": "career.resume_remote",
-      "title": "Resume and Remote Work Readiness",
-      "track": "Portfolio and Career",
-      "required": true,
-      "status": "FAIL",
-      "failed_rules": [
-        "rule1",
-        "rule2",
-        "rule3",
-        "rule4"
-      ],
-      "rules": {
-        "rule1_note_quality": {
-          "passed": false,
-          "detail": "0 < 70",
-          "best_score": 0,
-          "threshold": 70,
-          "matched_notes": 0
-        },
-        "rule2_ai_dump_flag": {
-          "passed": false,
-          "detail": "no qualified note",
-          "ai_dump_flag": null
-        },
-        "rule3_sources": {
-          "passed": false,
-          "detail": "blocked by rule1/rule2",
-          "registered_url_count": 0,
-          "has_sources_section": false
-        },
-        "rule4_practice_or_task": {
-          "passed": false,
-          "detail": "0 practice, 0 task",
-          "practice_count": 0,
-          "task_count": 0
-        }
-      },
-      "evidence": {
-        "notes": [],
-        "practice": [],
         "tasks": []
       }
     }

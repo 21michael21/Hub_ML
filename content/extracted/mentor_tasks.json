@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 86,
-    "tasks_with_asserts": 55,
+    "tasks_extracted": 87,
+    "tasks_with_asserts": 56,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 49,
+      "high": 50,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,37 @@
     }
   ],
   "tasks": [
+    {
+      "id": "career_portfolio_readme_sections__manual_01",
+      "source_notebook": "manual_career_portfolio",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Portfolio README artifact section validator",
+      "prompt": "#### Portfolio artifact: README section validator\n\nРеализуйте `validate_portfolio_readme(markdown)`. Функция должна проверить, что portfolio README или case study содержит обязательные разделы: Problem, Data, Approach, Results, Limitations, Reproducibility, Artifacts, Next Steps.\n\nЭто не проверка fake metrics и не генерация результатов. Это маленькая задача на структуру portfolio artifact/readme.",
+      "starter_code": "def validate_portfolio_readme(markdown: str) -> dict:\n    # TODO: detect required section headings in markdown text\n    ...\n\nvalid_readme = \"\"\"\n# Orders EDA Report\n\n## Problem\nUnderstand order patterns.\n\n## Data\ndf_orders.csv.\n\n## Approach\nEDA and visualization.\n\n## Results\nTo be filled after analysis.\n\n## Limitations\nNo causal claim.\n\n## Reproducibility\nUse requirements.txt and relative dataset paths.\n\n## Artifacts\nCharts and tables.\n\n## Next Steps\nCheck data quality risks.\n\"\"\"\n\nmissing_readme = \"\"\"\n# Orders EDA Report\n\n## Problem\nUnderstand order patterns.\n\n## Data\ndf_orders.csv.\n\"\"\"\n\nvalid = validate_portfolio_readme(valid_readme)\nmissing = validate_portfolio_readme(missing_readme)\n\nassert valid[\"ok\"] is True\nassert valid[\"missing\"] == []\nassert missing[\"ok\"] is False\nassert set(missing[\"missing\"]) == {\"approach\", \"results\", \"limitations\", \"reproducibility\", \"artifacts\", \"next steps\"}",
+      "tests": [
+        "valid_readme = \"\"\"\n# Orders EDA Report\n\n## Problem\nUnderstand order patterns.\n\n## Data\ndf_orders.csv.\n\n## Approach\nEDA and visualization.\n\n## Results\nTo be filled after analysis.\n\n## Limitations\nNo causal claim.\n\n## Reproducibility\nUse requirements.txt and relative dataset paths.\n\n## Artifacts\nCharts and tables.\n\n## Next Steps\nCheck data quality risks.\n\"\"\"",
+        "missing_readme = \"\"\"\n# Orders EDA Report\n\n## Problem\nUnderstand order patterns.\n\n## Data\ndf_orders.csv.\n\"\"\"",
+        "valid = validate_portfolio_readme(valid_readme)",
+        "missing = validate_portfolio_readme(missing_readme)",
+        "assert valid[\"ok\"] is True",
+        "assert valid[\"missing\"] == []",
+        "assert missing[\"ok\"] is False",
+        "assert set(missing[\"missing\"]) == {\"approach\", \"results\", \"limitations\", \"reproducibility\", \"artifacts\", \"next steps\"}"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "portfolio",
+        "readme",
+        "artifact",
+        "case study"
+      ],
+      "task_number_in_notebook": null
+    },
     {
       "id": "interview_take_home_readme_template__manual_01",
       "source_notebook": "manual_interview_take_home",
