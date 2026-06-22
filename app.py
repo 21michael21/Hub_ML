@@ -991,6 +991,7 @@ def inject_styles() -> None:
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.85rem;
         margin-bottom: 1.3rem;
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .home-metric-grid {
@@ -998,6 +999,7 @@ def inject_styles() -> None:
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 0.85rem;
         margin-bottom: 1.3rem;
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .today-plan-row {
@@ -1007,6 +1009,7 @@ def inject_styles() -> None:
         gap: 0.75rem;
         border-bottom: 1px solid var(--border-soft);
         padding: 0.72rem 0;
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .today-plan-row:last-child {
@@ -1054,6 +1057,54 @@ def inject_styles() -> None:
         border-radius: var(--radius);
         background: var(--surface);
         padding: 0.35rem 0;
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .home-cockpit-head {
+        margin-bottom: var(--s4);
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .home-cockpit-title {
+        color: var(--text);
+        font-family: var(--f-display);
+        font-size: clamp(2rem, 4.5vw, 4.3rem);
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 0.95;
+        margin: 0 0 var(--s2);
+    }
+
+    .home-cockpit-subtitle {
+        max-width: 760px;
+        color: var(--dim);
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .home-plan-panel {
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        background: var(--surface);
+        padding: 0.2rem 0.95rem;
+        margin-bottom: var(--s4);
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .home-stagger-1 {
+        animation-delay: .04s;
+    }
+
+    .home-stagger-2 {
+        animation-delay: .10s;
+    }
+
+    .home-stagger-3 {
+        animation-delay: .16s;
+    }
+
+    .home-stagger-4 {
+        animation-delay: .22s;
     }
 
     .attention-item {
@@ -3402,7 +3453,7 @@ def render_today_plan_row(
     }.get(kind, "type-tag")
     st.markdown(
         f"""
-<div class="today-plan-row">
+<div class="today-plan-row home-stagger-2">
     <span class="{kind_class}">{html.escape(kind)}</span>
     <span>
         <div class="today-plan-title">{html.escape(title)}</div>
@@ -3453,8 +3504,15 @@ def render_dashboard(
     quality_avg = theory_quality_average(audit_report)
     next_note_target = normalize_home_note_target(next_note) if next_note else None
 
-    st.markdown("# Hub_ML")
-    st.caption("Инженерная консоль для локальной ML-практики: учиться, собирать проекты, тренироваться и готовить portfolio artifacts.")
+    st.markdown(
+        """
+<div class="home-cockpit-head">
+    <div class="home-cockpit-title">Hub_ML</div>
+    <div class="home-cockpit-subtitle">Инженерная консоль для локальной ML-практики: учиться, собирать проекты, тренироваться и готовить portfolio artifacts.</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     resume_cards: list[str] = []
     if next_task:
@@ -3499,7 +3557,7 @@ def render_dashboard(
         resume_cards.append(render_card("Теория закрыта", f"просмотрено заметок: {total_notes}", eyebrow="Следующая theory note", status="PASS"))
 
     render_section_eyebrow_block("Продолжить")
-    st.markdown(f'<div class="home-resume-grid">{"".join(resume_cards)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="home-resume-grid home-stagger-1">{"".join(resume_cards)}</div>', unsafe_allow_html=True)
 
     render_section_eyebrow_block("План на сегодня")
     today_count = 0
@@ -3618,7 +3676,7 @@ def render_dashboard(
         )
     else:
         metric_tiles.append(render_metric_tile("Среднее качество теории", "—", meta="нет theory audit report", status="WEAK"))
-    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="home-metric-grid home-stagger-3">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
     render_section_eyebrow_block("Требует внимания")
     attention: list[str] = []
@@ -3642,13 +3700,22 @@ def render_dashboard(
 
     if attention:
         st.markdown(
-            '<div class="attention-list">'
+            '<div class="attention-list home-stagger-4">'
             + "".join(render_attention_item(item) for item in attention)
             + "</div>",
             unsafe_allow_html=True,
         )
     else:
-        st.success("По текущим reports и progress нет срочных проблем.")
+        st.markdown(
+            render_card(
+                "Срочных проблем нет",
+                "По текущим reports и progress всё выглядит спокойно.",
+                eyebrow="Needs attention",
+                status="READY",
+                extra_class="home-stagger-4",
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:

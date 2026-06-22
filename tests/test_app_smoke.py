@@ -81,7 +81,7 @@ def test_app_home_renders_without_exception(smoke_vault: Path) -> None:
 
     assert not exception_messages(at)
     assert [title.value for title in at.title] == ["Learning Sandbox — Theory Hub"]
-    assert any(value == "# Hub_ML" for value in markdown_values(at))
+    assert "Hub_ML" in " ".join(markdown_values(at))
 
 
 def test_home_does_not_show_raw_html(smoke_vault: Path) -> None:
