@@ -1,6 +1,6 @@
 # Russian Content Language Report
 
-Generated: `2026-06-22T12:31:24.134216+00:00`
+Generated: `2026-06-22T21:20:46.306537+00:00`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
 ## Policy
@@ -10,11 +10,11 @@ Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
 ## Summary
 
-- Total files: 264
-- ru_ok: 138
-- mixed_ok: 50
+- Total files: 272
+- ru_ok: 146
+- mixed_ok: 51
 - code_or_source_only: 1
-- too_much_english: 75
+- too_much_english: 74
 
 ## English-heavy Files
 
@@ -506,13 +506,6 @@ Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 - Cyrillic letters: 44
 - Latin letters: 338
 - Russian ratio: 0.115
-- Reason: latin prose dominates russian explanation
-
-### /Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Portfolio_Output_Guide.md
-- Classification: `too_much_english`
-- Cyrillic letters: 33
-- Latin letters: 1468
-- Russian ratio: 0.022
 - Reason: latin prose dominates russian explanation
 
 ### /Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Questions_To_Company.md

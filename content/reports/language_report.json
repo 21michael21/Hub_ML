@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T12:31:24.134216+00:00",
+  "generated_at": "2026-06-22T21:20:46.306537+00:00",
   "policy": {
     "required_language": "Russian learning explanations",
     "allowed_english": [
@@ -13,16 +13,32 @@
   },
   "metadata": {
     "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
-    "total_files": 264
+    "total_files": 272
   },
   "summary": {
-    "total": 264,
-    "ru_ok": 138,
-    "mixed_ok": 50,
+    "total": 272,
+    "ru_ok": 146,
+    "mixed_ok": 51,
     "code_or_source_only": 1,
-    "too_much_english": 75
+    "too_much_english": 74
   },
   "files": [
+    {
+      "path": "practice/career_portfolio_readme_case_study.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 542,
+      "latin_letters": 343,
+      "russian_ratio": 0.612,
+      "reason": "russian prose dominates"
+    },
+    {
+      "path": "practice/career_resume_remote_bullets.md",
+      "classification": "mixed_ok",
+      "cyrillic_letters": 507,
+      "latin_letters": 449,
+      "russian_ratio": 0.53,
+      "reason": "mixed prose with enough russian explanation"
+    },
     {
       "path": "practice/data_analysis_orders_eda.md",
       "classification": "ru_ok",
@@ -109,6 +125,30 @@
       "cyrillic_letters": 637,
       "latin_letters": 139,
       "russian_ratio": 0.821,
+      "reason": "russian prose dominates"
+    },
+    {
+      "path": "practice/interview_coding_algorithm_mock.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 628,
+      "latin_letters": 244,
+      "russian_ratio": 0.72,
+      "reason": "russian prose dominates"
+    },
+    {
+      "path": "practice/interview_ml_ds_questions_answer_bank.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 967,
+      "latin_letters": 278,
+      "russian_ratio": 0.777,
+      "reason": "russian prose dominates"
+    },
+    {
+      "path": "practice/interview_take_home_df_orders_plan.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 950,
+      "latin_letters": 524,
+      "russian_ratio": 0.645,
       "reason": "russian prose dominates"
     },
     {
@@ -1666,9 +1706,9 @@
     {
       "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Coding_Interview_Algorithms_Practice.md",
       "classification": "ru_ok",
-      "cyrillic_letters": 1233,
-      "latin_letters": 461,
-      "russian_ratio": 0.728,
+      "cyrillic_letters": 2280,
+      "latin_letters": 679,
+      "russian_ratio": 0.771,
       "reason": "russian prose dominates"
     },
     {
@@ -1880,6 +1920,14 @@
       "reason": "russian prose dominates"
     },
     {
+      "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/ML_DS_Interview_Questions_Guide.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 2983,
+      "latin_letters": 840,
+      "russian_ratio": 0.78,
+      "reason": "russian prose dominates"
+    },
+    {
       "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/ML_DS_Main.md",
       "classification": "mixed_ok",
       "cyrillic_letters": 60,
@@ -1893,6 +1941,14 @@
       "cyrillic_letters": 20637,
       "latin_letters": 5854,
       "russian_ratio": 0.779,
+      "reason": "russian prose dominates"
+    },
+    {
+      "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/ML_Take_Home_Assignment_Guide.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 2551,
+      "latin_letters": 810,
+      "russian_ratio": 0.759,
       "reason": "russian prose dominates"
     },
     {
@@ -1945,11 +2001,11 @@
     },
     {
       "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Portfolio_Output_Guide.md",
-      "classification": "too_much_english",
-      "cyrillic_letters": 33,
-      "latin_letters": 1468,
-      "russian_ratio": 0.022,
-      "reason": "latin prose dominates russian explanation"
+      "classification": "ru_ok",
+      "cyrillic_letters": 2052,
+      "latin_letters": 1269,
+      "russian_ratio": 0.618,
+      "reason": "russian prose dominates"
     },
     {
       "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Python_Main.md",
@@ -1990,6 +2046,14 @@
       "latin_letters": 106,
       "russian_ratio": 0.264,
       "reason": "latin prose dominates russian explanation"
+    },
+    {
+      "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Resume_Remote_Career_Guide.md",
+      "classification": "ru_ok",
+      "cyrillic_letters": 1902,
+      "latin_letters": 1262,
+      "russian_ratio": 0.601,
+      "reason": "russian prose dominates"
     },
     {
       "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Soft_Skill_Interview.md",
@@ -2695,14 +2759,6 @@
       "cyrillic_letters": 44,
       "latin_letters": 338,
       "russian_ratio": 0.115,
-      "reason": "latin prose dominates russian explanation"
-    },
-    {
-      "path": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat/05_IT_Resources/Portfolio_Output_Guide.md",
-      "classification": "too_much_english",
-      "cyrillic_letters": 33,
-      "latin_letters": 1468,
-      "russian_ratio": 0.022,
       "reason": "latin prose dominates russian explanation"
     },
     {

@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-06-22T12:31:24.281275+00:00",
+  "generated_at": "2026-06-22T21:20:46.098645+00:00",
   "metadata": {
     "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
-    "notes": 227,
-    "tasks": 53,
+    "notes": 230,
+    "tasks": 57,
     "projects": 4,
-    "practice_cards": 33,
+    "practice_cards": 38,
     "datasets": 3,
     "reports": 6
   },
   "summary": {
-    "total": 121,
-    "passing": 121,
+    "total": 127,
+    "passing": 127,
     "broken": 0
   },
   "targets": [
@@ -74,8 +74,8 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Home next practice card: Data Analysis: EDA по заказам",
-        "target_id": "data_analysis_orders_eda",
+        "label": "Home next practice card: Portfolio README Case Study",
+        "target_id": "career_portfolio_readme_case_study",
         "path": "",
         "project_id": "",
         "milestone_id": "",
@@ -83,7 +83,7 @@
       },
       "exists": true,
       "reason": "",
-      "resolved": "data_analysis_orders_eda"
+      "resolved": "career_portfolio_readme_case_study"
     },
     {
       "target": {
@@ -1068,6 +1068,34 @@
     {
       "target": {
         "kind": "theory_note",
+        "label": "Portfolio README Case Study related note: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:career_portfolio_readme_case_study"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/portfolio_output_guide.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Resume Remote Career: Honest Hub_ML Bullets related note: 05_IT_Resources/Resume_Remote_Career_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Resume_Remote_Career_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:career_resume_remote_bullets"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/resume_remote_career_guide.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
         "label": "Data Analysis: EDA по заказам related note: 00_Graph/20_Data_Analysis_Path.md",
         "target_id": "",
         "path": "00_Graph/20_Data_Analysis_Path.md",
@@ -1246,6 +1274,62 @@
       "exists": true,
       "reason": "",
       "resolved": "05_it_resources/git/git_cli_workflow.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Coding Interview: Algorithm Mock related note: 05_IT_Resources/Coding_Interview_Algorithms_Practice.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Coding_Interview_Algorithms_Practice.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:interview_coding_algorithm_mock"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/coding_interview_algorithms_practice.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Interview Questions: ML/DS Answer Bank related note: 05_IT_Resources/ML_DS_Interview_Questions_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/ML_DS_Interview_Questions_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:interview_ml_ds_questions_answer_bank"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/ml_ds_interview_questions_guide.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "ML Take-home: Orders Analysis Submission Plan related note: 05_IT_Resources/ML_Take_Home_Assignment_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/ML_Take_Home_Assignment_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:interview_take_home_df_orders_plan"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/ml_take_home_assignment_guide.md"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "ML Take-home: Orders Analysis Submission Plan dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "practice:interview_take_home_df_orders_plan"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
     },
     {
       "target": {
