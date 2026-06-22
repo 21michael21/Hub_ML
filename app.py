@@ -172,65 +172,55 @@ st.set_page_config(page_title=APP_TITLE, page_icon="📚", layout="wide")
 
 def inject_styles() -> None:
     st.markdown(
-        """
-<style>
-    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
-
+        """<style>
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
     :root {
-        --bg: #0D0F14;
-        --surface: #14171F;
-        --surface-2: #1A1F29;
-        --raised: #20262F;
-        --border: #272D38;
-        --border-soft: #1E2430;
-        --text: #E7EAF0;
-        --dim: #9AA3B2;
-        --faint: #5F6877;
-        --accent: #7C8CF8;
-        --accent-soft: rgba(124,140,248,0.14);
-        --pass: #46C265;
-        --warn: #D8A537;
-        --fail: #F0584F;
-        --info: #5AA9FF;
-        --radius: 12px;
-        --radius-sm: 8px;
-        --font-display: "Space Grotesk", sans-serif;
-        --font-body: "IBM Plex Sans", sans-serif;
-        --font-mono: "IBM Plex Mono", monospace;
+        --bg:#0A0C11; --surface:#12151D; --surface-2:#1A1F29; --raised:#232A36;
+        --border:#313A48; --border-soft:#232A36; --border-strong:#3D4757;
+        --text:#F1F3F8; --dim:#AAB3C2; --faint:#6A7382;
+        --accent:#8B9BFF; --accent-2:#6B7BF0; --accent-soft:rgba(139,155,255,.16);
+        --pass:#4FD06A; --warn:#E5B23A; --fail:#FF5E54; --info:#5FAEFF;
+        --r:13px; --r-sm:8px; --s1:8px; --s2:14px; --s3:22px; --s4:32px;
+        --f-display:"Space Grotesk"; --f-ui:"IBM Plex Sans"; --f-mono:"IBM Plex Mono";
+        --ease:cubic-bezier(.2,.7,.3,1);
+        --radius: var(--r);
+        --radius-sm: var(--r-sm);
+        --font-display: var(--f-display), sans-serif;
+        --font-body: var(--f-ui), sans-serif;
+        --font-mono: var(--f-mono), monospace;
 
         --ls-muted: var(--dim);
         --ls-border: var(--border);
         --ls-soft: var(--surface-2);
         --ls-softer: var(--surface);
         --ls-link: var(--info);
-        --ls-link-bg: rgba(90,169,255,0.14);
+        --ls-link-bg: rgba(95,174,255,0.14);
         --ls-chip-bg: var(--surface-2);
         --ls-code-bg: var(--raised);
         --ls-quote-bg: var(--surface-2);
     }
 
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @keyframes shimmer{0%{background-position:-360px 0}100%{background-position:360px 0}}
+    @keyframes growBar{from{width:0}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
     html, body, [data-testid="stAppViewContainer"], .stApp {
         background:
-            radial-gradient(rgba(124,140,248,0.055) 1px, transparent 1px),
+            radial-gradient(rgba(139,155,255,0.055) 1px, transparent 1px),
             var(--bg);
         background-size: 26px 26px, auto;
         color: var(--text);
-        font-family: var(--font-body);
+        font-family: var(--f-ui);
         font-size: 15px;
         line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
     }
 
     * {
         box-sizing: border-box;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            scroll-behavior: auto !important;
-            transition-duration: 0.01ms !important;
-        }
     }
 
     :focus-visible {
@@ -247,7 +237,7 @@ def inject_styles() -> None:
     .section-eyebrow,
     code,
     pre {
-        font-family: var(--font-mono);
+        font-family: var(--f-mono);
     }
 
     h1, h2, h3, h4,
@@ -256,12 +246,12 @@ def inject_styles() -> None:
     [data-testid="stMarkdownContainer"] h3,
     [data-testid="stMarkdownContainer"] h4 {
         color: var(--text);
-        font-family: var(--font-display);
+        font-family: var(--f-display);
         letter-spacing: 0;
     }
 
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #11141B 0%, var(--bg) 100%);
+        background: linear-gradient(180deg, #0F121A 0%, var(--bg) 100%);
         border-right: 1px solid var(--border);
     }
 
@@ -272,17 +262,18 @@ def inject_styles() -> None:
         border-radius: var(--radius-sm);
         background: transparent;
         color: var(--dim);
-        font-family: var(--font-body);
+        font-family: var(--f-ui);
         font-size: 0.86rem;
         padding: 0.38rem 0.62rem;
         text-align: left;
-        transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+        transition: background 0.14s var(--ease), color 0.14s var(--ease), border-color 0.14s var(--ease), transform 0.14s var(--ease);
     }
 
     [data-testid="stSidebar"] .stButton > button:hover {
         border-color: var(--border);
         background: var(--surface);
         color: var(--text);
+        transform: translateX(2px);
     }
 
     [data-testid="stSidebar"] .stButton > button:focus-visible {
@@ -299,9 +290,19 @@ def inject_styles() -> None:
     }
 
     .main .block-container {
-        max-width: 1120px;
+        max-width: 980px;
         padding-top: 2rem;
         padding-bottom: 4rem;
+    }
+
+    .content-container {
+        max-width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-gap {
+        margin-top: var(--s4);
     }
 
     [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2,
@@ -311,7 +312,7 @@ def inject_styles() -> None:
 
     .sidebar-logo {
         color: var(--text);
-        font-family: var(--font-display);
+        font-family: var(--f-display);
         font-size: 1.05rem;
         font-weight: 700;
         letter-spacing: 0;
@@ -321,7 +322,7 @@ def inject_styles() -> None:
     .nav-group-label {
         margin: 1rem 0 0.32rem;
         color: var(--faint);
-        font-family: var(--font-mono);
+        font-family: var(--f-mono);
         font-size: 0.66rem;
         letter-spacing: 0.12em;
         text-transform: uppercase;
@@ -332,7 +333,7 @@ def inject_styles() -> None:
         align-items: center;
         gap: 0.55rem;
         margin: 0.14rem 0 0.24rem;
-        border: 1px solid rgba(124,140,248,0.22);
+        border: 1px solid rgba(139,155,255,0.22);
         border-left: 3px solid var(--accent);
         border-radius: var(--radius-sm);
         background: var(--accent-soft);
@@ -344,7 +345,7 @@ def inject_styles() -> None:
 
     .nav-active-row .nav-ico {
         color: var(--accent);
-        font-family: var(--font-mono);
+        font-family: var(--f-mono);
     }
 
     .breadcrumb-shell {
@@ -432,7 +433,7 @@ def inject_styles() -> None:
         border-radius: 0.35rem;
         padding: 0.12rem 0.32rem;
         background: var(--ls-code-bg);
-        color: var(--text-color);
+        color: var(--text);
         font-size: 0.9em;
     }
 
@@ -643,7 +644,7 @@ def inject_styles() -> None:
         border-left: 3px solid var(--pass);
         padding: 0.45rem 0.8rem;
         margin: 0.75rem 0;
-        background: rgba(70,194,101,0.08);
+        background: rgba(79,208,106,0.08);
         color: var(--text);
     }
 
@@ -657,30 +658,41 @@ def inject_styles() -> None:
         color: var(--text);
     }
 
+    .eyebrow,
     .section-eyebrow {
         display: flex;
         align-items: center;
-        gap: 0.7rem;
-        margin: 1.4rem 0 0.75rem;
+        gap: 10px;
+        margin: var(--s3) 0 var(--s2);
         color: var(--faint);
-        font-size: 0.69rem;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
         letter-spacing: 0.14em;
         text-transform: uppercase;
     }
 
+    .eyebrow::after,
     .section-eyebrow::after {
         content: "";
         flex: 1;
         height: 1px;
-        background: var(--border-soft);
+        background: var(--border);
     }
 
     .console-card {
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: var(--r);
         background: var(--surface);
-        padding: 1rem;
-        box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+        padding: 16px 18px;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+        animation: fadeUp .4s var(--ease) both;
+        transition: border-color .16s var(--ease), transform .16s var(--ease), box-shadow .16s var(--ease);
+    }
+
+    .console-card:hover {
+        border-color: var(--border-strong);
+        transform: translateY(-2px);
+        box-shadow: 0 22px 58px rgba(0,0,0,0.24);
     }
 
     .console-card-eyebrow {
@@ -714,23 +726,91 @@ def inject_styles() -> None:
         font-size: 0.72rem;
     }
 
-    .metric-tile {
+    .console-panel {
+        overflow: hidden;
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: var(--r);
         background: var(--surface);
-        padding: 0.95rem 1rem;
+        animation: fadeUp .4s var(--ease) both;
     }
 
+    .console-panel .phead {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface-2);
+    }
+
+    .dot3 {
+        display: inline-flex;
+        gap: 6px;
+        margin-right: 4px;
+    }
+
+    .dot3 i,
+    .dot3 span {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+    }
+
+    .dot3 i:nth-child(1),
+    .dot3 span:nth-child(1) {
+        background: var(--fail);
+    }
+
+    .dot3 i:nth-child(2),
+    .dot3 span:nth-child(2) {
+        background: var(--warn);
+    }
+
+    .dot3 i:nth-child(3),
+    .dot3 span:nth-child(3) {
+        background: var(--pass);
+    }
+
+    .console-panel .editor,
+    .editor-wrapper {
+        overflow: auto;
+        padding: 16px;
+        background: #0D1016;
+        color: #cfd6e4;
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        line-height: 1.7;
+        white-space: pre;
+    }
+
+    .metric-tile {
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        background: var(--surface);
+        padding: 16px 18px;
+        animation: fadeUp .4s var(--ease) both;
+        transition: border-color .16s var(--ease), transform .16s var(--ease);
+    }
+
+    .metric-tile:hover {
+        border-color: var(--border-strong);
+        transform: translateY(-2px);
+    }
+
+    .metric-tile .n,
     .metric-tile-value {
         color: var(--text);
-        font-size: 1.55rem;
+        font-family: var(--font-mono);
+        font-size: 23px;
         font-weight: 600;
+        letter-spacing: -0.02em;
         line-height: 1;
     }
 
+    .metric-tile .n small,
     .metric-tile-total {
         color: var(--faint);
-        font-size: 0.95rem;
+        font-size: 14px;
     }
 
     .metric-tile-label {
@@ -745,19 +825,22 @@ def inject_styles() -> None:
         font-size: 0.68rem;
     }
 
+    .metric-tile .bar,
     .metric-bar {
-        height: 4px;
-        margin-top: 0.75rem;
+        height: 5px;
+        margin-top: 11px;
         overflow: hidden;
         border-radius: 999px;
         background: var(--surface-2);
     }
 
+    .metric-tile .bar i,
     .metric-bar-fill {
         display: block;
         height: 100%;
         border-radius: 999px;
         background: var(--accent);
+        animation: growBar 1s var(--ease) both;
     }
 
     .metric-fill-pass,
@@ -895,41 +978,57 @@ def inject_styles() -> None:
     .status-chip {
         display: inline-flex;
         align-items: center;
-        gap: 0.38rem;
+        gap: 6px;
         border: 1px solid var(--border);
         border-radius: 999px;
-        padding: 0.18rem 0.58rem;
+        padding: 4px 10px;
         background: var(--surface-2);
         color: var(--faint);
-        font-size: 0.68rem;
-        font-weight: 500;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
         letter-spacing: 0.06em;
         line-height: 1.35;
         text-transform: uppercase;
         vertical-align: middle;
     }
 
+    .status-chip .dot,
+    .status-chip .d,
     .chip-dot {
-        width: 0.38rem;
-        height: 0.38rem;
+        width: 6px;
+        height: 6px;
         border-radius: 999px;
         background: currentColor;
     }
 
+    .status-chip.pass,
+    .status-chip-pass,
     .chip-pass,
     .chip-done,
     .chip-ready {
         color: var(--pass);
-        background: rgba(70,194,101,0.10);
-        border-color: rgba(70,194,101,0.30);
+        background: rgba(79,208,106,0.12);
+        border-color: rgba(79,208,106,0.35);
     }
 
+    .status-chip.pass .chip-dot,
+    .status-chip-pass .chip-dot,
+    .chip-pass .chip-dot {
+        box-shadow: 0 0 8px var(--pass);
+        animation: pulse 1.8s var(--ease) infinite;
+    }
+
+    .status-chip.fail,
+    .status-chip.error,
+    .status-chip-fail,
+    .status-chip-error,
     .chip-fail,
     .chip-error,
     .chip-blocked {
         color: var(--fail);
-        background: rgba(240,88,79,0.10);
-        border-color: rgba(240,88,79,0.30);
+        background: rgba(255,94,84,0.12);
+        border-color: rgba(255,94,84,0.35);
     }
 
     .chip-in-progress,
@@ -940,6 +1039,8 @@ def inject_styles() -> None:
         border-color: rgba(216,165,55,0.30);
     }
 
+    .status-chip.idle,
+    .status-chip-idle,
     .chip-todo,
     .chip-not-started {
         color: var(--faint);
@@ -949,8 +1050,28 @@ def inject_styles() -> None:
 
     .chip-info {
         color: var(--info);
-        background: rgba(90,169,255,0.12);
-        border-color: rgba(90,169,255,0.30);
+        background: rgba(95,174,255,0.12);
+        border-color: rgba(95,174,255,0.30);
+    }
+
+    .skeleton {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .sk,
+    .skeleton-line {
+        height: 12px;
+        border-radius: 5px;
+        background: linear-gradient(90deg, var(--surface-2) 0, #2A3140 40px, var(--surface-2) 80px);
+        background-size: 360px 100%;
+        animation: shimmer 1.1s linear infinite;
+    }
+
+    .run-result,
+    .out {
+        animation: fadeUp .35s var(--ease) both;
     }
 </style>
         """,
@@ -959,17 +1080,18 @@ def inject_styles() -> None:
 
 
 STATUS_CHIP_CLASSES = {
-    "PASS": "chip-pass",
-    "FAIL": "chip-fail",
-    "ERROR": "chip-error",
-    "NOT STARTED": "chip-not-started",
+    "PASS": "status-chip-pass pass chip-pass",
+    "FAIL": "status-chip-fail fail chip-fail",
+    "ERROR": "status-chip-error error chip-error",
+    "NOT STARTED": "status-chip-idle idle chip-not-started",
     "IN PROGRESS": "chip-in-progress",
-    "DONE": "chip-done",
+    "DONE": "status-chip-pass pass chip-done",
     "NEEDS REVIEW": "chip-needs-review",
-    "READY": "chip-ready",
-    "BLOCKED": "chip-blocked",
-    "TODO": "chip-todo",
+    "READY": "status-chip-pass pass chip-ready",
+    "BLOCKED": "status-chip-error error chip-blocked",
+    "TODO": "status-chip-idle idle chip-todo",
     "WEAK": "chip-weak",
+    "IDLE": "status-chip-idle idle chip-not-started",
 }
 
 
@@ -1000,7 +1122,7 @@ def render_status_chip(status: str) -> str:
 
 
 def render_section_eyebrow(label: str) -> str:
-    return f'<div class="section-eyebrow">{html.escape(str(label))}</div>'
+    return f'<div class="eyebrow section-eyebrow">{html.escape(str(label))}</div>'
 
 
 def render_section_eyebrow_block(label: str) -> None:
@@ -1025,14 +1147,14 @@ def render_metric_tile(
             fill_status = normalize_chip_status(status).lower().replace(" ", "-")
             fill_class = f" metric-fill-{html.escape(fill_status)}"
         bar_markup = (
-            '<div class="metric-bar">'
-            f'<span class="metric-bar-fill{fill_class}" style="width: {width:.1f}%"></span>'
+            '<div class="bar metric-bar">'
+            f'<i class="metric-bar-fill{fill_class}" style="width: {width:.1f}%"></i>'
             "</div>"
         )
     meta_markup = f'<div class="metric-tile-meta">{html.escape(str(meta))}</div>' if meta else ""
     return (
         '<div class="metric-tile">'
-        f'<div class="metric-tile-value">{html.escape(str(value))}{total_markup}</div>'
+        f'<div class="n metric-tile-value">{html.escape(str(value))}{total_markup}</div>'
         f'<div class="metric-tile-label">{html.escape(str(label))}</div>'
         f"{meta_markup}{bar_markup}"
         "</div>"
