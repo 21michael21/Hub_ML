@@ -1,11 +1,11 @@
 {
   "summary": {
     "notebooks_processed": 11,
-    "tasks_extracted": 84,
-    "tasks_with_asserts": 53,
+    "tasks_extracted": 85,
+    "tasks_with_asserts": 54,
     "tasks_without_asserts": 31,
     "confidence": {
-      "high": 47,
+      "high": 48,
       "medium": 31,
       "low": 6
     },
@@ -146,6 +146,37 @@
     }
   ],
   "tasks": [
+    {
+      "id": "interview_coding_two_sum_hashmap__manual_01",
+      "source_notebook": "manual_interview_coding",
+      "source_path": "content/extracted/mentor_tasks.json",
+      "code_cell_index": null,
+      "prompt_cell_index": null,
+      "title": "Coding interview mock_interview algos_patterns two sum hashmap assert task",
+      "prompt": "#### Coding interview: two sum через hashmap\n\nРеализуйте `two_sum_indices(nums, target)`. Функция должна вернуть пару индексов `(i, j)`, где `i < j` и `nums[i] + nums[j] == target`. Если пары нет, верните `None`.\n\nЭто маленькая mock_interview задача на algos_patterns: сначала можно назвать brute force, затем улучшить решение через hashmap. После кода объясните Big O и edge cases.",
+      "starter_code": "def two_sum_indices(nums: list[int], target: int) -> tuple[int, int] | None:\n    # TODO: use hashmap of seen values -> index\n    ...\n\nassert two_sum_indices([2, 7, 11, 15], 9) == (0, 1)\nassert two_sum_indices([3, 2, 4], 6) == (1, 2)\nassert two_sum_indices([3, 3], 6) == (0, 1)\nassert two_sum_indices([-1, 5, 8, 1], 0) == (0, 3)\nassert two_sum_indices([1, 2, 3], 10) is None\nassert two_sum_indices([], 0) is None",
+      "tests": [
+        "assert two_sum_indices([2, 7, 11, 15], 9) == (0, 1)",
+        "assert two_sum_indices([3, 2, 4], 6) == (1, 2)",
+        "assert two_sum_indices([3, 3], 6) == (0, 1)",
+        "assert two_sum_indices([-1, 5, 8, 1], 0) == (0, 3)",
+        "assert two_sum_indices([1, 2, 3], 10) is None",
+        "assert two_sum_indices([], 0) is None"
+      ],
+      "has_asserts": true,
+      "confidence": "high",
+      "signals": [
+        "has_asserts",
+        "manual_content_gate_task",
+        "mock_interview",
+        "algos_patterns",
+        "assert",
+        "coding interview",
+        "hashmap",
+        "two sum"
+      ],
+      "task_number_in_notebook": null
+    },
     {
       "id": "mlops_monitoring_simple_drift_alert__manual_01",
       "source_notebook": "manual_mlops_monitoring",

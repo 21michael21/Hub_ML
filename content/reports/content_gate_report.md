@@ -1,6 +1,6 @@
 # Content Quality Gate Report
 
-Generated: `2026-06-22T21:03:48.340287+00:00`
+Generated: `2026-06-22T21:07:19.312609+00:00`
 Threshold: `70`
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
 
@@ -33,7 +33,7 @@ Summary: **GATE: 33/36 pass, 3 fail**
 - rule1 note quality: 100 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 1 practice, 1 task ✓
+- rule4 practice/task: 2 practice, 2 task ✓
 
 ## sql.select_join — SQL Select, Filter, Join  [PASS]
 
@@ -236,7 +236,7 @@ Summary: **GATE: 33/36 pass, 3 fail**
 - rule1 note quality: 100 >= 70 ✓
 - rule2 ai_dump_flag: ai_dump_flag false ✓
 - rule3 sources: 1 registered URLs ✓
-- rule4 practice/task: 0 practice, 1 task ✓
+- rule4 practice/task: 1 practice, 2 task ✓
 
 ## interview.take_home — Take-home Assignments  [FAIL]
 

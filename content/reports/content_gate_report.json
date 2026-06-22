@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T21:03:48.340287+00:00",
+  "generated_at": "2026-06-22T21:07:19.312609+00:00",
   "threshold": 70,
   "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
   "summary": {
@@ -286,9 +286,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "1 practice, 1 task",
-          "practice_count": 1,
-          "task_count": 1
+          "detail": "2 practice, 2 task",
+          "practice_count": 2,
+          "task_count": 2
         }
       },
       "evidence": {
@@ -321,11 +321,19 @@
         ],
         "practice": [
           {
+            "id": "interview_coding_algorithm_mock",
+            "title": "Coding Interview: Algorithm Mock"
+          },
+          {
             "id": "python_algorithms_hashmap_complexity_drill",
             "title": "Python Algorithms: Hashmap Complexity Drill"
           }
         ],
         "tasks": [
+          {
+            "id": "interview_coding_two_sum_hashmap__manual_01",
+            "title": "Coding interview mock_interview algos_patterns two sum hashmap assert task"
+          },
           {
             "id": "python_algorithms_sliding_window__manual_01",
             "title": "Algorithms sliding window max window sum"
@@ -1978,9 +1986,9 @@
         },
         "rule4_practice_or_task": {
           "passed": true,
-          "detail": "0 practice, 1 task",
-          "practice_count": 0,
-          "task_count": 1
+          "detail": "1 practice, 2 task",
+          "practice_count": 1,
+          "task_count": 2
         }
       },
       "evidence": {
@@ -1991,8 +1999,17 @@
             "quality_score": 100
           }
         ],
-        "practice": [],
+        "practice": [
+          {
+            "id": "interview_coding_algorithm_mock",
+            "title": "Coding Interview: Algorithm Mock"
+          }
+        ],
         "tasks": [
+          {
+            "id": "interview_coding_two_sum_hashmap__manual_01",
+            "title": "Coding interview mock_interview algos_patterns two sum hashmap assert task"
+          },
           {
             "id": "python_algorithms_sliding_window__manual_01",
             "title": "Algorithms sliding window max window sum"
