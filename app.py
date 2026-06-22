@@ -486,17 +486,31 @@ def inject_styles() -> None:
     }
 
     .note-header {
-        max-width: 780px;
-        margin: 0 auto 1rem auto;
-        padding-bottom: 0.85rem;
-        border-bottom: 1px solid var(--border);
+        max-width: 980px;
+        margin: 0 auto var(--s3) auto;
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        background: var(--surface);
+        padding: var(--s3);
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .breadcrumbs {
         color: var(--ls-muted);
+        font-family: var(--f-mono);
         font-size: 0.84rem;
         line-height: 1.45;
         margin-bottom: 0.55rem;
+    }
+
+    .note-header-title {
+        color: var(--text);
+        font-family: var(--f-display);
+        font-size: clamp(1.35rem, 2.8vw, 2.25rem);
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 1.08;
+        margin: 0 0 var(--s2);
     }
 
     .frontmatter-row {
@@ -591,10 +605,9 @@ def inject_styles() -> None:
     }
 
     .related-notes {
-        max-width: 780px;
-        margin: 1.6rem auto 0 auto;
-        padding-top: 1rem;
-        border-top: 1px solid var(--ls-border);
+        max-width: 980px;
+        margin: var(--s4) auto var(--s2) auto;
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .related-notes h3 {
@@ -609,12 +622,13 @@ def inject_styles() -> None:
     }
 
     .learning-panel {
-        max-width: 780px;
-        margin: 0 auto 1.1rem auto;
-        padding: 0.85rem 1rem;
+        max-width: 980px;
+        margin: 0 auto var(--s3) auto;
+        padding: var(--s3);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: var(--r);
         background: var(--surface);
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .learning-panel-title {
@@ -1523,6 +1537,23 @@ def practice_badge(status: str) -> str:
         f'<span class="status-pill {meta["class"]}">'
         f'{html.escape(meta["icon"])} {html.escape(meta["label"])}</span>'
     )
+
+
+def note_status_to_chip(status: str) -> str:
+    return {
+        STATUS_NOT_STARTED: "TODO",
+        STATUS_READING: "IN PROGRESS",
+        STATUS_DONE: "PASS",
+        STATUS_REPEAT: "WEAK",
+    }.get(status, "TODO")
+
+
+def practice_status_to_chip(status: str) -> str:
+    return {
+        PRACTICE_TODO: "TODO",
+        PRACTICE_DOING: "IN PROGRESS",
+        PRACTICE_DONE: "PASS",
+    }.get(status, "TODO")
 
 
 def set_note_status_by_key(note_key: str, status: str) -> None:
@@ -2960,9 +2991,13 @@ def render_sidebar(sections: dict[str, list[dict[str, str]]]) -> tuple[str, dict
 def render_note_header(section_key: str, note: dict[str, str], frontmatter: dict[str, Any]) -> None:
     section_label = humanize_section_name(section_key)
     chips = render_frontmatter_chips(frontmatter)
+    title = str(frontmatter.get("title") or note["display_name"])
+    status = render_status_chip(note_status_to_chip(get_note_status(note)))
     header = f"""
 <div class="note-header">
+    {render_section_eyebrow("Theory note")}
     <div class="breadcrumbs">{html.escape(section_label)} / {html.escape(note["display_name"])}</div>
+    <div class="note-header-title">{html.escape(title)} {status}</div>
     {chips}
 </div>
     """
@@ -3025,7 +3060,7 @@ def render_graph_navigation(
     outgoing_found = [link for link in outgoing if link.get("resolved_note")]
     outgoing_missing = [link for link in outgoing if not link.get("resolved_note")]
 
-    st.markdown('<div class="related-notes"><h3>🔗 Граф заметки</h3></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="related-notes">{render_section_eyebrow("Граф заметки")}</div>', unsafe_allow_html=True)
     st.button(
         "🎲 Открыть случайную непройденную заметку",
         key="open_random_unstarted",
@@ -3034,7 +3069,7 @@ def render_graph_navigation(
         use_container_width=True,
     )
 
-    st.markdown("#### Исходящие ссылки")
+    render_section_eyebrow_block("Исходящие ссылки")
     if outgoing_found:
         for index, link in enumerate(outgoing_found):
             render_link_card(link, index, "outgoing")
@@ -3042,11 +3077,11 @@ def render_graph_navigation(
         st.caption("В этой заметке нет найденных исходящих ссылок.")
 
     if outgoing_missing:
-        st.markdown("##### Не найдено")
+        render_section_eyebrow_block("Не найдено")
         for index, link in enumerate(outgoing_missing):
             render_link_card(link, index, "outgoing_missing")
 
-    st.markdown("#### Обратные ссылки / Backlinks")
+    render_section_eyebrow_block("Обратные ссылки / Backlinks")
     if backlinks:
         for index, link in enumerate(backlinks):
             source_note = link["source_note"]
@@ -3067,9 +3102,9 @@ def render_learning_controls(note: dict[str, str]) -> None:
     st.markdown(
         f"""
 <div class="learning-panel">
-    <div class="learning-panel-title">Учебный статус</div>
+    {render_section_eyebrow("Учебный статус")}
     <div class="muted-small">Отмечай состояние заметки, чтобы база становилась маршрутом, а не складом.</div>
-    <div style="margin-top: 0.65rem;">{status_badge(status)}</div>
+    <div style="margin-top: 0.65rem;">{render_status_chip(note_status_to_chip(status))}</div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -3122,18 +3157,15 @@ def render_related_practice_block(
     if not related_cards:
         return
 
-    st.markdown('<div class="related-notes"><h3>🎯 Практика по этой теме</h3></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="related-notes">{render_section_eyebrow("Практика по этой теме")}</div>', unsafe_allow_html=True)
     for card in related_cards:
         st.markdown(
-            f"""
-<div class="today-card">
-    <div class="today-card-title">{html.escape(card["title"])}</div>
-    <div class="muted-small">
-        {html.escape(card["section"])} · {html.escape(card["difficulty"])} · {html.escape(card["est_time"])}
-    </div>
-    <div style="margin-top: 0.45rem;">{practice_badge(get_card_status(card))}</div>
-</div>
-            """,
+            render_card(
+                str(card["title"]),
+                f"{card['section']} · {card['difficulty']} · {card['est_time']}",
+                eyebrow="Practice card",
+                status=practice_status_to_chip(get_card_status(card)),
+            ),
             unsafe_allow_html=True,
         )
         st.button(
@@ -6363,7 +6395,15 @@ def main() -> None:
     if not vault_path:
         st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
-        st.info("Укажите путь к Obsidian vault")
+        st.markdown(
+            render_card(
+                "Vault не подключён",
+                "Укажи путь к Obsidian vault в сайдбаре, чтобы открыть Theory.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         render_help()
         return
 
@@ -6371,7 +6411,15 @@ def main() -> None:
     if not vault.exists() or not vault.is_dir():
         st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
-        st.error(f"Путь не существует или не является папкой: {vault_path}")
+        st.markdown(
+            render_card(
+                "Vault не найден",
+                f"Проверь путь в сайдбаре: {vault_path}",
+                eyebrow="Error state",
+                status="ERROR",
+            ),
+            unsafe_allow_html=True,
+        )
         render_help()
         return
 
@@ -6380,7 +6428,15 @@ def main() -> None:
     if not sections:
         st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
-        st.info("Markdown-файлы не найдены")
+        st.markdown(
+            render_card(
+                "Markdown-файлы не найдены",
+                "Добавь `.md` заметки в vault или укажи другую папку в сайдбаре.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
         render_help()
         render_status_bar()
         return
@@ -6424,7 +6480,15 @@ def main() -> None:
         )
     elif active_tab == "Theory":
         if selected_note is None:
-            st.info("Выберите заметку в сайдбаре.")
+            st.markdown(
+                render_card(
+                    "Заметка не выбрана",
+                    "Выбери заметку в сайдбаре или очисти поиск, если список пуст.",
+                    eyebrow="Theory",
+                    status="TODO",
+                ),
+                unsafe_allow_html=True,
+            )
             render_status_bar()
             return
         render_note(selected_section, selected_note, resolved_vault, note_index, graph, sections, practice_cards)
