@@ -3,7 +3,7 @@ title: "Python: refactor event summarizer"
 section: Python
 difficulty: easy
 est_time: "30 мин"
-related_note: "00_Graph/11_Python_Core"
+related_note: "00_Graph/11_Python_Core.md"
 links:
   - "https://docs.python.org/3/tutorial/datastructures.html"
 ---

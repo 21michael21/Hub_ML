@@ -33,7 +33,8 @@
     "data_analysis_orders_eda"
   ],
   "related_task_ids": [
-    "analysis_3_pandas"
+    "analysis_3_pandas__cell_52",
+    "analysis_3_pandas__cell_55"
   ],
   "related_dataset_names": [
     "df_events.csv",

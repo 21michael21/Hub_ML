@@ -3,7 +3,7 @@ title: "Data Analysis: EDA по заказам"
 section: Data Analysis
 difficulty: medium
 est_time: "60 мин"
-related_note: "00_Graph/20_Data_Analysis_Path"
+related_note: "00_Graph/20_Data_Analysis_Path.md"
 dataset: "df_orders.csv"
 links:
   - "https://pandas.pydata.org/docs/user_guide/10min.html"

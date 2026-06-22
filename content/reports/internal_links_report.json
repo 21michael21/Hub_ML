@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-21T22:27:28.642218+00:00",
+  "generated_at": "2026-06-22T10:01:00.624824+00:00",
   "metadata": {
     "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
     "notes": 226,
@@ -10,9 +10,9 @@
     "reports": 6
   },
   "summary": {
-    "total": 116,
-    "passing": 106,
-    "broken": 10
+    "total": 121,
+    "passing": 121,
+    "broken": 0
   },
   "targets": [
     {
@@ -46,7 +46,7 @@
     {
       "target": {
         "kind": "project",
-        "label": "Home next project: Orders Conversion Baseline Classifier",
+        "label": "Home next project: Baseline classifier конверсии заказов",
         "target_id": "orders_conversion_baseline_classifier",
         "path": "",
         "project_id": "",
@@ -60,7 +60,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Home next project milestone: Define the target",
+        "label": "Home next project milestone: Определить target",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -102,7 +102,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders Conversion Baseline Classifier theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "label": "Baseline classifier конверсии заказов theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "target_id": "",
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
@@ -116,7 +116,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders Conversion Baseline Classifier theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "label": "Baseline classifier конверсии заказов theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "target_id": "",
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
@@ -130,7 +130,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders Conversion Baseline Classifier theory: 02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+        "label": "Baseline classifier конверсии заказов theory: 02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
         "target_id": "",
         "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
         "project_id": "",
@@ -144,7 +144,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders Conversion Baseline Classifier theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "label": "Baseline classifier конверсии заказов theory: 05_IT_Resources/Portfolio_Output_Guide.md",
         "target_id": "",
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
@@ -158,7 +158,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Orders Conversion Baseline Classifier practice: data_analysis_orders_eda",
+        "label": "Baseline classifier конверсии заказов practice: data_analysis_orders_eda",
         "target_id": "data_analysis_orders_eda",
         "path": "",
         "project_id": "",
@@ -172,35 +172,77 @@
     {
       "target": {
         "kind": "task",
-        "label": "Orders Conversion Baseline Classifier task: analysis_3_pandas",
-        "target_id": "analysis_3_pandas",
+        "label": "Baseline classifier конверсии заказов task: analysis_3_pandas__cell_52",
+        "target_id": "analysis_3_pandas__cell_52",
         "path": "",
         "project_id": "",
         "milestone_id": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
-      "exists": false,
-      "reason": "task not found: analysis_3_pandas",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_3_pandas__cell_52"
     },
     {
       "target": {
         "kind": "task",
-        "label": "Orders Conversion Baseline Classifier task: analysis_1_stats",
-        "target_id": "analysis_1_stats",
+        "label": "Baseline classifier конверсии заказов task: analysis_3_pandas__cell_57",
+        "target_id": "analysis_3_pandas__cell_57",
         "path": "",
         "project_id": "",
         "milestone_id": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
-      "exists": false,
-      "reason": "task not found: analysis_1_stats",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_3_pandas__cell_57"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Baseline classifier конверсии заказов task: analysis_1_stats__cell_12",
+        "target_id": "analysis_1_stats__cell_12",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_1_stats__cell_12"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Baseline classifier конверсии заказов task: ml_supervised_rule_based_baseline__manual_01",
+        "target_id": "ml_supervised_rule_based_baseline__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "ml_supervised_rule_based_baseline__manual_01"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Baseline classifier конверсии заказов task: ml_validation_metrics_manual_01",
+        "target_id": "ml_validation_metrics_manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_conversion_baseline_classifier"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "ml_validation_metrics_manual_01"
     },
     {
       "target": {
         "kind": "dataset",
-        "label": "Orders Conversion Baseline Classifier dataset: df_events.csv",
+        "label": "Baseline classifier конверсии заказов dataset: df_events.csv",
         "target_id": "df_events.csv",
         "path": "",
         "project_id": "",
@@ -214,7 +256,7 @@
     {
       "target": {
         "kind": "dataset",
-        "label": "Orders Conversion Baseline Classifier dataset: df_orders.csv",
+        "label": "Baseline classifier конверсии заказов dataset: df_orders.csv",
         "target_id": "df_orders.csv",
         "path": "",
         "project_id": "",
@@ -228,7 +270,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Define the target",
+        "label": "Baseline classifier конверсии заказов milestone: Определить target",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -242,7 +284,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Prepare the modeling table",
+        "label": "Baseline classifier конверсии заказов milestone: Подготовить modeling table",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -256,7 +298,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Create simple features",
+        "label": "Baseline classifier конверсии заказов milestone: Создать простые features",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -270,7 +312,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Make a train/test split",
+        "label": "Baseline classifier конверсии заказов milestone: Сделать train/test split",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -284,7 +326,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Train a baseline model",
+        "label": "Baseline classifier конверсии заказов milestone: Обучить baseline model",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -298,7 +340,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Evaluate classification metrics",
+        "label": "Baseline classifier конверсии заказов milestone: Оценить classification metrics",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -312,7 +354,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Do basic error analysis",
+        "label": "Baseline classifier конверсии заказов milestone: Сделать базовый error analysis",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -326,7 +368,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders Conversion Baseline Classifier milestone: Write the model card",
+        "label": "Baseline classifier конверсии заказов milestone: Написать model card",
         "target_id": "",
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
@@ -340,203 +382,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Events Funnel Analysis theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
-        "target_id": "",
-        "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "02_data_analysis/pandas/02_pandas_course_article.md"
-    },
-    {
-      "target": {
-        "kind": "theory_note",
-        "label": "Events Funnel Analysis theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
-        "target_id": "",
-        "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "02_data_analysis/datasets/01_vkat_analysis_data.md"
-    },
-    {
-      "target": {
-        "kind": "theory_note",
-        "label": "Events Funnel Analysis theory: 02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
-        "target_id": "",
-        "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "02_data_analysis/datasets/02_product_analytics_flow.md"
-    },
-    {
-      "target": {
-        "kind": "theory_note",
-        "label": "Events Funnel Analysis theory: 00_Graph/22_Product_Analytics.md",
-        "target_id": "",
-        "path": "00_Graph/22_Product_Analytics.md",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "00_graph/22_product_analytics.md"
-    },
-    {
-      "target": {
-        "kind": "theory_note",
-        "label": "Events Funnel Analysis theory: 05_IT_Resources/Portfolio_Output_Guide.md",
-        "target_id": "",
-        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "05_it_resources/portfolio_output_guide.md"
-    },
-    {
-      "target": {
-        "kind": "practice",
-        "label": "Events Funnel Analysis practice: data_analysis_orders_eda",
-        "target_id": "data_analysis_orders_eda",
-        "path": "",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "data_analysis_orders_eda"
-    },
-    {
-      "target": {
-        "kind": "task",
-        "label": "Events Funnel Analysis task: analysis_3_pandas",
-        "target_id": "analysis_3_pandas",
-        "path": "",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": false,
-      "reason": "task not found: analysis_3_pandas",
-      "resolved": ""
-    },
-    {
-      "target": {
-        "kind": "dataset",
-        "label": "Events Funnel Analysis dataset: df_events.csv",
-        "target_id": "df_events.csv",
-        "path": "",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "df_events.csv"
-    },
-    {
-      "target": {
-        "kind": "dataset",
-        "label": "Events Funnel Analysis dataset: df_orders.csv",
-        "target_id": "df_orders.csv",
-        "path": "",
-        "project_id": "",
-        "milestone_id": "",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "df_orders.csv"
-    },
-    {
-      "target": {
-        "kind": "milestone",
-        "label": "Events Funnel Analysis milestone: Map event types",
-        "target_id": "",
-        "path": "",
-        "project_id": "events_funnel_analysis",
-        "milestone_id": "map_events",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "events_funnel_analysis::map_events"
-    },
-    {
-      "target": {
-        "kind": "milestone",
-        "label": "Events Funnel Analysis milestone: Count unique users by step",
-        "target_id": "",
-        "path": "",
-        "project_id": "events_funnel_analysis",
-        "milestone_id": "count_users",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "events_funnel_analysis::count_users"
-    },
-    {
-      "target": {
-        "kind": "milestone",
-        "label": "Events Funnel Analysis milestone: Calculate conversion rates",
-        "target_id": "",
-        "path": "",
-        "project_id": "events_funnel_analysis",
-        "milestone_id": "conversion_rates",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "events_funnel_analysis::conversion_rates"
-    },
-    {
-      "target": {
-        "kind": "milestone",
-        "label": "Events Funnel Analysis milestone: Visualize the funnel",
-        "target_id": "",
-        "path": "",
-        "project_id": "events_funnel_analysis",
-        "milestone_id": "visualize_funnel",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "events_funnel_analysis::visualize_funnel"
-    },
-    {
-      "target": {
-        "kind": "milestone",
-        "label": "Events Funnel Analysis milestone: Write the funnel summary",
-        "target_id": "",
-        "path": "",
-        "project_id": "events_funnel_analysis",
-        "milestone_id": "funnel_summary",
-        "source": "project:events_funnel_analysis"
-      },
-      "exists": true,
-      "reason": "",
-      "resolved": "events_funnel_analysis::funnel_summary"
-    },
-    {
-      "target": {
-        "kind": "theory_note",
-        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "label": "Dashboard качества matching theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "target_id": "",
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
@@ -550,7 +396,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "label": "Dashboard качества matching theory: 02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
         "target_id": "",
         "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
         "project_id": "",
@@ -564,7 +410,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
+        "label": "Dashboard качества matching theory: 02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
         "target_id": "",
         "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
         "project_id": "",
@@ -578,7 +424,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Matching Quality Dashboard theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "label": "Dashboard качества matching theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "target_id": "",
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
@@ -592,7 +438,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Matching Quality Dashboard theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "label": "Dashboard качества matching theory: 05_IT_Resources/Portfolio_Output_Guide.md",
         "target_id": "",
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
@@ -606,7 +452,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Matching Quality Dashboard practice: data_analysis_orders_eda",
+        "label": "Dashboard качества matching practice: data_analysis_orders_eda",
         "target_id": "data_analysis_orders_eda",
         "path": "",
         "project_id": "",
@@ -620,7 +466,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Matching Quality Dashboard practice: data_visualization_orders_daily_line",
+        "label": "Dashboard качества matching practice: data_visualization_orders_daily_line",
         "target_id": "data_visualization_orders_daily_line",
         "path": "",
         "project_id": "",
@@ -634,35 +480,35 @@
     {
       "target": {
         "kind": "task",
-        "label": "Matching Quality Dashboard task: analysis_3_pandas",
-        "target_id": "analysis_3_pandas",
+        "label": "Dashboard качества matching task: analysis_3_pandas__cell_57",
+        "target_id": "analysis_3_pandas__cell_57",
         "path": "",
         "project_id": "",
         "milestone_id": "",
         "source": "project:matching_quality_dashboard"
       },
-      "exists": false,
-      "reason": "task not found: analysis_3_pandas",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_3_pandas__cell_57"
     },
     {
       "target": {
         "kind": "task",
-        "label": "Matching Quality Dashboard task: analysis_1_stats",
-        "target_id": "analysis_1_stats",
+        "label": "Dashboard качества matching task: analysis_1_stats__cell_12",
+        "target_id": "analysis_1_stats__cell_12",
         "path": "",
         "project_id": "",
         "milestone_id": "",
         "source": "project:matching_quality_dashboard"
       },
-      "exists": false,
-      "reason": "task not found: analysis_1_stats",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_1_stats__cell_12"
     },
     {
       "target": {
         "kind": "dataset",
-        "label": "Matching Quality Dashboard dataset: df_matching.csv",
+        "label": "Dashboard качества matching dataset: df_matching.csv",
         "target_id": "df_matching.csv",
         "path": "",
         "project_id": "",
@@ -676,7 +522,7 @@
     {
       "target": {
         "kind": "dataset",
-        "label": "Matching Quality Dashboard dataset: df_events.csv",
+        "label": "Dashboard качества matching dataset: df_events.csv",
         "target_id": "df_events.csv",
         "path": "",
         "project_id": "",
@@ -690,7 +536,7 @@
     {
       "target": {
         "kind": "dataset",
-        "label": "Matching Quality Dashboard dataset: df_orders.csv",
+        "label": "Dashboard качества matching dataset: df_orders.csv",
         "target_id": "df_orders.csv",
         "path": "",
         "project_id": "",
@@ -704,7 +550,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Matching Quality Dashboard milestone: Inspect matching data",
+        "label": "Dashboard качества matching milestone: Изучить matching data",
         "target_id": "",
         "path": "",
         "project_id": "matching_quality_dashboard",
@@ -718,7 +564,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Matching Quality Dashboard milestone: Check user assignment uniqueness",
+        "label": "Dashboard качества matching milestone: Проверить уникальность assignment",
         "target_id": "",
         "path": "",
         "project_id": "matching_quality_dashboard",
@@ -732,7 +578,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Matching Quality Dashboard milestone: Join matching to orders",
+        "label": "Dashboard качества matching milestone: Сделать join matching с orders",
         "target_id": "",
         "path": "",
         "project_id": "matching_quality_dashboard",
@@ -746,7 +592,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Matching Quality Dashboard milestone: Create quality dashboard visuals",
+        "label": "Dashboard качества matching milestone: Построить dashboard visuals качества",
         "target_id": "",
         "path": "",
         "project_id": "matching_quality_dashboard",
@@ -760,7 +606,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Matching Quality Dashboard milestone: Write dashboard summary",
+        "label": "Dashboard качества matching milestone: Написать dashboard summary",
         "target_id": "",
         "path": "",
         "project_id": "matching_quality_dashboard",
@@ -774,7 +620,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders EDA Report theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "label": "EDA-отчёт по заказам theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "target_id": "",
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
@@ -788,7 +634,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders EDA Report theory: 02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
+        "label": "EDA-отчёт по заказам theory: 02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
         "target_id": "",
         "path": "02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
         "project_id": "",
@@ -802,7 +648,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders EDA Report theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "label": "EDA-отчёт по заказам theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "target_id": "",
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
@@ -816,7 +662,7 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Orders EDA Report theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "label": "EDA-отчёт по заказам theory: 05_IT_Resources/Portfolio_Output_Guide.md",
         "target_id": "",
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
@@ -830,7 +676,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Orders EDA Report practice: data_analysis_orders_eda",
+        "label": "EDA-отчёт по заказам practice: data_analysis_orders_eda",
         "target_id": "data_analysis_orders_eda",
         "path": "",
         "project_id": "",
@@ -844,7 +690,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Orders EDA Report practice: data_visualization_orders_daily_line",
+        "label": "EDA-отчёт по заказам practice: data_visualization_orders_daily_line",
         "target_id": "data_visualization_orders_daily_line",
         "path": "",
         "project_id": "",
@@ -858,7 +704,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Orders EDA Report practice: data_visualization_commission_histogram",
+        "label": "EDA-отчёт по заказам practice: data_visualization_commission_histogram",
         "target_id": "data_visualization_commission_histogram",
         "path": "",
         "project_id": "",
@@ -872,7 +718,7 @@
     {
       "target": {
         "kind": "practice",
-        "label": "Orders EDA Report practice: data_visualization_commission_boxplot",
+        "label": "EDA-отчёт по заказам practice: data_visualization_commission_boxplot",
         "target_id": "data_visualization_commission_boxplot",
         "path": "",
         "project_id": "",
@@ -886,35 +732,49 @@
     {
       "target": {
         "kind": "task",
-        "label": "Orders EDA Report task: analysis_3_pandas",
-        "target_id": "analysis_3_pandas",
+        "label": "EDA-отчёт по заказам task: analysis_3_pandas__cell_52",
+        "target_id": "analysis_3_pandas__cell_52",
         "path": "",
         "project_id": "",
         "milestone_id": "",
         "source": "project:orders_eda_report"
       },
-      "exists": false,
-      "reason": "task not found: analysis_3_pandas",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_3_pandas__cell_52"
     },
     {
       "target": {
         "kind": "task",
-        "label": "Orders EDA Report task: analysis_1_stats",
-        "target_id": "analysis_1_stats",
+        "label": "EDA-отчёт по заказам task: analysis_1_stats__cell_7",
+        "target_id": "analysis_1_stats__cell_7",
         "path": "",
         "project_id": "",
         "milestone_id": "",
         "source": "project:orders_eda_report"
       },
-      "exists": false,
-      "reason": "task not found: analysis_1_stats",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_1_stats__cell_7"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "EDA-отчёт по заказам task: analysis_1_stats__cell_12",
+        "target_id": "analysis_1_stats__cell_12",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:orders_eda_report"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_1_stats__cell_12"
     },
     {
       "target": {
         "kind": "dataset",
-        "label": "Orders EDA Report dataset: df_orders.csv",
+        "label": "EDA-отчёт по заказам dataset: df_orders.csv",
         "target_id": "df_orders.csv",
         "path": "",
         "project_id": "",
@@ -928,7 +788,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders EDA Report milestone: Read the dataset context",
+        "label": "EDA-отчёт по заказам milestone: Разобраться в контексте датасета",
         "target_id": "",
         "path": "",
         "project_id": "orders_eda_report",
@@ -942,7 +802,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders EDA Report milestone: Run basic quality checks",
+        "label": "EDA-отчёт по заказам milestone: Провести базовые проверки качества",
         "target_id": "",
         "path": "",
         "project_id": "orders_eda_report",
@@ -956,7 +816,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders EDA Report milestone: Calculate core order metrics",
+        "label": "EDA-отчёт по заказам milestone: Посчитать основные метрики заказов",
         "target_id": "",
         "path": "",
         "project_id": "orders_eda_report",
@@ -970,7 +830,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders EDA Report milestone: Create two portfolio-ready charts",
+        "label": "EDA-отчёт по заказам milestone: Построить два portfolio-ready графика",
         "target_id": "",
         "path": "",
         "project_id": "orders_eda_report",
@@ -984,7 +844,7 @@
     {
       "target": {
         "kind": "milestone",
-        "label": "Orders EDA Report milestone: Write the mini report",
+        "label": "EDA-отчёт по заказам milestone: Написать мини-отчёт",
         "target_id": "",
         "path": "",
         "project_id": "orders_eda_report",
@@ -998,16 +858,226 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Data Analysis: EDA по заказам related note: 00_Graph/20_Data_Analysis_Path",
+        "label": "Funnel-анализ событий theory: 02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "target_id": "",
-        "path": "00_Graph/20_Data_Analysis_Path",
+        "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/pandas/02_pandas_course_article.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Funnel-анализ событий theory: 02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/01_vkat_analysis_data.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Funnel-анализ событий theory: 02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "target_id": "",
+        "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "02_data_analysis/datasets/02_product_analytics_flow.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Funnel-анализ событий theory: 00_Graph/22_Product_Analytics.md",
+        "target_id": "",
+        "path": "00_Graph/22_Product_Analytics.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "00_graph/22_product_analytics.md"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Funnel-анализ событий theory: 05_IT_Resources/Portfolio_Output_Guide.md",
+        "target_id": "",
+        "path": "05_IT_Resources/Portfolio_Output_Guide.md",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "05_it_resources/portfolio_output_guide.md"
+    },
+    {
+      "target": {
+        "kind": "practice",
+        "label": "Funnel-анализ событий practice: data_analysis_orders_eda",
+        "target_id": "data_analysis_orders_eda",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "data_analysis_orders_eda"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Funnel-анализ событий task: analysis_3_pandas__cell_52",
+        "target_id": "analysis_3_pandas__cell_52",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_3_pandas__cell_52"
+    },
+    {
+      "target": {
+        "kind": "task",
+        "label": "Funnel-анализ событий task: analysis_3_pandas__cell_55",
+        "target_id": "analysis_3_pandas__cell_55",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "analysis_3_pandas__cell_55"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Funnel-анализ событий dataset: df_events.csv",
+        "target_id": "df_events.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_events.csv"
+    },
+    {
+      "target": {
+        "kind": "dataset",
+        "label": "Funnel-анализ событий dataset: df_orders.csv",
+        "target_id": "df_orders.csv",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "df_orders.csv"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Funnel-анализ событий milestone: Разобрать типы событий",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "map_events",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::map_events"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Funnel-анализ событий milestone: Посчитать уникальных пользователей по шагам",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "count_users",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::count_users"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Funnel-анализ событий milestone: Посчитать conversion rates",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "conversion_rates",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::conversion_rates"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Funnel-анализ событий milestone: Визуализировать funnel",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "visualize_funnel",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::visualize_funnel"
+    },
+    {
+      "target": {
+        "kind": "milestone",
+        "label": "Funnel-анализ событий milestone: Написать summary по funnel",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "funnel_summary",
+        "source": "project:events_funnel_analysis"
+      },
+      "exists": true,
+      "reason": "",
+      "resolved": "events_funnel_analysis::funnel_summary"
+    },
+    {
+      "target": {
+        "kind": "theory_note",
+        "label": "Data Analysis: EDA по заказам related note: 00_Graph/20_Data_Analysis_Path.md",
+        "target_id": "",
+        "path": "00_Graph/20_Data_Analysis_Path.md",
         "project_id": "",
         "milestone_id": "",
         "source": "practice:data_analysis_orders_eda"
       },
-      "exists": false,
-      "reason": "theory note not found: 00_Graph/20_Data_Analysis_Path",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "00_graph/20_data_analysis_path.md"
     },
     {
       "target": {
@@ -1362,16 +1432,16 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "NLP: baseline классификатора текста related note: 00_Graph/40_NLP_Path",
+        "label": "NLP: baseline классификатора текста related note: 00_Graph/40_NLP_Path.md",
         "target_id": "",
-        "path": "00_Graph/40_NLP_Path",
+        "path": "00_Graph/40_NLP_Path.md",
         "project_id": "",
         "milestone_id": "",
         "source": "practice:nlp_text_classifier_baseline"
       },
-      "exists": false,
-      "reason": "theory note not found: 00_Graph/40_NLP_Path",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "00_graph/40_nlp_path.md"
     },
     {
       "target": {
@@ -1460,16 +1530,16 @@
     {
       "target": {
         "kind": "theory_note",
-        "label": "Python: refactor event summarizer related note: 00_Graph/11_Python_Core",
+        "label": "Python: refactor event summarizer related note: 00_Graph/11_Python_Core.md",
         "target_id": "",
-        "path": "00_Graph/11_Python_Core",
+        "path": "00_Graph/11_Python_Core.md",
         "project_id": "",
         "milestone_id": "",
         "source": "practice:python_refactor_user_events"
       },
-      "exists": false,
-      "reason": "theory note not found: 00_Graph/11_Python_Core",
-      "resolved": ""
+      "exists": true,
+      "reason": "",
+      "resolved": "00_graph/11_python_core.md"
     },
     {
       "target": {

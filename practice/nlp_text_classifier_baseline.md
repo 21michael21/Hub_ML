@@ -3,7 +3,7 @@ title: "NLP: baseline классификатора текста"
 section: NLP
 difficulty: medium
 est_time: "75 мин"
-related_note: "00_Graph/40_NLP_Path"
+related_note: "00_Graph/40_NLP_Path.md"
 links:
   - "https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html"
   - "https://huggingface.co/datasets"

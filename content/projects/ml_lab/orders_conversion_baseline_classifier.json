@@ -36,8 +36,11 @@
     "data_analysis_orders_eda"
   ],
   "related_task_ids": [
-    "analysis_3_pandas",
-    "analysis_1_stats"
+    "analysis_3_pandas__cell_52",
+    "analysis_3_pandas__cell_57",
+    "analysis_1_stats__cell_12",
+    "ml_supervised_rule_based_baseline__manual_01",
+    "ml_validation_metrics_manual_01"
   ],
   "related_dataset_names": [
     "df_events.csv",

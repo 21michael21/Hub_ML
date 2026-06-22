@@ -35,8 +35,9 @@
     "data_visualization_commission_boxplot"
   ],
   "related_task_ids": [
-    "analysis_3_pandas",
-    "analysis_1_stats"
+    "analysis_3_pandas__cell_52",
+    "analysis_1_stats__cell_7",
+    "analysis_1_stats__cell_12"
   ],
   "related_dataset_names": [
     "df_orders.csv"

@@ -35,8 +35,8 @@
     "data_visualization_orders_daily_line"
   ],
   "related_task_ids": [
-    "analysis_3_pandas",
-    "analysis_1_stats"
+    "analysis_3_pandas__cell_57",
+    "analysis_1_stats__cell_12"
   ],
   "related_dataset_names": [
     "df_matching.csv",
