@@ -3080,14 +3080,12 @@ def render_link_card(link: dict[str, Any], index: int, prefix: str) -> None:
             key=f"{prefix}_{index}_{resolved_note['path']}_{label}",
             on_click=set_active_note,
             args=(resolved_note,),
-            use_container_width=True,
         )
     else:
         st.button(
             f"{label} — не найдено",
             key=f"{prefix}_missing_{index}_{link.get('target')}",
             disabled=True,
-            use_container_width=True,
         )
 
 
@@ -3127,7 +3125,6 @@ def render_graph_navigation(
         key="open_random_unstarted",
         on_click=open_random_unstarted,
         args=(sections,),
-        use_container_width=True,
     )
 
     render_section_eyebrow_block("Исходящие ссылки")
@@ -3234,7 +3231,6 @@ def render_related_practice_block(
             key=f"related_practice_{card['id']}",
             on_click=open_practice_card,
             args=(card["id"],),
-            use_container_width=True,
         )
 
 
@@ -3378,7 +3374,6 @@ def render_semantic_search_results(
                 key=button_key,
                 on_click=open_theory_note_path,
                 args=(result.path, sections),
-                use_container_width=True,
             )
         elif result.source == "practice":
             card_id = str(result.payload.get("card_id") or "")
@@ -3387,7 +3382,6 @@ def render_semantic_search_results(
                 key=button_key,
                 on_click=open_practice_card,
                 args=(card_id,),
-                use_container_width=True,
                 disabled=not any(card.get("id") == card_id for card in practice_cards),
             )
         elif result.source == "task":
@@ -3398,7 +3392,6 @@ def render_semantic_search_results(
                 key=button_key,
                 on_click=open_mentor_task,
                 args=(task,),
-                use_container_width=True,
                 disabled=task is None,
             )
 
@@ -3424,7 +3417,7 @@ def render_theory_search_box(
         key="semantic_search_query",
         placeholder="Например: pandas groupby, leakage, window function",
     )
-    if st.button("Обновить индекс поиска", key="semantic_search_refresh", use_container_width=True):
+    if st.button("Обновить индекс поиска", key="semantic_search_refresh"):
         with st.spinner("Собираю локальный TF-IDF индекс..."):
             index = build_semantic_search_index(sections, practice_cards, mentor_tasks)
         st.session_state[SEMANTIC_SEARCH_INDEX_KEY] = index
@@ -3825,7 +3818,7 @@ def render_today_plan_row(
         """,
         unsafe_allow_html=True,
     )
-    st.button(button_label, key=button_key, on_click=on_click, args=args, use_container_width=True)
+    st.button(button_label, key=button_key, on_click=on_click, args=args)
 
 
 def render_attention_item(label: str, marker: str = "WARN") -> str:
@@ -4107,7 +4100,6 @@ def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
             key="open_next_note",
             on_click=open_note_from_roadmap,
             args=(next_note,),
-            use_container_width=True,
         )
     else:
         st.markdown(
@@ -4290,7 +4282,6 @@ def render_practice_detail(
             key=f"practice_open_theory_{card['id']}",
             on_click=open_theory_note,
             args=(related_note,),
-            use_container_width=True,
         )
     elif card.get("related_note"):
         st.markdown(
@@ -4310,7 +4301,6 @@ def render_practice_detail(
             key=f"practice_open_dataset_{card['id']}",
             on_click=open_dataset_from_card,
             args=(card["dataset"], card["id"]),
-            use_container_width=True,
             disabled=dataset is None,
         )
         st.button(
@@ -4318,7 +4308,6 @@ def render_practice_detail(
             key=f"practice_open_notebook_{card['id']}",
             on_click=open_dataset_in_notebook,
             args=(card["dataset"],),
-            use_container_width=True,
             disabled=dataset is None,
         )
         if dataset is None:
@@ -4604,7 +4593,6 @@ def render_data_lab_project_card(project: dict[str, Any]) -> None:
         key=f"data_lab_select_{project['id']}",
         on_click=select_data_lab_project,
         args=(project["id"],),
-        use_container_width=True,
     )
 
 
@@ -5307,7 +5295,6 @@ def render_experiments_tab(projects: list[dict[str, Any]]) -> None:
             key="experiments_empty_open_ml_lab",
             on_click=open_tab,
             args=("🤖 ML Lab",),
-            use_container_width=True,
         )
         return
 
@@ -7188,7 +7175,6 @@ def render_problem_link(record: dict[str, Any], index: int, prefix: str) -> None
         key=f"{prefix}_open_source_{index}_{source_note['path']}_{target}",
         on_click=open_source_note,
         args=(source_note,),
-        use_container_width=True,
     )
 
 
@@ -7203,7 +7189,7 @@ def render_links_health(graph: dict[str, Any]) -> None:
         unsafe_allow_html=True,
     )
 
-    if st.button("Пересканировать ссылки", key="rescan_links", use_container_width=True):
+    if st.button("Пересканировать ссылки", key="rescan_links"):
         scan_link_graph.clear()
         st.rerun()
 
@@ -7316,7 +7302,6 @@ level: beginner
 
 def main() -> None:
     inject_styles()
-    st.title(APP_TITLE)
 
     env_vault_path = os.environ.get("VAULT_PATH", "").strip()
     if "vault_path" not in st.session_state:
