@@ -34,6 +34,7 @@ def open_app(page: Page, app_url: str, *, width: int = 1440, height: int = 900) 
     page.set_viewport_size({"width": width, "height": height})
     page.goto(app_url, wait_until="domcontentloaded", timeout=20_000)
     expect(page.locator("body")).to_contain_text("Hub_ML", timeout=30_000)
+    expect(page.locator("body")).to_contain_text("Открыть теорию", timeout=30_000)
     assert_clean_page(page)
 
 

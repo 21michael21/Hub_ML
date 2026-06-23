@@ -24,6 +24,8 @@ class InternalTarget:
     path: str = ""
     project_id: str = ""
     milestone_id: str = ""
+    exists: bool = True
+    disabled_reason: str = ""
     source: str = ""
 
 

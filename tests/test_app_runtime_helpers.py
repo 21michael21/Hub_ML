@@ -203,3 +203,110 @@ def test_render_link_card_resolves_outgoing_and_backlink_targets(monkeypatch) ->
         ("Knowledge Map", "00_Atlas/00_Knowledge_Map.md"),
         ("Backlink", "00_Atlas/00_Knowledge_Map.md"),
     ]
+
+
+def test_theory_internal_target_opens_by_path_not_display_label(monkeypatch) -> None:
+    note, note_index = sample_note_index()
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+    app.st.session_state["home_note_index"] = note_index
+    app.st.session_state["active_note_path"] = "/vault/Home.md"
+
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    target = app.InternalTarget(
+        kind="theory_note",
+        label="00 Atlas / 00_Knowledge_Map.md",
+        path="00_Atlas/00_Knowledge_Map.md",
+        target_id="00_Atlas/00_Knowledge_Map.md",
+    )
+
+    app.open_internal_target(target)
+
+    assert app.st.session_state["active_tab"] == "Theory"
+    assert app.st.session_state["active_note_path"] == note["path"]
+    assert app.st.session_state["note_radio"] == note["path"]
+    assert reruns == [True]
+
+
+def test_task_internal_target_opens_selected_task(monkeypatch) -> None:
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    app.open_internal_target(app.InternalTarget(kind="task", label="Python", target_id="python_basics_records"))
+
+    assert app.st.session_state["active_tab"] == "🎯 Tasks"
+    assert app.st.session_state["selected_mentor_task"] == "python_basics_records"
+    assert app.st.session_state["mentor_task_notebook_filter"] == "Все"
+    assert app.st.session_state["mentor_task_confidence_filter"] == "Все"
+    assert reruns == [True]
+
+
+def test_project_milestone_internal_target_opens_project_and_milestone(monkeypatch) -> None:
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    app.open_internal_target(
+        app.InternalTarget(
+            kind="milestone",
+            label="Define target",
+            target_id="orders_conversion_baseline::define_target",
+            project_id="orders_conversion_baseline",
+            milestone_id="define_target",
+            source="ml_lab",
+        )
+    )
+
+    assert app.st.session_state["active_tab"] == "🤖 ML Lab"
+    assert app.st.session_state["selected_data_lab_project"] == "orders_conversion_baseline"
+    assert app.st.session_state["selected_project_milestone"] == "define_target"
+    assert reruns == [True]
+
+
+def test_invalid_internal_target_does_not_rerun(monkeypatch) -> None:
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    app.open_internal_target(
+        app.InternalTarget(
+            kind="task",
+            label="Missing task",
+            target_id="missing",
+            exists=False,
+            disabled_reason="missing target",
+        )
+    )
+
+    assert "active_tab" not in app.st.session_state
+    assert reruns == []
+
+
+def test_render_internal_action_card_disables_invalid_target(monkeypatch) -> None:
+    buttons: list[dict[str, object]] = []
+    captions: list[str] = []
+    html_blocks: list[str] = []
+
+    def fake_button(label: str, **kwargs: object) -> bool:
+        buttons.append({"label": label, **kwargs})
+        return False
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "button", fake_button)
+    monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
+
+    target = app.InternalTarget(
+        kind="theory_note",
+        label="Missing note",
+        path="missing.md",
+        exists=False,
+        disabled_reason="Заметка не найдена: missing.md",
+    )
+
+    assert app.render_internal_action_card(target, "Missing", "missing.md", "TODO", "test_action") is False
+    assert buttons[0]["disabled"] is True
+    assert buttons[0]["on_click"] is None
+    assert captions == ["Заметка не найдена: missing.md"]
+    assert "Missing" in html_blocks[0]

@@ -36,6 +36,7 @@ from core.experiments.tracker import (
     save_experiment_record,
     summarize_experiments,
 )
+from core.internal_links import InternalTarget
 from core.interview_arena import (
     PRACTICE_MODES,
     extract_expected_complexity,
@@ -3273,7 +3274,7 @@ def render_note_link_button(
             key=safe_widget_key(key_prefix, note_path, safe_label),
             help=note_path,
             on_click=open_theory_note,
-            args=(note_path, note_index),
+            args=(note_path, note_index, False),
             use_container_width=use_container_width,
         )
         st.caption(note_path)
@@ -3425,7 +3426,11 @@ def open_mentor_task(task: dict[str, Any]) -> None:
     st.session_state["active_tab"] = "🎯 Tasks"
 
 
-def open_theory_note(path: str | dict[str, str], note_index: dict[str, Any] | None = None) -> None:
+def open_theory_note(
+    path: str | dict[str, str],
+    note_index: dict[str, Any] | None = None,
+    rerun: bool = True,
+) -> None:
     note: dict[str, str] | None
     if isinstance(path, dict):
         note = path
@@ -3434,7 +3439,72 @@ def open_theory_note(path: str | dict[str, str], note_index: dict[str, Any] | No
     if note is not None:
         set_active_note(note, push_history=True)
     st.session_state["active_tab"] = "Theory"
-    st.rerun()
+    if rerun:
+        st.rerun()
+
+
+def open_internal_target(target: InternalTarget, *, rerun: bool = True) -> None:
+    if not target.exists:
+        return
+
+    kind = str(target.kind or "").strip()
+    if kind == "theory_note":
+        open_theory_note(target.path or target.target_id, st.session_state.get("home_note_index"), rerun=rerun)
+        return
+    if kind == "task":
+        st.session_state["selected_mentor_task"] = target.target_id
+        st.session_state["mentor_task_notebook_filter"] = "Все"
+        st.session_state["mentor_task_confidence_filter"] = "Все"
+        st.session_state["active_tab"] = "🎯 Tasks"
+    elif kind == "project":
+        st.session_state["selected_data_lab_project"] = target.target_id
+        st.session_state["active_tab"] = "🤖 ML Lab" if target.source == "ml_lab" else "🧪 Data Lab Projects"
+    elif kind == "milestone":
+        project_id = target.project_id or str(target.target_id).split("::", 1)[0]
+        milestone_id = target.milestone_id
+        st.session_state["selected_data_lab_project"] = project_id
+        st.session_state["selected_project_milestone"] = milestone_id
+        st.session_state["active_tab"] = "🤖 ML Lab" if target.source == "ml_lab" else "🧪 Data Lab Projects"
+    elif kind == "practice":
+        st.session_state["selected_practice_card"] = target.target_id
+        st.session_state["practice_filter_section"] = "Все"
+        st.session_state["practice_filter_difficulty"] = "Все"
+        st.session_state["active_tab"] = "🎯 Practice"
+    elif kind == "dataset":
+        st.session_state["active_tab"] = "📊 Datasets"
+    elif kind == "report":
+        st.session_state["active_tab"] = "🧭 Theory Quality"
+    else:
+        return
+    if rerun:
+        st.rerun()
+
+
+def open_internal_target_fields(
+    kind: str,
+    label: str,
+    target_id: str,
+    path: str,
+    project_id: str,
+    milestone_id: str,
+    source: str,
+    exists: bool = True,
+    disabled_reason: str = "",
+) -> None:
+    open_internal_target(
+        InternalTarget(
+            kind=kind,
+            label=label,
+            target_id=target_id,
+            path=path,
+            project_id=project_id,
+            milestone_id=milestone_id,
+            source=source,
+            exists=exists,
+            disabled_reason=disabled_reason,
+        ),
+        rerun=False,
+    )
 
 
 def render_related_practice_block(
@@ -4042,6 +4112,146 @@ def render_today_plan_row(
     st.button(button_label, key=button_key, on_click=on_click, args=args)
 
 
+def render_internal_action_card(
+    target: InternalTarget,
+    title: str,
+    subtitle: str,
+    status: str,
+    key_prefix: str,
+    action_label: str = "Открыть",
+) -> bool:
+    body = subtitle
+    meta = target.path or target.target_id
+    rendered_status = status if target.exists else "BLOCKED"
+    render_html(
+        render_card(
+            title,
+            body,
+            eyebrow=target.label,
+            meta=meta,
+            status=rendered_status,
+            extra_class="internal-action-card",
+        )
+    )
+    disabled = not target.exists
+    if disabled and target.disabled_reason:
+        st.caption(target.disabled_reason)
+    clicked = st.button(
+        action_label,
+        key=safe_widget_key(
+            key_prefix,
+            target.kind,
+            target.target_id,
+            target.path,
+            target.project_id,
+            target.milestone_id,
+        ),
+        help=meta or target.disabled_reason or None,
+        disabled=disabled,
+        on_click=open_internal_target_fields if target.exists else None,
+        args=(
+            target.kind,
+            target.label,
+            target.target_id,
+            target.path,
+            target.project_id,
+            target.milestone_id,
+            target.source,
+            target.exists,
+            target.disabled_reason,
+        )
+        if target.exists
+        else (),
+    )
+    return bool(clicked)
+
+
+def theory_note_target(note: dict[str, str] | None, note_index: dict[str, Any]) -> InternalTarget:
+    if not note:
+        return InternalTarget(
+            kind="theory_note",
+            label="Theory note",
+            exists=False,
+            disabled_reason="Нет подходящей следующей заметки.",
+        )
+    normalized = normalize_home_note_target(note)
+    path = normalized["path"]
+    exists = find_note_by_path(path, note_index) is not None
+    return InternalTarget(
+        kind="theory_note",
+        label=normalized["label"],
+        target_id=path,
+        path=path,
+        exists=exists,
+        disabled_reason="" if exists else f"Заметка не найдена: {path}",
+    )
+
+
+def mentor_task_target(task: dict[str, Any] | None, task_ids: set[str]) -> InternalTarget:
+    if not task:
+        return InternalTarget(
+            kind="task",
+            label="Mentor task",
+            exists=False,
+            disabled_reason="Нет открытой проверяемой задачи.",
+        )
+    task_id = str(task.get("id") or "")
+    exists = task_id in task_ids
+    return InternalTarget(
+        kind="task",
+        label=str(task.get("title") or task_id),
+        target_id=task_id,
+        exists=exists,
+        disabled_reason="" if exists else f"Задача не найдена: {task_id}",
+    )
+
+
+def practice_card_target(card: dict[str, Any] | None, card_ids: set[str]) -> InternalTarget:
+    if not card:
+        return InternalTarget(
+            kind="practice",
+            label="Practice card",
+            exists=False,
+            disabled_reason="Нет следующей practice card.",
+        )
+    card_id = str(card.get("id") or "")
+    exists = card_id in card_ids
+    return InternalTarget(
+        kind="practice",
+        label=str(card.get("title") or card_id),
+        target_id=card_id,
+        exists=exists,
+        disabled_reason="" if exists else f"Practice card не найдена: {card_id}",
+    )
+
+
+def project_milestone_target(project_step: dict[str, Any] | None) -> InternalTarget:
+    if not project_step:
+        return InternalTarget(
+            kind="milestone",
+            label="Project milestone",
+            exists=False,
+            disabled_reason="Нет открытого project milestone.",
+        )
+    project = project_step["project"]
+    milestone = project_step["milestone"]
+    project_id = str(project.get("id") or "")
+    milestone_id = str(milestone.get("id") or "")
+    exists = bool(project_id and milestone_id)
+    track = str(project.get("track") or "").casefold()
+    return InternalTarget(
+        kind="milestone",
+        label=str(milestone.get("title") or milestone_id),
+        target_id=f"{project_id}::{milestone_id}",
+        project_id=project_id,
+        milestone_id=milestone_id,
+        path=f"{project_id} / {milestone_id}",
+        exists=exists,
+        disabled_reason="" if exists else "Project или milestone не найден.",
+        source="ml_lab" if track == "classic ml" else "data_lab",
+    )
+
+
 def render_attention_item(label: str, marker: str = "WARN") -> str:
     return (
         '<div class="attention-item">'
@@ -4077,7 +4287,12 @@ def render_dashboard(
     project_stats = data_lab_projects_progress(data_lab_projects)
     experiment_records = experiment_records_for_projects(data_lab_projects)
     quality_avg = theory_quality_average(audit_report)
-    next_note_target = normalize_home_note_target(next_note) if next_note else None
+    note_index = build_note_index(sections)
+    st.session_state["home_note_index"] = note_index
+    next_note_target = theory_note_target(next_note, note_index)
+    next_task_target = mentor_task_target(next_task, {str(task.get("id") or "") for task in mentor_tasks})
+    next_card_target = practice_card_target(next_card, {str(card.get("id") or "") for card in practice_cards})
+    next_project_target = project_milestone_target(project_step)
 
     st.markdown(
         """
@@ -4089,102 +4304,98 @@ def render_dashboard(
         unsafe_allow_html=True,
     )
 
-    resume_cards: list[str] = []
+    resume_cards: list[tuple[InternalTarget | None, str, str, str, str]] = []
     if next_task:
         resume_cards.append(
-            render_card(
-                next_task["title"],
-                f"{next_task['notebook_label']} · confidence {next_task['confidence']}",
-                eyebrow="Следующая задача ментора",
-                meta=f"решено: {mentor_stats['done']}/{mentor_stats['total']}",
-                status="TODO",
+            (
+                next_task_target,
+                str(next_task["title"]),
+                f"{next_task['notebook_label']} · confidence {next_task['confidence']} · решено: {mentor_stats['done']}/{mentor_stats['total']}",
+                "TODO",
+                "home_resume_task",
             )
         )
     else:
-        resume_cards.append(render_card("Задачи ментора закрыты", "Нет открытой проверяемой задачи.", eyebrow="Следующая задача ментора", status="PASS"))
+        resume_cards.append((None, "Задачи ментора закрыты", "Нет открытой проверяемой задачи.", "PASS", "home_resume_task_done"))
 
     if project_step:
         project = project_step["project"]
         milestone = project_step["milestone"]
         resume_cards.append(
-            render_card(
+            (
+                next_project_target,
                 str(milestone.get("title") or milestone.get("id") or "Project milestone"),
-                str(project.get("title") or project.get("id") or "Project"),
-                eyebrow="Следующий milestone проекта",
-                meta=f"тип: {milestone.get('type', 'milestone')}",
-                status="IN PROGRESS",
+                f"{project.get('title') or project.get('id') or 'Project'} · тип: {milestone.get('type', 'milestone')}",
+                "IN PROGRESS",
+                "home_resume_project",
             )
         )
     else:
-        resume_cards.append(render_card("Проекты закрыты", "Все обязательные milestones завершены.", eyebrow="Следующий milestone проекта", status="PASS"))
+        resume_cards.append((None, "Проекты закрыты", "Все обязательные milestones завершены.", "PASS", "home_resume_project_done"))
 
-    if next_note and next_note_target:
+    if next_note and next_note_target.exists:
         resume_cards.append(
-            render_card(
-                next_note_target["label"],
-                f"заметок в vault: {len(notes)}",
-                eyebrow="Следующая theory note",
-                meta=next_note_target["path"],
-                status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
+            (
+                next_note_target,
+                next_note_target.label,
+                f"заметок в vault: {len(notes)} · {next_note_target.path}",
+                "READING" if get_note_status(next_note) == STATUS_READING else "TODO",
+                "home_resume_note",
             )
         )
     else:
-        resume_cards.append(render_card("Теория закрыта", f"просмотрено заметок: {total_notes}", eyebrow="Следующая theory note", status="PASS"))
+        resume_cards.append((None, "Теория закрыта", f"просмотрено заметок: {total_notes}", "PASS", "home_resume_note_done"))
 
     render_section_eyebrow_block("Продолжить")
-    st.markdown(f'<div class="home-resume-grid home-stagger-1">{"".join(resume_cards)}</div>', unsafe_allow_html=True)
+    for column, (target, title, subtitle, status, key_prefix) in zip(st.columns(3), resume_cards, strict=False):
+        with column:
+            if target:
+                render_internal_action_card(target, title, subtitle, status, key_prefix)
+            else:
+                render_html(render_card(title, subtitle, eyebrow="Продолжить", status=status, extra_class="home-stagger-1"))
 
     render_section_eyebrow_block("План на сегодня")
     today_count = 0
-    if next_note and next_note_target and today_count < 4:
-        render_today_plan_row(
-            kind=next_note_target["kind"],
-            title=next_note_target["label"],
-            meta=next_note_target["path"],
-            status="READING" if get_note_status(next_note) == STATUS_READING else "TODO",
-            button_label="Открыть теорию",
-            button_key="home_today_note",
-            on_click=open_theory_note_path,
-            args=(next_note_target["path"], sections),
+    if next_note and next_note_target.exists and today_count < 4:
+        render_internal_action_card(
+            next_note_target,
+            next_note_target.label,
+            next_note_target.path,
+            "READING" if get_note_status(next_note) == STATUS_READING else "TODO",
+            "home_today_note",
+            "Открыть теорию",
         )
         today_count += 1
-    if next_card and today_count < 4:
-        render_today_plan_row(
-            kind="learn",
-            title=next_card["title"],
-            meta=f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
-            status="IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
-            button_label="Открыть практику",
-            button_key="home_today_practice",
-            on_click=open_practice_card,
-            args=(next_card["id"],),
+    if next_card and next_card_target.exists and today_count < 4:
+        render_internal_action_card(
+            next_card_target,
+            str(next_card["title"]),
+            f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
+            "IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
+            "home_today_practice",
+            "Открыть практику",
         )
         today_count += 1
-    if project_step and today_count < 4:
+    if project_step and next_project_target.exists and today_count < 4:
         project = project_step["project"]
         milestone = project_step["milestone"]
-        project_tab = "🤖 ML Lab" if str(project.get("track") or "").casefold() == "classic ml" else "🧪 Data Lab Projects"
-        render_today_plan_row(
-            kind="build",
-            title=str(milestone.get("title") or milestone.get("id") or "Project milestone"),
-            meta=str(project.get("title") or project.get("id") or "Project"),
-            status="IN PROGRESS",
-            button_label="Открыть проект",
-            button_key="home_today_project",
-            on_click=open_project_tab,
-            args=(project["id"], project_tab),
+        render_internal_action_card(
+            next_project_target,
+            str(milestone.get("title") or milestone.get("id") or "Project milestone"),
+            str(project.get("title") or project.get("id") or "Project"),
+            "IN PROGRESS",
+            "home_today_project",
+            "Открыть проект",
         )
         today_count += 1
-    if next_task and today_count < 4:
-        render_today_plan_row(
-            kind="train",
-            title=next_task["title"],
-            meta=next_task["notebook_label"],
-            status="TODO",
-            button_label="Открыть задачу",
-            button_key="home_today_task",
-            on_click=open_mentor_task,
-            args=(next_task,),
+    if next_task and next_task_target.exists and today_count < 4:
+        render_internal_action_card(
+            next_task_target,
+            str(next_task["title"]),
+            str(next_task["notebook_label"]),
+            "TODO",
+            "home_today_task",
+            "Открыть задачу",
         )
         today_count += 1
     if next_algorithm and today_count < 4:
@@ -4286,6 +4497,46 @@ def render_dashboard(
             + "</div>",
             unsafe_allow_html=True,
         )
+        attention_actions: list[tuple[InternalTarget, str, str, str, str]] = []
+        if audit_report:
+            weak = [note for note in weakest_notes(audit_report, limit=20) if int(note.get("quality_score") or 0) < 45]
+            if weak:
+                weak_path = str(weak[0].get("relative_path") or weak[0].get("path") or "")
+                weak_target = InternalTarget(
+                    kind="theory_note",
+                    label=str(weak[0].get("title") or weak_path),
+                    target_id=weak_path,
+                    path=weak_path,
+                    exists=find_note_by_path(weak_path, note_index) is not None,
+                    disabled_reason=f"Заметка не найдена: {weak_path}",
+                )
+                attention_actions.append((weak_target, "Открыть слабую заметку", weak_target.label, "NEEDS REVIEW", "home_attention_weak_note"))
+        if incomplete_milestones and next_project_target.exists:
+            attention_actions.append(
+                (
+                    next_project_target,
+                    "Открыть ближайший milestone",
+                    next_project_target.path,
+                    "IN PROGRESS",
+                    "home_attention_milestone",
+                )
+            )
+        if not experiment_records:
+            ml_project = next((project for project in data_lab_projects if str(project.get("track") or "").casefold() == "classic ml"), None)
+            if ml_project:
+                experiment_target = InternalTarget(
+                    kind="project",
+                    label=str(ml_project.get("title") or ml_project.get("id")),
+                    target_id=str(ml_project.get("id") or ""),
+                    exists=bool(ml_project.get("id")),
+                    disabled_reason="Classic ML project не найден.",
+                    source="ml_lab",
+                )
+                attention_actions.append(
+                    (experiment_target, "Открыть ML Lab для experiment record", experiment_target.label, "TODO", "home_attention_experiment")
+                )
+        for target, title, subtitle, status, key_prefix in attention_actions[:3]:
+            render_internal_action_card(target, title, subtitle, status, key_prefix)
     else:
         st.markdown(
             render_card(
