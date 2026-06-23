@@ -120,6 +120,8 @@ Manual release checklist: [docs/manual_test_checklist.md](docs/manual_test_check
 
 Architecture notes: [docs/architecture.md](docs/architecture.md)
 
+Visual QA workflow: [docs/visual_qa.md](docs/visual_qa.md)
+
 ## Screenshot Checklist
 
 Before a visual checkpoint, capture screenshots for:

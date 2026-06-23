@@ -38,25 +38,38 @@ def open_app(page: Page, app_url: str, *, width: int = 1440, height: int = 900) 
 
 
 def click_button_containing(page: Page, text: str, *, timeout_ms: int = 8_000) -> bool:
-    result = page.evaluate(
-        """({ text }) => {
-            const buttons = Array.from(document.querySelectorAll('button'));
-            const target = buttons.find((button) => (button.innerText || button.textContent || '').includes(text));
-            if (!target) {
-                return { clicked: false, labels: buttons.map((button) => (button.innerText || button.textContent || '').trim()).slice(0, 60) };
-            }
-            target.scrollIntoView({ block: 'center', inline: 'nearest' });
-            target.click();
-            return { clicked: true, labels: [] };
-        }""",
-        {"text": text},
-    )
+    def attempt_click() -> dict[str, object]:
+        return page.evaluate(
+            """({ text }) => {
+                const buttons = Array.from(document.querySelectorAll('button'));
+                const target = buttons.find((button) => (button.innerText || button.textContent || '').includes(text));
+                if (!target) {
+                    return { clicked: false, labels: buttons.map((button) => (button.innerText || button.textContent || '').trim()).slice(0, 60) };
+                }
+                target.scrollIntoView({ block: 'center', inline: 'nearest' });
+                target.click();
+                return { clicked: true, labels: [] };
+            }""",
+            {"text": text},
+        )
+
+    result = attempt_click()
+    if not result["clicked"] and any("keyboard_double_arrow_right" in str(label) for label in result["labels"]):
+        page.evaluate(
+            """() => {
+                const toggler = Array.from(document.querySelectorAll('button'))
+                    .find((button) => (button.innerText || button.textContent || '')
+                        .includes('keyboard_double_arrow_right'));
+                if (toggler) toggler.click();
+            }"""
+        )
+        page.wait_for_timeout(600)
+        result = attempt_click()
     if not result["clicked"]:
         return False
     page.wait_for_timeout(min(timeout_ms, 1_000))
     assert_clean_page(page)
     return True
-
 
 def click_first_available_button(page: Page, labels: tuple[str, ...]) -> str | None:
     for label in labels:
