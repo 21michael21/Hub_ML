@@ -383,7 +383,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--threshold", type=int, default=70)
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--reaudit", action="store_true")
-    parser.add_argument("--vault", default=os.environ.get("VAULT_PATH"))
+    parser.add_argument("--vault", default=os.environ.get("VAULT_PATH"), help="Path to Obsidian vault. Defaults to VAULT_PATH env var.")
     parser.add_argument("--topic", help="Optional coverage topic id to evaluate.")
     return parser.parse_args(argv)
 

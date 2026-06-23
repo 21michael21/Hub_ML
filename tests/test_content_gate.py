@@ -5,7 +5,19 @@ from pathlib import Path
 
 import pytest
 
-from tools.check_content_gate import build_content_gate_payload, evaluate_topic_gate
+from tools.audit_theory_notes import scan_vault
+from tools.check_content_gate import (
+    DEFAULT_MATRIX,
+    DEFAULT_PRACTICE_DIR,
+    DEFAULT_RESOURCES,
+    DEFAULT_TASKS,
+    build_content_gate_payload,
+    evaluate_topic_gate,
+    load_json,
+    load_matrix,
+    load_practice_items,
+    load_task_items,
+)
 
 
 REGISTERED_URL = "https://pandas.pydata.org/docs/user_guide/index.html"
@@ -310,3 +322,23 @@ def test_strict_cli_exits_nonzero_when_required_topic_fails(tmp_path: Path) -> N
 
     assert exc.value.code == 1
     assert (output_dir / "content_gate_report.json").exists()
+
+
+def test_committed_sample_vault_has_at_least_one_gate_pass_and_fail() -> None:
+    sample_vault = Path("tests/fixtures/sample_vault").resolve()
+    notes = scan_vault(sample_vault)
+
+    payload = build_content_gate_payload(
+        topics=load_matrix(DEFAULT_MATRIX),
+        audit={"vault": str(sample_vault), "notes": notes},
+        resources=load_json(DEFAULT_RESOURCES),
+        practice_items=load_practice_items(DEFAULT_PRACTICE_DIR),
+        task_items=load_task_items(DEFAULT_TASKS),
+        threshold=70,
+    )
+
+    summary = payload["summary"]
+    passed_topic_ids = {str(topic["id"]) for topic in payload["topics"] if topic["status"] == "PASS"}
+    assert summary["passed_topics"] >= 1
+    assert summary["failed_topics"] >= 1
+    assert "python.basics" in passed_topic_ids
