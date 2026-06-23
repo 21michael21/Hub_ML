@@ -167,7 +167,7 @@ def test_experiments_empty_state_is_useful(monkeypatch: pytest.MonkeyPatch) -> N
     app.render_experiments_tab([])
 
     rendered = "\n".join(markdown_calls)
-    assert "No experiment runs found" in rendered
+    assert "Experiment runs не найдены" in rendered
     assert "Open ML Lab" in buttons
     assert "Traceback" not in rendered
 

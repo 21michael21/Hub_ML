@@ -45,6 +45,35 @@ def test_render_section_eyebrow_block_uses_html_markdown(monkeypatch) -> None:
     assert calls == [(app.render_section_eyebrow("Resume"), True)]
 
 
+def test_render_html_centralizes_trusted_helper_markup(monkeypatch) -> None:
+    calls: list[tuple[str, bool | None]] = []
+
+    def fake_markdown(body: str, unsafe_allow_html: bool | None = None, **_: object) -> None:
+        calls.append((body, unsafe_allow_html))
+
+    monkeypatch.setattr(app.st, "markdown", fake_markdown)
+
+    app.render_html(app.render_status_chip("PASS"))
+
+    assert calls == [(app.render_status_chip("PASS"), True)]
+
+
+def test_render_empty_state_escapes_content_and_uses_card_system() -> None:
+    rendered = app.render_empty_state(
+        "Нет <данных>",
+        "Добавь CSV & нажми scan.",
+        action="Открыть <Datasets>",
+    )
+
+    assert "console-card" in rendered
+    assert "empty-state-card" in rendered
+    assert "NEEDS REVIEW" in rendered
+    assert "Нет &lt;данных&gt;" in rendered
+    assert "CSV &amp; нажми" in rendered
+    assert "Открыть &lt;Datasets&gt;" in rendered
+    assert "Нет <данных>" not in rendered
+
+
 def test_home_note_target_uses_relative_path_not_display_label() -> None:
     note = {
         "section_label": "00 Atlas",

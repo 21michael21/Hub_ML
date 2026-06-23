@@ -86,18 +86,18 @@ def click_nav(page: Page, label: str) -> None:
         assert_clean_page(page)
         return
     nav_aliases = {
-        "Practice": ("Practice", "🎯 Practice"),
-        "Tasks": ("Tasks", "🎯 Tasks"),
-        "Datasets": ("Datasets", "📊 Datasets"),
-        "Notebook": ("Notebook", "📓 Notebook"),
-        "Data Lab": ("Data Lab", "🧪 Data Lab Projects"),
-        "ML Lab": ("ML Lab", "🤖 ML Lab"),
-        "Portfolio": ("Portfolio", "📁 Portfolio"),
-        "Experiments": ("Experiments", "🧪 Experiments"),
-        "Algorithms": ("Algorithms", "🧩 Algorithms"),
-        "Interviews": ("Interviews", "🎤 Interviews", "🎤"),
-        "Theory Quality": ("Theory Quality", "🧭 Theory Quality"),
-        "Links Health": ("Links Health", "Links Health"),
+        "Practice": ("Practice", "✎ Practice", "✎"),
+        "Tasks": ("Tasks", "✓ Tasks", "✓"),
+        "Datasets": ("Datasets", "▨ Datasets", "▨"),
+        "Notebook": ("Notebook", "▦ Notebook", "▦"),
+        "Data Lab": ("Data Lab", "▣ Data Lab", "▣"),
+        "ML Lab": ("ML Lab", "▧ ML Lab", "▧"),
+        "Portfolio": ("Portfolio", "□ Portfolio", "□"),
+        "Experiments": ("Experiments", "◌ Experiments", "◌"),
+        "Algorithms": ("Algorithms", "⌘ Algorithms", "⌘"),
+        "Interviews": ("Interviews", "? Interviews", "?"),
+        "Theory Quality": ("Theory Quality", "◇ Theory Quality", "◇"),
+        "Links Health": ("Links Health", "↔ Links Health", "↔"),
     }
     clicked = click_first_available_button(page, nav_aliases.get(label, (label,)))
     assert clicked is not None, f"Navigation item not found: {label}"

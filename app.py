@@ -189,6 +189,10 @@ def inject_styles() -> None:
         --r:13px; --r-sm:8px; --s1:8px; --s2:14px; --s3:22px; --s4:32px;
         --f-display:"Space Grotesk"; --f-ui:"IBM Plex Sans"; --f-mono:"IBM Plex Mono";
         --ease:cubic-bezier(.2,.7,.3,1);
+        --duration-fast:120ms; --duration-med:180ms; --duration-slow:420ms;
+        --shadow-card:0 18px 50px rgba(0,0,0,0.20);
+        --shadow-card-hover:0 22px 58px rgba(0,0,0,0.24);
+        --shadow-focus:0 0 0 3px rgba(139,155,255,0.22);
         --radius: var(--r);
         --radius-sm: var(--r-sm);
         --font-display: var(--f-display), sans-serif;
@@ -272,7 +276,7 @@ def inject_styles() -> None:
         font-size: 0.86rem;
         padding: 0.38rem 0.62rem;
         text-align: left;
-        transition: background 0.14s var(--ease), color 0.14s var(--ease), border-color 0.14s var(--ease), transform 0.14s var(--ease);
+        transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
     }
 
     [data-testid="stSidebar"] .stButton > button:hover {
@@ -285,6 +289,49 @@ def inject_styles() -> None:
     [data-testid="stSidebar"] .stButton > button:focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 2px;
+    }
+
+    [data-testid="stMain"] .stButton > button,
+    [data-testid="stMain"] .stDownloadButton > button,
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button {
+        border-color: var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        color: var(--text);
+        transition:
+            background var(--duration-fast) var(--ease),
+            border-color var(--duration-fast) var(--ease),
+            box-shadow var(--duration-fast) var(--ease),
+            color var(--duration-fast) var(--ease),
+            opacity var(--duration-fast) var(--ease),
+            transform var(--duration-fast) var(--ease);
+    }
+
+    [data-testid="stMain"] .stButton > button:hover:not(:disabled),
+    [data-testid="stMain"] .stDownloadButton > button:hover:not(:disabled),
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:hover:not(:disabled) {
+        border-color: var(--border-strong);
+        background: var(--raised);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+    }
+
+    [data-testid="stMain"] .stButton > button:focus-visible,
+    [data-testid="stMain"] .stDownloadButton > button:focus-visible,
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:focus-visible,
+    a.obsidian-link:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        box-shadow: var(--shadow-focus);
+    }
+
+    [data-testid="stMain"] .stButton > button:disabled,
+    [data-testid="stMain"] .stDownloadButton > button:disabled,
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:disabled {
+        cursor: not-allowed;
+        opacity: 0.52;
+        transform: none;
+        box-shadow: none;
     }
 
     [data-testid="stHeader"] {
@@ -890,15 +937,24 @@ def inject_styles() -> None:
         border-radius: var(--r);
         background: var(--surface);
         padding: 16px 18px;
-        box-shadow: 0 18px 50px rgba(0,0,0,0.20);
-        animation: fadeUp .4s var(--ease) both;
-        transition: border-color .16s var(--ease), transform .16s var(--ease), box-shadow .16s var(--ease);
+        box-shadow: var(--shadow-card);
+        animation: fadeUp var(--duration-slow) var(--ease) both;
+        transition:
+            background var(--duration-med) var(--ease),
+            border-color var(--duration-med) var(--ease),
+            box-shadow var(--duration-med) var(--ease),
+            transform var(--duration-med) var(--ease);
     }
 
     .console-card:hover {
         border-color: var(--border-strong);
         transform: translateY(-2px);
-        box-shadow: 0 22px 58px rgba(0,0,0,0.24);
+        box-shadow: var(--shadow-card-hover);
+    }
+
+    .console-card:focus-within {
+        border-color: var(--accent);
+        box-shadow: var(--shadow-focus), var(--shadow-card-hover);
     }
 
     .console-card-eyebrow {
@@ -994,8 +1050,11 @@ def inject_styles() -> None:
         border-radius: var(--r);
         background: var(--surface);
         padding: 16px 18px;
-        animation: fadeUp .4s var(--ease) both;
-        transition: border-color .16s var(--ease), transform .16s var(--ease);
+        animation: fadeUp var(--duration-slow) var(--ease) both;
+        transition:
+            border-color var(--duration-med) var(--ease),
+            box-shadow var(--duration-med) var(--ease),
+            transform var(--duration-med) var(--ease);
     }
 
     .metric-tile:hover {
@@ -1046,7 +1105,7 @@ def inject_styles() -> None:
         height: 100%;
         border-radius: 999px;
         background: var(--accent);
-        animation: growBar 1s var(--ease) both;
+        transition: width var(--duration-slow) var(--ease), background var(--duration-fast) var(--ease);
     }
 
     .metric-fill-pass,
@@ -1217,6 +1276,7 @@ def inject_styles() -> None:
         background: var(--surface);
         color: var(--dim);
         padding: 0.85rem 1rem;
+        animation: fadeUp var(--duration-med) var(--ease) both;
     }
 
     @media (max-width: 900px) {
@@ -1248,6 +1308,11 @@ def inject_styles() -> None:
         line-height: 1.35;
         text-transform: uppercase;
         vertical-align: middle;
+        transition:
+            background var(--duration-fast) var(--ease),
+            border-color var(--duration-fast) var(--ease),
+            color var(--duration-fast) var(--ease),
+            opacity var(--duration-fast) var(--ease);
     }
 
     .status-chip .dot,
@@ -1269,10 +1334,9 @@ def inject_styles() -> None:
         border-color: rgba(79,208,106,0.35);
     }
 
-    .status-chip.pass .chip-dot,
-    .status-chip-pass .chip-dot,
-    .chip-pass .chip-dot {
-        box-shadow: 0 0 8px var(--pass);
+    .status-chip.busy .chip-dot,
+    .chip-busy .chip-dot {
+        box-shadow: 0 0 8px var(--warn);
         animation: pulse 1.8s var(--ease) infinite;
     }
 
@@ -1348,6 +1412,11 @@ STATUS_CHIP_CLASSES = {
 }
 
 
+def render_html(markup: str) -> None:
+    """Render trusted HTML returned by Hub_ML UI helpers only."""
+    st.markdown(markup, unsafe_allow_html=True)
+
+
 def normalize_chip_status(status: str) -> str:
     normalized = re.sub(r"[_\-]+", " ", str(status or "").strip().upper())
     aliases = {
@@ -1383,7 +1452,7 @@ def render_section_eyebrow(label: str) -> str:
 
 
 def render_section_eyebrow_block(label: str) -> None:
-    st.markdown(render_section_eyebrow(label), unsafe_allow_html=True)
+    render_html(render_section_eyebrow(label))
 
 
 def render_metric_tile(
@@ -1439,6 +1508,27 @@ def render_card(
         f'<div class="console-card-title">{html.escape(str(title))} {status_markup}</div>'
         f"{body_markup}{meta_markup}{content_html}"
         "</div>"
+    )
+
+
+def render_empty_state(
+    title: str,
+    body: str,
+    *,
+    eyebrow: str = "Empty state",
+    status: str = "NEEDS REVIEW",
+    action: str = "",
+) -> str:
+    action_markup = ""
+    if action:
+        action_markup = f'<div class="console-card-meta">Дальше: {html.escape(str(action))}</div>'
+    return render_card(
+        title,
+        body,
+        eyebrow=eyebrow,
+        status=status,
+        extra_class="empty-state-card",
+        content_html=action_markup,
     )
 
 
@@ -4023,7 +4113,13 @@ def render_dashboard(
         )
         today_count += 1
     if today_count == 0:
-        st.markdown('<div class="empty-state-line">Нет готового следующего шага. Открой Projects или Theory и выбери направление.</div>', unsafe_allow_html=True)
+        render_html(
+            render_empty_state(
+                "Нет готового следующего шага",
+                "Открой Projects или Theory и выбери направление вручную.",
+                action="Выбери раздел в сайдбаре.",
+            )
+        )
 
     render_section_eyebrow_block("Статус")
     task_ratio = mentor_stats["done"] / mentor_stats["total"] if mentor_stats["total"] else 0.0
@@ -5141,7 +5237,13 @@ def render_experiment_tracker(project: dict[str, Any]) -> None:
 
     records = load_experiment_records(records_path)
     if not records:
-        st.info("No experiment records yet. Run a milestone in Notebook, copy real metrics here, then save a record.")
+        render_html(
+            render_empty_state(
+                "Experiment records пока нет",
+                "Запусти milestone или Notebook cell, перенеси только реальные metrics и сохрани record.",
+                action="Save current experiment summary",
+            )
+        )
         return
 
     metric_options = summarize_experiments(records)["metric_names"] or list(SUPPORTED_METRICS)
@@ -5318,9 +5420,12 @@ def render_experiments_tab(projects: list[dict[str, Any]]) -> None:
 
     records = experiment_records_for_projects(projects)
     if not records:
-        st.markdown(
-            '<div class="empty-state-line">No experiment runs found. Open ML Lab and save a real experiment summary after a Notebook run.</div>',
-            unsafe_allow_html=True,
+        render_html(
+            render_empty_state(
+                "Experiment runs не найдены",
+                "Открой ML Lab и сохрани реальный experiment summary после запуска в Notebook.",
+                action="Open ML Lab",
+            )
         )
         st.button(
             "Open ML Lab",
@@ -6639,26 +6744,24 @@ def render_datasets_tab(
         st.rerun()
 
     if not DATASETS_DIR.exists() or not DATASETS_DIR.is_dir():
-        st.markdown(
-            render_card(
+        render_html(
+            render_empty_state(
                 "Папка datasets/ не найдена",
                 "Создай datasets/ рядом с приложением и положи туда CSV-файлы.",
-                eyebrow="Empty state",
                 status="BLOCKED",
-            ),
-            unsafe_allow_html=True,
+                action="Добавь CSV и нажми «Пересканировать datasets/».",
+            )
         )
         return
 
     if not datasets:
-        st.markdown(
-            render_card(
+        render_html(
+            render_empty_state(
                 "CSV-файлы не найдены",
                 "Добавь df_events.csv, df_matching.csv или df_orders.csv в datasets/.",
-                eyebrow="Empty state",
                 status="NEEDS REVIEW",
-            ),
-            unsafe_allow_html=True,
+                action="Проверь папку datasets/ и пересканируй.",
+            )
         )
         return
 
