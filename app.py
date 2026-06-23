@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from urllib.parse import quote
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -1075,6 +1076,7 @@ def inject_styles() -> None:
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
+        min-height: 118px;
         padding: 16px 18px;
         animation: fadeUp var(--duration-slow) var(--ease) both;
         transition:
@@ -1113,6 +1115,7 @@ def inject_styles() -> None:
     .metric-tile-meta {
         margin-top: 0.2rem;
         color: var(--faint);
+        font-family: var(--font-mono);
         font-size: 0.68rem;
     }
 
@@ -1170,6 +1173,175 @@ def inject_styles() -> None:
         gap: 0.85rem;
         margin-bottom: 1.3rem;
         animation: fadeUp .32s var(--ease) both;
+    }
+
+    .flat-section-header,
+    .theory-quality-metric-grid,
+    .clickable-row-list,
+    .quality-manual-details {
+        max-width: 920px;
+    }
+
+    .flat-section-header {
+        margin: 0 0 var(--s4);
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .flat-section-title-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    .flat-section-title {
+        color: var(--text);
+        font-family: var(--font-display);
+        font-size: clamp(1.7rem, 2.2vw, 2.35rem);
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 1.08;
+    }
+
+    .flat-section-desc {
+        max-width: 760px;
+        margin-top: 10px;
+        color: var(--dim);
+        font-size: 0.98rem;
+        line-height: 1.55;
+    }
+
+    .flat-section-caption {
+        margin-top: 10px;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        line-height: 1.5;
+    }
+
+    .quality-manual-details {
+        margin: calc(-1 * var(--s2)) 0 var(--s4);
+        color: var(--dim);
+        font-size: 0.86rem;
+    }
+
+    .quality-manual-details summary {
+        display: inline-flex;
+        width: fit-content;
+        cursor: pointer;
+        color: var(--info);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        list-style: none;
+    }
+
+    .quality-manual-details summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .quality-manual-details summary:hover {
+        color: var(--text);
+    }
+
+    .quality-manual-details pre {
+        margin: 10px 0 0;
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        padding: 12px;
+        overflow-x: auto;
+        white-space: pre;
+    }
+
+    .theory-quality-metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: var(--s4);
+    }
+
+    .clickable-row-list {
+        display: grid;
+        gap: 10px;
+        margin: 10px 0 var(--s4);
+    }
+
+    .clickable-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        color: inherit;
+        padding: 14px 16px;
+        text-decoration: none;
+        animation: fadeUp .28s var(--ease) both;
+        transition:
+            border-color var(--duration-fast) var(--ease),
+            background var(--duration-fast) var(--ease),
+            transform var(--duration-fast) var(--ease);
+    }
+
+    .clickable-row-fail {
+        border-left: 2px solid var(--fail);
+    }
+
+    .clickable-row:hover {
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+        color: inherit;
+        text-decoration: none;
+        transform: translateX(2px);
+    }
+
+    .clickable-row-title {
+        color: var(--text);
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .clickable-row-meta {
+        margin-top: 5px;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        line-height: 1.45;
+    }
+
+    .clickable-row-action {
+        color: var(--dim);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        white-space: nowrap;
+        transition: color var(--duration-fast) var(--ease);
+    }
+
+    .clickable-row:hover .clickable-row-action {
+        color: var(--text);
+    }
+
+    @media (max-width: 720px) {
+        .theory-quality-metric-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .metric-tile .n,
+        .metric-tile-value {
+            overflow-wrap: normal;
+            word-break: normal;
+        }
+
+        .clickable-row {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .clickable-row-action {
+            white-space: normal;
+        }
     }
 
     .today-plan-row {
@@ -1486,6 +1658,28 @@ def render_section_eyebrow_block(label: str) -> None:
     render_html(render_section_eyebrow(label))
 
 
+def render_flat_section_header(
+    title: str,
+    description: str,
+    *,
+    eyebrow: str,
+    status: str,
+    caption: str = "",
+) -> str:
+    caption_markup = f'<div class="flat-section-caption">{html.escape(str(caption))}</div>' if caption else ""
+    return (
+        '<section class="flat-section-header">'
+        f"{render_section_eyebrow(eyebrow)}"
+        '<div class="flat-section-title-row">'
+        f'<div class="flat-section-title">{html.escape(str(title))}</div>'
+        f"{render_status_chip(status)}"
+        "</div>"
+        f'<div class="flat-section-desc">{html.escape(str(description))}</div>'
+        f"{caption_markup}"
+        "</section>"
+    )
+
+
 def render_metric_tile(
     label: str,
     value: str | int | float,
@@ -1515,6 +1709,32 @@ def render_metric_tile(
         f'<div class="metric-tile-label">{html.escape(str(label))}</div>'
         f"{meta_markup}{bar_markup}"
         "</div>"
+    )
+
+
+def theory_note_query_href(relative_path: str) -> str:
+    return f"?tab=Theory&note={quote(str(relative_path or ''), safe='')}"
+
+
+def render_clickable_row(
+    title: str,
+    meta: str,
+    *,
+    href: str,
+    action: str,
+    status: str = "",
+    accent: str = "",
+) -> str:
+    accent_class = f" clickable-row-{html.escape(str(accent).strip().casefold())}" if accent else ""
+    status_markup = f" {render_status_chip(status)}" if status else ""
+    return (
+        f'<a class="clickable-row{accent_class}" href="{html.escape(str(href), quote=True)}">'
+        "<div>"
+        f'<div class="clickable-row-title">{html.escape(str(title))}{status_markup}</div>'
+        f'<div class="clickable-row-meta">{html.escape(str(meta))}</div>'
+        "</div>"
+        f'<div class="clickable-row-action">→ {html.escape(str(action))}</div>'
+        "</a>"
     )
 
 
@@ -3885,6 +4105,27 @@ def open_theory_note_path(relative_path: str, sections: dict[str, list[dict[str,
 
 def open_tab(tab_name: str) -> None:
     st.session_state["active_tab"] = tab_name
+
+
+def query_param_value(name: str) -> str:
+    value = st.query_params.get(name, "")
+    if isinstance(value, list):
+        return str(value[0] if value else "").strip()
+    return str(value or "").strip()
+
+
+def apply_query_param_navigation(note_index: dict[str, Any]) -> None:
+    tab_name = query_param_value("tab")
+    note_path = query_param_value("note")
+    signature = f"{tab_name}\0{note_path}"
+    if not tab_name or st.session_state.get("_last_query_nav") == signature:
+        return
+
+    if tab_name in TAB_OPTIONS:
+        st.session_state["active_tab"] = tab_name
+    if tab_name == "Theory" and note_path:
+        open_theory_note(note_path, note_index, rerun=False)
+    st.session_state["_last_query_nav"] = signature
 
 
 def nav_button_label(tab_name: str) -> str:
@@ -6913,33 +7154,38 @@ def note_from_relative_path(relative_path: str, note_index: dict[str, Any]) -> d
 
 
 def render_theory_quality_tab(note_index: dict[str, Any]) -> None:
-    st.markdown(
-        render_card(
-            "🧭 Theory Quality",
-            "Read-only срез качества базы знаний. Он использует готовые отчёты и не сканирует vault автоматически.",
-            eyebrow="Learn",
-            status="READY",
-        ),
-        unsafe_allow_html=True,
-    )
-
     audit_report = load_json_report(THEORY_AUDIT_REPORT_PATH)
     coverage_report = load_json_report(COVERAGE_REPORT_PATH)
     audit_summary = theory_summary(audit_report)
     cov_summary = coverage_summary(coverage_report)
 
-    with st.expander("Как обновить отчёты вручную", expanded=not audit_report):
-        st.markdown(
-            """
-```bash
-PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/audit_theory_notes.py --vault "$VAULT_PATH"
-PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_coverage.py --vault "$VAULT_PATH"
-PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit --vault "$VAULT_PATH"
-```
-
-Если `VAULT_PATH` не задан, подставь абсолютный путь к Obsidian vault через `--vault`.
-            """
+    caption_parts = []
+    if audit_summary.get("generated_at"):
+        caption_parts.append(f"audit generated: {audit_summary['generated_at']}")
+    if audit_report.get("vault"):
+        caption_parts.append(f"vault: {audit_report['vault']}")
+    if not caption_parts:
+        caption_parts.append("audit generated: no report")
+    render_html(
+        render_flat_section_header(
+            "Theory Quality",
+            "Read-only срез качества базы знаний. Он использует готовые отчёты и не сканирует vault автоматически.",
+            eyebrow="Learn",
+            status="READY" if audit_report else "NEEDS REVIEW",
+            caption=" · ".join(caption_parts),
         )
+    )
+    render_html(
+        """
+<details class="quality-manual-details">
+    <summary>Как обновить отчёты вручную</summary>
+    <pre>PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/audit_theory_notes.py --vault "$VAULT_PATH"
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_coverage.py --vault "$VAULT_PATH"
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit --vault "$VAULT_PATH"</pre>
+    <div class="flat-section-caption">Если VAULT_PATH не задан, подставь абсолютный путь к Obsidian vault через --vault.</div>
+</details>
+        """.strip()
+    )
 
     if not audit_report:
         st.markdown(
@@ -6964,18 +7210,14 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
         render_metric_tile("Без examples", len(audit_summary.get("notes_without_examples", []) or []), status="NEEDS REVIEW"),
         render_metric_tile("Без sources", len(audit_summary.get("notes_without_sources", []) or []), status="NEEDS REVIEW"),
     ]
-    st.markdown(f'<div class="home-metric-grid">{"".join(meta_tiles)}</div>', unsafe_allow_html=True)
-
-    if audit_summary.get("generated_at"):
-        st.caption(f"Theory audit generated: {audit_summary['generated_at']}")
-    if audit_report.get("vault"):
-        st.caption(f"Vault: {audit_report['vault']}")
+    render_html(f'<div class="theory-quality-metric-grid">{"".join(meta_tiles)}</div>')
 
     render_section_eyebrow_block("Weakest Notes")
     weak = weakest_notes(audit_report, limit=20)
     if not weak:
         st.markdown(render_card("Weakest notes не найдены", "В текущем отчёте нет списка слабых заметок.", eyebrow="Empty state", status="READY"), unsafe_allow_html=True)
     else:
+        rows: list[str] = []
         for index, note in enumerate(weak):
             relative_path = str(note.get("relative_path") or "")
             title = str(note.get("title") or relative_path)
@@ -6986,25 +7228,20 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
                 score_number = int(score)
             except (TypeError, ValueError):
                 score_number = 0
-            st.markdown(
-                f"""
-<div class="health-row {'health-row-pass' if score_number >= 70 else 'health-row-fail'}">
-    <div class="link-label">{html.escape(title)}</div>
-    <div class="link-path">{html.escape(relative_path)}</div>
-    <div class="link-path">score: {html.escape(str(score))} · words: {html.escape(str(words))} · {html.escape(section)}</div>
-</div>
-                """,
-                unsafe_allow_html=True,
-            )
             target_note = note_from_relative_path(relative_path, note_index)
-            if target_note:
-                st.button(
-                    "Открыть в Theory",
-                    key=f"quality_open_weak_{index}_{relative_path}",
-                    on_click=open_theory_note,
-                    args=(target_note, None, False),
-                    use_container_width=True,
+            href = theory_note_query_href(str(target_note.get("relative_path") or relative_path)) if target_note else "#"
+            row_status = "NEEDS REVIEW" if score_number < 70 else "READY"
+            rows.append(
+                render_clickable_row(
+                    title,
+                    f"{relative_path} · score: {score} · words: {words} · {section}",
+                    href=href,
+                    action="Открыть в Theory",
+                    status=row_status,
+                    accent="fail" if score_number < 70 else "",
                 )
+            )
+        render_html(f'<div class="clickable-row-list">{"".join(rows)}</div>')
 
     list_cols = st.columns(2)
     with list_cols[0]:
@@ -7874,6 +8111,7 @@ def main() -> None:
         return
 
     note_index = build_note_index(sections)
+    apply_query_param_navigation(note_index)
     graph = scan_link_graph(str(resolved_vault))
     practice_cards, practice_warnings = scan_practice_cards()
     datasets = scan_datasets(DATASETS_DIR)

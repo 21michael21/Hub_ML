@@ -69,6 +69,53 @@ def test_status_chip_is_static_not_clickable() -> None:
     assert "<button" not in rendered
 
 
+def test_render_flat_section_header_uses_no_card_wrapper() -> None:
+    rendered = app.render_flat_section_header(
+        "Theory Quality",
+        "Read-only срез качества базы знаний.",
+        eyebrow="Learn",
+        status="READY",
+        caption="audit · vault",
+    )
+
+    assert "flat-section-header" in rendered
+    assert "console-card" not in rendered
+    assert "Theory Quality" in rendered
+    assert "audit · vault" in rendered
+    assert "READY" in rendered
+
+
+def test_render_metric_tile_omits_progress_bar_for_plain_counts() -> None:
+    rendered = app.render_metric_tile("Без sources", 3, status="NEEDS REVIEW")
+
+    assert "metric-tile" in rendered
+    assert "metric-bar" not in rendered
+
+
+def test_theory_note_query_href_encodes_note_path() -> None:
+    href = app.theory_note_query_href("00 Atlas/A&B.md")
+
+    assert href == "?tab=Theory&note=00%20Atlas%2FA%26B.md"
+
+
+def test_render_clickable_row_is_single_anchor_card() -> None:
+    rendered = app.render_clickable_row(
+        "Weak <Note>",
+        "score: 10 · words: 20",
+        href=app.theory_note_query_href("00_Atlas/Weak.md"),
+        action="Открыть",
+        status="FAIL",
+        accent="fail",
+    )
+
+    assert rendered.startswith('<a class="clickable-row clickable-row-fail"')
+    assert 'href="?tab=Theory&amp;note=00_Atlas%2FWeak.md"' in rendered
+    assert "Weak &lt;Note&gt;" in rendered
+    assert "→ Открыть" in rendered
+    assert "<button" not in rendered
+    assert rendered.count("<a ") == 1
+
+
 def test_inline_wikilink_renders_as_static_chip_not_fake_button() -> None:
     rendered = app.render_markdown_with_wikilinks("Смотри [[A & B]].")
 

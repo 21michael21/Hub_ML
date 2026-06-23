@@ -157,6 +157,58 @@ def test_theory_quality_missing_reports_state(monkeypatch: pytest.MonkeyPatch) -
     assert "Traceback" not in rendered
 
 
+def test_theory_quality_weak_notes_are_clickable_rows(monkeypatch: pytest.MonkeyPatch) -> None:
+    markdown_calls: list[str] = []
+    buttons: list[str] = []
+    note = {
+        "section_key": "00_Atlas",
+        "display_name": "Weak.md",
+        "relative_path": "00_Atlas/Weak.md",
+        "path": "/vault/00_Atlas/Weak.md",
+        "stem": "Weak",
+    }
+    note_index = app.build_note_index({"00_Atlas": [note]})
+    audit_report = {
+        "generated_at": "2026-06-23T10:00:00+00:00",
+        "vault": "/vault",
+        "summary": {
+            "total_notes": 1,
+            "average_quality_score": 25,
+            "weakest_notes": [
+                {
+                    "title": "Weak note",
+                    "relative_path": "00_Atlas/Weak.md",
+                    "quality_score": 25,
+                    "word_count": 80,
+                    "section": "00_Atlas",
+                }
+            ],
+            "notes_without_examples": [],
+            "notes_without_sources": [],
+        },
+    }
+
+    def fake_load_json_report(path: Path) -> dict[str, Any]:
+        if path == app.THEORY_AUDIT_REPORT_PATH:
+            return audit_report
+        return {}
+
+    monkeypatch.setattr(app, "load_json_report", fake_load_json_report)
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: markdown_calls.append(str(body)))
+    monkeypatch.setattr(app.st, "button", lambda label, **_kwargs: buttons.append(str(label)) or False)
+    monkeypatch.setattr(app.st, "expander", lambda *_args, **_kwargs: FakeExpander())
+    monkeypatch.setattr(app.st, "caption", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(app.st, "columns", lambda count: [FakeExpander() for _ in range(count)])
+
+    app.render_theory_quality_tab(note_index)
+
+    rendered = "\n".join(markdown_calls)
+    assert "flat-section-header" in rendered
+    assert "clickable-row clickable-row-fail" in rendered
+    assert "?tab=Theory&amp;note=00_Atlas%2FWeak.md" in rendered
+    assert "Открыть в Theory" not in buttons
+
+
 def test_experiments_empty_state_is_useful(monkeypatch: pytest.MonkeyPatch) -> None:
     markdown_calls: list[str] = []
     buttons: list[str] = []
