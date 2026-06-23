@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import app
 
 
@@ -310,3 +312,44 @@ def test_render_internal_action_card_disables_invalid_target(monkeypatch) -> Non
     assert buttons[0]["on_click"] is None
     assert captions == ["Заметка не найдена: missing.md"]
     assert "Missing" in html_blocks[0]
+
+
+def test_content_gate_status_renders_31_of_36(tmp_path) -> None:
+    report = tmp_path / "content_gate_report.json"
+    report.write_text(
+        json.dumps(
+            {
+                "generated_at": "2026-06-23T09:00:00+00:00",
+                "summary": {"passed_topics": 31, "total_topics": 36},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert app.content_gate_status(report) == "Gate: 31/36 · отчёт 2026-06-23"
+
+
+def test_content_gate_status_renders_36_of_36(tmp_path) -> None:
+    report = tmp_path / "content_gate_report.json"
+    report.write_text(
+        json.dumps(
+            {
+                "generated_at": "2026-06-23T09:00:00+00:00",
+                "summary": {"passed_topics": 36, "total_topics": 36},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert app.content_gate_status(report) == "Gate: 36/36 · отчёт 2026-06-23"
+
+
+def test_content_gate_status_missing_report_is_unknown(tmp_path) -> None:
+    assert app.content_gate_status(tmp_path / "missing.json") == "Gate: нет отчёта"
+
+
+def test_content_gate_status_malformed_report_does_not_crash(tmp_path) -> None:
+    report = tmp_path / "content_gate_report.json"
+    report.write_text("{not-json", encoding="utf-8")
+
+    assert app.content_gate_status(report) == "Gate: отчёт повреждён"

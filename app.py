@@ -3940,19 +3940,27 @@ def git_branch_from_head(git_dir: Path | None = None) -> str:
 def content_gate_status(report_path: Path = CONTENT_GATE_REPORT_PATH) -> str:
     try:
         payload = json.loads(report_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return "GATE n/a"
+    except OSError:
+        return "Gate: нет отчёта"
+    except json.JSONDecodeError:
+        return "Gate: отчёт повреждён"
     summary = payload.get("summary")
     if not isinstance(summary, dict):
-        return "GATE n/a"
+        return "Gate: отчёт неполный"
     passed = summary.get("passed_topics")
-    total = summary.get("total_topics", 36)
+    total = summary.get("total_topics")
     if isinstance(passed, list):
         passed = len(passed)
+    if total is None and isinstance(payload.get("topics"), list):
+        total = len(payload["topics"])
     try:
-        return f"GATE {int(passed)}/{int(total)}"
+        status = f"Gate: {int(passed)}/{int(total)}"
     except (TypeError, ValueError):
-        return "GATE n/a"
+        return "Gate: отчёт неполный"
+    generated_at = str(payload.get("generated_at") or "").strip()
+    if generated_at:
+        return f"{status} · отчёт {generated_at[:10]}"
+    return status
 
 
 def notebook_kernel_status_label() -> str:
