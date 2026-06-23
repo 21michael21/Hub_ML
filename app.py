@@ -1434,12 +1434,20 @@ def scan_vault(vault_path: str) -> dict[str, list[dict[str, str]]]:
     vault = Path(vault_path).expanduser().resolve()
     sections: dict[str, list[dict[str, str]]] = {}
 
-    for file_path in vault.rglob("*.md"):
+    try:
+        note_paths = sorted(vault.rglob("*.md"), key=lambda item: item.as_posix().casefold())
+    except OSError:
+        return {}
+
+    for file_path in note_paths:
         if is_hidden_path(file_path, vault):
             continue
 
-        section_key, display_name = get_section_for_file(file_path, vault)
-        relative_path = file_path.relative_to(vault).as_posix()
+        try:
+            section_key, display_name = get_section_for_file(file_path, vault)
+            relative_path = file_path.relative_to(vault).as_posix()
+        except (OSError, ValueError):
+            continue
         sections.setdefault(section_key, []).append(
             {
                 "display_name": display_name,
@@ -2179,11 +2187,31 @@ def collect_outgoing_links(
     return outgoing
 
 
+def empty_link_graph() -> dict[str, Any]:
+    return {
+        "outgoing_by_path": {},
+        "backlinks_by_path": {},
+        "broken": [],
+        "ambiguous": [],
+        "summary": {
+            "total": 0,
+            "resolved": 0,
+            "broken": 0,
+            "ambiguous": 0,
+        },
+    }
+
+
 @st.cache_data(show_spinner=False)
 def scan_link_graph(vault_path: str) -> dict[str, Any]:
-    vault = Path(vault_path).expanduser().resolve()
-    sections = scan_vault(str(vault))
-    note_index = build_note_index(sections)
+    try:
+        vault = Path(vault_path).expanduser().resolve()
+        sections = scan_vault(str(vault))
+        note_index = build_note_index(sections)
+    except OSError:
+        return empty_link_graph()
+    if not sections:
+        return empty_link_graph()
     outgoing_by_path: dict[str, list[dict[str, Any]]] = {}
     backlinks_by_path: dict[str, list[dict[str, Any]]] = {}
     broken: list[dict[str, Any]] = []
@@ -3411,6 +3439,24 @@ def render_status_bar() -> None:
     <div class="ide-statusbar-right">local-first · код виден · без фейковых метрик</div>
 </div>
         """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_vault_setup_card(title: str, body: str, *, status: str = "IN PROGRESS") -> None:
+    st.markdown(
+        render_card(
+            title,
+            body,
+            eyebrow="Vault setup",
+            status=status,
+            content_html=(
+                '<div class="console-panel">'
+                '<div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>setup · VAULT_PATH</span></div>'
+                '<div class="editor mono">VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py</div>'
+                "</div>"
+            ),
+        ),
         unsafe_allow_html=True,
     )
 
@@ -7028,32 +7074,27 @@ def main() -> None:
     if not vault_path:
         st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
-        st.markdown(
-            render_card(
-                "Vault не подключён",
-                "Укажи путь к Obsidian vault в сайдбаре, чтобы открыть Theory.",
-                eyebrow="Empty state",
-                status="TODO",
-            ),
-            unsafe_allow_html=True,
+        render_breadcrumb("Theory")
+        render_vault_setup_card(
+            "Vault не подключён",
+            "Укажи путь к Obsidian vault в сайдбаре или через VAULT_PATH, чтобы открыть Theory и Theory Quality.",
         )
         render_help()
+        render_status_bar()
         return
 
     vault = Path(vault_path).expanduser()
     if not vault.exists() or not vault.is_dir():
         st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
-        st.markdown(
-            render_card(
-                "Vault не найден",
-                f"Проверь путь в сайдбаре: {vault_path}",
-                eyebrow="Error state",
-                status="ERROR",
-            ),
-            unsafe_allow_html=True,
+        render_breadcrumb("Theory")
+        render_vault_setup_card(
+            "Vault не найден",
+            f"Проверь путь в сайдбаре или VAULT_PATH: {vault_path}",
+            status="ERROR",
         )
         render_help()
+        render_status_bar()
         return
 
     resolved_vault = vault.resolve()
@@ -7061,14 +7102,10 @@ def main() -> None:
     if not sections:
         st.sidebar.markdown('<div class="sidebar-logo">📚 Learning Sandbox</div>', unsafe_allow_html=True)
         st.sidebar.text_input("Путь к Obsidian vault", key="vault_path")
-        st.markdown(
-            render_card(
-                "Markdown-файлы не найдены",
-                "Добавь `.md` заметки в vault или укажи другую папку в сайдбаре.",
-                eyebrow="Empty state",
-                status="TODO",
-            ),
-            unsafe_allow_html=True,
+        render_breadcrumb("Theory")
+        render_vault_setup_card(
+            "Markdown-файлы не найдены",
+            "Добавь .md заметки в vault или укажи другую папку в сайдбаре.",
         )
         render_help()
         render_status_bar()
