@@ -5987,18 +5987,35 @@ def render_interviews_tab(interview_data: dict[str, Any]) -> None:
 
 
 def render_architecture_tab(architecture_data: dict[str, Any]) -> None:
-    st.markdown("### 🏗 Architecture")
-    st.markdown("Отдельный учебный справочник по архитектурным принципам и trade-offs.")
+    st.markdown(
+        render_card(
+            "🏗 Architecture",
+            "Отдельный учебный справочник по архитектурным принципам и trade-offs.",
+            eyebrow="Output cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
 
     document_html = str(architecture_data.get("html") or "")
     sections = architecture_data.get("sections", [])
     if not document_html:
-        st.info("Материал по архитектуре пока не найден.")
+        st.markdown(
+            render_card(
+                "Материал по архитектуре не найден",
+                "Проверь content/ или открой README, если справочник ещё не добавлен.",
+                eyebrow="Empty state",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
-    metric_cols = st.columns(2)
-    metric_cols[0].metric("Документ", architecture_data.get("title", "Architecture"))
-    metric_cols[1].metric("Разделов", len(sections))
+    architecture_tiles = [
+        render_metric_tile("Документ", architecture_data.get("title", "Architecture"), status="READY"),
+        render_metric_tile("Разделов", len(sections), status="INFO"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(architecture_tiles)}</div>', unsafe_allow_html=True)
 
     section_titles = ["Весь документ"] + [section["title"] for section in sections]
     control_cols = st.columns([0.5, 0.5])
@@ -6010,7 +6027,15 @@ def render_architecture_tab(architecture_data: dict[str, Any]) -> None:
         if matches:
             st.caption("Найденные разделы: " + " · ".join(section["title"] for section in matches[:8]))
         else:
-            st.warning("По названиям разделов ничего не найдено.")
+            st.markdown(
+                render_card(
+                    "Разделы не найдены",
+                    "Очисти поиск или попробуй другое слово.",
+                    eyebrow="Empty state",
+                    status="READY",
+                ),
+                unsafe_allow_html=True,
+            )
 
     if selected_title == "Весь документ":
         html_to_render = document_html
@@ -6058,7 +6083,11 @@ def render_architecture_tab(architecture_data: dict[str, Any]) -> None:
         """,
         unsafe_allow_html=True,
     )
-    st.markdown(f'<div class="architecture-doc">{html_to_render}</div>', unsafe_allow_html=True)
+    render_section_eyebrow_block("Document")
+    st.markdown(
+        f'<div class="console-card run-result"><div class="architecture-doc">{html_to_render}</div></div>',
+        unsafe_allow_html=True,
+    )
 
 
 def note_from_relative_path(relative_path: str, note_index: dict[str, Any]) -> dict[str, str] | None:
