@@ -367,6 +367,7 @@ def render_markdown_report(report: dict[str, Any]) -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate Hub_ML internal UI/navigation targets.")
     parser.add_argument("--vault", default=os.environ.get("VAULT_PATH", str(DEFAULT_VAULT)))
+    parser.add_argument("--output-dir", default=str(ROOT / "content" / "reports"))
     parser.add_argument("--strict", action="store_true", help="Exit non-zero when broken targets exist.")
     return parser.parse_args()
 
@@ -401,12 +402,15 @@ def main() -> int:
         ],
     }
 
-    OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    OUTPUT_MD.write_text(render_markdown_report(report), encoding="utf-8")
+    output_dir = Path(args.output_dir)
+    output_json = output_dir / "internal_links_report.json"
+    output_md = output_dir / "internal_links_report.md"
+    output_json.parent.mkdir(parents=True, exist_ok=True)
+    output_json.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output_md.write_text(render_markdown_report(report), encoding="utf-8")
     print(f"INTERNAL LINKS: {report['summary']['passing']}/{report['summary']['total']} pass, {report['summary']['broken']} broken")
-    print(f"Wrote: {OUTPUT_JSON}")
-    print(f"Wrote: {OUTPUT_MD}")
+    print(f"Wrote: {output_json}")
+    print(f"Wrote: {output_md}")
     return 1 if args.strict and broken else 0
 
 

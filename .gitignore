@@ -5,6 +5,7 @@ __pycache__/
 .venv/
 .streamlit-home/
 .learning_progress.json
+build/
 tests/e2e/artifacts/
 
 # Local scratch / experiments

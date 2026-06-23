@@ -35,7 +35,7 @@ jobs:
         run: python tools/validate_resources.py
 
       - name: Check internal links on sample vault
-        run: VAULT_PATH=tests/fixtures/sample_vault python tools/check_internal_links.py
+        run: VAULT_PATH=tests/fixtures/sample_vault python tools/check_internal_links.py --output-dir build/sample_reports
 
       - name: Check content gate on sample vault
-        run: VAULT_PATH=tests/fixtures/sample_vault python tools/check_content_gate.py --reaudit
+        run: VAULT_PATH=tests/fixtures/sample_vault python tools/check_content_gate.py --reaudit --output-dir build/sample_reports

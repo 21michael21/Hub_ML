@@ -98,11 +98,14 @@ The full private-vault content gate requires your real Obsidian vault:
 VAULT_PATH="/absolute/path/to/obsidian_vault" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
 ```
 
+The committed `content/reports/content_gate_report.json` is a snapshot of the private vault.
+Regenerate it only with your real vault using `VAULT_PATH=<your vault> python tools/check_content_gate.py --reaudit`.
+
 CI uses the committed sample vault to prove the tooling runs without private files. It does not assert `36/36` coverage:
 
 ```bash
-VAULT_PATH=tests/fixtures/sample_vault PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_internal_links.py
-VAULT_PATH=tests/fixtures/sample_vault PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
+VAULT_PATH=tests/fixtures/sample_vault PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_internal_links.py --output-dir build/sample_reports
+VAULT_PATH=tests/fixtures/sample_vault PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit --output-dir build/sample_reports
 ```
 
 Optional local pre-commit setup:

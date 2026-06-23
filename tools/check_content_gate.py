@@ -365,11 +365,13 @@ def write_reports(payload: dict[str, Any], output_dir: Path) -> tuple[Path, Path
     return json_path, md_path
 
 
-def run_reaudit(vault: str | None) -> None:
+def run_reaudit(vault: str | None, output_dir: Path) -> Path:
     command = [sys.executable, str(ROOT / "tools" / "audit_theory_notes.py")]
     if vault:
         command.extend(["--vault", vault])
+    command.extend(["--output-dir", str(output_dir)])
     subprocess.run(command, cwd=ROOT, check=True)
+    return output_dir / "theory_audit.json"
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -390,8 +392,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
+    output_dir = Path(args.output_dir)
     if args.reaudit:
-        run_reaudit(args.vault)
+        audit_path = run_reaudit(args.vault, output_dir)
+        if args.audit == str(DEFAULT_AUDIT):
+            args.audit = str(audit_path)
 
     topics = filter_topics(load_matrix(Path(args.matrix)), args.topic)
     audit = load_json(args.audit)
@@ -406,7 +411,7 @@ def main(argv: list[str] | None = None) -> None:
         task_items=task_items,
         threshold=args.threshold,
     )
-    json_path, md_path = write_reports(payload, Path(args.output_dir))
+    json_path, md_path = write_reports(payload, output_dir)
     summary = payload["summary"]
     print(f"GATE: {summary['passed_topics']}/{summary['total_topics']} pass, {summary['failed_topics']} fail")
     print(f"Failed rule counts: {summary['failed_rule_counts']}")
