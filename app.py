@@ -6358,9 +6358,9 @@ def render_notebook_cell(
 
     st.markdown(
         f"""
-<div class="learning-panel">
-    <div class="learning-panel-title">Ячейка {index}</div>
-    <div class="muted-small">Код выполняется в живом Python-ядре, состояние сохраняется между ячейками.</div>
+<div class="console-panel">
+    <div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>python · cell {index}</span></div>
+    <div class="editor">Код выполняется в живом Python-ядре, состояние сохраняется между ячейками.</div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -6407,21 +6407,39 @@ def render_notebook_cell(
     )
 
     if is_this_running:
+        loading_slot = st.empty()
         with st.spinner("Ячейка выполняется в Python-ядре..."):
+            render_kernel_loading_skeleton(loading_slot)
             st.caption("UI живой: можно прервать ядро сверху или нажать «Обновить вывод».")
+        loading_slot.empty()
 
-    st.markdown("##### Output")
+    render_section_eyebrow_block("Output")
     if outputs:
+        st.markdown('<div class="run-result">', unsafe_allow_html=True)
         for output in outputs:
             render_notebook_output(output)
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.caption("Пока нет вывода.")
+        st.markdown(
+            render_card(
+                "Вывода пока нет",
+                "Запусти ячейку, чтобы увидеть stdout, rich output или traceback.",
+                eyebrow="Notebook output",
+                status="READY",
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def render_notebook_tab() -> None:
-    st.markdown("### 📓 Notebook")
     st.markdown(
-        "Живое Python-ядро для экспериментов: переменные, импорты, датафреймы и модели сохраняются между ячейками."
+        render_card(
+            "📓 Notebook",
+            "Живое Python-ядро для экспериментов: переменные, импорты, датафреймы и модели сохраняются между ячейками.",
+            eyebrow="Build cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
     )
 
     init_notebook_state()
@@ -6434,19 +6452,20 @@ def render_notebook_tab() -> None:
         "busy": "busy",
         "dead": "dead",
     }.get(status, status)
-    status_class = {
-        "idle": "status-done",
-        "busy": "status-reading",
-        "dead": "status-repeat",
-    }.get(status, "status-not-started")
 
+    kernel_chip = {
+        "idle": "READY",
+        "busy": "IN PROGRESS",
+        "dead": "ERROR",
+    }.get(status_label, "NEEDS REVIEW")
     st.markdown(
-        f"""
-<div class="frontmatter-row">
-    <span class="status-pill {status_class}">kernel: {html.escape(status_label)}</span>
-    <span class="fm-chip">cwd: {html.escape(str(PROJECT_ROOT))}</span>
-</div>
-        """,
+        render_card(
+            "Kernel state",
+            f"cwd: {PROJECT_ROOT}",
+            eyebrow="Notebook runtime",
+            status=kernel_chip,
+            content_html=f'<div class="muted-small mono">kernel: {html.escape(status_label)}</div>',
+        ),
         unsafe_allow_html=True,
     )
 
@@ -6454,7 +6473,15 @@ def render_notebook_tab() -> None:
         st.warning(kernel_state["last_error"])
 
     if KernelManager is None:
-        st.error("Notebook требует jupyter_client и ipykernel. Установите зависимости из requirements.txt.")
+        st.markdown(
+            render_card(
+                "Notebook runtime недоступен",
+                "Notebook требует jupyter_client и ipykernel. Установи зависимости из requirements.txt.",
+                eyebrow="Missing dependency",
+                status="ERROR",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     controls = st.columns(4)
@@ -6490,9 +6517,18 @@ def render_notebook_tab() -> None:
     )
 
     if status == "dead":
-        st.info("Ядро остановлено. Нажмите «Перезапустить ядро», чтобы продолжить.")
+        st.markdown(
+            render_card(
+                "Ядро остановлено",
+                "Нажми «Перезапустить ядро», чтобы продолжить работу.",
+                eyebrow="Notebook runtime",
+                status="ERROR",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
+    render_section_eyebrow_block("Cells")
     for index, cell in enumerate(st.session_state["notebook_cells"], start=1):
         render_notebook_cell(cell, index, kernel_state)
 
