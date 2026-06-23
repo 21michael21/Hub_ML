@@ -72,3 +72,15 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q
 Manual release checklist: [docs/manual_test_checklist.md](docs/manual_test_checklist.md)
 
 Architecture notes: [docs/architecture.md](docs/architecture.md)
+
+## Screenshot Checklist
+
+Before a visual checkpoint, capture screenshots for:
+
+- `docs/screenshots/home-cockpit.png` — Home cockpit with top bar, status tiles, and bottom status bar.
+- `docs/screenshots/tasks-result.png` — Mentor Tasks result panel with PASS/FAIL/ERROR chip.
+- `docs/screenshots/projects-detail.png` — Data Lab or ML Lab project detail with milestone cards.
+- `docs/screenshots/notebook-output.png` — Notebook cell output after running `print(42)`.
+- `docs/screenshots/portfolio-export.png` — Portfolio exporter preview.
+
+Screenshots are optional local artifacts; do not commit private data or raw user outputs.

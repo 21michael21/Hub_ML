@@ -1298,15 +1298,11 @@ STATUS_CHIP_CLASSES = {
     "PASS": "status-chip-pass pass chip-pass",
     "FAIL": "status-chip-fail fail chip-fail",
     "ERROR": "status-chip-error error chip-error",
-    "NOT STARTED": "status-chip-idle idle chip-not-started",
     "IN PROGRESS": "chip-in-progress",
     "DONE": "status-chip-pass pass chip-done",
     "NEEDS REVIEW": "chip-needs-review",
     "READY": "status-chip-pass pass chip-ready",
     "BLOCKED": "status-chip-error error chip-blocked",
-    "TODO": "status-chip-idle idle chip-todo",
-    "WEAK": "chip-weak",
-    "IDLE": "status-chip-idle idle chip-not-started",
 }
 
 
@@ -1317,14 +1313,18 @@ def normalize_chip_status(status: str) -> str:
         "FAILED": "FAIL",
         "DOING": "IN PROGRESS",
         "READING": "IN PROGRESS",
+        "TODO": "IN PROGRESS",
+        "TO DO": "IN PROGRESS",
+        "NOT STARTED": "IN PROGRESS",
         "REVIEW": "NEEDS REVIEW",
-        "NOT_STARTED": "NOT STARTED",
-        "NOTSTARTED": "NOT STARTED",
-        "TO DO": "TODO",
+        "WEAK": "NEEDS REVIEW",
+        "NOT_STARTED": "IN PROGRESS",
+        "NOTSTARTED": "IN PROGRESS",
+        "IDLE": "READY",
         "COMPLETE": "DONE",
         "COMPLETED": "DONE",
     }
-    return aliases.get(normalized, normalized or "TODO")
+    return aliases.get(normalized, normalized or "IN PROGRESS")
 
 
 def render_status_chip(status: str) -> str:
@@ -1571,19 +1571,19 @@ def practice_badge(status: str) -> str:
 
 def note_status_to_chip(status: str) -> str:
     return {
-        STATUS_NOT_STARTED: "TODO",
+        STATUS_NOT_STARTED: "IN PROGRESS",
         STATUS_READING: "IN PROGRESS",
         STATUS_DONE: "PASS",
-        STATUS_REPEAT: "WEAK",
-    }.get(status, "TODO")
+        STATUS_REPEAT: "NEEDS REVIEW",
+    }.get(status, "IN PROGRESS")
 
 
 def practice_status_to_chip(status: str) -> str:
     return {
-        PRACTICE_TODO: "TODO",
+        PRACTICE_TODO: "IN PROGRESS",
         PRACTICE_DOING: "IN PROGRESS",
         PRACTICE_DONE: "PASS",
-    }.get(status, "TODO")
+    }.get(status, "IN PROGRESS")
 
 
 def set_note_status_by_key(note_key: str, status: str) -> None:

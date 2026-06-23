@@ -19,6 +19,13 @@ VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
 ## App Navigation
 
 - Home opens without errors.
+- Every page shows the same IDE top bar.
+- Every page shows the same bottom status bar with kernel/git/GATE/python information.
+- Horizontal and top padding are visually identical across tabs.
+- Major sections use the same eyebrow label and spacing rhythm.
+- Status chips use only: `PASS`, `FAIL`, `ERROR`, `IN PROGRESS`, `DONE`, `NEEDS REVIEW`, `READY`, `BLOCKED`.
+- Keyboard focus is visible on sidebar navigation, buttons, inputs, and select boxes.
+- With reduced motion enabled in the OS/browser, fades, shimmer, pulse, and bar animations stop.
 - Theory opens a markdown note from the vault.
 - Theory Quality opens generated audit and coverage summaries.
 - Practice opens existing cards from `practice/`.
@@ -44,6 +51,8 @@ VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
 
 ## Practice
 
+- Cards use the console-card visual system and hover consistently.
+- Empty states use one direct line plus a primary action.
 - Section filter works.
 - `Data Visualization` section appears.
 - The 3 visualization cards open:
@@ -57,6 +66,8 @@ VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
 
 ## Mentor Tasks
 
+- Result panel uses the console panel header, loading skeleton, and status chip.
+- PASS, FAIL, ERROR, TIMEOUT, and KERNEL_BUSY remain behaviorally unchanged.
 - Tasks load from `content/extracted/mentor_tasks.json`.
 - Checkable tasks count is 33.
 - Low-confidence tasks stay in the review section.
@@ -70,6 +81,8 @@ VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
 
 ## Datasets
 
+- Dataset registry renders as cards with mono rows/columns/size metrics.
+- Missing or unreadable CSV files render designed empty/error states.
 - Expected files appear:
   - `df_events.csv`;
   - `df_matching.csv`;
@@ -80,6 +93,9 @@ VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
 
 ## Notebook
 
+- The cell editor remains the existing widget.
+- Surrounding panel header and output area use the console visual system.
+- Running a cell shows spinner/skeleton before output.
 - Run:
 
 ```python
@@ -100,6 +116,8 @@ print(x * 2)
 
 ## Data Lab And ML Lab Projects
 
+- Project cards and milestone cards use status chips and metric tiles.
+- Code milestone result panels match Mentor Tasks result styling.
 - Data Lab Projects list contains:
   - Orders EDA Report;
   - Events Funnel Analysis;
@@ -137,6 +155,8 @@ print(x * 2)
 
 ## Experiment Tracker Lite
 
+- Empty experiment log shows a designed empty state.
+- Experiment records use cards/tables without layout jumps.
 - Open the Classic ML project detail.
 - Save a manual experiment record with:
   - model name;
@@ -151,12 +171,16 @@ print(x * 2)
 
 ## Algorithms
 
+- Learn/Practice/Timed Mock/Review views use the same cards and spacing.
+- Empty attempts section is explicit and not raw text.
 - Algorithm lessons list from `content/source/vkat/VKAT-main/algos_patterns/`.
 - Opening a lesson shows theory/docstring and source code.
 - Running tests on `03_hashmap_pattern.py` succeeds.
 
 ## Progress And Portfolio
 
+- Progress tiles use the same mono metric style as Home.
+- Portfolio artifact cards use status chips and designed empty states.
 - Progress shows notes, practice, mentor tasks, algorithms, projects, and portfolio counts.
 - Portfolio output can be saved for a practice card.
 - Portfolio Export preview can be generated from completed projects and/or completed practice cards.
@@ -165,6 +189,7 @@ print(x * 2)
 
 ## Release Gate
 
+- Capture visual screenshots listed in `README.md` if preparing a design checkpoint.
 - `git status` contains only intended files before commit.
 - `.learning_progress.json` is ignored.
 - `user_projects/` is ignored.

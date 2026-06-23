@@ -1,7 +1,7 @@
 # Theory Content Audit
 
 Vault: `/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat`
-Generated: `2026-06-22T21:20:44.724718+00:00`
+Generated: `2026-06-23T09:11:55.906849+00:00`
 
 ## Summary
 
