@@ -292,9 +292,45 @@ def inject_styles() -> None:
         color: var(--dim);
     }
 
-    .main .block-container {
-        max-width: 980px;
+    [data-testid="stMain"] [data-testid="stMainBlockContainer"] {
+        box-sizing: border-box;
+        width: min(100%, calc(980px + (var(--s4) * 2)));
+        max-width: calc(980px + (var(--s4) * 2));
         padding: var(--s4) var(--s4) 5rem var(--s4);
+    }
+
+    [data-testid="stMain"] [data-testid="stElementContainer"] {
+        max-width: 100%;
+    }
+
+    [data-testid="stMain"] [data-testid="stMarkdownContainer"] h1,
+    [data-testid="stMain"] [data-testid="stMarkdownContainer"] h2,
+    [data-testid="stMain"] [data-testid="stMarkdownContainer"] h3,
+    [data-testid="stMain"] [data-testid="stMarkdownContainer"] h4 {
+        margin-top: 0;
+        margin-bottom: var(--s2);
+    }
+
+    [data-testid="stMain"] [data-testid="stMarkdownContainer"] p {
+        margin-top: 0;
+    }
+
+    [data-testid="stMain"] [class*="st-key-open_next_note"],
+    [data-testid="stMain"] [class*="st-key-open_random_unstarted"],
+    [data-testid="stMain"] [class*="st-key-related_practice_"],
+    [data-testid="stMain"] [class*="st-key-practice_open_"],
+    [data-testid="stMain"] [class*="st-key-semantic_search"],
+    [data-testid="stMain"] [class*="st-key-semantic_related"],
+    [data-testid="stMain"] [class*="st-key-data_lab_select_"],
+    [data-testid="stMain"] [class*="st-key-experiments_empty_open_ml_lab"],
+    [data-testid="stMain"] [class*="st-key-rescan_links"],
+    [data-testid="stMain"] [class*="st-key-broken_open_source_"],
+    [data-testid="stMain"] [class*="st-key-ambiguous_open_source_"] {
+        margin-left: calc((var(--s4) * 2) + 4px);
+    }
+
+    [data-testid="stMain"] [class*="st-key-home_today_"] {
+        margin-left: calc((var(--s4) * 3) + 4px);
     }
 
     .content-container {
