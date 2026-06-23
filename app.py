@@ -415,11 +415,11 @@ def inject_styles() -> None:
         border: 1px solid var(--border-soft);
         border-radius: var(--r-sm);
         background: rgba(18,21,29,0.96);
-        color: var(--dim);
+        color: var(--faint);
         font-family: var(--f-mono);
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         letter-spacing: 0.02em;
-        padding: 0.46rem 0.66rem;
+        padding: 0.38rem 0.6rem;
         backdrop-filter: blur(14px);
         box-shadow: 0 -10px 26px rgba(0,0,0,0.24);
     }
@@ -3668,18 +3668,12 @@ def notebook_kernel_status_label() -> str:
 
 
 def render_status_bar() -> None:
-    kernel_status = notebook_kernel_status_label()
-    branch = git_branch_from_head()
     gate = content_gate_status()
-    python_label = f"python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     st.markdown(
         f"""
 <div class="ide-statusbar">
     <div class="ide-statusbar-left">
-        <span class="ide-statusbar-item"><span class="ide-statusbar-dot {html.escape(kernel_status)}"></span>kernel {html.escape(kernel_status)}</span>
-        <span class="ide-statusbar-item">git {html.escape(branch)}</span>
         <span class="ide-statusbar-item">{html.escape(gate)}</span>
-        <span class="ide-statusbar-item">{html.escape(python_label)}</span>
     </div>
     <div class="ide-statusbar-right">local-first · код виден · без фейковых метрик</div>
 </div>
@@ -4076,7 +4070,7 @@ def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
         render_card(
             "Roadmap",
             "Это учебная карта поверх Obsidian: проходи разделы, открывай заметки и отмечай прогресс.",
-            eyebrow="Learn cluster",
+            eyebrow="Learn",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -4363,7 +4357,7 @@ def render_practice_tab(
         render_card(
             "🎯 Practice",
             "Карточки превращают теорию в действие: инструкция, ресурсы, самопроверка и портфолио-выход.",
-            eyebrow="Learn cluster",
+            eyebrow="Learn",
             status="READY" if cards else "TODO",
         ),
         unsafe_allow_html=True,
@@ -5220,7 +5214,7 @@ def render_data_lab_projects_tab(
         render_card(
             title,
             description,
-            eyebrow="Build cluster",
+            eyebrow="Build",
             status="READY" if projects else "TODO",
         ),
         unsafe_allow_html=True,
@@ -5411,7 +5405,7 @@ def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[di
         render_card(
             "📁 Portfolio",
             "Здесь собираются результаты практики: артефакты, выводы и следы работы, которые потом можно превращать в резюме и GitHub.",
-            eyebrow="Output cluster",
+            eyebrow="Output",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -5692,7 +5686,7 @@ def render_algorithms_tab(lessons: list[dict[str, Any]]) -> None:
         render_card(
             "🧩 Algorithms Lab",
             "Livecoding-тренажер по файлам ментора: теория из docstring, эталонный код и запуск встроенных assert-тестов.",
-            eyebrow="Train cluster",
+            eyebrow="Train",
             status="READY" if lessons else "TODO",
         ),
         unsafe_allow_html=True,
@@ -6001,7 +5995,7 @@ def render_tasks_tab(mentor_data: dict[str, Any]) -> None:
         render_card(
             "🎯 Tasks",
             "Автопроверяемые задачи из ноутбуков ментора. В работу берутся только задания с `assert`.",
-            eyebrow="Train cluster",
+            eyebrow="Train",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -6182,7 +6176,7 @@ def render_interviews_tab(interview_data: dict[str, Any]) -> None:
         render_card(
             "🎤 Interviews",
             "Вопросы и задачи с ML/DS собеседований, сгруппированные по компаниям.",
-            eyebrow="Train cluster",
+            eyebrow="Train",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -6276,7 +6270,7 @@ def render_architecture_tab(architecture_data: dict[str, Any]) -> None:
         render_card(
             "🏗 Architecture",
             "Отдельный учебный справочник по архитектурным принципам и trade-offs.",
-            eyebrow="Output cluster",
+            eyebrow="Output",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -6390,7 +6384,7 @@ def render_theory_quality_tab(note_index: dict[str, Any]) -> None:
         render_card(
             "🧭 Theory Quality",
             "Read-only срез качества базы знаний. Он использует готовые отчёты и не сканирует vault автоматически.",
-            eyebrow="Learn cluster",
+            eyebrow="Learn",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -6585,7 +6579,7 @@ def render_datasets_tab(
         render_card(
             "📊 Datasets",
             "CSV-файлы из папки datasets/ рядом с приложением. Предпросмотр читает только первые строки.",
-            eyebrow="Build cluster",
+            eyebrow="Build",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -6746,7 +6740,7 @@ def render_scratch_tab(datasets: list[dict[str, Any]]) -> None:
         render_card(
             "⚡ Scratch",
             "Лёгкий текстовый раннер: код выполняется отдельным Python-процессом, без живого состояния и без рендера графиков.",
-            eyebrow="Build cluster",
+            eyebrow="Build",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -6912,7 +6906,7 @@ def render_notebook_tab() -> None:
         render_card(
             "📓 Notebook",
             "Живое Python-ядро для экспериментов: переменные, импорты, датафреймы и модели сохраняются между ячейками.",
-            eyebrow="Build cluster",
+            eyebrow="Build",
             status="READY",
         ),
         unsafe_allow_html=True,
@@ -7028,7 +7022,7 @@ def render_progress(
         render_card(
             "Progress",
             "Здесь видно, превращается ли база в реальный учебный путь.",
-            eyebrow="Learn cluster",
+            eyebrow="Learn",
             status="IN PROGRESS" if ratio < 1 else "PASS",
         ),
         unsafe_allow_html=True,
@@ -7182,7 +7176,7 @@ def render_links_health(graph: dict[str, Any]) -> None:
         render_card(
             "🔗 Links Health",
             "Аудит всех Obsidian-ссылок в vault. Это карта надежности твоей базы.",
-            eyebrow="Output cluster",
+            eyebrow="Output",
             status="READY",
         ),
         unsafe_allow_html=True,
