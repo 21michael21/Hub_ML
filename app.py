@@ -6781,8 +6781,20 @@ def render_progress(
     data_lab_done = data_lab_stats["projects_done"]
     data_lab_ratio = data_lab_done / data_lab_total if data_lab_total else 0.0
     render_section_eyebrow_block("Data Lab Projects")
+    data_lab_milestone_meta = f"milestones: {data_lab_stats['milestones_done']}/{data_lab_stats['milestones_total']}"
+    data_lab_tiles = [
+        render_metric_tile("Проектов", data_lab_total, status="INFO"),
+        render_metric_tile(
+            "Complete",
+            data_lab_done,
+            total=data_lab_total,
+            progress=data_lab_ratio,
+            meta=data_lab_milestone_meta,
+            status="PASS" if data_lab_ratio == 1 and data_lab_total else "IN PROGRESS",
+        ),
+    ]
     st.markdown(
-        f'<div class="home-metric-grid">{"".join([render_metric_tile("Проектов", data_lab_total, status="INFO"), render_metric_tile("Complete", data_lab_done, total=data_lab_total, progress=data_lab_ratio, meta=f"milestones: {data_lab_stats["milestones_done"]}/{data_lab_stats["milestones_total"]}", status="PASS" if data_lab_ratio == 1 and data_lab_total else "IN PROGRESS")])}</div>',
+        f'<div class="home-metric-grid">{"".join(data_lab_tiles)}</div>',
         unsafe_allow_html=True,
     )
 

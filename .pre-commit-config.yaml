@@ -3,7 +3,7 @@ repos:
     rev: v0.8.4
     hooks:
       - id: ruff
-        args: ["--select=E9,F63,F7,F82"]
+        args: ["--target-version=py311", "--select=E9,F63,F7,F82"]
         files: ^(app\.py|core/.*|tools/.*|tests/.*)\.py$
 
   - repo: local
