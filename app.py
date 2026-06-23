@@ -5059,11 +5059,27 @@ def render_portfolio_export_section(cards: list[dict[str, Any]], data_lab_projec
     project_by_id = {project["id"]: project for project in completed_projects}
     card_by_id = {card["id"]: card for card in completed_cards}
 
-    st.markdown("#### Portfolio Export")
-    st.warning(EXPORT_WARNING)
+    render_section_eyebrow_block("Portfolio Export")
+    st.markdown(
+        render_card(
+            "Markdown exporter",
+            EXPORT_WARNING,
+            eyebrow="Local artifact",
+            status="NEEDS REVIEW",
+        ),
+        unsafe_allow_html=True,
+    )
 
     if not completed_projects and not completed_cards:
-        st.info("Пока нет completed Data Lab проектов или completed practice cards для экспорта.")
+        st.markdown(
+            render_card(
+                "Экспорт пока недоступен",
+                "Заверши Data Lab проект или practice card, чтобы собрать markdown-шаблон.",
+                eyebrow="Empty state",
+                status="IN PROGRESS",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     selected_project_ids = st.multiselect(
@@ -5106,25 +5122,44 @@ def render_portfolio_export_section(cards: list[dict[str, Any]], data_lab_projec
 
 
 def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[dict[str, Any]]) -> None:
-    st.markdown("### 📁 Portfolio")
-    st.markdown("Здесь собираются результаты практики: артефакты, выводы и следы работы, которые потом можно превращать в резюме и GitHub.")
+    st.markdown(
+        render_card(
+            "📁 Portfolio",
+            "Здесь собираются результаты практики: артефакты, выводы и следы работы, которые потом можно превращать в резюме и GitHub.",
+            eyebrow="Output cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
 
     if not cards and not data_lab_projects:
-        st.info("Пока нет карточек практики, поэтому портфолио пустое.")
+        st.markdown(
+            render_card(
+                "Портфолио пустое",
+                "Открой Practice или Data Lab и сохрани первый output.",
+                eyebrow="Empty state",
+                status="IN PROGRESS",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     practice_stats = practice_progress(cards)
     output_stats = portfolio_progress(cards)
-    metric_cols = st.columns(3)
-    metric_cols[0].metric("Output записан", f"{output_stats['with_outputs']}/{output_stats['total']}")
-    metric_cols[1].metric("Практика сделана", f"{practice_stats[PRACTICE_DONE]}/{practice_stats['total']}")
-    metric_cols[2].metric("Без output", output_stats["missing"])
-
     output_ratio = output_stats["with_outputs"] / output_stats["total"] if output_stats["total"] else 0.0
-    st.progress(output_ratio)
+    practice_total = practice_stats["total"]
+    practice_done = practice_stats[PRACTICE_DONE]
+    practice_ratio = practice_done / practice_total if practice_total else 0.0
+    portfolio_tiles = [
+        render_metric_tile("Output записан", output_stats["with_outputs"], total=output_stats["total"], progress=output_ratio, status="PASS" if output_ratio == 1 and output_stats["total"] else "IN PROGRESS"),
+        render_metric_tile("Практика сделана", practice_done, total=practice_total, progress=practice_ratio, status="PASS" if practice_ratio == 1 and practice_total else "IN PROGRESS"),
+        render_metric_tile("Без output", output_stats["missing"], status="NEEDS REVIEW" if output_stats["missing"] else "READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(portfolio_tiles)}</div>', unsafe_allow_html=True)
 
     render_portfolio_export_section(cards, data_lab_projects)
 
+    render_section_eyebrow_block("Artifacts")
     view = st.radio(
         "Показать",
         ["Все", "Есть output", "Нет output"],
@@ -5141,7 +5176,15 @@ def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[di
         filtered.append(card)
 
     if not filtered:
-        st.info("По этому фильтру ничего нет.")
+        st.markdown(
+            render_card(
+                "По фильтру ничего нет",
+                "Смени фильтр или добавь output в карточке практики.",
+                eyebrow="Empty state",
+                status="READY",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     for card in filtered:
@@ -5152,23 +5195,8 @@ def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[di
         reflection = str(record.get("reflection", "")).strip()
         updated_at = str(record.get("updated_at", "")).strip()
 
-        st.markdown(
-            f"""
-<div class="today-card">
-    <div class="today-card-title">{html.escape(card["title"])}</div>
-    <div class="muted-small">
-        {html.escape(card["section"])} · {html.escape(card["difficulty"])} · {html.escape(card["est_time"])}
-    </div>
-    <div style="margin-top: 0.45rem;">
-        {practice_badge(get_card_status(card))}
-        <span class="status-pill {'status-done' if has_output else 'status-not-started'}">
-            {'■ output есть' if has_output else '□ output пустой'}
-        </span>
-    </div>
-</div>
-            """,
-            unsafe_allow_html=True,
-        )
+        output_status = "DONE" if has_output else "IN PROGRESS"
+        card_meta = f"{card['section']} · {card['difficulty']} · {card['est_time']}"
 
         if has_output:
             details = []
@@ -5181,11 +5209,34 @@ def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[di
             if updated_at:
                 details.append(f'<span class="muted-small">Обновлено: {html.escape(updated_at[:19].replace("T", " "))}</span>')
             st.markdown(
-                '<div class="practice-output">' + "<br>".join(details) + "</div>",
+                render_card(
+                    card["title"],
+                    card_meta,
+                    eyebrow="Portfolio artifact",
+                    status=output_status,
+                    content_html=(
+                        f'{render_status_chip(practice_status_to_chip(get_card_status(card)))} '
+                        f'{render_status_chip(output_status)}'
+                        '<div class="practice-output">' + "<br>".join(details) + "</div>"
+                    ),
+                ),
                 unsafe_allow_html=True,
             )
         else:
-            st.caption("Открой карточку и заполни output, когда появится результат.")
+            st.markdown(
+                render_card(
+                    card["title"],
+                    "Открой карточку и заполни output, когда появится результат.",
+                    eyebrow="Portfolio artifact",
+                    meta=card_meta,
+                    status=output_status,
+                    content_html=(
+                        f'{render_status_chip(practice_status_to_chip(get_card_status(card)))} '
+                        f'{render_status_chip(output_status)}'
+                    ),
+                ),
+                unsafe_allow_html=True,
+            )
 
         st.button(
             "Открыть карточку",
