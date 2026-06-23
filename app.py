@@ -391,7 +391,7 @@ def inject_styles() -> None:
 
     .ide-topbar strong,
     .breadcrumb-shell strong {
-        color: var(--dim);
+        color: var(--faint);
         font-weight: 500;
     }
 
@@ -400,7 +400,7 @@ def inject_styles() -> None:
     }
 
     .ide-topbar .ctx {
-        color: var(--text);
+        color: var(--dim);
     }
 
     .ide-statusbar {
@@ -3610,10 +3610,9 @@ def render_breadcrumb(active_tab: str) -> None:
     group = NAV_GROUP_BY_TAB.get(active_tab, "Home")
     label = NAV_LABELS.get(active_tab, active_tab)
     if active_tab == "Home":
-        crumb = '<strong>cluster</strong><span class="sep">/</span><span class="ctx">Home</span>'
+        crumb = '<span class="ctx">Home</span>'
     else:
         crumb = (
-            f"<strong>cluster</strong><span class=\"sep\">/</span>"
             f"<span>{html.escape(group)}</span><span class=\"sep\">/</span>"
             f"<span class=\"ctx\">{html.escape(label)}</span>"
         )
@@ -3621,7 +3620,7 @@ def render_breadcrumb(active_tab: str) -> None:
         f"""
 <div class="ide-topbar breadcrumb-shell">
     <div class="ide-topbar-left">{crumb}</div>
-    <div class="ide-topbar-right">Jump to anything… ⌘K</div>
+    <div class="ide-topbar-right">Jump… ⌘K</div>
 </div>
         """,
         unsafe_allow_html=True,
