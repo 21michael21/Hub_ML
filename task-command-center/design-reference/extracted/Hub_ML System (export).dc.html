@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#0A0C11">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect x="360" y="250" width="480" height="300" rx="24" fill="#12151D" stroke="#313A48" stroke-width="3"/>
+    <circle cx="410" cy="305" r="11" fill="#FF5E54"/>
+    <circle cx="446" cy="305" r="11" fill="#E5B23A"/>
+    <circle cx="482" cy="305" r="11" fill="#4FD06A"/>
+    <rect x="400" y="360" width="220" height="14" rx="7" fill="#8B9BFF"/>
+    <rect x="400" y="396" width="320" height="12" rx="6" fill="#3D4757"/>
+    <rect x="400" y="428" width="260" height="12" rx="6" fill="#3D4757"/>
+    <rect x="400" y="478" width="120" height="38" rx="9" fill="rgba(139,155,255,.14)" stroke="#3D4757" stroke-width="2"/>
+  </svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #8B9BFF; --accent-soft: rgba(139,155,255,.14); --sgap: 46px; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #0A0C11; }
+  ::selection { background: rgba(139,155,255,.28); }
+  @keyframes hubFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes hubSpin { to { transform: rotate(360deg); } }
+  @keyframes hubShimmer { 0% { background-position: -180% 0; } 100% { background-position: 180% 0; } }
+  @keyframes hubPulse { 0% { box-shadow: 0 0 0 0 rgba(229,178,58,.45); } 70% { box-shadow: 0 0 0 6px rgba(229,178,58,0); } 100% { box-shadow: 0 0 0 0 rgba(229,178,58,0); } }
+  @keyframes hubBlink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+</style>
+</helmet>
+
+<div style="background:#0A0C11;min-height:100vh;color:#F1F3F8;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5;">
+
+  <!-- ===== TOP IDE BREADCRUMB ===== -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 22px;background:rgba(10,12,17,.82);backdrop-filter:blur(10px);border-bottom:1px solid #313A48;">
+    <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;">
+      <span style="width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--accent-soft);"></span>
+      <span style="color:#AAB3C2;">Hub_ML</span>
+      <span style="color:#3D4757;">/</span>
+      <span style="color:#AAB3C2;">Design</span>
+      <span style="color:#3D4757;">/</span>
+      <span style="color:#F1F3F8;">System</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid #313A48;border-radius:8px;background:#12151D;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">
+      <span style="color:#AAB3C2;">⌘K</span>
+      <span>command palette</span>
+    </div>
+  </div>
+
+  <main style="max-width:1120px;margin:0 auto;padding:40px 28px 0;display:flex;flex-direction:column;gap:var(--sgap);">
+
+    <!-- ===== MASTHEAD ===== -->
+    <header style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;margin-bottom:12px;">Component Sheet · v1.0</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:40px;line-height:1.05;letter-spacing:-.02em;margin:0 0 12px;">Hub_ML System</h1>
+      <p style="max-width:560px;margin:0;color:#AAB3C2;font-size:15px;">A local-first ML learning workstation. Dark, high-contrast engineering console — the primitives every screen reuses. Restraint over decoration.</p>
+    </header>
+
+    <!-- ===== TOKENS: COLOR ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Tokens / 01</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Color</h2>
+        </div>
+        <p style="margin:0;color:#AAB3C2;max-width:560px;">Toned near-blacks, one indigo accent, four semantic signals. Saturation stays low everywhere except the signals.</p>
+      </div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:10px;">Surfaces</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:22px;">
+        <div style="border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+          <div style="height:54px;background:#0A0C11;border-bottom:1px solid #313A48;"></div>
+          <div style="padding:10px 11px;"><div style="font-size:12px;color:#F1F3F8;margin-bottom:3px;">bg</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">#0A0C11</div></div>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+          <div style="height:54px;background:#12151D;border-bottom:1px solid #313A48;"></div>
+          <div style="padding:10px 11px;"><div style="font-size:12px;color:#F1F3F8;margin-bottom:3px;">surface</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">#12151D</div></div>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+          <div style="height:54px;background:#1A1F29;border-bottom:1px solid #313A48;"></div>
+          <div style="padding:10px 11px;"><div style="font-size:12px;color:#F1F3F8;margin-bottom:3px;">raised</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">#1A1F29</div></div>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+          <div style="height:54px;background:#313A48;border-bottom:1px solid #313A48;"></div>
+          <div style="padding:10px 11px;"><div style="font-size:12px;color:#F1F3F8;margin-bottom:3px;">border</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">#313A48</div></div>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+          <div style="height:54px;background:#3D4757;border-bottom:1px solid #313A48;"></div>
+          <div style="padding:10px 11px;"><div style="font-size:12px;color:#F1F3F8;margin-bottom:3px;">border+</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">#3D4757</div></div>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+          <div style="height:54px;background:var(--accent);border-bottom:1px solid #313A48;"></div>
+          <div style="padding:10px 11px;"><div style="font-size:12px;color:#F1F3F8;margin-bottom:3px;">accent</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">#8B9BFF</div></div>
+        </div>
+      </div>
+
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:10px;">Text &amp; signals</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;">
+        <div style="display:flex;align-items:center;gap:9px;border:1px solid #313A48;border-radius:8px;padding:11px 12px;background:#12151D;"><span style="width:18px;height:18px;border-radius:5px;background:#F1F3F8;"></span><div><div style="font-size:12px;">text</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;">#F1F3F8</div></div></div>
+        <div style="display:flex;align-items:center;gap:9px;border:1px solid #313A48;border-radius:8px;padding:11px 12px;background:#12151D;"><span style="width:18px;height:18px;border-radius:5px;background:#AAB3C2;"></span><div><div style="font-size:12px;">dim</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;">#AAB3C2</div></div></div>
+        <div style="display:flex;align-items:center;gap:9px;border:1px solid #313A48;border-radius:8px;padding:11px 12px;background:#12151D;"><span style="width:18px;height:18px;border-radius:5px;background:#6A7382;"></span><div><div style="font-size:12px;">faint</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;">#6A7382</div></div></div>
+        <div style="display:flex;align-items:center;gap:9px;border:1px solid #313A48;border-radius:8px;padding:11px 12px;background:#12151D;"><span style="width:18px;height:18px;border-radius:5px;background:#4FD06A;"></span><div><div style="font-size:12px;">pass</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;">#4FD06A</div></div></div>
+        <div style="display:flex;align-items:center;gap:9px;border:1px solid #313A48;border-radius:8px;padding:11px 12px;background:#12151D;"><span style="width:18px;height:18px;border-radius:5px;background:#E5B23A;"></span><div><div style="font-size:12px;">warn</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;">#E5B23A</div></div></div>
+        <div style="display:flex;align-items:center;gap:9px;border:1px solid #313A48;border-radius:8px;padding:11px 12px;background:#12151D;"><span style="width:18px;height:18px;border-radius:5px;background:#FF5E54;"></span><div><div style="font-size:12px;">fail</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;">#FF5E54</div></div></div>
+      </div>
+    </section>
+
+    <!-- ===== TOKENS: TYPE + SPACE ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;display:grid;grid-template-columns:1.4fr 1fr;gap:22px;">
+      <div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Tokens / 02</span>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Type</h2>
+          <p style="margin:0;color:#AAB3C2;">Space Grotesk display · IBM Plex Sans UI · IBM Plex Mono for code &amp; meta.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;">
+            <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;margin-bottom:8px;"><span>SPACE GROTESK</span><span>display · 40 / 22</span></div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:34px;letter-spacing:-.02em;line-height:1.05;">Train. Eval. Ship.</div>
+          </div>
+          <div style="border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;">
+            <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;margin-bottom:8px;"><span>IBM PLEX SANS</span><span>ui · 15 / 14</span></div>
+            <div style="font-size:15px;color:#F1F3F8;">The whole interface reads like a console: quiet chrome, dense data, generous contrast for long study sessions.</div>
+          </div>
+          <div style="border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;">
+            <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6A7382;margin-bottom:8px;"><span>IBM PLEX MONO</span><span>code · meta · 13</span></div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#AAB3C2;">epoch 12/12 · loss 0.043 · acc 0.991 · 8.4s</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Tokens / 03</span>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Space &amp; radius</h2>
+          <p style="margin:0;color:#AAB3C2;">8 / 14 / 22 / 32 spacing. Radius 12 &amp; 8.</p>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:12px;padding:20px;background:#12151D;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:12px;"><span style="height:8px;width:8px;background:var(--accent);border-radius:2px;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;width:28px;">8</span><span style="height:8px;width:8px;background:#3D4757;border-radius:2px;flex:none;"></span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="height:8px;width:14px;background:var(--accent);border-radius:2px;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;width:28px;">14</span><span style="height:8px;width:14px;background:#3D4757;border-radius:2px;flex:none;"></span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="height:8px;width:22px;background:var(--accent);border-radius:2px;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;width:28px;">22</span><span style="height:8px;width:22px;background:#3D4757;border-radius:2px;flex:none;"></span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="height:8px;width:32px;background:var(--accent);border-radius:2px;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;width:28px;">32</span><span style="height:8px;width:32px;background:#3D4757;border-radius:2px;flex:none;"></span></div>
+          <div style="height:1px;background:#313A48;margin:2px 0;"></div>
+          <div style="display:flex;gap:14px;">
+            <div style="flex:1;text-align:center;"><div style="height:46px;border:1px solid #3D4757;border-radius:12px;background:#1A1F29;margin-bottom:7px;"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">r-12</span></div>
+            <div style="flex:1;text-align:center;"><div style="height:46px;border:1px solid #3D4757;border-radius:8px;background:#1A1F29;margin-bottom:7px;"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;">r-8</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="height:1px;background:#313A48;"></div>
+
+    <!-- ===== STATUS CHIPS ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Primitive / 01</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Status chip</h2>
+          <span style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;color:#4FD06A;"><span style="width:6px;height:6px;border-radius:50%;background:#4FD06A;"></span>READY</span>
+        </div>
+        <p style="margin:0;color:#AAB3C2;">Mono, pill, colored dot. Live states pulse. Hover brightens the border.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;color:#4FD06A;transition:border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="border-color:#3D4757;"><span style="width:7px;height:7px;border-radius:50%;background:#4FD06A;"></span>PASS</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;color:#FF5E54;transition:border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="border-color:#3D4757;"><span style="width:7px;height:7px;border-radius:50%;background:#FF5E54;"></span>FAIL</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;color:#FF5E54;transition:border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="border-color:#3D4757;"><span style="width:7px;height:7px;border-radius:50%;background:#FF5E54;"></span>ERROR</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;color:#E5B23A;transition:border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="border-color:#3D4757;"><span style="width:7px;height:7px;border-radius:50%;background:#E5B23A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;"></span>IN PROGRESS</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;color:#5FAEFF;transition:border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="border-color:#3D4757;"><span style="width:7px;height:7px;border-radius:50%;background:#5FAEFF;"></span>READY</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;color:#4FD06A;transition:border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="border-color:#3D4757;"><span style="width:7px;height:7px;border-radius:50%;background:#4FD06A;"></span>DONE</span>
+      </div>
+    </section>
+
+    <!-- ===== METRIC TILES ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Primitive / 02</span>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Metric tile</h2>
+        <p style="margin:0;color:#AAB3C2;">Big mono number, optional /total, label. Progress bar only when a real ratio exists. All tiles equal height.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch;">
+        <div style="display:flex;flex-direction:column;border:1px solid #313A48;border-radius:12px;padding:18px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:14px;">Epochs</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:34px;letter-spacing:-.02em;line-height:1;"> 7<span style="font-size:18px;color:#6A7382;">/12</span></div>
+          <div style="flex:1;"></div>
+          <div style="height:4px;border-radius:999px;background:#1A1F29;margin-top:16px;overflow:hidden;"><div style="height:100%;width:58%;background:var(--accent);border-radius:999px;transition:width 220ms cubic-bezier(.2,.7,.3,1);"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid #313A48;border-radius:12px;padding:18px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:14px;">Tests pass</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:34px;letter-spacing:-.02em;line-height:1;color:#4FD06A;">18<span style="font-size:18px;color:#6A7382;">/20</span></div>
+          <div style="flex:1;"></div>
+          <div style="height:4px;border-radius:999px;background:#1A1F29;margin-top:16px;overflow:hidden;"><div style="height:100%;width:90%;background:#4FD06A;border-radius:999px;"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid #313A48;border-radius:12px;padding:18px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:14px;">Val loss</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:34px;letter-spacing:-.02em;line-height:1;">0.043</div>
+          <div style="flex:1;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#4FD06A;margin-top:16px;">↓ 0.006 vs last</div>
+        </div>
+        <div style="display:flex;flex-direction:column;border:1px solid #313A48;border-radius:12px;padding:18px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:14px;">Learn rate</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:34px;letter-spacing:-.02em;line-height:1;">3e-4</div>
+          <div style="flex:1;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6A7382;margin-top:16px;">cosine decay</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CLICKABLE CARDS ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Primitive / 03</span>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Clickable card</h2>
+        <p style="margin:0;color:#AAB3C2;">The whole card is the action — no button below it. Hover lifts the card and brightens the → affordance. Fail variant carries a 2px left accent.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;margin-bottom:6px;">Notebook · backprop from scratch</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">module 04 · 12 cells · last run 2h ago</div></div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">open →</span>
+        </div>
+        <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;margin-bottom:6px;">Dataset · cifar-10 (local)</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">60k samples · 178 MB · cached</div></div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">inspect →</span>
+        </div>
+        <div role="button" tabindex="0" style="--arrowC:#FF5E54;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-left:2px solid #FF5E54;border-radius:12px;padding:18px 20px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;border-left-color:#FF5E54;">
+          <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;margin-bottom:6px;">Run #214 · grad explosion</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#FF5E54;">nan loss at step 1,204 · exit 1</div></div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">view log →</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;">
+          <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+            <div style="height:13px;width:62%;border-radius:5px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+            <div style="height:11px;width:40%;border-radius:5px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+          </div>
+          <div style="height:11px;width:54px;border-radius:5px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION HEADER PATTERN ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Primitive / 04</span>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Flat section header</h2>
+        <p style="margin:0;color:#AAB3C2;">Eyebrow + title + chip + one-line description. Flat — never wrapped in a bordered card. No card-in-card.</p>
+      </div>
+      <div style="border-top:1px solid #313A48;border-bottom:1px solid #313A48;padding:22px 0;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Module 04 / Optimization</span>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:24px;letter-spacing:-.01em;margin:0;">Gradient descent</h3>
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#E5B23A;"><span style="width:6px;height:6px;border-radius:50%;background:#E5B23A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;"></span>IN PROGRESS</span>
+          </div>
+          <p style="margin:0;color:#AAB3C2;max-width:600px;">Walk from a single update step to mini-batch SGD with momentum, then profile it on the local GPU.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CODE PANEL ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Primitive / 05</span>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Code panel</h2>
+        <p style="margin:0;color:#AAB3C2;">Traffic-light header, syntax-highlighted cell, a run button, and a live result area.</p>
+      </div>
+      <div style="border:1px solid #313A48;border-radius:12px;overflow:hidden;background:#12151D;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #313A48;background:#0F1219;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="display:flex;gap:7px;"><span style="width:11px;height:11px;border-radius:50%;background:#FF5E54;"></span><span style="width:11px;height:11px;border-radius:50%;background:#E5B23A;"></span><span style="width:11px;height:11px;border-radius:50%;background:#4FD06A;"></span></div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#AAB3C2;">train.py</span>
+          </div>
+          <div onClick="{{ runCode }}" role="button" tabindex="0" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:8px;border:1px solid #3D4757;background:var(--accent-soft);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.03em;transition:border-color 160ms,filter 160ms;" style-hover="border-color:var(--accent);filter:brightness(1.12);">
+          <sc-if value="{{ isRunning }}" hint-placeholder-val="{{ false }}"><span style="width:12px;height:12px;border-radius:50%;border:2px solid var(--accent-soft);border-top-color:var(--accent);animation:hubSpin .7s linear infinite;"></span></sc-if>
+          <sc-if value="{{ notRunning }}" hint-placeholder-val="{{ true }}"><span>▶</span></sc-if>
+          <span>{{ runLabel }}</span>
+          </div>
+        </div>
+        <pre style="margin:0;padding:18px 20px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;color:#F1F3F8;overflow-x:auto;"><span style="color:#8B9BFF;">import</span> torch
+<span style="color:#8B9BFF;">from</span> hub_ml <span style="color:#8B9BFF;">import</span> Trainer, load
+
+ds = <span style="color:#5FAEFF;">load</span>(<span style="color:#4FD06A;">"cifar-10"</span>, split=<span style="color:#4FD06A;">"train"</span>)
+model = <span style="color:#5FAEFF;">Trainer</span>(lr=<span style="color:#E5B23A;">3e-4</span>, epochs=<span style="color:#E5B23A;">12</span>)
+
+<span style="color:#6A7382;"># fit on the local GPU</span>
+model.<span style="color:#5FAEFF;">fit</span>(ds, batch=<span style="color:#E5B23A;">64</span>)
+<span style="color:#5FAEFF;">print</span>(model.<span style="color:#5FAEFF;">eval</span>())</pre>
+        <div style="border-top:1px solid #313A48;background:#0B0E14;padding:16px 20px;min-height:88px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.7;">
+          <sc-if value="{{ isIdle }}" hint-placeholder-val="{{ true }}">
+            <div style="color:#6A7382;">› press <span style="color:#AAB3C2;">Run</span> to execute this cell</div>
+          </sc-if>
+          <sc-if value="{{ isRunning }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;color:#E5B23A;"><span style="width:12px;height:12px;border-radius:50%;border:2px solid rgba(229,178,58,.25);border-top-color:#E5B23A;animation:hubSpin .7s linear infinite;"></span>executing cell — fitting on local GPU<span style="animation:hubBlink 1s steps(1) infinite;">_</span></div>
+          </sc-if>
+          <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+            <div style="color:#AAB3C2;">› loaded 60000 samples</div>
+            <div style="color:#AAB3C2;">› epoch <span style="color:#F1F3F8;">12/12</span>  loss <span style="color:#4FD06A;">0.043</span>  acc <span style="color:#4FD06A;">0.991</span></div>
+            <div style="color:#4FD06A;">✓ eval complete in 8.4s</div>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKELETON + EMPTY ===== -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Primitive / 06</span>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.01em;margin:0;">Loading &amp; empty</h2>
+        <p style="margin:0;color:#AAB3C2;">Shimmer skeleton while data resolves. A designed empty state: one line, one primary action.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="border:1px solid #313A48;border-radius:12px;padding:20px;background:#12151D;display:flex;flex-direction:column;gap:14px;">
+          <div style="height:15px;width:48%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+          <div style="height:11px;width:90%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+          <div style="height:11px;width:76%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+          <div style="display:flex;gap:10px;margin-top:4px;"><div style="height:38px;flex:1;border-radius:8px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div><div style="height:38px;flex:1;border-radius:8px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div>
+        </div>
+        <div style="border:1px solid #313A48;border-radius:12px;padding:20px;background:#12151D;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;min-height:170px;">
+          <div style="width:38px;height:38px;border-radius:10px;border:1px solid #3D4757;background:#1A1F29;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;color:#6A7382;font-size:18px;">∅</div>
+          <div style="color:#AAB3C2;max-width:300px;">No runs yet. Train a model to populate this workspace.</div>
+          <div role="button" tabindex="0" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:8px;border:1px solid #3D4757;background:var(--accent-soft);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.03em;transition:border-color 160ms,filter 160ms;" style-hover="border-color:var(--accent);filter:brightness(1.12);">▶ start a run</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== BOTTOM STATUS BAR ===== -->
+  <div style="position:sticky;bottom:0;z-index:20;margin-top:46px;display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 18px;background:rgba(10,12,17,.86);backdrop-filter:blur(10px);border-top:1px solid #313A48;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span style="display:inline-flex;align-items:center;gap:7px;color:#AAB3C2;"><span style="width:7px;height:7px;border-radius:50%;background:#4FD06A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;box-shadow:0 0 0 0 rgba(79,208,106,.4);"></span>GPU online</span>
+      <span>cuda:0 · 8.1 / 24 GB</span>
+      <span>py 3.11</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span>main</span>
+      <span>UTF-8</span>
+      <span style="color:#AAB3C2;">⌘K</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:2200},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Indigo&quot;,&quot;Blue&quot;,&quot;Green&quot;,&quot;Amber&quot;],&quot;default&quot;:&quot;Indigo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;compact&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { run: 'idle' };
+
+  componentDidMount() { this.applyTokens(); }
+  componentDidUpdate(prev) { if (prev.accent !== this.props.accent || prev.compact !== this.props.compact) this.applyTokens(); }
+
+  applyTokens() {
+    const map = { Indigo: '#8B9BFF', Blue: '#5FAEFF', Green: '#4FD06A', Amber: '#E5B23A' };
+    const soft = { Indigo: 'rgba(139,155,255,.14)', Blue: 'rgba(95,174,255,.14)', Green: 'rgba(79,208,106,.14)', Amber: 'rgba(229,178,58,.14)' };
+    const a = this.props.accent || 'Indigo';
+    const root = document.documentElement;
+    root.style.setProperty('--accent', map[a] || map.Indigo);
+    root.style.setProperty('--accent-soft', soft[a] || soft.Indigo);
+    root.style.setProperty('--sgap', this.props.compact ? '30px' : '46px');
+  }
+
+  runCode = () => {
+    if (this.state.run === 'running') return;
+    this.setState({ run: 'running' });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ run: 'done' }), 1500);
+  };
+
+  renderVals() {
+    const run = this.state.run;
+    return {
+      isIdle: run === 'idle',
+      isRunning: run === 'running',
+      notRunning: run !== 'running',
+      isDone: run === 'done',
+      runCode: this.runCode,
+      runLabel: run === 'running' ? 'Running' : run === 'done' ? 'Re-run' : 'Run',
+    };
+  }
+}
+</script>
+</body>
+</html>

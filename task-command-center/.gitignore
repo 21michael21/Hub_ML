@@ -1,0 +1,16 @@
+.env
+client_secret.json
+token.json
+client_secret*.json
+.taskctl_mock/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
+web/node_modules/
+web/dist/
+web/*.tsbuildinfo
+web/vite.config.js
+web/vite.config.d.ts

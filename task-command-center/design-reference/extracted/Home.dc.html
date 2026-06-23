@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #8B9BFF; --accent-soft: rgba(139,155,255,.14); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #0A0C11; }
+  ::selection { background: rgba(139,155,255,.28); }
+  @keyframes hubFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes hubSpin { to { transform: rotate(360deg); } }
+  @keyframes hubShimmer { 0% { background-position: -180% 0; } 100% { background-position: 180% 0; } }
+  @keyframes hubPulse { 0% { box-shadow: 0 0 0 0 rgba(229,178,58,.45); } 70% { box-shadow: 0 0 0 6px rgba(229,178,58,0); } 100% { box-shadow: 0 0 0 0 rgba(229,178,58,0); } }
+  @keyframes hubRing { from { stroke-dashoffset: 213.6; } to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+</style>
+</helmet>
+
+<div style="background:#0A0C11;min-height:100vh;color:#F1F3F8;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5;display:flex;flex-direction:column;">
+
+  <!-- TOP IDE BREADCRUMB -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 22px;background:rgba(10,12,17,.82);backdrop-filter:blur(10px);border-bottom:1px solid #313A48;">
+    <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;">
+      <span style="width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--accent-soft);"></span>
+      <span style="color:#AAB3C2;">Hub_ML</span>
+      <span style="color:#3D4757;">/</span>
+      <span style="color:#F1F3F8;">Home</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div onClick="{{ reload }}" role="button" tabindex="0" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid #313A48;border-radius:8px;background:#12151D;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;transition:border-color 160ms,color 160ms;" style-hover="border-color:#3D4757;color:#AAB3C2;"><span>↻</span><span>reload</span></div>
+      <div style="display:flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid #313A48;border-radius:8px;background:#12151D;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;"><span style="color:#AAB3C2;">⌘K</span><span>command palette</span></div>
+    </div>
+  </div>
+
+  <main style="flex:1;width:100%;max-width:760px;margin:0 auto;padding:40px 28px;display:flex;flex-direction:column;gap:32px;">
+
+    <!-- ============ LOADED STATE ============ -->
+    <sc-if value="{{ loaded }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:32px;">
+
+      <!-- BRAND -->
+      <header style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;letter-spacing:-.02em;margin:0;">Hub_ML</h1>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">· local workstation</span>
+        </div>
+        <p style="margin:0;color:#AAB3C2;font-size:15px;">Инженерная консоль для локальной ML-практики.</p>
+      </header>
+
+      <!-- HERO: GATE METRIC -->
+      <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) .08s both;">
+        <div style="display:flex;align-items:center;gap:26px;border:1px solid #313A48;border-radius:12px;padding:26px 28px;background:#12151D;">
+          <div style="position:relative;width:96px;height:96px;flex:none;">
+            <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg);">
+              <circle cx="48" cy="48" r="34" fill="none" stroke="#1A1F29" stroke-width="8"></circle>
+              <circle cx="48" cy="48" r="34" fill="none" stroke="#4FD06A" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="0" style="animation:hubRing 1s cubic-bezier(.2,.7,.3,1) .2s both;"></circle>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#4FD06A;">100%</div>
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Quality gate</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;padding:3px 10px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#4FD06A;"><span style="width:6px;height:6px;border-radius:50%;background:#4FD06A;"></span>PASS</span>
+            </div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:42px;letter-spacing:-.02em;line-height:1;">36<span style="font-size:24px;color:#6A7382;">/36</span></div>
+            <p style="margin:10px 0 0;color:#AAB3C2;max-width:420px;">Все 36 тем прошли контроль качества контента — честный прогресс, без накрутки.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ПРОДОЛЖИТЬ -->
+      <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) .16s both;">
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Resume</span>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.01em;margin:0;">Продолжить</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+
+          <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;animation:hubFadeUp .45s cubic-bezier(.2,.7,.3,1) .2s both;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+            <div>
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:7px;">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;">Advanced Python</span>
+                <span style="display:inline-flex;align-items:center;gap:7px;padding:3px 9px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#E5B23A;"><span style="width:6px;height:6px;border-radius:50%;background:#E5B23A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;"></span>IN PROGRESS</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">задача · confidence high · 0/51</div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">→ Открыть</span>
+          </div>
+
+          <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;animation:hubFadeUp .45s cubic-bezier(.2,.7,.3,1) .27s both;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+            <div>
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:7px;">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;">Градиентный спуск — конспект</span>
+                <span style="display:inline-flex;align-items:center;gap:7px;padding:3px 9px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#5FAEFF;"><span style="width:6px;height:6px;border-radius:50%;background:#5FAEFF;"></span>READY</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">конспект · module 04 · прочитано ½</div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">→ Открыть</span>
+          </div>
+
+          <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;animation:hubFadeUp .45s cubic-bezier(.2,.7,.3,1) .34s both;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+            <div>
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:7px;">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;">CIFAR-10 классификатор</span>
+                <span style="display:inline-flex;align-items:center;gap:7px;padding:3px 9px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#E5B23A;"><span style="width:6px;height:6px;border-radius:50%;background:#E5B23A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;"></span>IN PROGRESS</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">проект · epoch 7/12 · loss 0.043</div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">→ Открыть</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ПЛАН НА СЕГОДНЯ -->
+      <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) .24s both;">
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Today</span>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.01em;margin:0;">План на сегодня</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+
+          <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:16px 20px;background:#12151D;animation:hubFadeUp .45s cubic-bezier(.2,.7,.3,1) .3s both;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+            <div>
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:6px;">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:15px;">Следующий конспект · Регуляризация</span>
+                <span style="display:inline-flex;align-items:center;gap:7px;padding:3px 9px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#5FAEFF;"><span style="width:6px;height:6px;border-radius:50%;background:#5FAEFF;"></span>READY</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">конспект · ≈ 8 мин чтения</div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">→ Открыть</span>
+          </div>
+
+          <div role="button" tabindex="0" style="--arrowC:#6A7382;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:16px 20px;background:#12151D;animation:hubFadeUp .45s cubic-bezier(.2,.7,.3,1) .37s both;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;--arrowC:var(--accent);">
+            <div>
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:6px;">
+                <span style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:15px;">Практика · 10 задач по NumPy</span>
+                <span style="display:inline-flex;align-items:center;gap:7px;padding:3px 9px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#5FAEFF;"><span style="width:6px;height:6px;border-radius:50%;background:#5FAEFF;"></span>READY</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6A7382;">практика · 0/10 · ~25 мин</div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--arrowC);white-space:nowrap;transition:color 160ms;">→ Открыть</span>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+    </sc-if>
+
+    <!-- ============ LOADING / SKELETON STATE ============ -->
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <!-- brand skeleton -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="height:24px;width:200px;border-radius:6px;background:linear-gradient(90deg,#12151D 25%,#1d2330 50%,#12151D 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+        <div style="height:14px;width:340px;border-radius:6px;background:linear-gradient(90deg,#12151D 25%,#1d2330 50%,#12151D 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+      </div>
+      <!-- hero skeleton -->
+      <div style="display:flex;align-items:center;gap:26px;border:1px solid #313A48;border-radius:12px;padding:26px 28px;background:#12151D;">
+        <div style="width:96px;height:96px;border-radius:50%;flex:none;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+          <div style="height:12px;width:120px;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+          <div style="height:34px;width:160px;border-radius:8px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+          <div style="height:12px;width:80%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+        </div>
+      </div>
+      <!-- section + rows skeleton -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="height:18px;width:150px;border-radius:6px;background:linear-gradient(90deg,#12151D 25%,#1d2330 50%,#12151D 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;"><div style="flex:1;display:flex;flex-direction:column;gap:10px;"><div style="height:14px;width:55%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div><div style="height:11px;width:38%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div><div style="height:11px;width:64px;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;"><div style="flex:1;display:flex;flex-direction:column;gap:10px;"><div style="height:14px;width:48%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div><div style="height:11px;width:42%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div><div style="height:11px;width:64px;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #313A48;border-radius:12px;padding:18px 20px;background:#12151D;"><div style="flex:1;display:flex;flex-direction:column;gap:10px;"><div style="height:14px;width:52%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div><div style="height:11px;width:35%;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div><div style="height:11px;width:64px;border-radius:6px;background:linear-gradient(90deg,#1A1F29 25%,#242a37 50%,#1A1F29 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+  </main>
+
+  <!-- BOTTOM STATUS BAR -->
+  <div style="position:sticky;bottom:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 18px;background:rgba(10,12,17,.86);backdrop-filter:blur(10px);border-top:1px solid #313A48;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span style="display:inline-flex;align-items:center;gap:7px;color:#AAB3C2;"><span style="width:7px;height:7px;border-radius:50%;background:#4FD06A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;box-shadow:0 0 0 0 rgba(79,208,106,.4);"></span>local · online</span>
+      <span>gate 36/36</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span>main</span>
+      <span style="color:#AAB3C2;">⌘K</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:1000},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Indigo&quot;,&quot;Blue&quot;,&quot;Green&quot;,&quot;Amber&quot;],&quot;default&quot;:&quot;Indigo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;loading&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { loading: false };
+
+  componentDidMount() {
+    this.applyAccent();
+    if (this.props.loading) this.setState({ loading: true });
+  }
+  componentDidUpdate(prev) {
+    if (prev.accent !== this.props.accent) this.applyAccent();
+    if (prev.loading !== this.props.loading) this.setState({ loading: !!this.props.loading });
+  }
+
+  applyAccent() {
+    const map = { Indigo: '#8B9BFF', Blue: '#5FAEFF', Green: '#4FD06A', Amber: '#E5B23A' };
+    const soft = { Indigo: 'rgba(139,155,255,.14)', Blue: 'rgba(95,174,255,.14)', Green: 'rgba(79,208,106,.14)', Amber: 'rgba(229,178,58,.14)' };
+    const a = this.props.accent || 'Indigo';
+    document.documentElement.style.setProperty('--accent', map[a] || map.Indigo);
+    document.documentElement.style.setProperty('--accent-soft', soft[a] || soft.Indigo);
+  }
+
+  reload = () => {
+    if (this.state.loading) return;
+    this.setState({ loading: true });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ loading: false }), 1600);
+  };
+
+  renderVals() {
+    return {
+      loading: this.state.loading,
+      loaded: !this.state.loading,
+      reload: this.reload,
+    };
+  }
+}
+</script>
+</body>
+</html>

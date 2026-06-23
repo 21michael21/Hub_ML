@@ -1,0 +1,36 @@
+timezone: Europe/Moscow
+
+trello:
+  board_name: Command Center
+  lists:
+    - Inbox
+    - Backlog
+    - Next
+    - Today
+    - In Progress
+    - Waiting
+    - Review
+    - Done
+
+projects:
+  - CRM
+  - Landing
+  - Bot
+  - Database
+  - Docs
+  - Learning
+  - Personal
+  - Finance
+
+priorities:
+  - P1
+  - P2
+  - P3
+
+calendar:
+  calendar_name: Task Command Center
+  calendar_id: primary
+  default_reminders:
+    - 30
+    - 5
+  default_duration_minutes: 120

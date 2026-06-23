@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #8B9BFF; --accent-soft: rgba(139,155,255,.14); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #0A0C11; }
+  ::selection { background: rgba(139,155,255,.28); }
+  @keyframes hubFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes hubSpin { to { transform: rotate(360deg); } }
+  @keyframes hubShimmer { 0% { background-position: -180% 0; } 100% { background-position: 180% 0; } }
+  @keyframes hubPulse { 0% { box-shadow: 0 0 0 0 rgba(79,208,106,.5); } 70% { box-shadow: 0 0 0 6px rgba(79,208,106,0); } 100% { box-shadow: 0 0 0 0 rgba(79,208,106,0); } }
+  @keyframes hubBlink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  @keyframes hubBar { from { width: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+</style>
+</helmet>
+
+<div style="background:#0A0C11;min-height:100vh;color:#F1F3F8;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5;display:flex;flex-direction:column;">
+
+  <!-- TOP IDE BREADCRUMB -->
+  <div style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 22px;background:rgba(10,12,17,.82);backdrop-filter:blur(10px);border-bottom:1px solid #313A48;">
+    <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;">
+      <span style="width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--accent-soft);"></span>
+      <span style="color:#AAB3C2;">Mentor</span>
+      <span style="color:#3D4757;">/</span>
+      <span style="color:#F1F3F8;">Task</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid #313A48;border-radius:8px;background:#12151D;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;"><span style="color:#AAB3C2;">⌘K</span><span>command palette</span></div>
+  </div>
+
+  <main style="flex:1;width:100%;max-width:820px;margin:0 auto;padding:40px 28px;display:flex;flex-direction:column;gap:32px;">
+
+    <!-- HEADER -->
+    <header style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) both;display:flex;flex-direction:column;gap:10px;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6A7382;">Mentor · Task 07</span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;letter-spacing:-.02em;margin:0;">Очистка датасета транзакций</h1>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#E5B23A;"><span style="width:6px;height:6px;border-radius:50%;background:#E5B23A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;box-shadow:0 0 0 0 rgba(229,178,58,.5);"></span>IN PROGRESS</span>
+      </div>
+      <p style="margin:0;color:#AAB3C2;max-width:580px;">Загрузить CSV, отбросить дубликаты и пустые суммы, вернуть очищенный DataFrame. Проверка сверит размер и контрольные суммы.</p>
+    </header>
+
+    <!-- PROGRESS TILES -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) .08s both;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:stretch;max-width:420px;">
+      <div style="display:flex;flex-direction:column;border:1px solid #313A48;border-radius:12px;padding:18px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:14px;">Задач пройдено</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:32px;letter-spacing:-.02em;line-height:1;">14<span style="font-size:17px;color:#6A7382;">/20</span></div>
+        <div style="flex:1;"></div>
+        <div style="height:4px;border-radius:999px;background:#1A1F29;margin-top:16px;overflow:hidden;"><div style="height:100%;width:70%;background:var(--accent);border-radius:999px;animation:hubBar .7s cubic-bezier(.2,.7,.3,1) .2s both;"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;border:1px solid #313A48;border-radius:12px;padding:18px;background:#12151D;transition:transform 160ms cubic-bezier(.2,.7,.3,1),border-color 160ms cubic-bezier(.2,.7,.3,1);" style-hover="transform:translateY(-2px);border-color:#3D4757;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6A7382;margin-bottom:14px;">Темы в gate</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:32px;letter-spacing:-.02em;line-height:1;color:#4FD06A;">36<span style="font-size:17px;color:#6A7382;">/36</span></div>
+        <div style="flex:1;"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#4FD06A;margin-top:16px;">все прошли</div>
+      </div>
+    </section>
+
+    <!-- CODE PANEL -->
+    <section style="animation:hubFadeUp .5s cubic-bezier(.2,.7,.3,1) .16s both;">
+      <div style="border:1px solid #313A48;border-radius:12px;overflow:hidden;background:#12151D;">
+        <!-- traffic-light header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid #313A48;background:#0F1219;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="display:flex;gap:7px;"><span style="width:11px;height:11px;border-radius:50%;background:#FF5E54;"></span><span style="width:11px;height:11px;border-radius:50%;background:#E5B23A;"></span><span style="width:11px;height:11px;border-radius:50%;background:#4FD06A;"></span></div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#AAB3C2;">solution.py</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#3D4757;">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">python</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#3D4757;">·</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#4FD06A;"><span style="width:6px;height:6px;border-radius:50%;background:#4FD06A;"></span>kernel ready</span>
+          </div>
+        </div>
+        <!-- code -->
+        <pre style="margin:0;padding:18px 20px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;color:#F1F3F8;overflow-x:auto;"><span style="color:#8B9BFF;">import</span> pandas <span style="color:#8B9BFF;">as</span> pd
+
+<span style="color:#8B9BFF;">def</span> <span style="color:#5FAEFF;">clean</span>(path):
+    df = pd.<span style="color:#5FAEFF;">read_csv</span>(path)
+    df = df.<span style="color:#5FAEFF;">drop_duplicates</span>()
+    df = df.<span style="color:#5FAEFF;">dropna</span>(subset=[<span style="color:#4FD06A;">"amount"</span>])
+    <span style="color:#8B9BFF;">return</span> df.<span style="color:#5FAEFF;">reset_index</span>(drop=<span style="color:#E5B23A;">True</span>)</pre>
+        <!-- action row: content-width button + variant picker -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;border-top:1px solid #313A48;background:#0F1219;">
+          <div onClick="{{ run }}" role="button" tabindex="0" style="cursor:pointer;display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:8px;border:1px solid #3D4757;background:var(--accent-soft);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.03em;transition:border-color 160ms,filter 160ms;" style-hover="border-color:var(--accent);filter:brightness(1.12);">
+            <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}"><span style="width:13px;height:13px;border-radius:50%;border:2px solid var(--accent-soft);border-top-color:var(--accent);animation:hubSpin .7s linear infinite;"></span></sc-if>
+            <sc-if value="{{ notLoading }}" hint-placeholder-val="{{ true }}"><span>▶</span></sc-if>
+            <span>{{ runLabel }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#6A7382;">simulate</span>
+            <div style="display:flex;border:1px solid #313A48;border-radius:8px;overflow:hidden;background:#12151D;">
+              <div onClick="{{ pickPass }}" role="button" tabindex="0" style="cursor:pointer;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;border-right:1px solid #313A48;color:{{ passTabColor }};background:{{ passTabBg }};transition:all 140ms;">pass</div>
+              <div onClick="{{ pickFail }}" role="button" tabindex="0" style="cursor:pointer;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;border-right:1px solid #313A48;color:{{ failTabColor }};background:{{ failTabBg }};transition:all 140ms;">fail</div>
+              <div onClick="{{ pickError }}" role="button" tabindex="0" style="cursor:pointer;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:{{ errTabColor }};background:{{ errTabBg }};transition:all 140ms;">error</div>
+            </div>
+          </div>
+        </div>
+        <!-- result area -->
+        <div style="border-top:1px solid #313A48;background:#0B0E14;padding:18px 20px;min-height:128px;">
+
+          <!-- IDLE -->
+          <sc-if value="{{ isIdle }}" hint-placeholder-val="{{ true }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#6A7382;">› нажмите <span style="color:#AAB3C2;">Run check</span> — проверка сверит размер и контрольные суммы</div>
+          </sc-if>
+
+          <!-- LOADING -->
+          <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#E5B23A;margin-bottom:14px;"><span style="width:13px;height:13px;border-radius:50%;border:2px solid rgba(229,178,58,.25);border-top-color:#E5B23A;animation:hubSpin .7s linear infinite;"></span>running checks<span style="animation:hubBlink 1s steps(1) infinite;">_</span></div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="height:12px;width:58%;border-radius:5px;background:linear-gradient(90deg,#12151D 25%,#1d2330 50%,#12151D 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+              <div style="height:12px;width:44%;border-radius:5px;background:linear-gradient(90deg,#12151D 25%,#1d2330 50%,#12151D 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+              <div style="height:12px;width:50%;border-radius:5px;background:linear-gradient(90deg,#12151D 25%,#1d2330 50%,#12151D 75%);background-size:200% 100%;animation:hubShimmer 1.5s linear infinite;"></div>
+            </div>
+          </sc-if>
+
+          <!-- RESULT: PASS -->
+          <sc-if value="{{ showPass }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) both;">
+              <span style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#4FD06A;"><span style="width:7px;height:7px;border-radius:50%;background:#4FD06A;animation:hubPulse 1.8s cubic-bezier(.2,.7,.3,1) infinite;"></span>PASS</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">3/3 проверки · 240ms</span>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.85;">
+              <div style="color:#4FD06A;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .05s both;">✓ rows_count == 378299</div>
+              <div style="color:#4FD06A;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .12s both;">✓ no_duplicates() == True</div>
+              <div style="color:#4FD06A;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .19s both;">✓ amount_sum == 9912847.50</div>
+            </div>
+          </sc-if>
+
+          <!-- RESULT: FAIL -->
+          <sc-if value="{{ showFail }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) both;">
+              <span style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#FF5E54;"><span style="width:7px;height:7px;border-radius:50%;background:#FF5E54;"></span>FAIL</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">2/3 проверки · 251ms</span>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.85;">
+              <div style="color:#4FD06A;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .05s both;">✓ rows_count == 378299</div>
+              <div style="color:#FF5E54;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .12s both;">✗ no_duplicates() == True</div>
+              <div style="color:#6A7382;padding-left:16px;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .19s both;">expected <span style="color:#AAB3C2;">True</span> · got <span style="color:#FF5E54;">False</span> — 412 дубликатов остались</div>
+            </div>
+          </sc-if>
+
+          <!-- RESULT: ERROR -->
+          <sc-if value="{{ showError }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) both;">
+              <span style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:999px;border:1px solid #313A48;background:#1A1F29;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#FF5E54;"><span style="width:7px;height:7px;border-radius:50%;background:#FF5E54;"></span>ERROR</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">прервано · 38ms</span>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.85;">
+              <div style="color:#6A7382;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .05s both;">Traceback (most recent call last):</div>
+              <div style="color:#AAB3C2;padding-left:16px;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .12s both;">File "solution.py", line 4, in clean</div>
+              <div style="color:#FF5E54;animation:hubFadeUp .35s cubic-bezier(.2,.7,.3,1) .19s both;">KeyError: 'amount'</div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM STATUS BAR -->
+  <div style="position:sticky;bottom:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 18px;background:rgba(10,12,17,.86);backdrop-filter:blur(10px);border-top:1px solid #313A48;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6A7382;">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span style="display:inline-flex;align-items:center;gap:7px;color:#AAB3C2;"><span style="width:7px;height:7px;border-radius:50%;background:#4FD06A;"></span>kernel ready</span>
+      <span>task 07/20</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span>py 3.11</span>
+      <span style="color:#AAB3C2;">⌘K</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:880,&quot;height&quot;:920},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Indigo&quot;,&quot;Blue&quot;,&quot;Green&quot;,&quot;Amber&quot;],&quot;default&quot;:&quot;Indigo&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { phase: 'idle', outcome: 'pass' };
+
+  componentDidMount() { this.applyAccent(); }
+  componentDidUpdate(prev) { if (prev.accent !== this.props.accent) this.applyAccent(); }
+
+  applyAccent() {
+    const map = { Indigo: '#8B9BFF', Blue: '#5FAEFF', Green: '#4FD06A', Amber: '#E5B23A' };
+    const soft = { Indigo: 'rgba(139,155,255,.14)', Blue: 'rgba(95,174,255,.14)', Green: 'rgba(79,208,106,.14)', Amber: 'rgba(229,178,58,.14)' };
+    const a = this.props.accent || 'Indigo';
+    document.documentElement.style.setProperty('--accent', map[a] || map.Indigo);
+    document.documentElement.style.setProperty('--accent-soft', soft[a] || soft.Indigo);
+  }
+
+  run = () => {
+    if (this.state.phase === 'loading') return;
+    this.setState({ phase: 'loading' });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ phase: 'result' }), 1500);
+  };
+
+  pick = (outcome) => () => {
+    if (this.state.phase === 'loading') return;
+    this.setState({ outcome, phase: 'idle' });
+  };
+
+  renderVals() {
+    const { phase, outcome } = this.state;
+    const tabBg = (o) => outcome === o ? 'rgba(139,155,255,.14)' : 'transparent';
+    const tabCol = (o, c) => outcome === o ? c : '#6A7382';
+    return {
+      run: this.run,
+      pickPass: this.pick('pass'),
+      pickFail: this.pick('fail'),
+      pickError: this.pick('error'),
+      isIdle: phase === 'idle',
+      isLoading: phase === 'loading',
+      notLoading: phase !== 'loading',
+      showPass: phase === 'result' && outcome === 'pass',
+      showFail: phase === 'result' && outcome === 'fail',
+      showError: phase === 'result' && outcome === 'error',
+      runLabel: phase === 'loading' ? 'Running' : phase === 'result' ? 'Re-run check' : 'Run check',
+      passTabBg: tabBg('pass'), failTabBg: tabBg('fail'), errTabBg: tabBg('error'),
+      passTabColor: tabCol('pass', '#4FD06A'), failTabColor: tabCol('fail', '#FF5E54'), errTabColor: tabCol('error', '#FF5E54'),
+    };
+  }
+}
+</script>
+</body>
+</html>
