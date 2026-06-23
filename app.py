@@ -6457,13 +6457,29 @@ def render_datasets_tab(
 
 
 def render_scratch_tab(datasets: list[dict[str, Any]]) -> None:
-    st.markdown("### ⚡ Scratch")
     st.markdown(
-        "Лёгкий текстовый раннер: код выполняется отдельным Python-процессом, без живого состояния и без рендера графиков."
+        render_card(
+            "⚡ Scratch",
+            "Лёгкий текстовый раннер: код выполняется отдельным Python-процессом, без живого состояния и без рендера графиков.",
+            eyebrow="Build cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
     )
 
     if "scratch_code" not in st.session_state:
         st.session_state["scratch_code"] = default_scratch_code(datasets)
+
+    render_section_eyebrow_block("Runner")
+    st.markdown(
+        """
+<div class="console-panel">
+    <div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>python · scratch process</span></div>
+    <div class="editor">Код запускается изолированно: без состояния Notebook и без rich output.</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     timeout_seconds = st.number_input(
         "Timeout, сек",
@@ -6485,19 +6501,36 @@ def render_scratch_tab(datasets: list[dict[str, Any]]) -> None:
         if code is not None:
             st.session_state["scratch_code"] = code
     else:
-        st.info("streamlit-ace не установлен, поэтому открыт простой текстовый редактор.")
+        st.markdown(
+            render_card(
+                "Простой редактор",
+                "streamlit-ace не установлен, поэтому открыт стандартный text_area.",
+                eyebrow="Editor fallback",
+                status="READY",
+            ),
+            unsafe_allow_html=True,
+        )
         st.text_area("Python code", height=360, key="scratch_code")
 
     if st.button("▶ Запустить", key="run_scratch", use_container_width=True):
         result = run_scratch_code(st.session_state["scratch_code"], int(timeout_seconds))
+        chip = "ERROR" if result["timed_out"] else ("PASS" if result["exit_code"] == 0 else "FAIL")
+        st.markdown(
+            render_card(
+                "Scratch result",
+                f"exit code: {result['exit_code']} · time: {result['elapsed']:.2f}s",
+                eyebrow="Run result",
+                status=chip,
+                extra_class="run-result",
+            ),
+            unsafe_allow_html=True,
+        )
         if result["timed_out"]:
             st.warning(f"⏱ таймаут после {timeout_seconds} сек")
-        else:
-            st.caption(f"exit code: {result['exit_code']} · time: {result['elapsed']:.2f}s")
 
-        st.markdown("#### stdout")
+        render_section_eyebrow_block("stdout")
         st.code(result["stdout"] or "", language="text")
-        st.markdown("#### stderr")
+        render_section_eyebrow_block("stderr")
         st.code(result["stderr"] or "", language="text")
 
 
