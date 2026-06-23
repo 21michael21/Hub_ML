@@ -85,8 +85,23 @@ def click_nav(page: Page, label: str) -> None:
     if body_has_any(page, active_markers.get(label, (label,))):
         assert_clean_page(page)
         return
-    assert click_button_containing(page, label), f"Navigation item not found: {label}"
-    expect(page.locator("body")).to_contain_text(label.split()[0], timeout=10_000)
+    nav_aliases = {
+        "Practice": ("Practice", "🎯 Practice"),
+        "Tasks": ("Tasks", "🎯 Tasks"),
+        "Datasets": ("Datasets", "📊 Datasets"),
+        "Notebook": ("Notebook", "📓 Notebook"),
+        "Data Lab": ("Data Lab", "🧪 Data Lab Projects"),
+        "ML Lab": ("ML Lab", "🤖 ML Lab"),
+        "Portfolio": ("Portfolio", "📁 Portfolio"),
+        "Experiments": ("Experiments", "🧪 Experiments"),
+        "Algorithms": ("Algorithms", "🧩 Algorithms"),
+        "Interviews": ("Interviews", "🎤 Interviews", "🎤"),
+        "Theory Quality": ("Theory Quality", "🧭 Theory Quality"),
+        "Links Health": ("Links Health", "Links Health"),
+    }
+    clicked = click_first_available_button(page, nav_aliases.get(label, (label,)))
+    assert clicked is not None, f"Navigation item not found: {label}"
+    expect(page.locator("body")).to_contain_text(active_markers.get(label, (label,))[0], timeout=10_000)
     assert_clean_page(page)
 
 

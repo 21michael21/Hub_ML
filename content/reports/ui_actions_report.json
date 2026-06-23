@@ -1,0 +1,2619 @@
+{
+  "generated_at": "2026-06-23T13:04:20.155331+00:00",
+  "metadata": {
+    "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
+    "notes": 230,
+    "tasks": 57,
+    "projects": 4,
+    "practice_cards": 38,
+    "datasets": 3,
+    "reports": 4,
+    "known_state_keys": [
+      "active_note_path",
+      "active_tab",
+      "data_lab_projects",
+      "interview_company_filter",
+      "interview_practice_mode",
+      "learning_progress",
+      "note_radio",
+      "portfolio_export_cards",
+      "portfolio_export_projects",
+      "project_milestones_plain_editor",
+      "selected_data_lab_project",
+      "selected_mentor_task",
+      "selected_practice_card",
+      "tasks_plain_editor"
+    ]
+  },
+  "summary": {
+    "total": 298,
+    "passing": 298,
+    "warnings": 106,
+    "broken": 0
+  },
+  "inventory": {
+    "by_action_type": {
+      "export": 1,
+      "navigate": 88,
+      "open_detail": 99,
+      "run_check": 80,
+      "save_progress": 25,
+      "set_state": 5
+    },
+    "by_target_kind": {
+      "dataset": 12,
+      "milestone": 47,
+      "none": 2,
+      "practice": 39,
+      "project": 6,
+      "tab": 22,
+      "task": 115,
+      "theory_note": 55
+    },
+    "by_source": {
+      "home.resume": 1,
+      "home.today": 4,
+      "interviews.answer": 1,
+      "interviews.mode": 4,
+      "ml_lab.experiment_tracker": 1,
+      "portfolio.exporter": 2,
+      "practice.card": 38,
+      "practice.dataset": 12,
+      "practice.related_note": 34,
+      "projects.catalog": 4,
+      "projects.milestone": 46,
+      "sidebar": 17,
+      "tasks.detail": 57,
+      "tasks.list": 57,
+      "theory_quality.weakest_notes": 20
+    }
+  },
+  "broken_actions": [],
+  "unsafe_actions": [
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_44",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_44",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_45",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_45",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_46",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_46",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_47",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_47",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_114",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_114",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_115",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_115",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_4_advanced__cell_116",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_4_advanced__cell_116",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_algorithms_sliding_window__manual_01",
+        "label": "Run task checks: Algorithms sliding window max window sum",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_algorithms_sliding_window__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.stats_hypothesis_ab_conversion_rates__manual_01",
+        "label": "Run task checks: Hypothesis A/B test conversion rate and uplift calculation",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "stats_hypothesis_ab_conversion_rates__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.career_portfolio_readme_sections__manual_01",
+        "label": "Run task checks: Portfolio README artifact section validator",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "career_portfolio_readme_sections__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.career_resume_remote_bullet_structure__manual_01",
+        "label": "Run task checks: Resume remote career bullet structure validator",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "career_resume_remote_bullet_structure__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.data_cleaning_eda_events__manual_01",
+        "label": "Run task checks: Data cleaning EDA missing values and duplicates",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "data_cleaning_eda_events__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.genai_embedding_similarity_numpy__manual_01",
+        "label": "Run task checks: Toy embedding similarity and vector search with NumPy",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "genai_embedding_similarity_numpy__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.interview_coding_two_sum_hashmap__manual_01",
+        "label": "Run task checks: Coding interview mock_interview algos_patterns two sum hashmap assert task",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "interview_coding_two_sum_hashmap__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.interview_take_home_readme_template__manual_01",
+        "label": "Run task checks: ML take-home homework README template validator",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "interview_take_home_readme_template__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.math_linear_algebra_numpy__manual_01",
+        "label": "Run task checks: NumPy matrix, vector, and dot product sanity check",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "math_linear_algebra_numpy__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.math_optimization_gradient_descent__manual_01",
+        "label": "Run task checks: Optimization gradient descent on a quadratic loss function",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "math_optimization_gradient_descent__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.ml_feature_engineering_event_table__manual_01",
+        "label": "Run task checks: Feature engineering encoding scaling event feature table",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "ml_feature_engineering_event_table__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.ml_supervised_rule_based_baseline__manual_01",
+        "label": "Run task checks: Supervised learning rule-based classification baseline",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "ml_supervised_rule_based_baseline__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.ml_unsupervised_nearest_centroid__manual_01",
+        "label": "Run task checks: Unsupervised learning clustering PCA nearest centroid",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "ml_unsupervised_nearest_centroid__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.ml_validation_metrics_manual_01",
+        "label": "Run task checks: Classification validation metrics from confusion counts",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "ml_validation_metrics_manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.mlops_experiment_tracking_jsonl_roundtrip__manual_01",
+        "label": "Run task checks: Experiment tracking MLflow local JSONL roundtrip",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "mlops_experiment_tracking_jsonl_roundtrip__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.mlops_monitoring_simple_drift_alert__manual_01",
+        "label": "Run task checks: Model monitoring data drift alert",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "mlops_monitoring_simple_drift_alert__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.mlops_serving_predict_order_conversion__manual_01",
+        "label": "Run task checks: Model serving API inference predict function",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "mlops_serving_predict_order_conversion__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.nlp_preprocessing_normalize_tokenize__manual_01",
+        "label": "Run task checks: NLP text preprocessing tokenization pipeline",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "nlp_preprocessing_normalize_tokenize__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.nlp_vectorization_count_vectors__manual_01",
+        "label": "Run task checks: NLP TFIDF CountVectorizer vectorizer count vectors",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "nlp_vectorization_count_vectors__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_basics_user_events__manual_01",
+        "label": "Run task checks: Python basics list dict loop function over user events",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_basics_user_events__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_typing_architecture_normalize_event__manual_01",
+        "label": "Run task checks: Typed Python architecture normalize event function",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_typing_architecture_normalize_event__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_oop_order_history__manual_01",
+        "label": "Run task checks: Python OOP class behavior over order history",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_oop_order_history__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.sql_aggregation_windows_pandas__manual_01",
+        "label": "Run task checks: SQL GROUP BY and window function equivalent in pandas",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "sql_aggregation_windows_pandas__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.sql_select_join_pandas_merge__manual_01",
+        "label": "Run task checks: SQL SELECT JOIN WHERE equivalent with pandas merge",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "sql_select_join_pandas_merge__manual_01",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_2_numpy__cell_65",
+        "label": "Run task checks: В numpy встроены функции для поиска минимумов, максимумов и суммы. Часто мы хотим найти сумму не всего `np.array`, а по строкам или столбцам. Для этого используется аргумент `axis`.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_2_numpy__cell_65",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_2_numpy__cell_30",
+        "label": "Run task checks: Изменять элементы тоже легко, можно поменять одно значение, а можно сразу целую колонку.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_2_numpy__cell_30",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_2_numpy__cell_75",
+        "label": "Run task checks: Можно комбинировать условия с помощью `&` (и) и `|` (или). **Важно:** каждое условие обязательно брать в скобки `()`!",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_2_numpy__cell_75",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_2_numpy__cell_81",
+        "label": "Run task checks: Можно менять форму `np.array`, главное чтобы общее количество элементов оставалось тем же.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_2_numpy__cell_81",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_3_pandas__cell_52",
+        "label": "Run task checks: Задание 1: Свойства и статистики",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_3_pandas__cell_52",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_3_pandas__cell_55",
+        "label": "Run task checks: Задание 2: Фильтрация",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_3_pandas__cell_55",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_3_pandas__cell_57",
+        "label": "Run task checks: Задание 3: Слияния (Merge)",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_3_pandas__cell_57",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_3_architecture__cell_48",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_3_architecture__cell_48",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_3_architecture__cell_90",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_3_architecture__cell_90",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_3_architecture__cell_73",
+        "label": "Run task checks: Создайте класс Hero. В конструкторе он должен принимать имя и сохранять инкапсулированные параметры: `_name` (имя) и `_stamina` (выносливость, по умолчанию 100). Реализуйте следующие методы:",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_3_architecture__cell_73",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_3_architecture__cell_75",
+        "label": "Run task checks: У вас есть базовый класс `Weapon`, который наносит урон. Создайте класс-наследник `MagicWand`.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_3_architecture__cell_75",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_3_architecture__cell_50",
+        "label": "Run task checks: Реализуйте методы:",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_3_architecture__cell_50",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_2_basics__cell_60",
+        "label": "Run task checks: `+=` и `-=` иногда называют синтаксическим сахаром (сокращением записи), на самом деле они им не является, но мы пока будем считать что `b+=1` и `b=b+1` имеют одинаковый смысл.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_2_basics__cell_60",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_2_basics__cell_77",
+        "label": "Run task checks: Данные можно приводить из одного типа в другой",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_2_basics__cell_77",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_5_oop__cell_10",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_5_OOP__cell_10",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_5_oop__cell_19",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_5_OOP__cell_19",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_1_stats__cell_12",
+        "label": "Run task checks: Меры центральной тенденции",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_1_stats__cell_12",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_1_stats__cell_13",
+        "label": "Run task checks: Меры центральной тенденции",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_1_stats__cell_13",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_1_stats__cell_7",
+        "label": "Run task checks: Очевидные штуки",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_1_stats__cell_7",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_1_stats__cell_8",
+        "label": "Run task checks: Очевидные штуки",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_1_stats__cell_8",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.analysis_1_stats__cell_9",
+        "label": "Run task checks: Очевидные штуки",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "analysis_1_stats__cell_9",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_6_advanced___cell_34",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_6_advanced+__cell_34",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_6_advanced___cell_38",
+        "label": "Run task checks: Задание",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_6_advanced+__cell_38",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_6_advanced___cell_19",
+        "label": "Run task checks: Напишите lambda-функцию, которая принимает одно число и возвращает его квадрат.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_6_advanced+__cell_19",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_6_advanced___cell_23",
+        "label": "Run task checks: Ниже дан список словарей с информацией о людях.",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_6_advanced+__cell_23",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "tasks.run_check.python_6_advanced___cell_21",
+        "label": "Run task checks: Отфильтруйте список чисел так,",
+        "action_type": "run_check",
+        "target_kind": "task",
+        "target_id": "python_6_advanced+__cell_21",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_mentor_task"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "tasks.detail"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "experiments.save.orders_conversion_baseline_classifier",
+        "label": "Save experiment record: Baseline classifier конверсии заказов",
+        "action_type": "save_progress",
+        "target_kind": "project",
+        "target_id": "orders_conversion_baseline_classifier",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "selected_data_lab_project"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "ml_lab.experiment_tracker"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.define_target",
+        "label": "Mark milestone done: Определить target",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "define_target",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.define_target",
+        "label": "Run milestone: Определить target",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "define_target",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.prepare_dataset",
+        "label": "Mark milestone done: Подготовить modeling table",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "prepare_dataset",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.prepare_dataset",
+        "label": "Run milestone: Подготовить modeling table",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "prepare_dataset",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.create_features",
+        "label": "Mark milestone done: Создать простые features",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "create_features",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.create_features",
+        "label": "Run milestone: Создать простые features",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "create_features",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.train_test_split",
+        "label": "Mark milestone done: Сделать train/test split",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "train_test_split",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.train_test_split",
+        "label": "Run milestone: Сделать train/test split",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "train_test_split",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.baseline_model",
+        "label": "Mark milestone done: Обучить baseline model",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "baseline_model",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.baseline_model",
+        "label": "Run milestone: Обучить baseline model",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "baseline_model",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.evaluate_metrics",
+        "label": "Mark milestone done: Оценить classification metrics",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "evaluate_metrics",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.evaluate_metrics",
+        "label": "Run milestone: Оценить classification metrics",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "evaluate_metrics",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.error_analysis",
+        "label": "Mark milestone done: Сделать базовый error analysis",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "error_analysis",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.error_analysis",
+        "label": "Run milestone: Сделать базовый error analysis",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "error_analysis",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_conversion_baseline_classifier.model_card",
+        "label": "Mark milestone done: Написать model card",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "model_card",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_conversion_baseline_classifier.model_card",
+        "label": "Run milestone: Написать model card",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_conversion_baseline_classifier",
+        "milestone_id": "model_card",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.matching_quality_dashboard.inspect_matching",
+        "label": "Mark milestone done: Изучить matching data",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "inspect_matching",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.matching_quality_dashboard.inspect_matching",
+        "label": "Run milestone: Изучить matching data",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "inspect_matching",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.matching_quality_dashboard.check_uniqueness",
+        "label": "Mark milestone done: Проверить уникальность assignment",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "check_uniqueness",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.matching_quality_dashboard.check_uniqueness",
+        "label": "Run milestone: Проверить уникальность assignment",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "check_uniqueness",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.matching_quality_dashboard.join_orders",
+        "label": "Mark milestone done: Сделать join matching с orders",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "join_orders",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.matching_quality_dashboard.join_orders",
+        "label": "Run milestone: Сделать join matching с orders",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "join_orders",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.matching_quality_dashboard.quality_visuals",
+        "label": "Mark milestone done: Построить dashboard visuals качества",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "quality_visuals",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.matching_quality_dashboard.quality_visuals",
+        "label": "Run milestone: Построить dashboard visuals качества",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "quality_visuals",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.matching_quality_dashboard.dashboard_summary",
+        "label": "Mark milestone done: Написать dashboard summary",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "dashboard_summary",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.matching_quality_dashboard.dashboard_summary",
+        "label": "Run milestone: Написать dashboard summary",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "matching_quality_dashboard",
+        "milestone_id": "dashboard_summary",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_eda_report.read_context",
+        "label": "Mark milestone done: Разобраться в контексте датасета",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "read_context",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_eda_report.read_context",
+        "label": "Run milestone: Разобраться в контексте датасета",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "read_context",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_eda_report.quality_checks",
+        "label": "Mark milestone done: Провести базовые проверки качества",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "quality_checks",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_eda_report.quality_checks",
+        "label": "Run milestone: Провести базовые проверки качества",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "quality_checks",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_eda_report.core_metrics",
+        "label": "Mark milestone done: Посчитать основные метрики заказов",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "core_metrics",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_eda_report.core_metrics",
+        "label": "Run milestone: Посчитать основные метрики заказов",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "core_metrics",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_eda_report.visualize_orders",
+        "label": "Mark milestone done: Построить два portfolio-ready графика",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "visualize_orders",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_eda_report.visualize_orders",
+        "label": "Run milestone: Построить два portfolio-ready графика",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "visualize_orders",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.orders_eda_report.write_report",
+        "label": "Mark milestone done: Написать мини-отчёт",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "write_report",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.orders_eda_report.write_report",
+        "label": "Run milestone: Написать мини-отчёт",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "orders_eda_report",
+        "milestone_id": "write_report",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.events_funnel_analysis.map_events",
+        "label": "Mark milestone done: Разобрать типы событий",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "map_events",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.events_funnel_analysis.map_events",
+        "label": "Run milestone: Разобрать типы событий",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "map_events",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.events_funnel_analysis.count_users",
+        "label": "Mark milestone done: Посчитать уникальных пользователей по шагам",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "count_users",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.events_funnel_analysis.count_users",
+        "label": "Run milestone: Посчитать уникальных пользователей по шагам",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "count_users",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.events_funnel_analysis.conversion_rates",
+        "label": "Mark milestone done: Посчитать conversion rates",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "conversion_rates",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.events_funnel_analysis.conversion_rates",
+        "label": "Run milestone: Посчитать conversion rates",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "conversion_rates",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.events_funnel_analysis.visualize_funnel",
+        "label": "Mark milestone done: Визуализировать funnel",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "visualize_funnel",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.events_funnel_analysis.visualize_funnel",
+        "label": "Run milestone: Визуализировать funnel",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "visualize_funnel",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.mark_done.events_funnel_analysis.funnel_summary",
+        "label": "Mark milestone done: Написать summary по funnel",
+        "action_type": "save_progress",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "funnel_summary",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "projects.milestone.run.events_funnel_analysis.funnel_summary",
+        "label": "Run milestone: Написать summary по funnel",
+        "action_type": "run_check",
+        "target_kind": "milestone",
+        "target_id": "",
+        "path": "",
+        "project_id": "events_funnel_analysis",
+        "milestone_id": "funnel_summary",
+        "required_state_keys": [
+          "learning_progress"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "projects.milestone"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "portfolio.export_markdown",
+        "label": "Export markdown",
+        "action_type": "export",
+        "target_kind": "",
+        "target_id": "",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "portfolio_export_projects",
+          "portfolio_export_cards"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "portfolio.exporter"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    },
+    {
+      "action": {
+        "action_id": "interviews.save_answer",
+        "label": "Save answer",
+        "action_type": "save_progress",
+        "target_kind": "tab",
+        "target_id": "Interviews",
+        "path": "",
+        "project_id": "",
+        "milestone_id": "",
+        "required_state_keys": [
+          "interview_practice_mode"
+        ],
+        "expected_state_changes": [],
+        "safe_to_e2e_click": false,
+        "source": "interviews.answer"
+      },
+      "ok": true,
+      "severity": "warning",
+      "reason": "unsafe to e2e click; target and state keys validated only",
+      "target_exists": true,
+      "state_keys_ok": true,
+      "duplicate": false
+    }
+  ]
+}
