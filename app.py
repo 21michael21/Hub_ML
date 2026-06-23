@@ -291,8 +291,7 @@ def inject_styles() -> None:
 
     .main .block-container {
         max-width: 980px;
-        padding-top: 2rem;
-        padding-bottom: 4rem;
+        padding: var(--s4) var(--s4) 5rem var(--s4);
     }
 
     .content-container {
@@ -676,9 +675,16 @@ def inject_styles() -> None:
     .roadmap-card {
         padding: 0.85rem 1rem;
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: var(--r);
         background: var(--surface);
         margin-bottom: 0.75rem;
+        animation: fadeUp .32s var(--ease) both;
+        transition: border-color .16s var(--ease), transform .16s var(--ease);
+    }
+
+    .roadmap-card:hover {
+        border-color: var(--border-strong);
+        transform: translateY(-2px);
     }
 
     .roadmap-title {
@@ -693,8 +699,13 @@ def inject_styles() -> None:
     }
 
     .section-progress-row {
-        padding: 0.55rem 0;
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        margin: var(--s2) 0;
+        padding: 0.72rem 0.9rem;
         border-bottom: 1px solid var(--border-soft);
+        animation: fadeUp .32s var(--ease) both;
     }
 
     .section-progress-row:last-child {
@@ -726,10 +737,28 @@ def inject_styles() -> None:
 
     .health-row {
         border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
+        border-radius: var(--r-sm);
         padding: 0.75rem 0.9rem;
         background: var(--surface);
         margin: 0.55rem 0;
+        animation: fadeUp .32s var(--ease) both;
+        transition: background .16s var(--ease), border-color .16s var(--ease);
+    }
+
+    .health-row:hover {
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+    }
+
+    .health-row-pass {
+        border-color: rgba(79,208,106,0.28);
+        background: rgba(79,208,106,0.06);
+    }
+
+    .health-row-fail,
+    .health-row-error {
+        border-color: rgba(255,94,84,0.28);
+        background: rgba(255,94,84,0.06);
     }
 
     .today-hero {
@@ -3752,22 +3781,26 @@ def render_dashboard(
 
 
 def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
-    st.markdown("### Roadmap")
     st.markdown(
-        "Это учебная карта поверх Obsidian: проходи разделы, открывай заметки и отмечай прогресс."
+        render_card(
+            "Roadmap",
+            "Это учебная карта поверх Obsidian: проходи разделы, открывай заметки и отмечай прогресс.",
+            eyebrow="Learn cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
     )
 
     next_note = find_next_note(sections)
     if next_note:
         section_label = humanize_section_name(next_note["section_key"])
         st.markdown(
-            f"""
-<div class="learning-panel">
-    <div class="learning-panel-title">Следующий разумный шаг</div>
-    <div class="muted-small">{html.escape(section_label)} / {html.escape(next_note["display_name"])}</div>
-    <div style="margin-top: 0.5rem;">{status_badge(get_note_status(next_note))}</div>
-</div>
-            """,
+            render_card(
+                "Следующий разумный шаг",
+                f"{section_label} / {next_note['display_name']}",
+                eyebrow="Next note",
+                status=note_status_to_chip(get_note_status(next_note)),
+            ),
             unsafe_allow_html=True,
         )
         st.button(
@@ -3778,8 +3811,17 @@ def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
             use_container_width=True,
         )
     else:
-        st.success("Все заметки отмечены как готовые. Красиво идем.")
+        st.markdown(
+            render_card(
+                "Все заметки отмечены",
+                "Красиво идем. Можно открыть Practice или Projects.",
+                eyebrow="Roadmap",
+                status="PASS",
+            ),
+            unsafe_allow_html=True,
+        )
 
+    render_section_eyebrow_block("Разделы")
     for section_key, notes in sections.items():
         stats = section_progress(notes)
         done = stats[STATUS_DONE]
@@ -3789,17 +3831,21 @@ def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
         ratio = done / total if total else 0.0
 
         st.markdown(
-            f"""
-<div class="roadmap-card">
-    <div class="roadmap-title">{html.escape(humanize_section_name(section_key))}</div>
-    <div class="roadmap-meta">
-        {done}/{total} готово · {reading} читаю · {repeat} повторить
-    </div>
-</div>
-            """,
+            render_card(
+                humanize_section_name(section_key),
+                f"{done}/{total} готово · {reading} читаю · {repeat} повторить",
+                eyebrow="Vault section",
+                status="PASS" if ratio == 1 and total else "IN PROGRESS",
+                content_html=render_metric_tile(
+                    "Progress",
+                    done,
+                    total=total,
+                    progress=ratio,
+                    status="PASS" if ratio == 1 and total else "IN PROGRESS",
+                ),
+            ),
             unsafe_allow_html=True,
         )
-        st.progress(ratio)
 
         with st.expander(f"Заметки раздела: {humanize_section_name(section_key)}"):
             for note in notes:
@@ -3808,7 +3854,7 @@ def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:
                     f"{html.escape(note['display_name'])}",
                     unsafe_allow_html=True,
                 )
-                cols[1].markdown(status_badge(get_note_status(note)), unsafe_allow_html=True)
+                cols[1].markdown(render_status_chip(note_status_to_chip(get_note_status(note))), unsafe_allow_html=True)
                 cols[2].button(
                     "Открыть",
                     key=f"roadmap_open_{note['relative_path']}",
@@ -5975,9 +6021,14 @@ def note_from_relative_path(relative_path: str, note_index: dict[str, Any]) -> d
 
 
 def render_theory_quality_tab(note_index: dict[str, Any]) -> None:
-    st.markdown("### 🧭 Theory Quality")
     st.markdown(
-        "Read-only срез качества базы знаний. Он использует готовые отчёты и не сканирует vault автоматически."
+        render_card(
+            "🧭 Theory Quality",
+            "Read-only срез качества базы знаний. Он использует готовые отчёты и не сканирует vault автоматически.",
+            eyebrow="Learn cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
     )
 
     audit_report = load_json_report(THEORY_AUDIT_REPORT_PATH)
@@ -5999,24 +6050,39 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
         )
 
     if not audit_report:
-        st.warning(f"Не найден отчёт: `{THEORY_AUDIT_REPORT_PATH}`")
+        st.markdown(
+            render_card(
+                "Theory audit report не найден",
+                f"Запусти аудит вручную. Ожидаемый файл: {THEORY_AUDIT_REPORT_PATH}",
+                eyebrow="Empty state",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
-    meta_cols = st.columns(4)
-    meta_cols[0].metric("Заметок", audit_summary.get("total_notes", 0))
-    meta_cols[1].metric("Средний score", audit_summary.get("average_quality_score", "—"))
-    meta_cols[2].metric("Без examples", len(audit_summary.get("notes_without_examples", []) or []))
-    meta_cols[3].metric("Без sources", len(audit_summary.get("notes_without_sources", []) or []))
+    average_score = audit_summary.get("average_quality_score", "—")
+    try:
+        quality_progress = float(average_score) / 100
+    except (TypeError, ValueError):
+        quality_progress = None
+    meta_tiles = [
+        render_metric_tile("Заметок", audit_summary.get("total_notes", 0), status="INFO"),
+        render_metric_tile("Средний score", average_score, total=100, progress=quality_progress, status="PASS" if quality_progress and quality_progress >= 0.7 else "WEAK"),
+        render_metric_tile("Без examples", len(audit_summary.get("notes_without_examples", []) or []), status="NEEDS REVIEW"),
+        render_metric_tile("Без sources", len(audit_summary.get("notes_without_sources", []) or []), status="NEEDS REVIEW"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(meta_tiles)}</div>', unsafe_allow_html=True)
 
     if audit_summary.get("generated_at"):
         st.caption(f"Theory audit generated: {audit_summary['generated_at']}")
     if audit_report.get("vault"):
         st.caption(f"Vault: {audit_report['vault']}")
 
-    st.markdown("#### Weakest Notes")
+    render_section_eyebrow_block("Weakest Notes")
     weak = weakest_notes(audit_report, limit=20)
     if not weak:
-        st.info("Weakest notes не найдены в отчёте.")
+        st.markdown(render_card("Weakest notes не найдены", "В текущем отчёте нет списка слабых заметок.", eyebrow="Empty state", status="READY"), unsafe_allow_html=True)
     else:
         for index, note in enumerate(weak):
             relative_path = str(note.get("relative_path") or "")
@@ -6024,9 +6090,13 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
             score = note.get("quality_score", "—")
             words = note.get("word_count", "—")
             section = str(note.get("section") or "")
+            try:
+                score_number = int(score)
+            except (TypeError, ValueError):
+                score_number = 0
             st.markdown(
                 f"""
-<div class="health-row">
+<div class="health-row {'health-row-pass' if score_number >= 70 else 'health-row-fail'}">
     <div class="link-label">{html.escape(title)}</div>
     <div class="link-path">{html.escape(relative_path)}</div>
     <div class="link-path">score: {html.escape(str(score))} · words: {html.escape(str(words))} · {html.escape(section)}</div>
@@ -6046,24 +6116,24 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
 
     list_cols = st.columns(2)
     with list_cols[0]:
-        st.markdown("#### Notes Without Examples")
+        render_section_eyebrow_block("Notes Without Examples")
         examples_missing = report_list(audit_summary, "notes_without_examples", limit=30)
         if examples_missing:
             st.markdown("\n".join(f"- `{path}`" for path in examples_missing))
         else:
-            st.success("Все заметки имеют examples по текущей эвристике.")
+            st.markdown(render_card("Examples закрыты", "Все заметки имеют examples по текущей эвристике.", eyebrow="Audit", status="PASS"), unsafe_allow_html=True)
 
     with list_cols[1]:
-        st.markdown("#### Notes Without Sources")
+        render_section_eyebrow_block("Notes Without Sources")
         sources_missing = report_list(audit_summary, "notes_without_sources", limit=30)
         if sources_missing:
             st.markdown("\n".join(f"- `{path}`" for path in sources_missing))
         else:
-            st.success("Все заметки имеют sources по текущей эвристике.")
+            st.markdown(render_card("Sources закрыты", "Все заметки имеют sources по текущей эвристике.", eyebrow="Audit", status="PASS"), unsafe_allow_html=True)
 
-    st.markdown("#### Coverage")
+    render_section_eyebrow_block("Coverage")
     if not coverage_report:
-        st.info(f"Coverage report не найден: `{COVERAGE_REPORT_PATH}`")
+        st.markdown(render_card("Coverage report не найден", f"Ожидаемый файл: {COVERAGE_REPORT_PATH}", eyebrow="Empty state", status="NEEDS REVIEW"), unsafe_allow_html=True)
         return
 
     if cov_summary.get("generated_at"):
@@ -6071,7 +6141,7 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
 
     missing = missing_required_topics(coverage_report)
     if missing:
-        st.markdown("##### Missing Required Topics")
+        render_section_eyebrow_block("Missing Required Topics")
         st.dataframe(
             [
                 {
@@ -6087,7 +6157,7 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
             hide_index=True,
         )
     else:
-        st.success("Missing required topics не найдены в coverage report.")
+        st.markdown(render_card("Required topics закрыты", "Missing required topics не найдены в coverage report.", eyebrow="Coverage", status="PASS"), unsafe_allow_html=True)
 
     track_rows = []
     for track, counts in coverage_by_track(coverage_report).items():
@@ -6102,24 +6172,23 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
             }
         )
     if track_rows:
-        st.markdown("##### Coverage By Track")
+        render_section_eyebrow_block("Coverage By Track")
         st.dataframe(track_rows, use_container_width=True, hide_index=True)
 
-    st.markdown("#### Content Quality Gate")
+    render_section_eyebrow_block("Content Quality Gate")
     gate_report = load_json_report(CONTENT_GATE_REPORT_PATH)
     if not gate_report:
-        st.info(
-            "Content gate report не найден. Запусти вручную: "
-            "`PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit --vault \"$VAULT_PATH\"`"
-        )
+        st.markdown(render_card("Content gate report не найден", "Запусти tools/check_content_gate.py --reaudit вручную.", eyebrow="Empty state", status="NEEDS REVIEW"), unsafe_allow_html=True)
         return
 
     gate_summary = gate_report.get("summary") if isinstance(gate_report.get("summary"), dict) else {}
-    gate_cols = st.columns(4)
-    gate_cols[0].metric("Gate PASS", gate_summary.get("passed_topics", 0))
-    gate_cols[1].metric("Gate FAIL", gate_summary.get("failed_topics", 0))
-    gate_cols[2].metric("Required failed", len(gate_summary.get("failed_required_topic_ids", []) or []))
-    gate_cols[3].metric("Threshold", gate_report.get("threshold", "—"))
+    gate_tiles = [
+        render_metric_tile("Gate PASS", gate_summary.get("passed_topics", 0), status="PASS"),
+        render_metric_tile("Gate FAIL", gate_summary.get("failed_topics", 0), status="FAIL" if gate_summary.get("failed_topics", 0) else "READY"),
+        render_metric_tile("Required failed", len(gate_summary.get("failed_required_topic_ids", []) or []), status="FAIL" if gate_summary.get("failed_required_topic_ids") else "READY"),
+        render_metric_tile("Threshold", gate_report.get("threshold", "—"), status="INFO"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(gate_tiles)}</div>', unsafe_allow_html=True)
     if gate_report.get("generated_at"):
         st.caption(f"Content gate generated: {gate_report['generated_at']}")
 
@@ -6134,7 +6203,7 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
             failed_rules = ", ".join(str(rule) for rule in topic.get("failed_rules", []) or []) or "none"
             st.markdown(
                 f"""
-<div class="health-row">
+<div class="health-row health-row-{html.escape(status.casefold())}">
     <div class="link-label">{render_status_chip(status)} {html.escape(str(topic.get("id") or ""))} — {html.escape(str(topic.get("title") or ""))}</div>
     <div class="link-path">failed rules: {html.escape(failed_rules)}</div>
 </div>
@@ -6443,95 +6512,90 @@ def render_progress(
     not_started = total - done - reading - repeat
     ratio = completion_ratio(notes)
 
-    st.markdown("### Progress")
-    st.markdown("Здесь видно, превращается ли база в реальный учебный путь.")
-
-    metric_cols = st.columns(4)
-    metric_cols[0].metric("Готово", done)
-    metric_cols[1].metric("Читаю", reading)
-    metric_cols[2].metric("Повторить", repeat)
-    metric_cols[3].metric("Не начато", not_started)
-
-    st.progress(ratio)
-    st.caption(f"Общий прогресс: {done}/{total} заметок ({ratio:.0%})")
+    st.markdown(
+        render_card(
+            "Progress",
+            "Здесь видно, превращается ли база в реальный учебный путь.",
+            eyebrow="Learn cluster",
+            status="IN PROGRESS" if ratio < 1 else "PASS",
+        ),
+        unsafe_allow_html=True,
+    )
+    note_tiles = [
+        render_metric_tile("Готово", done, total=total, progress=ratio, status="PASS" if ratio == 1 and total else "IN PROGRESS"),
+        render_metric_tile("Читаю", reading, status="IN PROGRESS"),
+        render_metric_tile("Повторить", repeat, status="WEAK" if repeat else "READY"),
+        render_metric_tile("Не начато", not_started, status="TODO" if not_started else "READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(note_tiles)}</div>', unsafe_allow_html=True)
 
     practice_stats = practice_progress(practice_cards)
-    st.markdown("#### Практика")
+    render_section_eyebrow_block("Практика")
     practice_total = practice_stats["total"]
     practice_done = practice_stats[PRACTICE_DONE]
     practice_ratio = practice_done / practice_total if practice_total else 0.0
-    practice_cols = st.columns(3)
-    practice_cols[0].metric("Карточек", practice_total)
-    practice_cols[1].metric("В работе", practice_stats[PRACTICE_DOING])
-    practice_cols[2].metric("Сделано", practice_done)
-    st.progress(practice_ratio)
-    st.caption(f"Практика: {practice_done}/{practice_total} карточек ({practice_ratio:.0%})")
+    st.markdown(
+        f'<div class="home-metric-grid">{"".join([render_metric_tile("Карточек", practice_total, status="INFO"), render_metric_tile("В работе", practice_stats[PRACTICE_DOING], status="IN PROGRESS"), render_metric_tile("Сделано", practice_done, total=practice_total, progress=practice_ratio, status="PASS" if practice_ratio == 1 and practice_total else "IN PROGRESS")])}</div>',
+        unsafe_allow_html=True,
+    )
 
     mentor_stats = mentor_tasks_progress(mentor_tasks)
     mentor_total = mentor_stats["total"]
     mentor_done = mentor_stats["done"]
     mentor_ratio = mentor_done / mentor_total if mentor_total else 0.0
-    st.markdown("#### Mentor tasks")
-    mentor_cols = st.columns(2)
-    mentor_cols[0].metric("Автозадач", mentor_total)
-    mentor_cols[1].metric("Решено", mentor_done)
-    st.progress(mentor_ratio)
-    st.caption(f"Задачи ментора: {mentor_done}/{mentor_total} ({mentor_ratio:.0%})")
+    render_section_eyebrow_block("Mentor tasks")
+    st.markdown(
+        f'<div class="home-metric-grid">{"".join([render_metric_tile("Автозадач", mentor_total, status="INFO"), render_metric_tile("Решено", mentor_done, total=mentor_total, progress=mentor_ratio, status="PASS" if mentor_ratio == 1 and mentor_total else "IN PROGRESS")])}</div>',
+        unsafe_allow_html=True,
+    )
 
     data_lab_stats = data_lab_projects_progress(data_lab_projects)
     data_lab_total = data_lab_stats["projects_total"]
     data_lab_done = data_lab_stats["projects_done"]
     data_lab_ratio = data_lab_done / data_lab_total if data_lab_total else 0.0
-    st.markdown("#### Data Lab Projects")
-    data_lab_cols = st.columns(2)
-    data_lab_cols[0].metric("Проектов", data_lab_total)
-    data_lab_cols[1].metric("Complete", data_lab_done)
-    st.progress(data_lab_ratio)
-    st.caption(
-        f"Data Lab: {data_lab_done}/{data_lab_total} проектов complete · "
-        f"{data_lab_stats['milestones_done']}/{data_lab_stats['milestones_total']} milestones"
+    render_section_eyebrow_block("Data Lab Projects")
+    st.markdown(
+        f'<div class="home-metric-grid">{"".join([render_metric_tile("Проектов", data_lab_total, status="INFO"), render_metric_tile("Complete", data_lab_done, total=data_lab_total, progress=data_lab_ratio, meta=f"milestones: {data_lab_stats["milestones_done"]}/{data_lab_stats["milestones_total"]}", status="PASS" if data_lab_ratio == 1 and data_lab_total else "IN PROGRESS")])}</div>',
+        unsafe_allow_html=True,
     )
 
     algorithm_stats = algorithm_progress(algorithm_lessons)
     algorithm_total = algorithm_stats["total"]
     algorithm_done = algorithm_stats["done"]
     algorithm_ratio = algorithm_done / algorithm_total if algorithm_total else 0.0
-    st.markdown("#### Algorithms Lab")
-    algorithm_cols = st.columns(2)
-    algorithm_cols[0].metric("Уроков", algorithm_total)
-    algorithm_cols[1].metric("Пройдено", algorithm_done)
-    st.progress(algorithm_ratio)
-    st.caption(f"Алгоритмы: {algorithm_done}/{algorithm_total} уроков ({algorithm_ratio:.0%})")
+    render_section_eyebrow_block("Algorithms Lab")
+    st.markdown(
+        f'<div class="home-metric-grid">{"".join([render_metric_tile("Уроков", algorithm_total, status="INFO"), render_metric_tile("Пройдено", algorithm_done, total=algorithm_total, progress=algorithm_ratio, status="PASS" if algorithm_ratio == 1 and algorithm_total else "IN PROGRESS")])}</div>',
+        unsafe_allow_html=True,
+    )
 
     arena_stats = interview_arena_progress_summary()
-    st.markdown("#### Interview Arena")
-    arena_cols = st.columns(4)
-    arena_cols[0].metric("Algorithm attempts", arena_stats["algorithm_attempts"])
-    arena_cols[1].metric("Mock sessions", arena_stats["mock_sessions_completed"])
-    arena_cols[2].metric("Interview answers", arena_stats["interview_answers"])
-    arena_cols[3].metric("Repeat later", arena_stats["questions_repeat_later"])
+    render_section_eyebrow_block("Interview Arena")
+    st.markdown(
+        f'<div class="home-metric-grid">{"".join([render_metric_tile("Algorithm attempts", arena_stats["algorithm_attempts"], status="INFO"), render_metric_tile("Mock sessions", arena_stats["mock_sessions_completed"], status="READY"), render_metric_tile("Interview answers", arena_stats["interview_answers"], status="INFO"), render_metric_tile("Repeat later", arena_stats["questions_repeat_later"], status="WEAK" if arena_stats["questions_repeat_later"] else "READY")])}</div>',
+        unsafe_allow_html=True,
+    )
 
     output_stats = portfolio_progress(practice_cards)
     output_total = output_stats["total"]
     output_done = output_stats["with_outputs"]
     output_ratio = output_done / output_total if output_total else 0.0
-    st.markdown("#### Portfolio outputs")
-    output_cols = st.columns(2)
-    output_cols[0].metric("Output записан", output_done)
-    output_cols[1].metric("Без output", output_stats["missing"])
-    st.progress(output_ratio)
-    st.caption(f"Портфолио-след: {output_done}/{output_total} карточек ({output_ratio:.0%})")
+    render_section_eyebrow_block("Portfolio outputs")
+    st.markdown(
+        f'<div class="home-metric-grid">{"".join([render_metric_tile("Output записан", output_done, total=output_total, progress=output_ratio, status="PASS" if output_ratio == 1 and output_total else "IN PROGRESS"), render_metric_tile("Без output", output_stats["missing"], status="TODO" if output_stats["missing"] else "READY")])}</div>',
+        unsafe_allow_html=True,
+    )
 
     next_note = find_next_note(sections)
     if next_note:
         section_label = humanize_section_name(next_note["section_key"])
         st.markdown(
-            f"""
-<div class="learning-panel">
-    <div class="learning-panel-title">Что открыть дальше</div>
-    <div class="muted-small">{html.escape(section_label)} / {html.escape(next_note["display_name"])}</div>
-</div>
-            """,
+            render_card(
+                "Что открыть дальше",
+                f"{section_label} / {next_note['display_name']}",
+                eyebrow="Next note",
+                status=note_status_to_chip(get_note_status(next_note)),
+            ),
             unsafe_allow_html=True,
         )
         st.button(
@@ -6542,25 +6606,21 @@ def render_progress(
             use_container_width=True,
         )
 
-    st.markdown("#### По разделам")
+    render_section_eyebrow_block("По разделам")
     for section_key, section_notes in sections.items():
         stats = section_progress(section_notes)
         total_section = stats["total"]
         ratio_section = stats[STATUS_DONE] / total_section if total_section else 0.0
         st.markdown(
-            f"""
-<div class="section-progress-row">
-    <strong>{html.escape(humanize_section_name(section_key))}</strong>
-    <div class="muted-small">
-        {stats[STATUS_DONE]}/{total_section} готово ·
-        {stats[STATUS_READING]} читаю ·
-        {stats[STATUS_REPEAT]} повторить
-    </div>
-</div>
-            """,
+            render_card(
+                humanize_section_name(section_key),
+                f"{stats[STATUS_DONE]}/{total_section} готово · {stats[STATUS_READING]} читаю · {stats[STATUS_REPEAT]} повторить",
+                eyebrow="Vault section",
+                status="PASS" if ratio_section == 1 and total_section else "IN PROGRESS",
+                content_html=render_metric_tile("Progress", stats[STATUS_DONE], total=total_section, progress=ratio_section, status="PASS" if ratio_section == 1 and total_section else "IN PROGRESS"),
+            ),
             unsafe_allow_html=True,
         )
-        st.progress(ratio_section)
 
 
 def open_source_note(note: dict[str, str]) -> None:
@@ -6573,10 +6633,11 @@ def render_problem_link(record: dict[str, Any], index: int, prefix: str) -> None
     target = str(record.get("target") or "")
     reason = str(record.get("reason") or "")
     label = str(record.get("label") or target)
+    row_class = "health-row-error" if prefix == "broken" else "health-row-fail"
     st.markdown(
         f"""
-<div class="health-row">
-    <div class="link-label">{html.escape(label)}</div>
+<div class="health-row {row_class}">
+    <div class="link-label">{render_status_chip('ERROR' if prefix == 'broken' else 'NEEDS REVIEW')} {html.escape(label)}</div>
     <div class="link-path">target: {html.escape(target)}</div>
     <div class="link-path">источник: {html.escape(link_path_label(source_note))}</div>
     <div class="link-path">причина: {html.escape(reason)}</div>
@@ -6594,41 +6655,60 @@ def render_problem_link(record: dict[str, Any], index: int, prefix: str) -> None
 
 
 def render_links_health(graph: dict[str, Any]) -> None:
-    st.markdown("### 🔗 Links Health")
-    st.markdown("Аудит всех Obsidian-ссылок в vault. Это карта надежности твоей базы.")
+    st.markdown(
+        render_card(
+            "🔗 Links Health",
+            "Аудит всех Obsidian-ссылок в vault. Это карта надежности твоей базы.",
+            eyebrow="Output cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
 
     if st.button("Пересканировать ссылки", key="rescan_links", use_container_width=True):
         scan_link_graph.clear()
         st.rerun()
 
     summary = graph["summary"]
-    cols = st.columns(4)
-    cols[0].metric("Всего ссылок", summary["total"])
-    cols[1].metric("Резолвится", summary["resolved"])
-    cols[2].metric("Битые", summary["broken"])
-    cols[3].metric("Неоднозначные", summary["ambiguous"])
+    total_links = summary["total"] or 0
+    resolved_ratio = summary["resolved"] / total_links if total_links else 0.0
+    metric_tiles = [
+        render_metric_tile("Всего ссылок", summary["total"], status="INFO"),
+        render_metric_tile("Резолвится", summary["resolved"], total=summary["total"], progress=resolved_ratio, status="PASS" if resolved_ratio == 1 and total_links else "IN PROGRESS"),
+        render_metric_tile("Битые", summary["broken"], status="ERROR" if summary["broken"] else "READY"),
+        render_metric_tile("Неоднозначные", summary["ambiguous"], status="NEEDS REVIEW" if summary["ambiguous"] else "READY"),
+    ]
+    st.markdown(f'<div class="home-metric-grid">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
 
     if summary["broken"] == 0 and summary["ambiguous"] == 0:
-        st.success("Все ссылки на месте ✅")
+        st.markdown(
+            render_card(
+                "Все ссылки на месте",
+                "Битых и неоднозначных Obsidian-ссылок не найдено.",
+                eyebrow="Links Health",
+                status="PASS",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     broken = graph["broken"]
     ambiguous = graph["ambiguous"]
 
     if broken:
-        st.markdown("#### Битые ссылки")
+        render_section_eyebrow_block("Битые ссылки")
         for index, record in enumerate(broken):
             render_problem_link(record, index, "broken")
     else:
-        st.info("Битых ссылок нет.")
+        st.markdown(render_card("Битых ссылок нет", "Все targets резолвятся по текущему индексу vault.", eyebrow="Links Health", status="PASS"), unsafe_allow_html=True)
 
     if ambiguous:
-        st.markdown("#### Неоднозначные ссылки")
+        render_section_eyebrow_block("Неоднозначные ссылки")
         st.caption("Приложение выбирает ближайшую заметку по дереву, но лучше уточнить путь в Obsidian-ссылке.")
         for index, record in enumerate(ambiguous):
             render_problem_link(record, index, "ambiguous")
     else:
-        st.info("Неоднозначных ссылок нет.")
+        st.markdown(render_card("Неоднозначных ссылок нет", "Каждая ссылка указывает на один понятный target.", eyebrow="Links Health", status="PASS"), unsafe_allow_html=True)
 
 
 def render_help() -> None:
