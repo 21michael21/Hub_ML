@@ -2179,7 +2179,7 @@ def render_markdown_with_wikilinks(markdown_text: str) -> str:
 
     def replace_match(match: re.Match[str]) -> str:
         parsed = split_wikilink(match.group(1))
-        rendered_label = html.escape(label_for_link(parsed))
+        rendered_label = label_for_link(parsed)
         return f'<span class="obsidian-link">🔗 {rendered_label}</span>'
 
     rendered_parts: list[str] = []
