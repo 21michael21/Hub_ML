@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import queue
 import time
 from pathlib import Path
@@ -8,6 +9,8 @@ from typing import Any
 import streamlit as st
 
 from core.notebook.output import notebook_output_from_message, outputs_to_stdout
+
+logger = logging.getLogger(__name__)
 
 try:
     from jupyter_client import KernelManager
@@ -45,7 +48,7 @@ def run_hidden_kernel_setup(kc: Any) -> None:
             ):
                 break
     except Exception:
-        pass
+        logger.debug("Hidden notebook kernel setup failed.", exc_info=True)
 
 
 def start_notebook_kernel() -> dict[str, Any]:
@@ -124,17 +127,17 @@ def shutdown_notebook_kernel(kernel_state: dict[str, Any]) -> None:
             if active_kc is not None:
                 active_kc.stop_channels()
         except Exception:
-            pass
+            logger.debug("Failed to stop active notebook kernel channels.", exc_info=True)
     try:
         if kc is not None:
             kc.stop_channels()
     except Exception:
-        pass
+        logger.debug("Failed to stop notebook kernel channels.", exc_info=True)
     try:
         if km is not None and getattr(km, "is_alive", lambda: False)():
             km.shutdown_kernel(now=True)
     except Exception:
-        pass
+        logger.debug("Failed to shut down notebook kernel.", exc_info=True)
 
 
 def restart_notebook_kernel() -> None:
@@ -176,7 +179,7 @@ def finish_notebook_execution(kernel_state: dict[str, Any]) -> None:
         if kc is not None:
             kc.stop_channels()
     except Exception:
-        pass
+        logger.debug("Failed to stop active execution channels.", exc_info=True)
 
     kernel_state["active_execution"] = None
     kernel_state["status"] = "idle"
@@ -372,7 +375,7 @@ def run_code_in_kernel_sync(code: str, timeout_seconds: int = 20) -> dict[str, A
                 try:
                     km.interrupt_kernel()
                 except Exception:
-                    pass
+                    logger.debug("Failed to interrupt timed-out notebook kernel.", exc_info=True)
                 drain_deadline = time.perf_counter() + 3.0
                 while time.perf_counter() < drain_deadline:
                     try:
@@ -457,4 +460,4 @@ def run_code_in_kernel_sync(code: str, timeout_seconds: int = 20) -> dict[str, A
             if kc is not None:
                 kc.stop_channels()
         except Exception:
-            pass
+            logger.debug("Failed to stop notebook cell channels.", exc_info=True)

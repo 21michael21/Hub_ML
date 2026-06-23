@@ -4,6 +4,7 @@ import ast
 import hashlib
 import html
 import json
+import logging
 import os
 import random
 import re
@@ -76,6 +77,8 @@ from core.tasks.runner import (
     run_code_in_notebook_kernel_sync,
     traceback_text,
 )
+
+logger = logging.getLogger(__name__)
 
 try:
     from streamlit_ace import st_ace
@@ -2909,7 +2912,7 @@ def run_scratch_code(code: str, timeout_seconds: int) -> dict[str, Any]:
             try:
                 temp_path.unlink(missing_ok=True)
             except OSError:
-                pass
+                logger.debug("Failed to remove temporary code file.", exc_info=True)
 
 
 def init_notebook_state() -> None:
