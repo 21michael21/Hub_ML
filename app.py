@@ -6216,8 +6216,15 @@ def render_datasets_tab(
     datasets: list[dict[str, Any]],
     practice_cards: list[dict[str, Any]],
 ) -> None:
-    st.markdown("### 📊 Datasets")
-    st.markdown("CSV-файлы из папки `datasets/` рядом с приложением. Предпросмотр читает только первые строки.")
+    st.markdown(
+        render_card(
+            "📊 Datasets",
+            "CSV-файлы из папки datasets/ рядом с приложением. Предпросмотр читает только первые строки.",
+            eyebrow="Build cluster",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
 
     return_card_id = st.session_state.get("dataset_return_card")
     if return_card_id and any(card["id"] == return_card_id for card in practice_cards):
@@ -6234,24 +6241,52 @@ def render_datasets_tab(
         st.rerun()
 
     if not DATASETS_DIR.exists() or not DATASETS_DIR.is_dir():
-        st.info("Папка datasets/ пока не создана. Добавьте CSV-файлы рядом с приложением.")
+        st.markdown(
+            render_card(
+                "Папка datasets/ не найдена",
+                "Создай datasets/ рядом с приложением и положи туда CSV-файлы.",
+                eyebrow="Empty state",
+                status="BLOCKED",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     if not datasets:
-        st.info("CSV-файлы в datasets/ не найдены.")
+        st.markdown(
+            render_card(
+                "CSV-файлы не найдены",
+                "Добавь df_events.csv, df_matching.csv или df_orders.csv в datasets/.",
+                eyebrow="Empty state",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
-    summary_rows = [
-        {
-            "name": dataset["name"],
-            "size": dataset["size"],
-            "rows": dataset["rows"] if dataset["rows"] is not None else "—",
-            "columns": dataset["columns"] if dataset["columns"] is not None else "—",
-            "status": "ok" if not dataset.get("error") else "error",
-        }
-        for dataset in datasets
-    ]
-    st.dataframe(summary_rows, use_container_width=True, hide_index=True)
+    render_section_eyebrow_block("Registry")
+    dataset_cards = []
+    for dataset in datasets:
+        has_error = bool(dataset.get("error"))
+        rows_value = dataset["rows"] if dataset["rows"] is not None else "—"
+        columns_value = dataset["columns"] if dataset["columns"] is not None else "—"
+        card_body = "".join(
+            [
+                render_metric_tile("rows", rows_value, status="ERROR" if has_error else "READY"),
+                render_metric_tile("cols", columns_value, status="ERROR" if has_error else "READY"),
+                render_metric_tile("size", dataset["size"], status="INFO"),
+            ]
+        )
+        dataset_cards.append(
+            render_card(
+                dataset["name"],
+                str(dataset.get("error") or dataset["path"]),
+                eyebrow="CSV",
+                status="ERROR" if has_error else "READY",
+                content_html=f'<div class="home-metric-grid">{card_body}</div>',
+            )
+        )
+    st.markdown(f'<div class="home-card-grid">{"".join(dataset_cards)}</div>', unsafe_allow_html=True)
 
     names = [dataset["name"] for dataset in datasets]
     selected_name = st.session_state.get("selected_dataset")
@@ -6267,33 +6302,76 @@ def render_datasets_tab(
     )
     selected = find_dataset_record(selected_name, datasets)
     if not selected:
-        st.info("Выберите датасет.")
+        st.markdown(
+            render_card(
+                "Датасет не выбран",
+                "Выбери CSV в списке выше, чтобы открыть предпросмотр.",
+                eyebrow="Dataset preview",
+                status="READY",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     if selected.get("error"):
-        st.warning(f"Не удалось прочитать CSV: {selected['error']}")
+        st.markdown(
+            render_card(
+                "Не удалось прочитать CSV",
+                str(selected["error"]),
+                eyebrow=selected["name"],
+                status="ERROR",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
     preview_data = read_dataset_preview(selected["path"], nrows=50)
     if preview_data["error"]:
-        st.warning(f"Не удалось открыть предпросмотр: {preview_data['error']}")
+        st.markdown(
+            render_card(
+                "Не удалось открыть предпросмотр",
+                str(preview_data["error"]),
+                eyebrow=selected["name"],
+                status="ERROR",
+            ),
+            unsafe_allow_html=True,
+        )
         return
 
-    st.markdown(f"#### {selected['name']}")
-    meta_cols = st.columns(3)
-    meta_cols[0].metric("Размер", selected["size"])
-    meta_cols[1].metric("Строк", selected["rows"] if selected["rows"] is not None else "—")
-    meta_cols[2].metric("Колонок", selected["columns"] if selected["columns"] is not None else "—")
+    render_section_eyebrow_block("Preview")
+    selected_tiles = [
+        render_metric_tile("Размер", selected["size"], status="INFO"),
+        render_metric_tile("Строк", selected["rows"] if selected["rows"] is not None else "—", status="READY"),
+        render_metric_tile("Колонок", selected["columns"] if selected["columns"] is not None else "—", status="READY"),
+    ]
+    st.markdown(
+        render_card(
+            selected["name"],
+            "Метаданные выбранного CSV.",
+            eyebrow="Selected dataset",
+            status="READY",
+            content_html=f'<div class="home-metric-grid">{"".join(selected_tiles)}</div>',
+        ),
+        unsafe_allow_html=True,
+    )
 
-    st.markdown("#### Preview: первые 50 строк")
+    render_section_eyebrow_block("Первые 50 строк")
     st.dataframe(preview_data["preview"], use_container_width=True)
 
-    st.markdown("#### Колонки и типы")
+    render_section_eyebrow_block("Колонки и типы")
     st.dataframe(preview_data["dtypes"], use_container_width=True, hide_index=True)
 
-    st.markdown("#### Describe: числовые колонки")
+    render_section_eyebrow_block("Describe: числовые колонки")
     if preview_data["describe"] is None:
-        st.info("Числовых колонок в первых строках не найдено.")
+        st.markdown(
+            render_card(
+                "Числовых колонок не найдено",
+                "В первых строках нет numeric-полей для describe().",
+                eyebrow="Dataset profile",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
     else:
         st.dataframe(preview_data["describe"], use_container_width=True)
 
