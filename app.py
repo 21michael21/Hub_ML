@@ -67,6 +67,7 @@ from core.reports.theory_quality import (
     theory_summary,
     weakest_notes,
 )
+from core.search import SearchIndex, SearchItem, build_tfidf_index, search as semantic_search
 from core.tasks.loader import load_mentor_tasks
 from core.tasks.models import dataset_snippet_for_task
 from core.tasks.runner import (
@@ -103,6 +104,8 @@ CONTENT_GATE_REPORT_PATH = PROJECT_ROOT / "content" / "reports" / "content_gate_
 DATA_LAB_PROJECTS_DIR = PROJECT_ROOT / "content" / "projects" / "data_lab"
 ML_LAB_PROJECTS_DIR = PROJECT_ROOT / "content" / "projects" / "ml_lab"
 PROJECT_RECIPE_DIRS = (DATA_LAB_PROJECTS_DIR, ML_LAB_PROJECTS_DIR)
+SEMANTIC_SEARCH_INDEX_KEY = "semantic_search_index"
+SEMANTIC_SEARCH_META_KEY = "semantic_search_meta"
 STATUS_NOT_STARTED = "not_started"
 STATUS_READING = "reading"
 STATUS_DONE = "done"
@@ -3235,6 +3238,246 @@ def render_related_practice_block(
         )
 
 
+def semantic_search_note_item(note: dict[str, str]) -> SearchItem | None:
+    text, error = read_note(note["path"])
+    if error:
+        return None
+    frontmatter, body = split_frontmatter(text)
+    title = str(frontmatter.get("title") or note.get("display_name") or note.get("relative_path") or "").strip()
+    relative_path = str(note.get("relative_path") or note.get("display_name") or note.get("path") or "").strip()
+    return SearchItem(
+        source="theory_note",
+        id=f"note:{relative_path}",
+        title=title or relative_path,
+        body=body,
+        path=relative_path,
+        payload={"display_name": note.get("display_name", ""), "section_key": note.get("section_key", "")},
+    )
+
+
+def semantic_search_practice_item(card: dict[str, Any]) -> SearchItem:
+    body = "\n".join(
+        [
+            str(card.get("section") or ""),
+            str(card.get("difficulty") or ""),
+            str(card.get("related_note") or ""),
+            str(card.get("dataset") or ""),
+            str(card.get("body") or ""),
+        ]
+    )
+    card_id = str(card.get("id") or "").strip()
+    return SearchItem(
+        source="practice",
+        id=f"practice:{card_id}",
+        title=str(card.get("title") or card_id),
+        body=body,
+        path=str(card.get("path") or ""),
+        payload={"card_id": card_id},
+    )
+
+
+def semantic_search_task_item(task: dict[str, Any]) -> SearchItem:
+    task_id = str(task.get("id") or "").strip()
+    body = "\n".join(
+        str(task.get(key) or "")
+        for key in ("notebook_label", "prompt", "starter_code", "solution_starter", "test_code", "dependency_hint")
+    )
+    return SearchItem(
+        source="task",
+        id=f"task:{task_id}",
+        title=str(task.get("title") or task_id),
+        body=body,
+        path=task_id,
+        payload={"task_id": task_id, "notebook_label": task.get("notebook_label", "")},
+    )
+
+
+def build_semantic_search_index(
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+) -> SearchIndex:
+    items: list[SearchItem] = []
+    for note in all_notes(sections):
+        item = semantic_search_note_item(note)
+        if item is not None:
+            items.append(item)
+    items.extend(semantic_search_practice_item(card) for card in practice_cards)
+    items.extend(semantic_search_task_item(task) for task in mentor_tasks)
+    return build_tfidf_index(items)
+
+
+def semantic_search_result_status(
+    result_source: str,
+    result_path: str,
+    result_payload: dict[str, Any],
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+) -> str:
+    if result_source == "theory_note":
+        note = note_from_relative_path_in_sections(result_path, sections)
+        return note_status_to_chip(get_note_status(note)) if note else "NEEDS REVIEW"
+    if result_source == "practice":
+        card_id = str(result_payload.get("card_id") or "")
+        card = next((candidate for candidate in practice_cards if candidate.get("id") == card_id), None)
+        return practice_status_to_chip(get_card_status(card)) if card else "NEEDS REVIEW"
+    if result_source == "task":
+        task_id = str(result_payload.get("task_id") or "")
+        return "PASS" if get_mentor_task_status(task_id) == STATUS_DONE else "IN PROGRESS"
+    return "READY"
+
+
+def semantic_search_source_label(source: str) -> str:
+    return {
+        "theory_note": "Theory",
+        "practice": "Practice",
+        "task": "Mentor Task",
+    }.get(source, source)
+
+
+def render_semantic_search_results(
+    results: list[Any],
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    *,
+    key_prefix: str,
+) -> None:
+    task_by_id = {str(task.get("id")): task for task in mentor_tasks}
+    for index, result in enumerate(results):
+        score = f"score {result.score:.2f}"
+        status = semantic_search_result_status(result.source, result.path, result.payload, sections, practice_cards)
+        meta_parts = [score]
+        if result.source == "theory_note" and result.path:
+            meta_parts.append(result.path)
+        elif result.source == "practice":
+            meta_parts.append(result.payload.get("card_id", ""))
+        elif result.source == "task":
+            meta_parts.append(str(result.payload.get("notebook_label") or "Mentor task"))
+        st.markdown(
+            render_card(
+                result.title,
+                " · ".join(part for part in meta_parts if part),
+                eyebrow=semantic_search_source_label(result.source),
+                status=status,
+            ),
+            unsafe_allow_html=True,
+        )
+        button_key = safe_widget_key(key_prefix, result.source, result.id, index)
+        if result.source == "theory_note":
+            st.button(
+                "Открыть заметку",
+                key=button_key,
+                on_click=open_theory_note_path,
+                args=(result.path, sections),
+                use_container_width=True,
+            )
+        elif result.source == "practice":
+            card_id = str(result.payload.get("card_id") or "")
+            st.button(
+                "Открыть practice card",
+                key=button_key,
+                on_click=open_practice_card,
+                args=(card_id,),
+                use_container_width=True,
+                disabled=not any(card.get("id") == card_id for card in practice_cards),
+            )
+        elif result.source == "task":
+            task_id = str(result.payload.get("task_id") or "")
+            task = task_by_id.get(task_id)
+            st.button(
+                "Открыть mentor task",
+                key=button_key,
+                on_click=open_mentor_task,
+                args=(task,),
+                use_container_width=True,
+                disabled=task is None,
+            )
+
+
+def render_theory_search_box(
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+) -> None:
+    render_section_eyebrow_block("Find related")
+    st.markdown(
+        render_card(
+            "Локальный semantic search",
+            "TF-IDF индекс ищет по заметкам vault, practice cards и mentor tasks. Индекс пересобирается только вручную.",
+            eyebrow="Local search",
+            status="READY",
+        ),
+        unsafe_allow_html=True,
+    )
+
+    query = st.text_input(
+        "Поиск по смыслу",
+        key="semantic_search_query",
+        placeholder="Например: pandas groupby, leakage, window function",
+    )
+    if st.button("Обновить индекс поиска", key="semantic_search_refresh", use_container_width=True):
+        with st.spinner("Собираю локальный TF-IDF индекс..."):
+            index = build_semantic_search_index(sections, practice_cards, mentor_tasks)
+        st.session_state[SEMANTIC_SEARCH_INDEX_KEY] = index
+        st.session_state[SEMANTIC_SEARCH_META_KEY] = {
+            "items": len(index.items),
+            "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        }
+        st.success(f"Индекс обновлён: {len(index.items)} документов")
+
+    index = st.session_state.get(SEMANTIC_SEARCH_INDEX_KEY)
+    meta = st.session_state.get(SEMANTIC_SEARCH_META_KEY, {})
+    if not isinstance(index, SearchIndex):
+        st.markdown(
+            render_card(
+                "Индекс ещё не собран",
+                "Нажми «Обновить индекс поиска», чтобы построить локальный индекс. Автосканирования на загрузке нет.",
+                eyebrow="Empty state",
+                status="TODO",
+            ),
+            unsafe_allow_html=True,
+        )
+        return
+
+    st.caption(f"Документов в индексе: {meta.get('items', len(index.items))}")
+    if not query.strip():
+        return
+
+    results = semantic_search(index, query, k=6)
+    if not results:
+        st.markdown(
+            render_card(
+                "Совпадений нет",
+                "Попробуй другой запрос: тему, библиотеку, метрику или название датасета.",
+                eyebrow="Search",
+                status="NEEDS REVIEW",
+            ),
+            unsafe_allow_html=True,
+        )
+        return
+    render_semantic_search_results(results, sections, practice_cards, mentor_tasks, key_prefix="semantic_search")
+
+
+def render_related_semantic_results(
+    note: dict[str, str],
+    body: str,
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+) -> None:
+    index = st.session_state.get(SEMANTIC_SEARCH_INDEX_KEY)
+    if not isinstance(index, SearchIndex):
+        return
+    query = f"{note.get('display_name', '')}\n{body[:1200]}"
+    current_id = f"note:{note.get('relative_path', '')}"
+    results = semantic_search(index, query, k=4, exclude_ids={current_id})
+    if not results:
+        return
+    render_section_eyebrow_block("Related by semantic search")
+    render_semantic_search_results(results, sections, practice_cards, mentor_tasks, key_prefix="semantic_related")
+
+
 def render_note(
     section_key: str,
     note: dict[str, str],
@@ -3243,6 +3486,7 @@ def render_note(
     graph: dict[str, Any],
     sections: dict[str, list[dict[str, str]]],
     practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
 ) -> None:
     text, error = read_note(note["path"])
     if error:
@@ -3264,6 +3508,7 @@ def render_note(
     rendered_body = render_markdown_with_wikilinks(body)
     st.markdown(rendered_body, unsafe_allow_html=True)
 
+    render_related_semantic_results(note, body, sections, practice_cards, mentor_tasks)
     render_related_practice_block(note, practice_cards, note_index)
     render_graph_navigation(note, graph, sections)
 
@@ -7161,7 +7406,17 @@ def main() -> None:
             )
             render_status_bar()
             return
-        render_note(selected_section, selected_note, resolved_vault, note_index, graph, sections, practice_cards)
+        render_theory_search_box(sections, practice_cards, mentor_data.get("tasks", []))
+        render_note(
+            selected_section,
+            selected_note,
+            resolved_vault,
+            note_index,
+            graph,
+            sections,
+            practice_cards,
+            mentor_data.get("tasks", []),
+        )
     elif active_tab == "🎯 Practice":
         render_practice_tab(practice_cards, practice_warnings, note_index, datasets)
     elif active_tab == "🎯 Tasks":
