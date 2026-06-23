@@ -1,5 +1,7 @@
 # Hub_ML
 
+[![CI](https://github.com/21michael21/Hub_ML/actions/workflows/ci.yml/badge.svg)](https://github.com/21michael21/Hub_ML/actions/workflows/ci.yml)
+
 Local Streamlit workstation for ML/NLP learning, data analysis practice, notebook experimentation, algorithms, interview prep, and portfolio artifacts.
 
 Hub_ML is intentionally simple: one Streamlit entrypoint, local files, no external AI API calls, no database, no auth, no Docker, and no web backend.
@@ -67,6 +69,29 @@ Ignored local/source material includes raw VKAT notebooks, local virtualenvs, St
 ```bash
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m compileall -q app.py core tools tests
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q
+```
+
+## Running Checks
+
+The full private-vault content gate requires your real Obsidian vault:
+
+```bash
+VAULT_PATH="/absolute/path/to/obsidian_vault" PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
+```
+
+CI uses the committed sample vault to prove the tooling runs without private files. It does not assert `36/36` coverage:
+
+```bash
+VAULT_PATH=tests/fixtures/sample_vault PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_internal_links.py
+VAULT_PATH=tests/fixtures/sample_vault PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
+```
+
+Optional local pre-commit setup:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pip install -r requirements-dev.txt
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/pre-commit install
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/pre-commit run --all-files
 ```
 
 Manual release checklist: [docs/manual_test_checklist.md](docs/manual_test_checklist.md)

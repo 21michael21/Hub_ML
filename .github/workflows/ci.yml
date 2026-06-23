@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile
+        run: python -m compileall app.py tools
+
+      - name: Import app
+        run: python -c "import app"
+
+      - name: Test
+        run: python -m pytest -q
+
+      - name: Validate resources
+        run: python tools/validate_resources.py
+
+      - name: Check internal links on sample vault
+        run: VAULT_PATH=tests/fixtures/sample_vault python tools/check_internal_links.py
+
+      - name: Check content gate on sample vault
+        run: VAULT_PATH=tests/fixtures/sample_vault python tools/check_content_gate.py --reaudit
