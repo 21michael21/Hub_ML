@@ -1,0 +1,2 @@
+# Optional local semantic-search backend. The app works without this file.
+sentence-transformers>=3.0

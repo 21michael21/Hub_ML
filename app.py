@@ -67,7 +67,7 @@ from core.reports.theory_quality import (
     theory_summary,
     weakest_notes,
 )
-from core.search import SearchIndex, SearchItem, build_tfidf_index, search as semantic_search
+from core.search import SearchIndex, SearchItem, build_search_index, search as semantic_search
 from core.tasks.loader import load_mentor_tasks
 from core.tasks.models import dataset_snippet_for_task
 from core.tasks.runner import (
@@ -3304,7 +3304,7 @@ def build_semantic_search_index(
             items.append(item)
     items.extend(semantic_search_practice_item(card) for card in practice_cards)
     items.extend(semantic_search_task_item(task) for task in mentor_tasks)
-    return build_tfidf_index(items)
+    return build_search_index(items)
 
 
 def semantic_search_result_status(
@@ -3333,6 +3333,14 @@ def semantic_search_source_label(source: str) -> str:
         "practice": "Practice",
         "task": "Mentor Task",
     }.get(source, source)
+
+
+def semantic_search_backend_label(index: SearchIndex) -> str:
+    if index.backend == "embeddings":
+        return f"embeddings · {index.model_name or 'local model'}"
+    if index.reason == "embedding_backend_unavailable":
+        return "TF-IDF · embeddings unavailable"
+    return "TF-IDF"
 
 
 def render_semantic_search_results(
@@ -3404,7 +3412,7 @@ def render_theory_search_box(
     st.markdown(
         render_card(
             "Локальный semantic search",
-            "TF-IDF индекс ищет по заметкам vault, practice cards и mentor tasks. Индекс пересобирается только вручную.",
+            "Поиск ищет по заметкам vault, practice cards и mentor tasks. По умолчанию используется TF-IDF; embeddings включаются только через HUBML_EMBEDDINGS=1.",
             eyebrow="Local search",
             status="READY",
         ),
@@ -3424,7 +3432,7 @@ def render_theory_search_box(
             "items": len(index.items),
             "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         }
-        st.success(f"Индекс обновлён: {len(index.items)} документов")
+        st.success(f"Индекс обновлён: {len(index.items)} документов · {semantic_search_backend_label(index)}")
 
     index = st.session_state.get(SEMANTIC_SEARCH_INDEX_KEY)
     meta = st.session_state.get(SEMANTIC_SEARCH_META_KEY, {})
@@ -3440,7 +3448,7 @@ def render_theory_search_box(
         )
         return
 
-    st.caption(f"Документов в индексе: {meta.get('items', len(index.items))}")
+    st.caption(f"Backend: {semantic_search_backend_label(index)} · Документов в индексе: {meta.get('items', len(index.items))}")
     if not query.strip():
         return
 

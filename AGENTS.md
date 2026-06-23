@@ -3,6 +3,9 @@
 ## Stack & boundaries
 - Streamlit single-app (`app.py`) + `tools/` + `content/`. Only stdlib + pandas/pytest.
 - Do not introduce React/Next/Tauri/FastAPI/MLflow/LangChain/vector DB or any heavy dependency.
+- One optional exception is allowed for local search only: `sentence-transformers` may be installed
+  from `requirements-embeddings.txt` as an opt-in, local, CPU, free embedding backend. It must never
+  be required for tests/runtime, never call an API, and TF-IDF must remain the default fallback.
 - Do not add AI APIs and do not implement RAG. External sources are curate + cite: never paste source text, never bulk-generate notes. Auditor flag `likely_ai_dump_or_placeholder = true` is a failure, not a warning.
 
 ## Don't break

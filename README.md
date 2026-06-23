@@ -71,6 +71,25 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m compileall -q app.py core tools te
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q
 ```
 
+## Optional: Better Search
+
+Theory search works out of the box with local TF-IDF. No model download is required.
+
+For a stronger local semantic-search backend, you can opt in to a small Hugging Face
+`sentence-transformers` model:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pip install -r requirements-embeddings.txt
+HUBML_EMBEDDINGS=1 VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
+```
+
+Notes:
+
+- This is optional; the app falls back to TF-IDF when the package/model is missing.
+- The default model is `all-MiniLM-L6-v2`, runs locally on CPU, and downloads on first use.
+- Embeddings are cached under ignored `user_projects/search_cache/`.
+- No AI API, vector database, LangChain, or external service is used.
+
 ## Running Checks
 
 The full private-vault content gate requires your real Obsidian vault:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from core.search import SearchItem, build_tfidf_index, search
+from core.search import SearchItem, build_search_index, build_tfidf_index, search
 
 
 def test_semantic_search_ranks_expected_item_first() -> None:
@@ -57,3 +57,27 @@ def test_semantic_search_can_exclude_current_item() -> None:
     results = search(index, "pandas dataframe", k=3, exclude_ids={"current"})
 
     assert [result.id for result in results] == ["task"]
+
+
+def test_default_search_backend_is_tfidf(monkeypatch) -> None:
+    monkeypatch.delenv("HUBML_EMBEDDINGS", raising=False)
+
+    index = build_search_index(
+        [SearchItem(source="note", id="python", title="Python", body="lists dicts functions")]
+    )
+
+    assert index.backend == "tfidf"
+    assert search(index, "lists")[0].id == "python"
+
+
+def test_embedding_backend_falls_back_when_optional_package_missing(monkeypatch) -> None:
+    monkeypatch.setenv("HUBML_EMBEDDINGS", "1")
+    monkeypatch.setattr("core.search.load_embedding_model", lambda *_args, **_kwargs: None)
+
+    index = build_search_index(
+        [SearchItem(source="note", id="python", title="Python", body="lists dicts functions")]
+    )
+
+    assert index.backend == "tfidf"
+    assert index.reason == "embedding_backend_unavailable"
+    assert search(index, "functions")[0].id == "python"
