@@ -2129,6 +2129,18 @@ def index_path_key(path: Path) -> str:
     return normalize_link_path(path.as_posix()).casefold()
 
 
+def normalize_theory_note_path(path: str | Path) -> str:
+    text = str(path or "").strip().replace("\\", "/")
+    if not text:
+        return ""
+    if "#" in text:
+        text = text.split("#", 1)[0]
+    text = normalize_link_path(text).strip("/")
+    if text and not Path(text).suffix:
+        text = f"{text}.md"
+    return text
+
+
 def build_note_index(sections: dict[str, list[dict[str, str]]]) -> dict[str, Any]:
     note_by_path: dict[str, dict[str, str]] = {}
     stem_index: dict[str, list[dict[str, str]]] = {}
@@ -2151,6 +2163,42 @@ def build_note_index(sections: dict[str, list[dict[str, str]]]) -> dict[str, Any
         "rel_index": rel_index,
         "all_notes": all_notes(sections),
     }
+
+
+def find_note_by_path(path: str | Path, note_index: dict[str, Any] | None = None) -> dict[str, str] | None:
+    normalized = normalize_theory_note_path(path)
+    if not normalized or not note_index:
+        return None
+
+    rel_index = note_index.get("rel_index")
+    if isinstance(rel_index, dict):
+        for key in (normalized.casefold(), index_path_key(Path(normalized))):
+            note = rel_index.get(key)
+            if isinstance(note, dict):
+                return note
+
+    note_by_path = note_index.get("note_by_path")
+    if isinstance(note_by_path, dict):
+        note = note_by_path.get(str(path))
+        if isinstance(note, dict):
+            return note
+        try:
+            absolute = str(Path(path).expanduser().resolve())
+        except OSError:
+            absolute = ""
+        if absolute:
+            note = note_by_path.get(absolute)
+            if isinstance(note, dict):
+                return note
+
+    for note in note_index.get("all_notes", []):
+        if not isinstance(note, dict):
+            continue
+        if str(note.get("relative_path") or "").casefold() == normalized.casefold():
+            return note
+        if str(note.get("path") or "") == str(path):
+            return note
+    return None
 
 
 def common_prefix_len(left: tuple[str, ...], right: tuple[str, ...]) -> int:
@@ -3198,23 +3246,69 @@ def link_path_label(note: dict[str, str]) -> str:
     return f"{humanize_section_name(note['section_key'])} / {note['display_name']}"
 
 
-def render_link_card(link: dict[str, Any], index: int, prefix: str) -> None:
+def note_link_label(label: str, note: dict[str, str], *, ambiguous: bool = False) -> str:
+    display = str(label or note.get("display_name") or note.get("relative_path") or "Заметка").strip()
+    if len(display) > 72:
+        display = f"{display[:69].rstrip()}..."
+    suffix = " · неоднозначно" if ambiguous else ""
+    return f"🔗 {display}{suffix}"
+
+
+def render_note_link_button(
+    label: str,
+    path: str,
+    key_prefix: str,
+    note_index: dict[str, Any] | None,
+    *,
+    ambiguous: bool = False,
+    use_container_width: bool = True,
+) -> bool:
+    note = find_note_by_path(path, note_index)
+    normalized_path = normalize_theory_note_path(path)
+    safe_label = str(label or Path(normalized_path).stem or "Заметка").strip()
+    if note:
+        note_path = str(note.get("relative_path") or normalized_path)
+        st.button(
+            note_link_label(safe_label, note, ambiguous=ambiguous),
+            key=safe_widget_key(key_prefix, note_path, safe_label),
+            help=note_path,
+            on_click=open_theory_note,
+            args=(note_path, note_index),
+            use_container_width=use_container_width,
+        )
+        st.caption(note_path)
+        return True
+
+    render_html(
+        render_card(
+            f"{safe_label} — не найдено",
+            normalized_path or str(path),
+            eyebrow="Ссылка не найдена",
+            status="NEEDS REVIEW",
+            extra_class="static-note-link",
+        )
+    )
+    return False
+
+
+def render_link_card(link: dict[str, Any], index: int, prefix: str, note_index: dict[str, Any]) -> None:
     resolved_note = link.get("resolved_note")
     label = str(link.get("label") or link.get("target") or "")
 
     if resolved_note:
-        suffix = " · неоднозначно" if link.get("status") == "ambiguous" else ""
-        st.button(
-            f"{label}{suffix}\n{link_path_label(resolved_note)}",
-            key=f"{prefix}_{index}_{resolved_note['path']}_{label}",
-            on_click=set_active_note,
-            args=(resolved_note,),
+        render_note_link_button(
+            label,
+            str(resolved_note.get("relative_path") or resolved_note.get("path") or ""),
+            safe_widget_key(prefix, index),
+            note_index,
+            ambiguous=link.get("status") == "ambiguous",
         )
     else:
-        st.button(
-            f"{label} — не найдено",
-            key=f"{prefix}_missing_{index}_{link.get('target')}",
-            disabled=True,
+        render_note_link_button(
+            label,
+            str(link.get("target") or ""),
+            safe_widget_key(prefix, "missing", index),
+            note_index,
         )
 
 
@@ -3242,6 +3336,7 @@ def render_graph_navigation(
     note: dict[str, str],
     graph: dict[str, Any],
     sections: dict[str, list[dict[str, str]]],
+    note_index: dict[str, Any],
 ) -> None:
     outgoing = dedupe_link_records(graph["outgoing_by_path"].get(note["path"], []))
     backlinks = dedupe_link_records(graph["backlinks_by_path"].get(note["path"], []))
@@ -3259,14 +3354,14 @@ def render_graph_navigation(
     render_section_eyebrow_block("Исходящие ссылки")
     if outgoing_found:
         for index, link in enumerate(outgoing_found):
-            render_link_card(link, index, "outgoing")
+            render_link_card(link, index, "outgoing", note_index)
     else:
         st.caption("В этой заметке нет найденных исходящих ссылок.")
 
     if outgoing_missing:
         render_section_eyebrow_block("Не найдено")
         for index, link in enumerate(outgoing_missing):
-            render_link_card(link, index, "outgoing_missing")
+            render_link_card(link, index, "outgoing_missing", note_index)
 
     render_section_eyebrow_block("Обратные ссылки / Backlinks")
     if backlinks:
@@ -3278,7 +3373,7 @@ def render_graph_navigation(
                 "resolved_note": source_note,
                 "status": "resolved",
             }
-            render_link_card(backlink_record, index, "backlink")
+            render_link_card(backlink_record, index, "backlink", note_index)
     else:
         st.caption("Пока никто не ссылается на эту заметку.")
 
@@ -3330,9 +3425,16 @@ def open_mentor_task(task: dict[str, Any]) -> None:
     st.session_state["active_tab"] = "🎯 Tasks"
 
 
-def open_theory_note(note: dict[str, str]) -> None:
-    set_active_note(note, push_history=True)
+def open_theory_note(path: str | dict[str, str], note_index: dict[str, Any] | None = None) -> None:
+    note: dict[str, str] | None
+    if isinstance(path, dict):
+        note = path
+    else:
+        note = find_note_by_path(path, note_index)
+    if note is not None:
+        set_active_note(note, push_history=True)
     st.session_state["active_tab"] = "Theory"
+    st.rerun()
 
 
 def render_related_practice_block(
@@ -3640,7 +3742,7 @@ def render_note(
 
     render_related_semantic_results(note, body, sections, practice_cards, mentor_tasks)
     render_related_practice_block(note, practice_cards, note_index)
-    render_graph_navigation(note, graph, sections)
+    render_graph_navigation(note, graph, sections, note_index)
 
 
 def open_note_from_roadmap(note: dict[str, str]) -> None:
@@ -3678,10 +3780,7 @@ def note_from_relative_path_in_sections(
 
 
 def open_theory_note_path(relative_path: str, sections: dict[str, list[dict[str, str]]]) -> None:
-    note = note_from_relative_path_in_sections(relative_path, sections)
-    if note is not None:
-        set_active_note(note, push_history=False)
-    st.session_state["active_tab"] = "Theory"
+    open_theory_note(relative_path, build_note_index(sections))
 
 
 def open_tab(tab_name: str) -> None:
