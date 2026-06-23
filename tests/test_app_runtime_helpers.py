@@ -60,6 +60,25 @@ def test_render_html_centralizes_trusted_helper_markup(monkeypatch) -> None:
     assert calls == [(app.render_status_chip("PASS"), True)]
 
 
+def test_status_chip_is_static_not_clickable() -> None:
+    rendered = app.render_status_chip("PASS")
+
+    assert "status-chip" in rendered
+    assert "static-chip" in rendered
+    assert "clickable-card" not in rendered
+    assert "<button" not in rendered
+
+
+def test_inline_wikilink_renders_as_static_chip_not_fake_button() -> None:
+    rendered = app.render_markdown_with_wikilinks("Смотри [[A & B]].")
+
+    assert "obsidian-link-static" in rendered
+    assert "static-chip" in rendered
+    assert "obsidian-link\"" not in rendered
+    assert "<button" not in rendered
+    assert "A &amp; B" in rendered
+
+
 def test_render_empty_state_escapes_content_and_uses_card_system() -> None:
     rendered = app.render_empty_state(
         "Нет <данных>",
@@ -312,6 +331,32 @@ def test_render_internal_action_card_disables_invalid_target(monkeypatch) -> Non
     assert buttons[0]["on_click"] is None
     assert captions == ["Заметка не найдена: missing.md"]
     assert "Missing" in html_blocks[0]
+    assert "disabled-target-card" in html_blocks[0]
+
+
+def test_render_internal_action_card_marks_clickable_target(monkeypatch) -> None:
+    buttons: list[dict[str, object]] = []
+    html_blocks: list[str] = []
+
+    def fake_button(label: str, **kwargs: object) -> bool:
+        buttons.append({"label": label, **kwargs})
+        return False
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "button", fake_button)
+
+    target = app.InternalTarget(
+        kind="task",
+        label="Task",
+        target_id="python_basics_records",
+        exists=True,
+    )
+
+    assert app.render_internal_action_card(target, "Task", "Open task", "TODO", "test_action", "Открыть задачу") is False
+    assert "internal-action-card clickable-card" in html_blocks[0]
+    assert buttons[0]["label"] == "Открыть задачу"
+    assert buttons[0]["disabled"] is False
+    assert buttons[0]["on_click"] is app.open_internal_target_fields
 
 
 def test_content_gate_status_renders_31_of_36(tmp_path) -> None:

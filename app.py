@@ -320,7 +320,7 @@ def inject_styles() -> None:
     [data-testid="stMain"] .stButton > button:focus-visible,
     [data-testid="stMain"] .stDownloadButton > button:focus-visible,
     [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:focus-visible,
-    a.obsidian-link:focus-visible {
+    .clickable-card:focus-within {
         outline: 2px solid var(--accent);
         outline-offset: 2px;
         box-shadow: var(--shadow-focus);
@@ -683,7 +683,7 @@ def inject_styles() -> None:
         color: var(--ls-muted);
     }
 
-    .obsidian-link {
+    .obsidian-link-static {
         display: inline;
         border-radius: 0.35rem;
         padding: 0.06rem 0.32rem;
@@ -691,6 +691,7 @@ def inject_styles() -> None:
         color: var(--ls-link);
         font-weight: 600;
         white-space: normal;
+        cursor: default;
     }
 
     .related-notes {
@@ -947,7 +948,13 @@ def inject_styles() -> None:
             transform var(--duration-med) var(--ease);
     }
 
-    .console-card:hover {
+    .clickable-card,
+    .internal-action-card {
+        border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+    }
+
+    .clickable-card:hover,
+    .internal-action-card:hover {
         border-color: var(--border-strong);
         transform: translateY(-2px);
         box-shadow: var(--shadow-card-hover);
@@ -956,6 +963,24 @@ def inject_styles() -> None:
     .console-card:focus-within {
         border-color: var(--accent);
         box-shadow: var(--shadow-focus), var(--shadow-card-hover);
+    }
+
+    .disabled-target-card,
+    .static-note-link {
+        border-style: dashed;
+        border-color: var(--border-soft);
+        background: var(--surface);
+        color: var(--dim);
+        opacity: 0.78;
+        transform: none;
+        box-shadow: var(--shadow-card);
+    }
+
+    .disabled-target-card:hover,
+    .static-note-link:hover {
+        border-color: var(--border-soft);
+        transform: none;
+        box-shadow: var(--shadow-card);
     }
 
     .console-card-eyebrow {
@@ -1316,6 +1341,11 @@ def inject_styles() -> None:
             opacity var(--duration-fast) var(--ease);
     }
 
+    .static-chip {
+        cursor: default;
+        user-select: none;
+    }
+
     .status-chip .dot,
     .status-chip .d,
     .chip-dot {
@@ -1443,7 +1473,7 @@ def render_status_chip(status: str) -> str:
     label = normalize_chip_status(status)
     css_class = STATUS_CHIP_CLASSES.get(label, "chip-info")
     return (
-        f'<span class="status-chip {css_class}">'
+        f'<span class="status-chip static-chip {css_class}">'
         f'<span class="chip-dot"></span>{html.escape(label)}</span>'
     )
 
@@ -2322,7 +2352,7 @@ def render_markdown_with_wikilinks(markdown_text: str) -> str:
     def replace_match(match: re.Match[str]) -> str:
         parsed = split_wikilink(match.group(1))
         rendered_label = label_for_link(parsed)
-        return f'<span class="obsidian-link">🔗 {rendered_label}</span>'
+        return f'<span class="obsidian-link-static static-chip">🔗 {rendered_label}</span>'
 
     rendered_parts: list[str] = []
     last_end = 0
@@ -3286,7 +3316,7 @@ def render_note_link_button(
             normalized_path or str(path),
             eyebrow="Ссылка не найдена",
             status="NEEDS REVIEW",
-            extra_class="static-note-link",
+            extra_class="static-note-link disabled-target-card",
         )
     )
     return False
@@ -4131,6 +4161,7 @@ def render_internal_action_card(
     body = subtitle
     meta = target.path or target.target_id
     rendered_status = status if target.exists else "BLOCKED"
+    card_class = "internal-action-card clickable-card" if target.exists else "disabled-target-card"
     render_html(
         render_card(
             title,
@@ -4138,7 +4169,7 @@ def render_internal_action_card(
             eyebrow=target.label,
             meta=meta,
             status=rendered_status,
-            extra_class="internal-action-card",
+            extra_class=card_class,
         )
     )
     disabled = not target.exists
@@ -4767,7 +4798,7 @@ def render_practice_detail(
             "📖 Открыть теорию",
             key=f"practice_open_theory_{card['id']}",
             on_click=open_theory_note,
-            args=(related_note,),
+            args=(related_note, None, False),
         )
     elif card.get("related_note"):
         st.markdown(
@@ -5315,7 +5346,7 @@ def render_data_lab_before_start(
                     label,
                     key=f"data_lab_theory_{project['id']}_{index}",
                     on_click=open_theory_note,
-                    args=(note,),
+                    args=(note, None, False),
                     use_container_width=True,
                 )
             else:
@@ -6971,7 +7002,7 @@ PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tools/check_content_gate.py --reaudit
                     "Открыть в Theory",
                     key=f"quality_open_weak_{index}_{relative_path}",
                     on_click=open_theory_note,
-                    args=(target_note,),
+                    args=(target_note, None, False),
                     use_container_width=True,
                 )
 
