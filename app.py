@@ -623,12 +623,6 @@ def inject_styles() -> None:
         line-height: 1.5;
     }
 
-    div[data-testid="stMarkdownContainer"] {
-        max-width: 780px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
     div[data-testid="stMarkdownContainer"] p,
     div[data-testid="stMarkdownContainer"] li {
         font-size: 16.5px;
@@ -713,13 +707,105 @@ def inject_styles() -> None:
     }
 
     .learning-panel {
-        max-width: 980px;
-        margin: 0 auto var(--s3) auto;
-        padding: var(--s3);
+        margin: 0 0 var(--s2) 0;
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--surface);
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .theory-page {
+        max-width: 1120px;
+        margin: 0 auto;
+    }
+
+    .theory-note-body {
+        max-width: 760px;
+        margin: 0;
+        color: var(--text);
+    }
+
+    .theory-note-body p,
+    .theory-note-body li {
+        color: var(--dim);
+        font-size: 16.5px;
+        line-height: 1.72;
+    }
+
+    .theory-note-body h1,
+    .theory-note-body h2,
+    .theory-note-body h3 {
+        color: var(--text);
+    }
+
+    .st-key-theory_note_body [data-testid="stMarkdownContainer"] {
+        max-width: 760px;
+        margin: 0;
+    }
+
+    .theory-side-panel {
+        position: sticky;
+        top: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .theory-side-panel [data-testid="stButton"] > button {
+        justify-content: flex-start;
+        min-height: 38px;
+        border-color: var(--border);
+        background: var(--surface);
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        text-align: left;
+        white-space: normal;
+    }
+
+    .theory-side-panel [data-testid="stButton"] > button:hover:not(:disabled) {
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+        transform: translateX(2px);
+        box-shadow: none;
+    }
+
+    .theory-side-panel [data-testid="stButton"] > button:disabled {
+        border-style: dashed;
+        color: var(--faint);
+        background: rgba(18,21,29,0.72);
+    }
+
+    .theory-panel-block {
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
+        padding: 14px;
         animation: fadeUp .32s var(--ease) both;
+    }
+
+    [data-testid="stMain"] [class*="st-key-outgoing_"] button,
+    [data-testid="stMain"] [class*="st-key-backlink_"] button,
+    [data-testid="stMain"] [class*="st-key-outgoing_missing_"] button,
+    [data-testid="stMain"] [class*="st-key-related_practice_"] button,
+    [data-testid="stMain"] [class*="st-key-theory_task_"] button {
+        justify-content: flex-start;
+        min-height: 38px;
+        text-align: left;
+        white-space: normal;
+        box-shadow: none;
+    }
+
+    @media (max-width: 900px) {
+        .theory-side-panel {
+            position: static;
+            margin-top: var(--s3);
+        }
+
+        .theory-note-body {
+            max-width: 100%;
+        }
     }
 
     .learning-panel-title {
@@ -2574,6 +2660,10 @@ def normalize_theory_note_path(path: str | Path) -> str:
     return text
 
 
+def compact_note_lookup_token(value: str | Path) -> str:
+    return re.sub(r"[^a-z0-9а-яё]+", "", str(value or "").casefold())
+
+
 def build_note_index(sections: dict[str, list[dict[str, str]]]) -> dict[str, Any]:
     note_by_path: dict[str, dict[str, str]] = {}
     stem_index: dict[str, list[dict[str, str]]] = {}
@@ -2631,6 +2721,14 @@ def find_note_by_path(path: str | Path, note_index: dict[str, Any] | None = None
             return note
         if str(note.get("path") or "") == str(path):
             return note
+        wanted_token = compact_note_lookup_token(Path(normalized).stem)
+        if wanted_token:
+            note_tokens = (
+                compact_note_lookup_token(Path(str(note.get("relative_path") or "")).stem),
+                compact_note_lookup_token(Path(str(note.get("display_name") or "")).stem),
+            )
+            if any(wanted_token == token or wanted_token in token for token in note_tokens):
+                return note
     return None
 
 
@@ -2769,6 +2867,10 @@ def render_markdown_with_wikilinks(markdown_text: str) -> str:
     escaped_tail = html.escape(tail, quote=False)
     rendered_parts.append(WIKILINK_RE.sub(replace_match, escaped_tail))
     return "".join(rendered_parts)
+
+
+def render_theory_note_body(markdown_text: str) -> str:
+    return f'<article class="theory-note-body">{render_markdown_with_wikilinks(markdown_text)}</article>'
 
 
 def collect_outgoing_links(
@@ -3661,7 +3763,6 @@ def render_sidebar(sections: dict[str, list[dict[str, str]]]) -> tuple[str, dict
 
 def render_note_header(section_key: str, note: dict[str, str], frontmatter: dict[str, Any]) -> None:
     section_label = humanize_section_name(section_key)
-    chips = render_frontmatter_chips(frontmatter)
     title = str(frontmatter.get("title") or note["display_name"])
     status = render_status_chip(note_status_to_chip(get_note_status(note)))
     header = f"""
@@ -3669,7 +3770,6 @@ def render_note_header(section_key: str, note: dict[str, str], frontmatter: dict
     {render_section_eyebrow("Theory note")}
     <div class="breadcrumbs">{html.escape(section_label)} / {html.escape(note["display_name"])}</div>
     <div class="note-header-title">{html.escape(title)} {status}</div>
-    {chips}
 </div>
     """
     st.markdown(header, unsafe_allow_html=True)
@@ -3684,7 +3784,54 @@ def note_link_label(label: str, note: dict[str, str], *, ambiguous: bool = False
     if len(display) > 72:
         display = f"{display[:69].rstrip()}..."
     suffix = " · неоднозначно" if ambiguous else ""
-    return f"🔗 {display}{suffix}"
+    return f"{display}{suffix}"
+
+
+def readable_note_button_label(label: str, fallback_path: str) -> str:
+    display = str(label or Path(str(fallback_path or "Заметка")).stem or "Заметка").strip()
+    display = re.sub(r"\s+", " ", display)
+    if len(display) > 64:
+        display = f"{display[:61].rstrip()}..."
+    return display or "Заметка"
+
+
+def render_note_target_button(
+    label: str,
+    path: str,
+    note_index: dict[str, Any] | None,
+    key_prefix: str,
+    *,
+    ambiguous: bool = False,
+    use_container_width: bool = True,
+) -> bool:
+    normalized_path = normalize_theory_note_path(path)
+    note = find_note_by_path(normalized_path or path, note_index)
+    display = readable_note_button_label(label, normalized_path or path)
+    if note:
+        note_path = str(note.get("relative_path") or normalized_path)
+        button_label = note_link_label(display, note, ambiguous=ambiguous)
+        st.button(
+            button_label,
+            key=safe_widget_key(key_prefix, note_path, display),
+            help=note_path,
+            on_click=open_theory_note,
+            args=(note_path, note_index, True),
+            use_container_width=use_container_width,
+            disabled=False,
+        )
+        st.caption(note_path)
+        return True
+
+    missing_path = normalized_path or str(path or "").strip()
+    st.button(
+        display,
+        key=safe_widget_key(key_prefix, missing_path, display),
+        help=f"Target не найден: {missing_path}",
+        disabled=True,
+        use_container_width=use_container_width,
+    )
+    st.caption(f"{missing_path} · target не найден")
+    return False
 
 
 def render_note_link_button(
@@ -3696,32 +3843,14 @@ def render_note_link_button(
     ambiguous: bool = False,
     use_container_width: bool = True,
 ) -> bool:
-    note = find_note_by_path(path, note_index)
-    normalized_path = normalize_theory_note_path(path)
-    safe_label = str(label or Path(normalized_path).stem or "Заметка").strip()
-    if note:
-        note_path = str(note.get("relative_path") or normalized_path)
-        st.button(
-            note_link_label(safe_label, note, ambiguous=ambiguous),
-            key=safe_widget_key(key_prefix, note_path, safe_label),
-            help=note_path,
-            on_click=open_theory_note,
-            args=(note_path, note_index, False),
-            use_container_width=use_container_width,
-        )
-        st.caption(note_path)
-        return True
-
-    render_html(
-        render_card(
-            f"{safe_label} — не найдено",
-            normalized_path or str(path),
-            eyebrow="Ссылка не найдена",
-            status="NEEDS REVIEW",
-            extra_class="static-note-link disabled-target-card",
-        )
+    return render_note_target_button(
+        label,
+        path,
+        note_index,
+        key_prefix,
+        ambiguous=ambiguous,
+        use_container_width=use_container_width,
     )
-    return False
 
 
 def render_link_card(link: dict[str, Any], index: int, prefix: str, note_index: dict[str, Any]) -> None:
@@ -3868,8 +3997,9 @@ def open_theory_note(
         note = path
     else:
         note = find_note_by_path(path, note_index)
-    if note is not None:
-        set_active_note(note, push_history=True)
+    if note is None:
+        return
+    set_active_note(note, push_history=True)
     st.session_state["active_tab"] = "Theory"
     if rerun:
         st.rerun()
@@ -3950,21 +4080,58 @@ def render_related_practice_block(
 
     st.markdown(f'<div class="related-notes">{render_section_eyebrow("Практика по этой теме")}</div>', unsafe_allow_html=True)
     for card in related_cards:
-        st.markdown(
-            render_card(
-                str(card["title"]),
-                f"{card['section']} · {card['difficulty']} · {card['est_time']}",
-                eyebrow="Practice card",
-                status=practice_status_to_chip(get_card_status(card)),
-            ),
-            unsafe_allow_html=True,
-        )
+        meta = f"{card['section']} · {card['difficulty']} · {card['est_time']}"
         st.button(
-            "Открыть карточку",
+            readable_note_button_label(str(card["title"]), str(card["id"])),
             key=f"related_practice_{card['id']}",
+            help=meta,
             on_click=open_practice_card,
             args=(card["id"],),
+            use_container_width=True,
         )
+        st.caption(meta)
+
+
+def tasks_for_note(note: dict[str, str], mentor_tasks: list[dict[str, Any]], limit: int = 5) -> list[dict[str, Any]]:
+    note_tokens = {
+        compact_note_lookup_token(Path(str(note.get("relative_path") or "")).stem),
+        compact_note_lookup_token(Path(str(note.get("display_name") or "")).stem),
+    }
+    note_tokens = {token for token in note_tokens if token}
+    if not note_tokens:
+        return []
+
+    matches: list[dict[str, Any]] = []
+    for task in mentor_tasks:
+        haystack = " ".join(
+            str(task.get(key) or "")
+            for key in ("id", "title", "notebook_label", "source_notebook", "prompt")
+        )
+        haystack_token = compact_note_lookup_token(haystack)
+        if any(token in haystack_token for token in note_tokens):
+            matches.append(task)
+    return matches[:limit]
+
+
+def render_related_tasks_block(note: dict[str, str], mentor_tasks: list[dict[str, Any]]) -> None:
+    related_tasks = tasks_for_note(note, mentor_tasks)
+    if not related_tasks:
+        return
+
+    st.markdown(f'<div class="related-notes">{render_section_eyebrow("Задачи по этой теме")}</div>', unsafe_allow_html=True)
+    for task in related_tasks:
+        task_id = str(task.get("id") or "")
+        meta = f"{task.get('notebook_label', 'Notebook')} · confidence {task.get('confidence', '—')}"
+        st.button(
+            readable_note_button_label(str(task.get("title") or task_id), task_id),
+            key=safe_widget_key("theory_task", task_id),
+            help=meta,
+            on_click=open_mentor_task,
+            args=(task,),
+            use_container_width=True,
+            disabled=not task_id,
+        )
+        st.caption(meta)
 
 
 def semantic_search_note_item(note: dict[str, str]) -> SearchItem | None:
@@ -4212,6 +4379,14 @@ def render_related_semantic_results(
     render_semantic_search_results(results, sections, practice_cards, mentor_tasks, key_prefix="semantic_related")
 
 
+def render_theory_note_metadata(frontmatter: dict[str, Any]) -> None:
+    chips = render_frontmatter_chips(frontmatter)
+    if not chips:
+        st.caption("Metadata/frontmatter нет.")
+        return
+    st.markdown(chips, unsafe_allow_html=True)
+
+
 def render_note(
     section_key: str,
     note: dict[str, str],
@@ -4228,8 +4403,8 @@ def render_note(
         return
 
     frontmatter, body = split_frontmatter(text)
+    st.markdown('<div class="theory-page">', unsafe_allow_html=True)
     render_note_header(section_key, note, frontmatter)
-    render_learning_controls(note)
 
     if st.session_state.get("note_history"):
         st.button(
@@ -4239,12 +4414,23 @@ def render_note(
             args=(note_index,),
         )
 
-    rendered_body = render_markdown_with_wikilinks(body)
-    st.markdown(rendered_body, unsafe_allow_html=True)
-
-    render_related_semantic_results(note, body, sections, practice_cards, mentor_tasks)
-    render_related_practice_block(note, practice_cards, note_index)
-    render_graph_navigation(note, graph, sections, note_index)
+    main_col, side_col = st.columns([0.68, 0.32], gap="large")
+    with main_col:
+        with st.container(key="theory_note_body"):
+            st.markdown(render_markdown_with_wikilinks(body), unsafe_allow_html=True)
+        render_related_semantic_results(note, body, sections, practice_cards, mentor_tasks)
+    with side_col:
+        st.markdown('<aside class="theory-side-panel">', unsafe_allow_html=True)
+        render_learning_controls(note)
+        st.markdown('<section class="theory-panel-block">', unsafe_allow_html=True)
+        render_section_eyebrow_block("Metadata")
+        render_theory_note_metadata(frontmatter)
+        st.markdown("</section>", unsafe_allow_html=True)
+        render_graph_navigation(note, graph, sections, note_index)
+        render_related_practice_block(note, practice_cards, note_index)
+        render_related_tasks_block(note, mentor_tasks)
+        st.markdown("</aside>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 def open_note_from_roadmap(note: dict[str, str]) -> None:

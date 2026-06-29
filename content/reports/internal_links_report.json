@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-22T21:20:46.098645+00:00",
+  "generated_at": "2026-06-29T19:33:19.546202+00:00",
   "metadata": {
-    "vault": "/Users/mihailkulibaba/Projects/practic_ML/obsidian_vkat",
+    "vault": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/obsidian_vkat",
     "notes": 230,
     "tasks": 57,
     "projects": 4,
@@ -23,6 +23,8 @@
         "path": "00_Atlas/00_Knowledge_Map.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "home"
       },
       "exists": true,
@@ -37,6 +39,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "home"
       },
       "exists": true,
@@ -51,6 +55,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "home"
       },
       "exists": true,
@@ -65,6 +71,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "define_target",
+        "exists": true,
+        "disabled_reason": "",
         "source": "home"
       },
       "exists": true,
@@ -79,6 +87,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "home"
       },
       "exists": true,
@@ -93,6 +103,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "home"
       },
       "exists": true,
@@ -107,6 +119,8 @@
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -121,6 +135,8 @@
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -135,6 +151,8 @@
         "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -149,6 +167,8 @@
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -163,6 +183,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -177,6 +199,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -191,6 +215,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -205,6 +231,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -219,6 +247,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -233,6 +263,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -247,6 +279,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -261,6 +295,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -275,6 +311,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "define_target",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -289,6 +327,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "prepare_dataset",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -303,6 +343,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "create_features",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -317,6 +359,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "train_test_split",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -331,6 +375,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "baseline_model",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -345,6 +391,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "evaluate_metrics",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -359,6 +407,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "error_analysis",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -373,6 +423,8 @@
         "path": "",
         "project_id": "orders_conversion_baseline_classifier",
         "milestone_id": "model_card",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_conversion_baseline_classifier"
       },
       "exists": true,
@@ -387,6 +439,8 @@
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -401,6 +455,8 @@
         "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -415,6 +471,8 @@
         "path": "02_Data_Analysis/Stats/02_Statistics_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -429,6 +487,8 @@
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -443,6 +503,8 @@
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -457,6 +519,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -471,6 +535,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -485,6 +551,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -499,6 +567,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -513,6 +583,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -527,6 +599,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -541,6 +615,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -555,6 +631,8 @@
         "path": "",
         "project_id": "matching_quality_dashboard",
         "milestone_id": "inspect_matching",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -569,6 +647,8 @@
         "path": "",
         "project_id": "matching_quality_dashboard",
         "milestone_id": "check_uniqueness",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -583,6 +663,8 @@
         "path": "",
         "project_id": "matching_quality_dashboard",
         "milestone_id": "join_orders",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -597,6 +679,8 @@
         "path": "",
         "project_id": "matching_quality_dashboard",
         "milestone_id": "quality_visuals",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -611,6 +695,8 @@
         "path": "",
         "project_id": "matching_quality_dashboard",
         "milestone_id": "dashboard_summary",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:matching_quality_dashboard"
       },
       "exists": true,
@@ -625,6 +711,8 @@
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -639,6 +727,8 @@
         "path": "02_Data_Analysis/Visualization/02_Visualization_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -653,6 +743,8 @@
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -667,6 +759,8 @@
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -681,6 +775,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -695,6 +791,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -709,6 +807,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -723,6 +823,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -737,6 +839,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -751,6 +855,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -765,6 +871,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -779,6 +887,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -793,6 +903,8 @@
         "path": "",
         "project_id": "orders_eda_report",
         "milestone_id": "read_context",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -807,6 +919,8 @@
         "path": "",
         "project_id": "orders_eda_report",
         "milestone_id": "quality_checks",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -821,6 +935,8 @@
         "path": "",
         "project_id": "orders_eda_report",
         "milestone_id": "core_metrics",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -835,6 +951,8 @@
         "path": "",
         "project_id": "orders_eda_report",
         "milestone_id": "visualize_orders",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -849,6 +967,8 @@
         "path": "",
         "project_id": "orders_eda_report",
         "milestone_id": "write_report",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:orders_eda_report"
       },
       "exists": true,
@@ -863,6 +983,8 @@
         "path": "02_Data_Analysis/Pandas/02_Pandas_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -877,6 +999,8 @@
         "path": "02_Data_Analysis/Datasets/01_VKAT_Analysis_Data.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -891,6 +1015,8 @@
         "path": "02_Data_Analysis/Datasets/02_Product_Analytics_Flow.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -905,6 +1031,8 @@
         "path": "00_Graph/22_Product_Analytics.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -919,6 +1047,8 @@
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -933,6 +1063,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -947,6 +1079,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -961,6 +1095,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -975,6 +1111,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -989,6 +1127,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -1003,6 +1143,8 @@
         "path": "",
         "project_id": "events_funnel_analysis",
         "milestone_id": "map_events",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -1017,6 +1159,8 @@
         "path": "",
         "project_id": "events_funnel_analysis",
         "milestone_id": "count_users",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -1031,6 +1175,8 @@
         "path": "",
         "project_id": "events_funnel_analysis",
         "milestone_id": "conversion_rates",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -1045,6 +1191,8 @@
         "path": "",
         "project_id": "events_funnel_analysis",
         "milestone_id": "visualize_funnel",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -1059,6 +1207,8 @@
         "path": "",
         "project_id": "events_funnel_analysis",
         "milestone_id": "funnel_summary",
+        "exists": true,
+        "disabled_reason": "",
         "source": "project:events_funnel_analysis"
       },
       "exists": true,
@@ -1073,6 +1223,8 @@
         "path": "05_IT_Resources/Portfolio_Output_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:career_portfolio_readme_case_study"
       },
       "exists": true,
@@ -1087,6 +1239,8 @@
         "path": "05_IT_Resources/Resume_Remote_Career_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:career_resume_remote_bullets"
       },
       "exists": true,
@@ -1101,6 +1255,8 @@
         "path": "00_Graph/20_Data_Analysis_Path.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_analysis_orders_eda"
       },
       "exists": true,
@@ -1115,6 +1271,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_analysis_orders_eda"
       },
       "exists": true,
@@ -1129,6 +1287,8 @@
         "path": "02_Data_Analysis/EDA/01_Data_Cleaning_EDA.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_cleaning_eda_quality_orders"
       },
       "exists": true,
@@ -1143,6 +1303,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_cleaning_eda_quality_orders"
       },
       "exists": true,
@@ -1157,6 +1319,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_visualization_commission_boxplot"
       },
       "exists": true,
@@ -1171,6 +1335,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_visualization_commission_histogram"
       },
       "exists": true,
@@ -1185,6 +1351,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:data_visualization_orders_daily_line"
       },
       "exists": true,
@@ -1199,6 +1367,8 @@
         "path": "04_NLP/GenAI/02_Embedding_Vector_Search_Semantic_Search.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:genai_embedding_semantic_search_practice"
       },
       "exists": true,
@@ -1213,6 +1383,8 @@
         "path": "04_NLP/GenAI/04_LLM_Evaluation_Agents_Tools.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:genai_eval_agent_review_card"
       },
       "exists": true,
@@ -1227,6 +1399,8 @@
         "path": "04_NLP/GenAI/01_Prompt_Engineering_LLM.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:genai_prompt_llm_practice"
       },
       "exists": true,
@@ -1241,6 +1415,8 @@
         "path": "04_NLP/GenAI/03_RAG_Retrieval_Augmented_Generation.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:genai_rag_citation_drill"
       },
       "exists": true,
@@ -1255,6 +1431,8 @@
         "path": "05_IT_Resources/Git/Reproducible_Environment.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:git_reproducibility_setup_runbook"
       },
       "exists": true,
@@ -1269,6 +1447,8 @@
         "path": "05_IT_Resources/Git/Git_CLI_Workflow.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:git_tools_commit_readme_practice"
       },
       "exists": true,
@@ -1283,6 +1463,8 @@
         "path": "05_IT_Resources/Coding_Interview_Algorithms_Practice.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:interview_coding_algorithm_mock"
       },
       "exists": true,
@@ -1297,6 +1479,8 @@
         "path": "05_IT_Resources/ML_DS_Interview_Questions_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:interview_ml_ds_questions_answer_bank"
       },
       "exists": true,
@@ -1311,6 +1495,8 @@
         "path": "05_IT_Resources/ML_Take_Home_Assignment_Guide.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:interview_take_home_df_orders_plan"
       },
       "exists": true,
@@ -1325,6 +1511,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:interview_take_home_df_orders_plan"
       },
       "exists": true,
@@ -1339,6 +1527,8 @@
         "path": "03_Ml/Math/01_Linear_Algebra_for_ML.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:math_linear_algebra_numpy_practice"
       },
       "exists": true,
@@ -1353,6 +1543,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:math_linear_algebra_numpy_practice"
       },
       "exists": true,
@@ -1367,6 +1559,8 @@
         "path": "03_ML/Math/02_Optimization_Basics.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:math_optimization_quadratic_gradient_descent"
       },
       "exists": true,
@@ -1381,6 +1575,8 @@
         "path": "03_ML/07_Feature_Engineering.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:ml_feature_engineering_feature_table"
       },
       "exists": true,
@@ -1395,6 +1591,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:ml_feature_engineering_feature_table"
       },
       "exists": true,
@@ -1409,6 +1607,8 @@
         "path": "03_ML/12_Supervised_Learning_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:ml_supervised_target_features_baseline"
       },
       "exists": true,
@@ -1423,6 +1623,8 @@
         "path": "03_ML/14_Unsupervised_Learning_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:ml_unsupervised_user_segmentation"
       },
       "exists": true,
@@ -1437,6 +1639,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:ml_unsupervised_user_segmentation"
       },
       "exists": true,
@@ -1451,6 +1655,8 @@
         "path": "03_ML/Validation/01_Validation_Metrics.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:ml_validation_metrics_baseline_practice"
       },
       "exists": true,
@@ -1465,6 +1671,8 @@
         "path": "05_IT_Resources/MLOps/01_Experiment_Tracking.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:mlops_experiment_log_baseline_comparison"
       },
       "exists": true,
@@ -1479,6 +1687,8 @@
         "path": "05_IT_Resources/MLOps/03_Model_Monitoring_Data_Drift.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:mlops_monitoring_drift_alert_card"
       },
       "exists": true,
@@ -1493,6 +1703,8 @@
         "path": "05_IT_Resources/MLOps/02_Model_Serving_Basics.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:mlops_serving_predict_function_contract"
       },
       "exists": true,
@@ -1507,6 +1719,8 @@
         "path": "04_NLP/02_Text_Preprocessing.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:nlp_preprocessing_message_cleaning"
       },
       "exists": true,
@@ -1521,6 +1735,8 @@
         "path": "00_Graph/40_NLP_Path.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:nlp_text_classifier_baseline"
       },
       "exists": true,
@@ -1535,6 +1751,8 @@
         "path": "04_NLP/12_Transformers_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:nlp_transformer_pipeline_explainer"
       },
       "exists": true,
@@ -1549,6 +1767,8 @@
         "path": "04_NLP/13_Text_Representations_Course_Article.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:nlp_vectorization_bag_of_words"
       },
       "exists": true,
@@ -1563,6 +1783,8 @@
         "path": "01_Python/Algorithms/00_Algorithms_Map.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:python_algorithms_hashmap_complexity_drill"
       },
       "exists": true,
@@ -1577,6 +1799,8 @@
         "path": "01_Python/Core/03_Collections.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:python_basics_user_event_structures"
       },
       "exists": true,
@@ -1591,6 +1815,8 @@
         "path": "01_Python/OOP/08_Python_OOP_Class_Object.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:python_oop_refactor_order_history"
       },
       "exists": true,
@@ -1605,6 +1831,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:python_oop_refactor_order_history"
       },
       "exists": true,
@@ -1619,6 +1847,8 @@
         "path": "00_Graph/11_Python_Core.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:python_refactor_user_events"
       },
       "exists": true,
@@ -1633,6 +1863,8 @@
         "path": "01_Python/Architecture/05_Typing_Architecture.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:python_typing_architecture_refactor"
       },
       "exists": true,
@@ -1647,6 +1879,8 @@
         "path": "05_IT_Resources/SQL/SQL_Select_Join.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:sql_select_join_query_reading"
       },
       "exists": true,
@@ -1661,6 +1895,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:sql_select_join_query_reading"
       },
       "exists": true,
@@ -1675,6 +1911,8 @@
         "path": "05_IT_Resources/SQL/SQL_Aggregations_Windows.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:sql_window_aggregation_practice"
       },
       "exists": true,
@@ -1689,6 +1927,8 @@
         "path": "",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:sql_window_aggregation_practice"
       },
       "exists": true,
@@ -1703,6 +1943,8 @@
         "path": "02_Data_Analysis/Stats/04_Hypothesis_AB_Testing.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "practice:stats_hypothesis_ab_scenario_review"
       },
       "exists": true,
@@ -1714,84 +1956,96 @@
         "kind": "report",
         "label": "Report file: content/reports/content_gate_report.json",
         "target_id": "",
-        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/content_gate_report.json",
+        "path": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/Hub_ML/content/reports/content_gate_report.json",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "reports"
       },
       "exists": true,
       "reason": "",
-      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/content_gate_report.json"
+      "resolved": "/users/m.kulibaba/desktop/hub_ml_transfer_20260623_204709/hub_ml/content/reports/content_gate_report.json"
     },
     {
       "target": {
         "kind": "report",
         "label": "Report file: content/reports/content_gate_report.md",
         "target_id": "",
-        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/content_gate_report.md",
+        "path": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/Hub_ML/content/reports/content_gate_report.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "reports"
       },
       "exists": true,
       "reason": "",
-      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/content_gate_report.md"
+      "resolved": "/users/m.kulibaba/desktop/hub_ml_transfer_20260623_204709/hub_ml/content/reports/content_gate_report.md"
     },
     {
       "target": {
         "kind": "report",
         "label": "Report file: content/reports/coverage_report.json",
         "target_id": "",
-        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/coverage_report.json",
+        "path": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/Hub_ML/content/reports/coverage_report.json",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "reports"
       },
       "exists": true,
       "reason": "",
-      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/coverage_report.json"
+      "resolved": "/users/m.kulibaba/desktop/hub_ml_transfer_20260623_204709/hub_ml/content/reports/coverage_report.json"
     },
     {
       "target": {
         "kind": "report",
         "label": "Report file: content/reports/coverage_report.md",
         "target_id": "",
-        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/coverage_report.md",
+        "path": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/Hub_ML/content/reports/coverage_report.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "reports"
       },
       "exists": true,
       "reason": "",
-      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/coverage_report.md"
+      "resolved": "/users/m.kulibaba/desktop/hub_ml_transfer_20260623_204709/hub_ml/content/reports/coverage_report.md"
     },
     {
       "target": {
         "kind": "report",
         "label": "Report file: content/reports/theory_audit.json",
         "target_id": "",
-        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/theory_audit.json",
+        "path": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/Hub_ML/content/reports/theory_audit.json",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "reports"
       },
       "exists": true,
       "reason": "",
-      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/theory_audit.json"
+      "resolved": "/users/m.kulibaba/desktop/hub_ml_transfer_20260623_204709/hub_ml/content/reports/theory_audit.json"
     },
     {
       "target": {
         "kind": "report",
         "label": "Report file: content/reports/theory_audit.md",
         "target_id": "",
-        "path": "/Users/mihailkulibaba/Documents/New project/content/reports/theory_audit.md",
+        "path": "/Users/m.kulibaba/Desktop/Hub_ML_transfer_20260623_204709/Hub_ML/content/reports/theory_audit.md",
         "project_id": "",
         "milestone_id": "",
+        "exists": true,
+        "disabled_reason": "",
         "source": "reports"
       },
       "exists": true,
       "reason": "",
-      "resolved": "/users/mihailkulibaba/documents/new project/content/reports/theory_audit.md"
+      "resolved": "/users/m.kulibaba/desktop/hub_ml_transfer_20260623_204709/hub_ml/content/reports/theory_audit.md"
     }
   ]
 }

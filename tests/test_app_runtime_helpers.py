@@ -362,6 +362,34 @@ def test_open_theory_note_updates_expected_session_keys(monkeypatch) -> None:
     assert reruns == [True]
 
 
+def test_open_theory_note_ignores_missing_target_without_history(monkeypatch) -> None:
+    _, note_index = sample_note_index()
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+    app.st.session_state["active_note_path"] = "/vault/Home.md"
+
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    app.open_theory_note("missing target", note_index)
+
+    assert app.st.session_state["active_note_path"] == "/vault/Home.md"
+    assert app.st.session_state.get("note_history") is None
+    assert reruns == []
+
+
+def test_open_theory_note_accepts_label_path_mismatch(monkeypatch) -> None:
+    note, note_index = sample_note_index()
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    app.open_theory_note("00 Atlas / Knowledge Map", note_index)
+
+    assert app.st.session_state["active_note_path"] == note["path"]
+    assert reruns == [True]
+
+
 def test_render_note_link_button_renders_clickable_button_for_existing_note(monkeypatch) -> None:
     _, note_index = sample_note_index()
     buttons: list[dict[str, object]] = []
@@ -376,26 +404,58 @@ def test_render_note_link_button_renders_clickable_button_for_existing_note(monk
     rendered = app.render_note_link_button("Knowledge Map", "00_Atlas/00_Knowledge_Map.md", "outgoing", note_index)
 
     assert rendered is True
-    assert buttons[0]["label"] == "🔗 Knowledge Map"
+    assert buttons[0]["label"] == "Knowledge Map"
     assert buttons[0]["help"] == "00_Atlas/00_Knowledge_Map.md"
     assert buttons[0]["on_click"] is app.open_theory_note
+    assert buttons[0]["disabled"] is False
     assert captions == ["00_Atlas/00_Knowledge_Map.md"]
 
 
-def test_render_note_link_button_missing_target_is_static(monkeypatch) -> None:
+def test_render_note_target_button_missing_target_is_disabled(monkeypatch) -> None:
     _, note_index = sample_note_index()
-    buttons: list[str] = []
-    html_blocks: list[str] = []
+    buttons: list[dict[str, object]] = []
+    captions: list[str] = []
 
-    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append(str(label)))
-    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    def fake_button(label: str, **kwargs: object) -> None:
+        buttons.append({"label": label, **kwargs})
 
-    rendered = app.render_note_link_button("Missing", "missing_note", "outgoing", note_index)
+    monkeypatch.setattr(app.st, "button", fake_button)
+    monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
+
+    rendered = app.render_note_target_button("Missing long display label that should not be the path", "missing_note", note_index, "outgoing")
 
     assert rendered is False
-    assert buttons == []
-    assert "Missing — не найдено" in html_blocks[0]
-    assert "NEEDS REVIEW" in html_blocks[0]
+    assert len(buttons) == 1
+    assert buttons[0]["label"] == "Missing long display label that should not be the path"
+    assert buttons[0]["disabled"] is True
+    assert "Target не найден" in str(buttons[0]["help"])
+    assert captions == ["missing_note.md · target не найден"]
+
+
+def test_render_note_target_button_key_is_stable(monkeypatch) -> None:
+    _, note_index = sample_note_index()
+    buttons: list[dict[str, object]] = []
+
+    def fake_button(label: str, **kwargs: object) -> None:
+        buttons.append({"label": label, **kwargs})
+
+    monkeypatch.setattr(app.st, "button", fake_button)
+    monkeypatch.setattr(app.st, "caption", lambda _value: None)
+
+    app.render_note_target_button("Knowledge Map", "00_Atlas/00_Knowledge_Map.md", note_index, "outgoing")
+    app.render_note_target_button("Knowledge Map", "00_Atlas/00_Knowledge_Map.md", note_index, "outgoing")
+
+    assert buttons[0]["key"] == buttons[1]["key"]
+    assert buttons[0]["key"] == "outgoing_00_Atlas_00_Knowledge_Map_md_Knowledge_Map"
+
+
+def test_render_theory_note_body_uses_page_specific_wrapper() -> None:
+    rendered = app.render_theory_note_body("# Title\n\nSee [[A & B]].")
+
+    assert rendered.startswith('<article class="theory-note-body">')
+    assert "obsidian-link-static static-chip" in rendered
+    assert "A &amp; B" in rendered
+    assert "stMarkdownContainer" not in rendered
 
 
 def test_render_link_card_resolves_outgoing_and_backlink_targets(monkeypatch) -> None:
