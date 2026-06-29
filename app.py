@@ -180,6 +180,48 @@ NAV_LABELS = {tab: label for _, items in NAV_GROUPS for tab, label, _ in items}
 NAV_ICONS = {tab: icon for _, items in NAV_GROUPS for tab, _, icon in items}
 NAV_GROUP_BY_TAB = {tab: group for group, items in NAV_GROUPS for tab, _, _ in items}
 TAB_OPTIONS = list(NAV_LABELS)
+LAYOUT_MODES = {"reading", "dashboard", "workbench", "full_workspace"}
+DEFAULT_LAYOUT_MODE = "dashboard"
+TAB_LAYOUT_MODES = {
+    "Home": "dashboard",
+    "Theory": "reading",
+    "🎯 Practice": "workbench",
+    "🎯 Tasks": "workbench",
+    "🧪 Data Lab Projects": "workbench",
+    "🤖 ML Lab": "workbench",
+    "🧪 Experiments": "workbench",
+    "📁 Portfolio": "dashboard",
+    "📊 Datasets": "full_workspace",
+    "⚡ Scratch": "full_workspace",
+    "📓 Notebook": "full_workspace",
+    "🧩 Algorithms": "workbench",
+    "🎤 Interviews": "workbench",
+    "🏗 Architecture": "reading",
+    "🧭 Theory Quality": "dashboard",
+    "Roadmap": "dashboard",
+    "Progress": "dashboard",
+    "🔗 Links Health": "dashboard",
+}
+TAB_PAGE_CLASSES = {
+    "Home": "home-page",
+    "Theory": "theory-page-shell",
+    "🎯 Practice": "practice-page",
+    "🎯 Tasks": "tasks-page",
+    "🧪 Data Lab Projects": "data-lab-page",
+    "🤖 ML Lab": "ml-lab-page",
+    "🧪 Experiments": "experiments-page",
+    "📁 Portfolio": "portfolio-page",
+    "📊 Datasets": "datasets-page",
+    "⚡ Scratch": "scratch-page",
+    "📓 Notebook": "notebook-page",
+    "🧩 Algorithms": "algorithms-page",
+    "🎤 Interviews": "interviews-page",
+    "🏗 Architecture": "architecture-page",
+    "🧭 Theory Quality": "theory-quality-page",
+    "Roadmap": "roadmap-page",
+    "Progress": "progress-page",
+    "🔗 Links Health": "links-health-page",
+}
 
 
 st.set_page_config(page_title=APP_TITLE, page_icon="📚", layout="wide")
@@ -202,6 +244,8 @@ def inject_styles() -> None:
         --shadow-card:0 18px 50px rgba(0,0,0,0.20);
         --shadow-card-hover:0 22px 58px rgba(0,0,0,0.24);
         --shadow-focus:0 0 0 3px rgba(139,155,255,0.22);
+        --hub-page-shell-max:1280px;
+        --hub-page-shell-padding-x:clamp(18px, 2.2vw, 32px);
         --radius: var(--r);
         --radius-sm: var(--r-sm);
         --font-display: var(--f-display), sans-serif;
@@ -360,13 +404,40 @@ def inject_styles() -> None:
 
     [data-testid="stMain"] [data-testid="stMainBlockContainer"] {
         box-sizing: border-box;
-        width: min(100%, calc(980px + (var(--s4) * 2)));
-        max-width: calc(980px + (var(--s4) * 2));
-        padding: var(--s4) var(--s4) 5rem var(--s4);
+        width: min(100%, calc(var(--hub-page-shell-max) + var(--hub-page-shell-padding-x) + var(--hub-page-shell-padding-x)));
+        max-width: calc(var(--hub-page-shell-max) + var(--hub-page-shell-padding-x) + var(--hub-page-shell-padding-x));
+        padding: var(--s4) var(--hub-page-shell-padding-x) 5rem var(--hub-page-shell-padding-x);
+        margin-inline: auto;
+        transition:
+            width var(--duration-slow) var(--ease),
+            max-width var(--duration-slow) var(--ease),
+            padding var(--duration-med) var(--ease);
     }
 
     [data-testid="stMain"] [data-testid="stElementContainer"] {
         max-width: 100%;
+    }
+
+    .page-shell {
+        width: 100%;
+        max-width: 100%;
+        margin-inline: auto;
+    }
+
+    .page-shell-reading {
+        --page-content-max: 1180px;
+    }
+
+    .page-shell-dashboard {
+        --page-content-max: 1280px;
+    }
+
+    .page-shell-workbench {
+        --page-content-max: 1440px;
+    }
+
+    .page-shell-full_workspace {
+        --page-content-max: none;
     }
 
     [data-testid="stMain"] [data-testid="stMarkdownContainer"] h1,
@@ -719,6 +790,11 @@ def inject_styles() -> None:
     .theory-page {
         max-width: 1120px;
         margin: 0 auto;
+    }
+
+    .theory-page .note-header,
+    .theory-page .related-notes {
+        max-width: 100%;
     }
 
     .theory-note-body {
@@ -1474,9 +1550,9 @@ def inject_styles() -> None:
         animation: fadeUp .32s var(--ease) both;
     }
 
-    .flat-section-header,
+    .theory-quality-page .flat-section-header,
+    .theory-quality-page .clickable-row-list,
     .theory-quality-metric-grid,
-    .clickable-row-list,
     .quality-manual-details {
         max-width: 920px;
     }
@@ -1564,6 +1640,7 @@ def inject_styles() -> None:
         display: grid;
         gap: 10px;
         margin: 10px 0 var(--s4);
+        width: 100%;
     }
 
     .clickable-row {
@@ -1718,7 +1795,7 @@ def inject_styles() -> None:
 
     .home-cockpit-head,
     .home-hero {
-        max-width: 920px;
+        max-width: min(100%, 1180px);
         margin-bottom: var(--s4);
         animation: fadeUp .32s var(--ease) both;
     }
@@ -2065,6 +2142,66 @@ STATUS_CHIP_CLASSES = {
 def render_html(markup: str) -> None:
     """Render trusted HTML returned by Hub_ML UI helpers only."""
     st.markdown(markup, unsafe_allow_html=True)
+
+
+def normalize_layout_mode(mode: str) -> str:
+    normalized = str(mode or "").strip().lower().replace("-", "_")
+    return normalized if normalized in LAYOUT_MODES else DEFAULT_LAYOUT_MODE
+
+
+def layout_mode_for_tab(tab_name: str) -> str:
+    return normalize_layout_mode(TAB_LAYOUT_MODES.get(str(tab_name or ""), DEFAULT_LAYOUT_MODE))
+
+
+def page_class_for_tab(tab_name: str) -> str:
+    return TAB_PAGE_CLASSES.get(str(tab_name or ""), "hub-page")
+
+
+def css_class_name(raw: str) -> str:
+    normalized = re.sub(r"[^a-zA-Z0-9_-]+", "-", str(raw or "").strip().lower()).strip("-")
+    return normalized or "hub-page"
+
+
+def render_page_shell_start(mode: str, page_class: str = "") -> str:
+    layout_mode = normalize_layout_mode(mode)
+    classes = ["page-shell", f"page-shell-{layout_mode}"]
+    if page_class:
+        classes.append(css_class_name(page_class))
+    return f'<div class="{html.escape(" ".join(classes), quote=True)}">'
+
+
+def render_page_shell_end() -> str:
+    return "</div>"
+
+
+def page_layout_mode_css(mode: str) -> str:
+    layout_mode = normalize_layout_mode(mode)
+    widths = {
+        "reading": "1180px",
+        "dashboard": "1280px",
+        "workbench": "1440px",
+    }
+    padding = "clamp(18px, 2.2vw, 32px)"
+    if layout_mode == "full_workspace":
+        container_width = "width: 100%;\n        max-width: none;"
+    else:
+        width = widths[layout_mode]
+        container_width = (
+            f"width: min(100%, calc({width} + {padding} + {padding}));\n"
+            f"        max-width: calc({width} + {padding} + {padding});"
+        )
+    return f"""<style>
+    [data-testid="stMain"] [data-testid="stMainBlockContainer"] {{
+        box-sizing: border-box;
+        {container_width}
+        padding: var(--s4) {padding} 5rem {padding};
+        margin-inline: auto;
+    }}
+</style>"""
+
+
+def apply_page_layout_mode(mode: str) -> None:
+    render_html(page_layout_mode_css(mode))
 
 
 def normalize_chip_status(status: str) -> str:
@@ -9152,7 +9289,9 @@ def main() -> None:
     active_tab = render_grouped_navigation()
     selected_section, selected_note = render_sidebar(sections)
     render_breadcrumb(active_tab)
-
+    active_layout_mode = layout_mode_for_tab(active_tab)
+    apply_page_layout_mode(active_layout_mode)
+    render_html(render_page_shell_start(active_layout_mode, page_class_for_tab(active_tab)))
     if active_tab == "Home":
         render_dashboard(
             sections,
@@ -9177,19 +9316,18 @@ def main() -> None:
                 ),
                 unsafe_allow_html=True,
             )
-            render_status_bar()
-            return
-        render_theory_search_box(sections, practice_cards, mentor_data.get("tasks", []))
-        render_note(
-            selected_section,
-            selected_note,
-            resolved_vault,
-            note_index,
-            graph,
-            sections,
-            practice_cards,
-            mentor_data.get("tasks", []),
-        )
+        else:
+            render_theory_search_box(sections, practice_cards, mentor_data.get("tasks", []))
+            render_note(
+                selected_section,
+                selected_note,
+                resolved_vault,
+                note_index,
+                graph,
+                sections,
+                practice_cards,
+                mentor_data.get("tasks", []),
+            )
     elif active_tab == "🎯 Practice":
         render_practice_tab(practice_cards, practice_warnings, note_index, datasets)
     elif active_tab == "🎯 Tasks":
@@ -9230,6 +9368,7 @@ def main() -> None:
         render_progress(sections, practice_cards, algorithm_lessons, mentor_data.get("tasks", []), project_recipes)
     else:
         render_links_health(graph)
+    render_html(render_page_shell_end())
     render_status_bar()
 
 

@@ -262,6 +262,49 @@ def test_injected_css_has_visual_polish_accessibility_contract(monkeypatch) -> N
     assert "transition: width var(--duration-slow)" in css
 
 
+def test_normalize_layout_mode_accepts_known_modes() -> None:
+    assert app.normalize_layout_mode("reading") == "reading"
+    assert app.normalize_layout_mode("dashboard") == "dashboard"
+    assert app.normalize_layout_mode("workbench") == "workbench"
+    assert app.normalize_layout_mode("full_workspace") == "full_workspace"
+
+
+def test_normalize_layout_mode_falls_back_to_dashboard() -> None:
+    assert app.normalize_layout_mode("wide-ish") == "dashboard"
+    assert app.normalize_layout_mode("") == "dashboard"
+
+
+def test_layout_mode_for_tab_maps_workspace_pages() -> None:
+    assert app.layout_mode_for_tab("Home") == "dashboard"
+    assert app.layout_mode_for_tab("Theory") == "reading"
+    assert app.layout_mode_for_tab("🎯 Tasks") == "workbench"
+    assert app.layout_mode_for_tab("🧪 Data Lab Projects") == "workbench"
+    assert app.layout_mode_for_tab("🤖 ML Lab") == "workbench"
+    assert app.layout_mode_for_tab("📓 Notebook") == "full_workspace"
+
+
+def test_page_layout_css_reduces_one_size_global_constraint() -> None:
+    dashboard_css = app.page_layout_mode_css("dashboard")
+    workbench_css = app.page_layout_mode_css("workbench")
+    full_css = app.page_layout_mode_css("full_workspace")
+
+    assert "1280px" in dashboard_css
+    assert "1440px" in workbench_css
+    assert "max-width: none" in full_css
+    assert "980px" not in dashboard_css
+    assert "[data-testid=\"stMainBlockContainer\"]" in workbench_css
+
+
+def test_render_page_shell_helpers_emit_safe_classes() -> None:
+    start = app.render_page_shell_start("reading", "Theory Page")
+    end = app.render_page_shell_end()
+
+    assert start == '<div class="page-shell page-shell-reading theory-page">'
+    assert end == "</div>"
+    assert "<script" not in start
+    assert "Theory Page" not in start
+
+
 def test_status_chip_is_static_not_clickable() -> None:
     rendered = app.render_status_chip("PASS")
 
