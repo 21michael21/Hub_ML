@@ -77,6 +77,7 @@ def _wait_for_server(url: str, process: subprocess.Popen[str], timeout: float = 
 @pytest.fixture(scope="session")
 def streamlit_app_url(tmp_path_factory: pytest.TempPathFactory) -> str:
     port = _pick_port(int(os.environ.get("HUB_ML_E2E_PORT", "8765")))
+    run_root = tmp_path_factory.mktemp("hub_ml_e2e_state")
     vault = Path(
         os.environ.get("HUB_ML_E2E_VAULT")
         or os.environ.get("VAULT_PATH")
@@ -90,6 +91,8 @@ def streamlit_app_url(tmp_path_factory: pytest.TempPathFactory) -> str:
         {
             "VAULT_PATH": str(vault),
             "PYTHONDONTWRITEBYTECODE": "1",
+            "HUB_ML_PROGRESS_PATH": str(run_root / ".learning_progress.json"),
+            "HUB_ML_USER_PROJECTS_DIR": str(run_root / "user_projects"),
             "STREAMLIT_BROWSER_GATHER_USAGE_STATS": "false",
         }
     )

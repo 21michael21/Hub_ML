@@ -69,6 +69,13 @@ def test_safe_widget_key_accepts_two_and_four_parts() -> None:
     )
 
 
+def test_env_path_uses_override_and_expands_user(monkeypatch, tmp_path) -> None:
+    override = tmp_path / "progress.json"
+    monkeypatch.setenv("HUB_ML_PROGRESS_PATH", str(override))
+
+    assert app.env_path("HUB_ML_PROGRESS_PATH", "~/fallback.json") == override
+
+
 def test_safe_widget_key_handles_empty_and_long_values() -> None:
     assert app.safe_widget_key("", None) == "widget"
 

@@ -92,12 +92,19 @@ NO_SECTION_KEY = "__no_section__"
 NO_SECTION_LABEL = "Без раздела"
 WIKILINK_RE = re.compile(r"\[\[([^\]\n]+?)\]\]")
 MARKDOWN_CODE_RE = re.compile(r"(```.*?```|`[^`\n]*`)", re.DOTALL)
-PROGRESS_PATH = Path(__file__).with_name(".learning_progress.json")
+
+
+def env_path(name: str, default: str | Path) -> Path:
+    raw = os.environ.get(name)
+    return Path(raw if raw else default).expanduser()
+
+
+PROJECT_ROOT = Path(__file__).parent
+PROGRESS_PATH = env_path("HUB_ML_PROGRESS_PATH", Path(__file__).with_name(".learning_progress.json"))
 PRACTICE_DIR = Path(__file__).with_name("practice")
 DATASETS_DIR = Path(__file__).with_name("datasets")
-PROJECT_ROOT = Path(__file__).parent
 PORTFOLIO_DIR = PROJECT_ROOT / "portfolio"
-USER_PROJECTS_DIR = PROJECT_ROOT / "user_projects"
+USER_PROJECTS_DIR = env_path("HUB_ML_USER_PROJECTS_DIR", PROJECT_ROOT / "user_projects")
 ALGORITHMS_DIR = PROJECT_ROOT / "content" / "source" / "vkat" / "VKAT-main" / "algos_patterns"
 INTERVIEW_QUESTIONS_PATH = PROJECT_ROOT / "content" / "interview_questions" / "ml_ds_interview_questions.json"
 ARCHITECTURE_GUIDELINES_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines.html"

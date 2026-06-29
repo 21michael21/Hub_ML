@@ -121,8 +121,94 @@ def click_visible_graph_link(page: Page, *, require_path_label: bool = False, wa
 
 
 def click_nav(page: Page, label: str) -> None:
-    clicked = click_visible_button_containing(page, label)
+    nav_aliases = {
+        "Data Lab": ("Data Lab", "▣ Data Lab", "▣"),
+        "ML Lab": ("ML Lab", "▧ ML Lab", "▧"),
+        "Portfolio": ("Portfolio", "□ Portfolio", "□"),
+        "Algorithms": ("Algorithms", "⌘ Algorithms", "⌘"),
+        "Interviews": ("Interviews", "? Interviews", "?"),
+        "Experiments": ("Experiments", "◌ Experiments", "◌"),
+    }
+    clicked = None
+    for candidate in nav_aliases.get(label, (label,)):
+        clicked = click_visible_button_containing(page, candidate)
+        if clicked is not None:
+            break
+    if clicked is None:
+        page.evaluate(
+            """() => {
+                const toggler = Array.from(document.querySelectorAll('button'))
+                    .find((button) => (button.innerText || button.textContent || '')
+                        .includes('keyboard_double_arrow_right'));
+                if (toggler) toggler.click();
+            }"""
+        )
+        page.wait_for_timeout(600)
+        for candidate in nav_aliases.get(label, (label,)):
+            clicked = click_visible_button_containing(page, candidate)
+            if clicked is not None:
+                break
     assert clicked is not None, f"Navigation button not found: {label}"
+
+
+def body_has_any(page: Page, patterns: tuple[str, ...]) -> bool:
+    text = visible_text(page)
+    return any(pattern in text for pattern in patterns)
+
+
+def click_first_available_button(page: Page, labels: tuple[str, ...]) -> str | None:
+    for label in labels:
+        clicked = click_visible_button_containing(page, label)
+        if clicked is not None:
+            return clicked
+    return None
+
+
+def click_first_visible_checkbox_containing(page: Page, labels: tuple[str, ...]) -> str | None:
+    result = page.evaluate(
+        """({ labels }) => {
+            const labelNodes = Array.from(document.querySelectorAll('label'));
+            for (const wanted of labels) {
+                const label = labelNodes.find((node) => {
+                    const text = (node.innerText || node.textContent || '').trim();
+                    const rect = node.getBoundingClientRect();
+                    return text.includes(wanted) && rect.width > 0 && rect.height > 0;
+                });
+                if (!label) continue;
+                const input = label.querySelector('input[type="checkbox"]')
+                    || document.getElementById(label.getAttribute('for') || '');
+                if (input && input.disabled) continue;
+                label.scrollIntoView({ block: 'center', inline: 'nearest' });
+                label.click();
+                return (label.innerText || label.textContent || '').trim();
+            }
+            return null;
+        }""",
+        {"labels": list(labels)},
+    )
+    if result is None:
+        return None
+    page.wait_for_timeout(600)
+    assert_clean_page(page)
+    return str(result)
+
+
+def fill_input_by_label(page: Page, label: str, value: str) -> bool:
+    locator = page.get_by_label(label, exact=True)
+    try:
+        if locator.count() == 0:
+            return False
+        locator.fill(value, timeout=5_000)
+        return True
+    except Exception:
+        return False
+
+
+def assert_no_horizontal_overflow(page: Page, max_extra_px: int = 24) -> None:
+    overflow = page.evaluate(
+        """() => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth"""
+    )
+    assert overflow <= max_extra_px
 
 
 def open_theory_from_home(page: Page, app_url: str) -> str:
@@ -212,5 +298,104 @@ def test_home_next_project_milestone_opens_project_detail(page: Page, streamlit_
         return
 
     text = visible_text(page)
-    assert any(marker in text for marker in ("PROJECT DETAIL", "Milestone progress", "milestone", "Experiment Tracker Lite"))
+    assert any(marker in text for marker in ("Следующий шаг", "Milestones", "milestone", "Experiment Tracker Lite"))
     assert_clean_page(page)
+
+
+def test_data_lab_project_next_milestone_flow(page: Page, streamlit_app_url: str) -> None:
+    open_app(page, streamlit_app_url)
+    click_nav(page, "Data Lab")
+    expect(page.locator("body")).to_contain_text("Каталог проектов", timeout=10_000)
+
+    click_first_available_button(page, ("Выбрать проект", "Выбран"))
+    expect(page.locator("body")).to_contain_text("Перед стартом", timeout=10_000)
+    expect(page.locator("body")).to_contain_text("Milestones", timeout=10_000)
+
+    opened = click_first_available_button(page, ("Открыть следующий milestone", "Отметить готово", "Сбросить milestone"))
+    assert opened is not None or body_has_any(page, ("Проект готов", "Шаг 1:", "Run milestone"))
+
+    checklist_clicked = click_first_visible_checkbox_containing(page, ("Loaded data", "Summary written"))
+    if checklist_clicked is None:
+        checklist_clicked = click_first_available_button(page, ("Отметить готово",))
+    assert checklist_clicked is not None or body_has_any(page, ("Checklist", "Portfolio output", "Writing prompt", "Solution code"))
+    assert_clean_page(page)
+
+
+def test_ml_lab_project_detail_and_milestone_flow(page: Page, streamlit_app_url: str) -> None:
+    open_app(page, streamlit_app_url)
+    click_nav(page, "ML Lab")
+
+    expect(page.locator("body")).to_contain_text("ML Lab", timeout=10_000)
+    expect(page.locator("body")).to_contain_text("Перед стартом", timeout=10_000)
+    expect(page.locator("body")).to_contain_text("Milestones", timeout=10_000)
+    assert body_has_any(page, ("Следующий шаг", "Проект готов", "Experiment Tracker Lite"))
+
+    opened = click_first_available_button(page, ("Открыть следующий milestone", "Отметить готово", "▶ Run milestone"))
+    assert opened is not None or body_has_any(page, ("Шаг 1:", "Solution code", "Writing prompt"))
+    assert_clean_page(page)
+
+
+def test_experiment_tracker_form_or_empty_state_renders(page: Page, streamlit_app_url: str) -> None:
+    open_app(page, streamlit_app_url)
+    click_nav(page, "ML Lab")
+
+    expect(page.locator("body")).to_contain_text("Experiment Tracker Lite", timeout=10_000)
+    text = visible_text(page)
+    assert body_has_any(page, ("Experiment records пока нет", "Save current experiment summary", "Runs"))
+
+    if click_visible_button_containing(page, "Save current experiment summary") is not None:
+        fill_input_by_label(page, "Model name", "E2E baseline")
+        fill_input_by_label(page, "accuracy", "0.5")
+        fill_input_by_label(page, "Notes", "E2E smoke")
+        assert "Model name" in visible_text(page) or "E2E baseline" in visible_text(page)
+    else:
+        assert "Experiment records пока нет" in text or "Runs" in text
+    assert_clean_page(page)
+
+
+def test_portfolio_preview_or_empty_state_is_clickable_safe(page: Page, streamlit_app_url: str) -> None:
+    open_app(page, streamlit_app_url)
+    click_nav(page, "Portfolio")
+
+    expect(page.locator("body")).to_contain_text("Portfolio", timeout=10_000)
+    if click_visible_button_containing(page, "Markdown preview") is not None:
+        assert body_has_any(page, ("# Portfolio", "## Projects", "## Practice", "Markdown preview"))
+    else:
+        assert body_has_any(page, ("Экспорт пока недоступен", "Markdown exporter", "Output записан"))
+    assert_clean_page(page)
+
+
+def test_interviews_and_algorithms_modes_are_reachable(page: Page, streamlit_app_url: str) -> None:
+    open_app(page, streamlit_app_url)
+    click_nav(page, "Interviews")
+
+    for mode in ("Learn", "Practice", "Timed Mock", "Review"):
+        click_visible_button_containing(page, mode)
+        assert_clean_page(page)
+    assert body_has_any(page, ("Interviews", "Вопросов", "Answer notes", "Ответь"))
+
+    click_nav(page, "Algorithms")
+    expect(page.locator("body")).to_contain_text("Interview Arena", timeout=10_000)
+    for mode in ("Learn", "Practice", "Timed Mock", "Review"):
+        click_visible_button_containing(page, mode)
+        assert_clean_page(page)
+    assert body_has_any(page, ("Algorithms", "Interview Arena", "Режим"))
+
+
+@pytest.mark.parametrize("viewport", [(1440, 900), (390, 844)])
+def test_home_and_ml_lab_responsive_navigation(
+    page: Page,
+    streamlit_app_url: str,
+    viewport: tuple[int, int],
+) -> None:
+    width, height = viewport
+    page.set_viewport_size({"width": width, "height": height})
+    page.goto(streamlit_app_url, wait_until="domcontentloaded", timeout=20_000)
+    expect(page.locator("body")).to_contain_text("Hub_ML", timeout=30_000)
+    assert_clean_page(page)
+    assert_no_horizontal_overflow(page)
+
+    click_nav(page, "ML Lab")
+    expect(page.locator("body")).to_contain_text("ML Lab", timeout=10_000)
+    assert_clean_page(page)
+    assert_no_horizontal_overflow(page)
