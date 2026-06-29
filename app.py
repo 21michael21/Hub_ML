@@ -296,10 +296,16 @@ def inject_styles() -> None:
     [data-testid="stMain"] .stButton > button,
     [data-testid="stMain"] .stDownloadButton > button,
     [data-testid="stMain"] [data-testid="stFormSubmitButton"] button {
+        width: 100%;
+        min-height: 38px;
+        justify-content: center;
         border-color: var(--border);
         border-radius: var(--r-sm);
         background: var(--surface);
         color: var(--text);
+        white-space: normal;
+        overflow-wrap: anywhere;
+        text-align: center;
         transition:
             background var(--duration-fast) var(--ease),
             border-color var(--duration-fast) var(--ease),
@@ -365,24 +371,6 @@ def inject_styles() -> None:
 
     [data-testid="stMain"] [data-testid="stMarkdownContainer"] p {
         margin-top: 0;
-    }
-
-    [data-testid="stMain"] [class*="st-key-open_next_note"],
-    [data-testid="stMain"] [class*="st-key-open_random_unstarted"],
-    [data-testid="stMain"] [class*="st-key-related_practice_"],
-    [data-testid="stMain"] [class*="st-key-practice_open_"],
-    [data-testid="stMain"] [class*="st-key-semantic_search"],
-    [data-testid="stMain"] [class*="st-key-semantic_related"],
-    [data-testid="stMain"] [class*="st-key-data_lab_select_"],
-    [data-testid="stMain"] [class*="st-key-experiments_empty_open_ml_lab"],
-    [data-testid="stMain"] [class*="st-key-rescan_links"],
-    [data-testid="stMain"] [class*="st-key-broken_open_source_"],
-    [data-testid="stMain"] [class*="st-key-ambiguous_open_source_"] {
-        margin-left: calc((var(--s4) * 2) + 4px);
-    }
-
-    [data-testid="stMain"] [class*="st-key-home_today_"] {
-        margin-left: calc((var(--s4) * 3) + 4px);
     }
 
     .content-container {
@@ -621,6 +609,7 @@ def inject_styles() -> None:
         color: var(--text);
         font-size: 0.78rem;
         line-height: 1.5;
+        cursor: default;
     }
 
     div[data-testid="stMarkdownContainer"] p,
@@ -1881,6 +1870,8 @@ def inject_styles() -> None:
         line-height: 1.35;
         text-transform: uppercase;
         vertical-align: middle;
+        cursor: default;
+        user-select: none;
         transition:
             background var(--duration-fast) var(--ease),
             border-color var(--duration-fast) var(--ease),
@@ -1891,6 +1882,34 @@ def inject_styles() -> None:
     .static-chip {
         cursor: default;
         user-select: none;
+        pointer-events: none;
+    }
+
+    .static-chip-value {
+        margin-left: 6px;
+        color: var(--text);
+    }
+
+    .disabled-chip {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+        cursor: not-allowed;
+        opacity: 0.68;
+        pointer-events: none;
+    }
+
+    .disabled-chip-reason {
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    .warning-state-card {
+        border-left: 2px solid var(--warn);
     }
 
     .status-chip .dot,
@@ -2025,6 +2044,26 @@ def render_status_chip(status: str) -> str:
     )
 
 
+def render_static_chip(label: str, value: str = "", *, status: str = "INFO") -> str:
+    css_class = STATUS_CHIP_CLASSES.get(normalize_chip_status(status), "chip-info")
+    value_markup = f'<span class="static-chip-value">{html.escape(str(value))}</span>' if value else ""
+    return (
+        f'<span class="status-chip static-chip {css_class}">'
+        f'<span class="chip-dot"></span>{html.escape(str(label))}{value_markup}</span>'
+    )
+
+
+def render_disabled_chip(label: str, reason: str) -> str:
+    safe_reason = html.escape(str(reason or "Недоступно"))
+    return (
+        '<span class="status-chip static-chip disabled-chip chip-blocked" aria-disabled="true">'
+        '<span><span class="chip-dot"></span>'
+        f"{html.escape(str(label))}</span>"
+        f'<span class="disabled-chip-reason">{safe_reason}</span>'
+        "</span>"
+    )
+
+
 def render_section_eyebrow(label: str) -> str:
     return f'<div class="eyebrow section-eyebrow">{html.escape(str(label))}</div>'
 
@@ -2053,6 +2092,17 @@ def render_flat_section_header(
         f"{caption_markup}"
         "</section>"
     )
+
+
+def render_section_header(
+    title: str,
+    description: str,
+    *,
+    eyebrow: str,
+    status: str = "READY",
+    caption: str = "",
+) -> str:
+    return render_flat_section_header(title, description, eyebrow=eyebrow, status=status, caption=caption)
 
 
 def render_metric_tile(
@@ -2084,6 +2134,37 @@ def render_metric_tile(
         f'<div class="metric-tile-label">{html.escape(str(label))}</div>'
         f"{meta_markup}{bar_markup}"
         "</div>"
+    )
+
+
+def render_action_button(
+    label: str,
+    *,
+    key: str,
+    on_click: Any | None = None,
+    args: tuple[Any, ...] = (),
+    href: str = "",
+    disabled: bool = False,
+    disabled_reason: str = "",
+    help_text: str = "",
+    use_container_width: bool = True,
+) -> bool:
+    if not disabled and on_click is None and not href:
+        raise ValueError("render_action_button requires on_click or href for enabled actions")
+    help_value = disabled_reason or help_text or href or None
+    if href and on_click is None:
+        st.link_button(label, href, key=key, help=help_value, disabled=disabled, use_container_width=use_container_width)
+        return False
+    return bool(
+        st.button(
+            label,
+            key=key,
+            help=help_value,
+            disabled=disabled,
+            on_click=on_click if not disabled else None,
+            args=args if not disabled else (),
+            use_container_width=use_container_width,
+        )
     )
 
 
@@ -2172,7 +2253,7 @@ def render_internal_action_row(
         f'<div class="clickable-row-title">{html.escape(str(title))} {status_markup}</div>'
         f'<div class="clickable-row-meta">{html.escape(str(meta))}</div>'
         "</div>"
-        '<div class="clickable-row-action">done</div>'
+        f'<div class="clickable-row-action">{render_disabled_chip("Недоступно", meta)}</div>'
         "</div>"
     )
 
@@ -2201,6 +2282,50 @@ def render_card(
     )
 
 
+def render_action_card(
+    title: str,
+    body: str,
+    *,
+    key_prefix: str,
+    action_label: str = "Открыть",
+    on_click: Any | None = None,
+    args: tuple[Any, ...] = (),
+    href: str = "",
+    eyebrow: str = "",
+    meta: str = "",
+    status: str = "READY",
+    disabled: bool = False,
+    disabled_reason: str = "",
+) -> bool:
+    if not disabled and on_click is None and not href:
+        raise ValueError("enabled action card requires on_click or href")
+    card_status = "BLOCKED" if disabled else status
+    card_class = "disabled-target-card" if disabled else "internal-action-card clickable-card"
+    render_html(
+        render_card(
+            title,
+            body,
+            eyebrow=eyebrow,
+            meta=meta,
+            status=card_status,
+            extra_class=card_class,
+        )
+    )
+    clicked = render_action_button(
+        action_label,
+        key=safe_widget_key("action_card", key_prefix, title, action_label),
+        on_click=on_click,
+        args=args,
+        href=href,
+        disabled=disabled,
+        disabled_reason=disabled_reason,
+        help_text=meta,
+    )
+    if disabled and disabled_reason:
+        st.caption(disabled_reason)
+    return clicked
+
+
 def render_empty_state(
     title: str,
     body: str,
@@ -2219,6 +2344,18 @@ def render_empty_state(
         status=status,
         extra_class="empty-state-card",
         content_html=action_markup,
+    )
+
+
+def render_warning_state(title: str, body: str, *, reason: str = "") -> str:
+    content_html = f'<div class="console-card-meta">{html.escape(str(reason))}</div>' if reason else ""
+    return render_card(
+        title,
+        body,
+        eyebrow="Warning",
+        status="NEEDS REVIEW",
+        extra_class="warning-state-card",
+        content_html=content_html,
     )
 
 
@@ -2731,7 +2868,7 @@ def render_frontmatter_chips(frontmatter: dict[str, Any]) -> str:
             rendered_values = [str(item) for item in value if str(item)]
             if key == "tags":
                 chips.extend(
-                    f'<span class="fm-chip">#{html.escape(item)}</span>' for item in rendered_values
+                    f'<span class="fm-chip static-chip">#{html.escape(item)}</span>' for item in rendered_values
                 )
                 continue
             rendered = ", ".join(rendered_values)
@@ -2742,7 +2879,7 @@ def render_frontmatter_chips(frontmatter: dict[str, Any]) -> str:
 
         if rendered:
             chips.append(
-                f'<span class="fm-chip">{html.escape(key)}: {html.escape(rendered)}</span>'
+                f'<span class="fm-chip static-chip">{html.escape(key)}: {html.escape(rendered)}</span>'
             )
 
     if not chips:
@@ -3981,23 +4118,22 @@ def render_note_target_button(
     if note:
         note_path = str(note.get("relative_path") or normalized_path)
         button_label = note_link_label(display, note, ambiguous=ambiguous)
-        st.button(
+        render_action_button(
             button_label,
             key=safe_widget_key(key_prefix, note_path, display),
-            help=note_path,
+            help_text=note_path,
             on_click=open_theory_note,
             args=(note_path, note_index, True),
             use_container_width=use_container_width,
-            disabled=False,
         )
         st.caption(note_path)
         return True
 
     missing_path = normalized_path or str(path or "").strip()
-    st.button(
+    render_action_button(
         display,
         key=safe_widget_key(key_prefix, missing_path, display),
-        help=f"Target не найден: {missing_path}",
+        disabled_reason=f"Target не найден: {missing_path}",
         disabled=True,
         use_container_width=use_container_width,
     )
@@ -4994,7 +5130,7 @@ def render_today_plan_row(
         """,
         unsafe_allow_html=True,
     )
-    st.button(button_label, key=button_key, on_click=on_click, args=args)
+    render_action_button(button_label, key=button_key, on_click=on_click, args=args)
 
 
 def render_internal_action_card(
@@ -5005,26 +5141,10 @@ def render_internal_action_card(
     key_prefix: str,
     action_label: str = "Открыть",
 ) -> bool:
-    body = subtitle
-    meta = target.path or target.target_id
-    rendered_status = status if target.exists else "BLOCKED"
-    card_class = "internal-action-card clickable-card" if target.exists else "disabled-target-card"
-    render_html(
-        render_card(
-            title,
-            body,
-            eyebrow=target.label,
-            meta=meta,
-            status=rendered_status,
-            extra_class=card_class,
-        )
-    )
-    disabled = not target.exists
-    if disabled and target.disabled_reason:
-        st.caption(target.disabled_reason)
-    clicked = st.button(
-        action_label,
-        key=safe_widget_key(
+    return render_action_card(
+        title,
+        subtitle,
+        key_prefix=safe_widget_key(
             key_prefix,
             target.kind,
             target.target_id,
@@ -5032,8 +5152,7 @@ def render_internal_action_card(
             target.project_id,
             target.milestone_id,
         ),
-        help=meta or target.disabled_reason or None,
-        disabled=disabled,
+        action_label=action_label,
         on_click=open_internal_target_fields if target.exists else None,
         args=(
             target.kind,
@@ -5045,11 +5164,13 @@ def render_internal_action_card(
             target.source,
             target.exists,
             target.disabled_reason,
-        )
-        if target.exists
-        else (),
+        ),
+        eyebrow=target.label,
+        meta=target.path or target.target_id,
+        status=status,
+        disabled=not target.exists,
+        disabled_reason=target.disabled_reason,
     )
-    return bool(clicked)
 
 
 def theory_note_target(note: dict[str, str] | None, note_index: dict[str, Any]) -> InternalTarget:
@@ -6188,11 +6309,12 @@ def render_lab_prerequisite_item(item: dict[str, Any], key_prefix: str) -> None:
     target = item.get("target")
     is_target = isinstance(target, InternalTarget)
     disabled = bool(item.get("disabled")) or not is_target or (is_target and not target.exists)
-    st.button(
+    render_action_button(
         button_label,
         key=safe_widget_key(key_prefix, item.get("label"), button_label),
-        help=reason or (target.path or target.target_id if is_target else None),
+        help_text=(target.path or target.target_id if is_target else ""),
         disabled=disabled,
+        disabled_reason=reason,
         on_click=open_internal_target_fields if is_target and target.exists else None,
         args=lab_internal_target_fields(target) if is_target and target.exists else (),
         use_container_width=True,
@@ -6204,12 +6326,13 @@ def render_lab_prerequisite_item(item: dict[str, Any], key_prefix: str) -> None:
 def render_data_lab_project_card(project: dict[str, Any], *, selected: bool = False) -> None:
     stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
     render_html(render_lab_project_catalog_card(project, stats, selected=selected))
-    st.button(
+    render_action_button(
         "Выбран" if selected else "Выбрать проект",
         key=f"data_lab_select_{project['id']}",
         on_click=select_data_lab_project,
         args=(project["id"],),
         disabled=selected,
+        disabled_reason="Проект уже выбран" if selected else "",
         use_container_width=True,
     )
 
@@ -6374,7 +6497,7 @@ def render_lab_next_action(project: dict[str, Any], milestone: dict[str, Any] | 
             f'<div class="lab-step-meta">{html.escape(meta)}</div>'
             "</div>"
         )
-        st.button(
+        render_action_button(
             "Открыть следующий milestone",
             key=safe_widget_key("lab_next_milestone", project["id"], milestone.get("id")),
             on_click=select_project_milestone,
@@ -6389,7 +6512,13 @@ def render_lab_next_action(project: dict[str, Any], milestone: dict[str, Any] | 
         '<div class="lab-next-body">Все milestones закрыты. Проверь portfolio output и отметь готовность проекта.</div>'
         "</div>"
     )
-    st.button("Продолжить проект", key=safe_widget_key("lab_next_done", project["id"]), disabled=True, use_container_width=True)
+    render_action_button(
+        "Продолжить проект",
+        key=safe_widget_key("lab_next_done", project["id"]),
+        disabled=True,
+        disabled_reason="Все milestones уже закрыты.",
+        use_container_width=True,
+    )
 
 
 def render_lab_milestone_summary(
@@ -6951,25 +7080,22 @@ def render_portfolio_export_section(cards: list[dict[str, Any]], data_lab_projec
     card_by_id = {card["id"]: card for card in completed_cards}
 
     render_section_eyebrow_block("Portfolio Export")
-    st.markdown(
-        render_card(
+    render_html(
+        render_warning_state(
             "Markdown exporter",
             EXPORT_WARNING,
-            eyebrow="Local artifact",
-            status="NEEDS REVIEW",
-        ),
-        unsafe_allow_html=True,
+            reason="Локальный markdown artifact, проверь вручную перед публикацией.",
+        )
     )
 
     if not completed_projects and not completed_cards:
-        st.markdown(
-            render_card(
+        render_html(
+            render_empty_state(
                 "Экспорт пока недоступен",
                 "Заверши Data Lab проект или practice card, чтобы собрать markdown-шаблон.",
-                eyebrow="Empty state",
                 status="IN PROGRESS",
-            ),
-            unsafe_allow_html=True,
+                action="Закрой проект или practice output",
+            )
         )
         return
 
@@ -7024,14 +7150,13 @@ def render_portfolio_tab(cards: list[dict[str, Any]], data_lab_projects: list[di
     )
 
     if not cards and not data_lab_projects:
-        st.markdown(
-            render_card(
+        render_html(
+            render_empty_state(
                 "Портфолио пустое",
                 "Открой Practice или Data Lab и сохрани первый output.",
-                eyebrow="Empty state",
                 status="IN PROGRESS",
-            ),
-            unsafe_allow_html=True,
+                action="Сохранить первый output",
+            )
         )
         return
 

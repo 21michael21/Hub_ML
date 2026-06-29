@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+import pytest
+
 import app
 
 
@@ -244,6 +246,85 @@ def test_status_chip_is_static_not_clickable() -> None:
     assert "<button" not in rendered
 
 
+def test_static_chip_is_metadata_only() -> None:
+    rendered = app.render_static_chip("level", "beginner")
+
+    assert "static-chip" in rendered
+    assert "clickable" not in rendered
+    assert "<button" not in rendered
+    assert "level" in rendered
+    assert "beginner" in rendered
+
+
+def test_disabled_chip_includes_visible_reason() -> None:
+    rendered = app.render_disabled_chip("Dataset", "Файл не найден")
+
+    assert "disabled-chip" in rendered
+    assert "aria-disabled=\"true\"" in rendered
+    assert "Dataset" in rendered
+    assert "Файл не найден" in rendered
+    assert "<button" not in rendered
+
+
+def test_render_action_button_requires_action_target(monkeypatch) -> None:
+    with pytest.raises(ValueError, match="requires on_click or href"):
+        app.render_action_button("Открыть", key="missing_action")
+
+
+def test_render_action_button_uses_real_streamlit_button(monkeypatch) -> None:
+    buttons: list[dict[str, object]] = []
+
+    def fake_button(label: str, **kwargs: object) -> bool:
+        buttons.append({"label": label, **kwargs})
+        return False
+
+    monkeypatch.setattr(app.st, "button", fake_button)
+
+    app.render_action_button("Открыть", key="open_one", on_click=lambda: None, help_text="target.md")
+
+    assert buttons[0]["label"] == "Открыть"
+    assert buttons[0]["key"] == "open_one"
+    assert buttons[0]["help"] == "target.md"
+    assert buttons[0]["use_container_width"] is True
+
+
+def test_render_action_card_requires_enabled_action() -> None:
+    with pytest.raises(ValueError, match="enabled action card requires"):
+        app.render_action_card("Title", "Body", key_prefix="card")
+
+
+def test_render_action_card_disables_with_reason(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    buttons: list[dict[str, object]] = []
+    captions: list[str] = []
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
+    monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
+
+    clicked = app.render_action_card(
+        "Missing",
+        "Нет target",
+        key_prefix="missing_card",
+        action_label="Открыть",
+        disabled=True,
+        disabled_reason="Target не найден",
+    )
+
+    assert clicked is False
+    assert "disabled-target-card" in html_blocks[0]
+    assert buttons[0]["disabled"] is True
+    assert captions == ["Target не найден"]
+
+
+def test_render_warning_state_uses_warning_semantics() -> None:
+    rendered = app.render_warning_state("Проверь", "Нужна ручная проверка.", reason="Нет данных")
+
+    assert "warning-state-card" in rendered
+    assert "NEEDS REVIEW" in rendered
+    assert "Нет данных" in rendered
+
+
 def test_render_flat_section_header_uses_no_card_wrapper() -> None:
     rendered = app.render_flat_section_header(
         "Theory Quality",
@@ -327,6 +408,32 @@ def test_render_internal_action_row_is_single_anchor_card() -> None:
     assert "→ Открыть" in rendered
     assert "<button" not in rendered
     assert rendered.count("<a ") == 1
+
+
+def test_render_internal_action_row_disabled_uses_disabled_chip() -> None:
+    target = app.InternalTarget(
+        kind="task",
+        label="Missing task",
+        target_id="missing",
+        exists=False,
+        disabled_reason="Задача не найдена",
+    )
+
+    rendered = app.render_internal_action_row(target, "Missing task", "missing", "TODO")
+
+    assert 'aria-disabled="true"' in rendered
+    assert "disabled-chip" in rendered
+    assert "Задача не найдена" in rendered
+    assert "→ Открыть" not in rendered
+    assert "<button" not in rendered
+
+
+def test_frontmatter_chips_are_static_metadata() -> None:
+    rendered = app.render_frontmatter_chips({"tags": ["ml", "pandas"], "level": "beginner"})
+
+    assert rendered.count("static-chip") == 3
+    assert "clickable" not in rendered
+    assert "<button" not in rendered
 
 
 def test_apply_query_param_navigation_opens_internal_target(monkeypatch) -> None:
