@@ -1101,6 +1101,177 @@ def inject_styles() -> None:
         font-size: 0.72rem;
     }
 
+    .lab-page-header {
+        margin-bottom: var(--s4);
+    }
+
+    .lab-project-card {
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        background: var(--surface);
+        padding: 14px 15px;
+        animation: fadeUp .42s var(--ease) both;
+        transition: transform 160ms var(--ease), border-color 160ms var(--ease), background 160ms var(--ease);
+    }
+
+    .lab-project-card:hover,
+    .lab-project-card-selected {
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+        transform: translateY(-2px);
+    }
+
+    .lab-project-card-selected {
+        border-left: 2px solid var(--accent);
+    }
+
+    .lab-project-title {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--text);
+        font-family: var(--font-display);
+        font-size: 0.98rem;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .lab-project-meta,
+    .lab-step-meta,
+    .lab-prerequisite-meta {
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        line-height: 1.5;
+    }
+
+    .lab-project-meta {
+        margin-top: 8px;
+    }
+
+    .lab-project-skills {
+        margin-top: 8px;
+        color: var(--dim);
+        font-size: 0.82rem;
+    }
+
+    .lab-detail-hero,
+    .lab-next-action,
+    .lab-prerequisite-row,
+    .lab-milestone-step {
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        background: var(--surface);
+        padding: 16px 18px;
+        animation: fadeUp .45s var(--ease) both;
+    }
+
+    .lab-detail-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(150px, 0.34fr);
+        gap: 18px;
+        align-items: center;
+    }
+
+    .lab-detail-title,
+    .lab-next-title,
+    .lab-step-title {
+        color: var(--text);
+        font-family: var(--font-display);
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .lab-detail-title {
+        font-size: 1.35rem;
+    }
+
+    .lab-detail-goal,
+    .lab-next-body {
+        margin-top: 8px;
+        color: var(--dim);
+        line-height: 1.55;
+    }
+
+    .lab-next-action {
+        margin-top: 14px;
+        border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+        background: linear-gradient(180deg, rgba(139,155,255,.08), var(--surface));
+    }
+
+    .lab-prerequisite-row {
+        margin: 10px 0 8px;
+        padding: 13px 14px;
+    }
+
+    .lab-prerequisite-row-blocked {
+        border-left: 2px solid var(--fail);
+    }
+
+    .lab-prerequisite-title-row,
+    .lab-step-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .lab-prerequisite-title {
+        color: var(--text);
+        font-weight: 600;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    .lab-milestone-step {
+        margin-top: 12px;
+    }
+
+    .lab-milestone-current {
+        border-left: 2px solid var(--accent);
+        background: var(--surface-2);
+    }
+
+    .lab-step-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--r-sm);
+        color: var(--accent);
+        background: var(--accent-soft);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .lab-step-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .lab-step-output {
+        margin-top: 8px;
+        color: var(--dim);
+        font-size: 0.86rem;
+    }
+
+    @media (max-width: 760px) {
+        .lab-detail-hero {
+            grid-template-columns: 1fr;
+        }
+        .lab-prerequisite-title-row,
+        .lab-step-title-row {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
     .console-panel {
         overflow: hidden;
         border: 1px solid var(--border);
@@ -4033,6 +4204,8 @@ def open_internal_target(target: InternalTarget, *, rerun: bool = True) -> None:
         st.session_state["practice_filter_difficulty"] = "Все"
         st.session_state["active_tab"] = "🎯 Practice"
     elif kind == "dataset":
+        if target.target_id:
+            st.session_state["selected_dataset"] = target.target_id
         st.session_state["active_tab"] = "📊 Datasets"
     elif kind == "report":
         st.session_state["active_tab"] = "🧭 Theory Quality"
@@ -5722,7 +5895,9 @@ def project_readiness_checks(
     checks: list[dict[str, Any]] = []
 
     for theory_path in project.get("related_theory_paths", []):
-        note = note_from_relative_path(str(theory_path), note_index) or resolve_related_note(str(theory_path), note_index)
+        note = note_from_relative_path(str(theory_path), note_index)
+        if note is None and {"rel_index", "stem_index"}.issubset(note_index):
+            note = resolve_related_note(str(theory_path), note_index)
         checks.append(
             {
                 "kind": "Theory",
@@ -5780,32 +5955,262 @@ def render_project_progress_badge(stats: dict[str, Any]) -> str:
     return f"{render_status_chip(status)} <span class='muted-small'>{html.escape(label)}</span>"
 
 
-def render_data_lab_project_card(project: dict[str, Any]) -> None:
-    stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
-    datasets = ", ".join(project.get("datasets", [])) or "no datasets"
-    skills = " · ".join(project.get("skills", [])[:4])
-    st.markdown(
-        render_card(
-            str(project["title"]),
-            f"{project['level']} · {datasets}",
-            eyebrow="Project",
-            meta=skills,
-            status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
-            content_html=render_metric_tile(
-                "Milestones",
-                stats["done"],
-                total=stats["total"],
-                progress=stats["ratio"],
-                status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
-            ),
-        ),
-        unsafe_allow_html=True,
+def lab_project_status(stats: dict[str, Any]) -> str:
+    return "PASS" if stats.get("total") and stats.get("done") == stats.get("total") else "IN PROGRESS"
+
+
+def find_next_lab_milestone(project: dict[str, Any], record: dict[str, Any]) -> dict[str, Any] | None:
+    completed = completed_milestone_ids(record)
+    milestones = [milestone for milestone in project.get("milestones", []) if isinstance(milestone, dict)]
+    for milestone in milestones:
+        milestone_id = str(milestone.get("id") or "")
+        if milestone_id and milestone.get("required", True) and milestone_id not in completed:
+            return milestone
+    for milestone in milestones:
+        milestone_id = str(milestone.get("id") or "")
+        if milestone_id and milestone_id not in completed:
+            return milestone
+    return None
+
+
+def select_project_milestone(project_id: str, milestone_id: str) -> None:
+    st.session_state["selected_data_lab_project"] = project_id
+    st.session_state["selected_project_milestone"] = milestone_id
+
+
+def render_lab_project_catalog_card(project: dict[str, Any], stats: dict[str, Any], *, selected: bool) -> str:
+    status = lab_project_status(stats)
+    selected_class = " lab-project-card-selected" if selected else ""
+    datasets = ", ".join(str(item) for item in project.get("datasets", [])) or "датасеты не указаны"
+    skills = " · ".join(str(item) for item in project.get("skills", [])[:4]) or "skills не указаны"
+    progress_tile = render_metric_tile(
+        "Milestones",
+        stats.get("done", 0),
+        total=stats.get("total", 0),
+        progress=float(stats.get("ratio", 0) or 0),
+        status=status,
     )
+    return (
+        f'<div class="lab-project-card{selected_class}">'
+        '<div class="lab-project-title">'
+        f'<span>{html.escape(str(project.get("title") or project.get("id") or "Project"))}</span>'
+        f"{render_status_chip(status)}"
+        "</div>"
+        f'<div class="lab-project-meta">{html.escape(str(project.get("level") or "level"))} · {html.escape(datasets)}</div>'
+        f'<div class="lab-project-skills">{html.escape(skills)}</div>'
+        f"{progress_tile}"
+        "</div>"
+    )
+
+
+def lab_internal_target_fields(target: InternalTarget) -> tuple[Any, ...]:
+    return (
+        target.kind,
+        target.label,
+        target.target_id,
+        target.path,
+        target.project_id,
+        target.milestone_id,
+        target.source,
+        target.exists,
+        target.disabled_reason,
+    )
+
+
+def lab_prerequisite_item(
+    *,
+    label: str,
+    meta: str,
+    status: str,
+    button_label: str = "",
+    target: InternalTarget | None = None,
+    reason: str = "",
+) -> dict[str, Any]:
+    disabled = bool(target and not target.exists) or bool(reason and target is None)
+    return {
+        "label": label,
+        "meta": meta,
+        "status": status,
+        "button_label": button_label,
+        "target": target,
+        "disabled": disabled,
+        "reason": reason or (target.disabled_reason if target else ""),
+    }
+
+
+def build_lab_prerequisite_groups(
+    project: dict[str, Any],
+    *,
+    note_index: dict[str, Any],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    datasets: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    groups: list[dict[str, Any]] = [
+        {"title": "Теория", "items": []},
+        {"title": "Практика", "items": []},
+        {"title": "Задачи", "items": []},
+        {"title": "Датасеты", "items": []},
+        {"title": "Не хватает перед стартом", "items": []},
+    ]
+    by_title = {str(group["title"]): group for group in groups}
+
+    for theory_path in project.get("related_theory_paths", []):
+        path = str(theory_path)
+        note = note_from_relative_path(path, note_index)
+        if note is None and {"rel_index", "stem_index"}.issubset(note_index):
+            note = resolve_related_note(path, note_index)
+        target_path = str(note.get("relative_path") or path) if note else path
+        status = "READY" if note else "BLOCKED"
+        target = InternalTarget(
+            kind="theory_note",
+            label="Theory note",
+            target_id=target_path,
+            path=target_path,
+            exists=bool(note),
+            disabled_reason="" if note else f"Заметка не найдена: {path}",
+        )
+        by_title["Теория"]["items"].append(
+            lab_prerequisite_item(
+                label=path,
+                meta="заметка",
+                status=status,
+                button_label="Открыть теорию",
+                target=target,
+            )
+        )
+
+    for card_id in project.get("related_practice_ids", []):
+        card = find_practice_card(str(card_id), practice_cards)
+        status = get_card_status(card) if card else "BLOCKED"
+        label = str(card.get("title") if card else card_id)
+        target = InternalTarget(
+            kind="practice",
+            label="Practice card",
+            target_id=str(card.get("id") if card else card_id),
+            exists=bool(card),
+            disabled_reason="" if card else f"Practice card не найдена: {card_id}",
+        )
+        meta = f"{card.get('section', '')} · {PRACTICE_META[status]['label']}" if card else "практика"
+        by_title["Практика"]["items"].append(
+            lab_prerequisite_item(
+                label=label,
+                meta=meta,
+                status="PASS" if status == PRACTICE_DONE else ("BLOCKED" if not card else "IN PROGRESS"),
+                button_label="Открыть практику",
+                target=target,
+            )
+        )
+
+    for task_ref in project.get("related_task_ids", []):
+        matches = related_mentor_tasks(str(task_ref), mentor_tasks)
+        task = matches[0] if matches else None
+        done_count = sum(1 for item in matches if get_mentor_task_status(item["id"]) == STATUS_DONE)
+        target = InternalTarget(
+            kind="task",
+            label="Mentor task",
+            target_id=str(task.get("id") if task else task_ref),
+            exists=bool(task),
+            disabled_reason="" if task else f"Задача не найдена: {task_ref}",
+        )
+        status = "PASS" if matches and done_count == len(matches) else ("BLOCKED" if not task else "IN PROGRESS")
+        meta = f"{done_count}/{len(matches)} решено · {task.get('title')}" if task else "задача"
+        by_title["Задачи"]["items"].append(
+            lab_prerequisite_item(
+                label=str(task_ref),
+                meta=meta,
+                status=status,
+                button_label="Открыть задачу",
+                target=target,
+            )
+        )
+
+    dataset_names = project.get("related_dataset_names") or project.get("datasets", [])
+    for dataset_name in dataset_names:
+        name = str(dataset_name)
+        exists = find_dataset_record(name, datasets) is not None
+        target = InternalTarget(
+            kind="dataset",
+            label="Dataset",
+            target_id=name,
+            exists=exists,
+            disabled_reason="" if exists else f"Датасет не найден: {name}",
+        )
+        by_title["Датасеты"]["items"].append(
+            lab_prerequisite_item(
+                label=name,
+                meta="датасет",
+                status="READY" if exists else "BLOCKED",
+                button_label="Открыть датасет",
+                target=target,
+            )
+        )
+
+    checks = project_readiness_checks(
+        project,
+        note_index=note_index,
+        practice_cards=practice_cards,
+        mentor_tasks=mentor_tasks,
+        datasets=datasets,
+    )
+    readiness = calculate_readiness(checks)
+    for missing in readiness["missing"]:
+        by_title["Не хватает перед стартом"]["items"].append(
+            lab_prerequisite_item(
+                label=str(missing),
+                meta="обязательно перед стартом",
+                status="BLOCKED",
+                reason="Сначала закрой связанный пункт выше.",
+            )
+        )
+    return groups
+
+
+def render_lab_prerequisite_item(item: dict[str, Any], key_prefix: str) -> None:
+    status = str(item.get("status") or "READY")
+    blocked_class = " lab-prerequisite-row-blocked" if normalize_chip_status(status) in {"BLOCKED", "FAIL", "ERROR"} else ""
+    visible_meta = str(item.get("meta") or "")
+    reason = str(item.get("reason") or "")
+    if reason and not item.get("button_label"):
+        visible_meta = f"{visible_meta} · {reason}" if visible_meta else reason
+    render_html(
+        '<div class="lab-prerequisite-row{}">'.format(blocked_class)
+        + '<div class="lab-prerequisite-title-row">'
+        + f'<div class="lab-prerequisite-title">{html.escape(str(item.get("label") or ""))}</div>'
+        + render_status_chip(status)
+        + "</div>"
+        + f'<div class="lab-prerequisite-meta">{html.escape(visible_meta)}</div>'
+        + "</div>"
+    )
+    button_label = str(item.get("button_label") or "")
+    if not button_label:
+        return
+    target = item.get("target")
+    is_target = isinstance(target, InternalTarget)
+    disabled = bool(item.get("disabled")) or not is_target or (is_target and not target.exists)
     st.button(
-        "Открыть проект",
+        button_label,
+        key=safe_widget_key(key_prefix, item.get("label"), button_label),
+        help=reason or (target.path or target.target_id if is_target else None),
+        disabled=disabled,
+        on_click=open_internal_target_fields if is_target and target.exists else None,
+        args=lab_internal_target_fields(target) if is_target and target.exists else (),
+        use_container_width=True,
+    )
+    if disabled and reason:
+        st.caption(reason)
+
+
+def render_data_lab_project_card(project: dict[str, Any], *, selected: bool = False) -> None:
+    stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
+    render_html(render_lab_project_catalog_card(project, stats, selected=selected))
+    st.button(
+        "Выбран" if selected else "Выбрать проект",
         key=f"data_lab_select_{project['id']}",
         on_click=select_data_lab_project,
         args=(project["id"],),
+        disabled=selected,
+        use_container_width=True,
     )
 
 
@@ -5958,14 +6363,77 @@ def render_project_writing_milestone(project: dict[str, Any], milestone: dict[st
         st.success("Notes saved.")
 
 
-def render_data_lab_milestone(project: dict[str, Any], milestone: dict[str, Any]) -> None:
+def render_lab_next_action(project: dict[str, Any], milestone: dict[str, Any] | None, stats: dict[str, Any]) -> None:
+    if milestone:
+        title = str(milestone.get("title") or milestone.get("id") or "Milestone")
+        meta = f"{milestone.get('type', 'milestone')} · {stats.get('done', 0)}/{stats.get('total', 0)} закрыто"
+        render_html(
+            '<div class="lab-next-action">'
+            f'<div class="lab-next-title">Следующий шаг: {html.escape(title)}</div>'
+            f'<div class="lab-next-body">{html.escape(str(milestone.get("description") or ""))}</div>'
+            f'<div class="lab-step-meta">{html.escape(meta)}</div>'
+            "</div>"
+        )
+        st.button(
+            "Открыть следующий milestone",
+            key=safe_widget_key("lab_next_milestone", project["id"], milestone.get("id")),
+            on_click=select_project_milestone,
+            args=(project["id"], str(milestone.get("id") or "")),
+            use_container_width=True,
+        )
+        return
+
+    render_html(
+        '<div class="lab-next-action">'
+        '<div class="lab-next-title">Проект готов</div>'
+        '<div class="lab-next-body">Все milestones закрыты. Проверь portfolio output и отметь готовность проекта.</div>'
+        "</div>"
+    )
+    st.button("Продолжить проект", key=safe_widget_key("lab_next_done", project["id"]), disabled=True, use_container_width=True)
+
+
+def render_lab_milestone_summary(
+    project: dict[str, Any],
+    milestone: dict[str, Any],
+    *,
+    index: int,
+    done: bool,
+    current: bool,
+) -> None:
+    status = "PASS" if done else ("IN PROGRESS" if current else "READY")
+    required_label = "required" if milestone.get("required", True) else "optional"
+    portfolio_output = str(milestone.get("portfolio_output") or "Результат будет зафиксирован внутри шага.").strip()
+    current_class = " lab-milestone-current" if current else ""
+    render_html(
+        f'<div class="lab-milestone-step{current_class}">'
+        '<div class="lab-step-title-row">'
+        '<div class="lab-step-title-wrap">'
+        f'<span class="lab-step-index">{index}</span>'
+        f'<div><div class="lab-step-title">{html.escape(str(milestone.get("title") or milestone.get("id") or "Milestone"))}</div>'
+        f'<div class="lab-step-meta">{html.escape(str(milestone.get("type") or "milestone"))} · {required_label}</div></div>'
+        "</div>"
+        f"{render_status_chip(status)}"
+        "</div>"
+        f'<div class="lab-step-output">Ожидаемый результат: {html.escape(portfolio_output)}</div>'
+        "</div>"
+    )
+
+
+def render_data_lab_milestone(
+    project: dict[str, Any],
+    milestone: dict[str, Any],
+    *,
+    index: int = 1,
+    current_milestone_id: str = "",
+) -> None:
     project_id = project["id"]
     milestone_id = milestone["id"]
     done = is_data_lab_milestone_done(project_id, milestone_id)
     record = get_data_lab_milestone_record(project_id, milestone_id)
-    icon = "✅" if done else "□"
+    current = str(milestone_id) == str(current_milestone_id)
+    render_lab_milestone_summary(project, milestone, index=index, done=done, current=current)
     required_label = "required" if milestone.get("required", True) else "optional"
-    with st.expander(f"{icon} {milestone['title']} · {milestone['type']} · {required_label}", expanded=not done):
+    with st.expander(f"Шаг {index}: {milestone['title']} · {milestone['type']} · {required_label}", expanded=current or not done):
         st.markdown(milestone["description"])
         hints = milestone.get("dataset_hints", [])
         if hints:
@@ -6019,98 +6487,26 @@ def render_data_lab_before_start(
     )
     readiness = calculate_readiness(checks)
 
-    st.markdown("#### Before you start")
+    render_section_eyebrow_block("Перед стартом")
     st.markdown(
         f"{render_readiness_badge(readiness)} "
-        f"<span class='muted-small'>{readiness['done']}/{readiness['total']} prerequisites completed</span>",
+        f"<span class='muted-small'>{readiness['done']}/{readiness['total']} prerequisites готовы</span>",
         unsafe_allow_html=True,
     )
-    if readiness["missing"]:
-        with st.expander("Missing prerequisites", expanded=False):
-            for item in readiness["missing"]:
-                st.markdown(f"- {item}")
-
-    if project.get("related_theory_paths"):
-        st.markdown("##### Theory notes")
-        theory_cols = st.columns(2)
-        for index, theory_path in enumerate(project["related_theory_paths"]):
-            note = note_from_relative_path(str(theory_path), note_index) or resolve_related_note(str(theory_path), note_index)
-            col = theory_cols[index % len(theory_cols)]
-            if note:
-                label = f"📖 {Path(str(theory_path)).stem.replace('_', ' ')}"
-                col.button(
-                    label,
-                    key=f"data_lab_theory_{project['id']}_{index}",
-                    on_click=open_theory_note,
-                    args=(note, None, False),
-                    use_container_width=True,
-                )
-            else:
-                col.button(
-                    f"{theory_path} — missing",
-                    key=f"data_lab_theory_missing_{project['id']}_{index}",
-                    disabled=True,
-                    use_container_width=True,
-                )
-
-    if project.get("related_practice_ids"):
-        st.markdown("##### Practice cards")
-        for card_id in project["related_practice_ids"]:
-            card = find_practice_card(str(card_id), practice_cards)
-            if not card:
-                st.button(f"{card_id} — missing", key=f"data_lab_practice_missing_{project['id']}_{card_id}", disabled=True)
-                continue
-            status = get_card_status(card)
-            cols = st.columns([0.7, 0.3])
-            cols[0].caption(f"{card['title']} · {card.get('section', '')} · {PRACTICE_META[status]['label']}")
-            cols[1].button(
-                "Open practice",
-                key=f"data_lab_practice_{project['id']}_{card_id}",
-                on_click=open_practice_card,
-                args=(card["id"],),
-                use_container_width=True,
-            )
-
-    if project.get("related_task_ids"):
-        st.markdown("##### Mentor tasks")
-        for task_ref in project["related_task_ids"]:
-            matches = related_mentor_tasks(str(task_ref), mentor_tasks)
-            task = matches[0] if matches else None
-            cols = st.columns([0.7, 0.3])
-            if task:
-                done_count = sum(1 for item in matches if get_mentor_task_status(item["id"]) == STATUS_DONE)
-                cols[0].caption(f"{task_ref}: {done_count}/{len(matches)} solved · first: {task['title']}")
-                cols[1].button(
-                    "Open task",
-                    key=f"data_lab_task_{project['id']}_{task_ref}",
-                    on_click=open_mentor_task,
-                    args=(task,),
-                    use_container_width=True,
-                )
-            else:
-                cols[0].caption(f"{task_ref} — no matching task found")
-                cols[1].button(
-                    "Open task",
-                    key=f"data_lab_task_missing_{project['id']}_{task_ref}",
-                    disabled=True,
-                    use_container_width=True,
-                )
-
-    dataset_names = project.get("related_dataset_names") or project.get("datasets", [])
-    if dataset_names:
-        st.markdown("##### Datasets to inspect")
-        dataset_cols = st.columns(max(1, min(3, len(dataset_names))))
-        for index, dataset_name in enumerate(dataset_names):
-            col = dataset_cols[index % len(dataset_cols)]
-            exists = find_dataset_record(str(dataset_name), datasets) is not None
-            col.button(
-                f"📊 {dataset_name}" if exists else f"{dataset_name} — missing",
-                key=f"data_lab_before_dataset_{project['id']}_{dataset_name}",
-                on_click=open_dataset_tab if exists else None,
-                args=(dataset_name,) if exists else None,
-                disabled=not exists,
-                use_container_width=True,
-            )
+    groups = build_lab_prerequisite_groups(
+        project,
+        note_index=note_index,
+        practice_cards=practice_cards,
+        mentor_tasks=mentor_tasks,
+        datasets=datasets,
+    )
+    for group in groups:
+        items = list(group.get("items", []))
+        if not items:
+            continue
+        st.markdown(f"##### {group['title']}")
+        for index, item in enumerate(items):
+            render_lab_prerequisite_item(item, safe_widget_key("lab_prerequisite", project["id"], group["title"], index))
 
 
 def render_data_lab_portfolio_output(project: dict[str, Any]) -> None:
@@ -6351,34 +6747,43 @@ def render_data_lab_project_detail(
     mentor_tasks: list[dict[str, Any]],
     note_index: dict[str, Any],
 ) -> None:
-    stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
-    st.markdown(
-        render_card(
-            str(project["title"]),
-            str(project["goal"]),
-            eyebrow="Project detail",
-            meta=f"{stats['done']}/{stats['total']} milestones · {project.get('estimated_time', '')}",
-            status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
-            content_html=render_metric_tile(
-                "Milestone progress",
-                stats["done"],
-                total=stats["total"],
-                progress=stats["ratio"],
-                status="PASS" if stats["total"] and stats["done"] == stats["total"] else "IN PROGRESS",
-            ),
-        ),
-        unsafe_allow_html=True,
+    record = get_data_lab_project_record(project["id"])
+    stats = project_progress_from_record(project, record)
+    status = lab_project_status(stats)
+    next_milestone = find_next_lab_milestone(project, record)
+    selected_milestone_id = str(st.session_state.get("selected_project_milestone") or "")
+    valid_milestone_ids = {str(milestone.get("id") or "") for milestone in project.get("milestones", [])}
+    if selected_milestone_id not in valid_milestone_ids:
+        selected_milestone_id = str(next_milestone.get("id") if next_milestone else "")
+
+    progress_tile = render_metric_tile(
+        "Прогресс",
+        stats["done"],
+        total=stats["total"],
+        progress=stats["ratio"],
+        status=status,
     )
+    render_html(
+        '<section class="lab-detail-hero">'
+        "<div>"
+        f'<div class="lab-project-meta">{html.escape(str(project.get("track") or "Data Lab"))} · {html.escape(str(project.get("estimated_time") or ""))}</div>'
+        f'<div class="lab-detail-title">{html.escape(str(project["title"]))} {render_status_chip(status)}</div>'
+        f'<div class="lab-detail-goal">{html.escape(str(project["goal"]))}</div>'
+        "</div>"
+        f"<div>{progress_tile}</div>"
+        "</section>"
+    )
+    render_lab_next_action(project, next_milestone, stats)
 
     detail_tiles = [
-        render_metric_tile("Level", project.get("level", "—"), status="INFO"),
-        render_metric_tile("Datasets", len(project.get("datasets", [])), status="INFO"),
+        render_metric_tile("Уровень", project.get("level", "—"), status="INFO"),
+        render_metric_tile("Датасеты", len(project.get("datasets", [])), status="INFO"),
         render_metric_tile("Skills", len(project.get("skills", [])), status="READY"),
     ]
     st.markdown(f'<div class="home-metric-grid">{"".join(detail_tiles)}</div>', unsafe_allow_html=True)
 
-    render_section_eyebrow_block("Business Context")
-    st.markdown(project.get("business_context") or "No business context provided.")
+    render_section_eyebrow_block("Контекст")
+    st.markdown(project.get("business_context") or "Контекст не указан.")
 
     render_data_lab_before_start(
         project,
@@ -6388,36 +6793,15 @@ def render_data_lab_project_detail(
         datasets=datasets,
     )
 
-    render_section_eyebrow_block("Datasets")
-    dataset_cols = st.columns(max(1, min(3, len(project.get("datasets", [])) or 1)))
-    for index, dataset_name in enumerate(project.get("datasets", [])):
-        col = dataset_cols[index % len(dataset_cols)]
-        exists = find_dataset_record(dataset_name, datasets) is not None
-        if exists:
-            col.button(
-                f"📊 {dataset_name}",
-                key=f"data_lab_dataset_{project['id']}_{dataset_name}",
-                on_click=open_dataset_tab,
-                args=(dataset_name,),
-                use_container_width=True,
-            )
-        else:
-            col.button(
-                f"{dataset_name} — missing",
-                key=f"data_lab_dataset_{project['id']}_{dataset_name}",
-                disabled=True,
-                use_container_width=True,
-            )
-
     if project.get("prerequisites"):
         render_section_eyebrow_block("Prerequisites")
         st.markdown("\n".join(f"- {item}" for item in project["prerequisites"]))
 
     render_section_eyebrow_block("Milestones")
-    for milestone in project.get("milestones", []):
-        render_data_lab_milestone(project, milestone)
+    for index, milestone in enumerate(project.get("milestones", []), start=1):
+        render_data_lab_milestone(project, milestone, index=index, current_milestone_id=selected_milestone_id)
 
-    render_section_eyebrow_block("Deliverables")
+    render_section_eyebrow_block("Результат")
     st.markdown("\n".join(f"- {item}" for item in project.get("deliverables", [])))
 
     render_data_lab_portfolio_output(project)
@@ -6436,25 +6820,24 @@ def render_data_lab_projects_tab(
     title: str = "🧪 Data Lab Projects",
     description: str = "End-to-end проекты: от датасета и анализа до графиков, выводов и portfolio output. Код пока запускай в Notebook вручную.",
 ) -> None:
-    st.markdown(
-        render_card(
+    render_html(
+        render_flat_section_header(
             title,
             description,
-            eyebrow="Build",
+            eyebrow="Lab",
             status="READY" if projects else "TODO",
-        ),
-        unsafe_allow_html=True,
+            caption="project catalog · milestones · portfolio output",
+        )
     )
 
     if not projects:
-        st.markdown(
+        render_html(
             render_card(
                 "Project recipes не найдены",
                 "Добавь JSON recipes under content/projects/, чтобы собрать Data Lab catalog.",
                 eyebrow="Empty state",
                 status="TODO",
-            ),
-            unsafe_allow_html=True,
+            )
         )
         return
 
@@ -6485,11 +6868,11 @@ def render_data_lab_projects_tab(
         selected_id = projects[0]["id"]
         st.session_state["selected_data_lab_project"] = selected_id
 
-    list_col, detail_col = st.columns([0.38, 0.62])
+    list_col, detail_col = st.columns([0.34, 0.66], gap="large")
     with list_col:
-        render_section_eyebrow_block("Project Catalog")
+        render_section_eyebrow_block("Каталог проектов")
         for project in projects:
-            render_data_lab_project_card(project)
+            render_data_lab_project_card(project, selected=str(project["id"]) == str(selected_id))
 
     selected_project = next(project for project in projects if project["id"] == selected_id)
     with detail_col:

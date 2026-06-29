@@ -13,6 +13,52 @@ class FakeColumn:
         return False
 
 
+def runtime_sample_project() -> dict[str, object]:
+    return {
+        "id": "orders_eda",
+        "title": "Orders EDA",
+        "level": "beginner",
+        "track": "Data Lab",
+        "datasets": ["df_orders.csv"],
+        "skills": ["pandas", "eda"],
+        "estimated_time": "2 ч",
+        "goal": "Build an EDA report.",
+        "business_context": "Understand orders.",
+        "prerequisites": ["Pandas basics"],
+        "related_theory_paths": ["02_Data_Analysis/Pandas.md"],
+        "related_practice_ids": ["orders_practice"],
+        "related_task_ids": ["analysis_3_pandas"],
+        "related_dataset_names": ["df_orders.csv"],
+        "milestones": [
+            {
+                "id": "load",
+                "title": "Load data",
+                "type": "code",
+                "description": "Load the CSV.",
+                "required": True,
+                "portfolio_output": "Dataset overview",
+            },
+            {
+                "id": "summary",
+                "title": "Write summary",
+                "type": "report",
+                "description": "Write the result.",
+                "required": True,
+                "portfolio_output": "Mini report",
+            },
+            {
+                "id": "optional_card",
+                "title": "Optional model card",
+                "type": "model_card",
+                "description": "Optional reflection.",
+                "required": False,
+            },
+        ],
+        "deliverables": ["Report"],
+        "portfolio_prompt": "Explain the analysis.",
+    }
+
+
 def test_safe_widget_key_accepts_two_and_four_parts() -> None:
     assert app.safe_widget_key("portfolio_output", "card 1") == "portfolio_output_card_1"
     assert (
@@ -40,6 +86,127 @@ def test_project_milestone_widget_key_is_stable() -> None:
 
     assert first == second
     assert first == "project_milestone_orders_conversion_define_target_code"
+
+
+def test_find_next_lab_milestone_prefers_required_todo() -> None:
+    project = runtime_sample_project()
+    record = {"milestones": {"load": {"done": True}}}
+
+    milestone = app.find_next_lab_milestone(project, record)
+
+    assert milestone is not None
+    assert milestone["id"] == "summary"
+
+
+def test_find_next_lab_milestone_falls_back_to_optional() -> None:
+    project = runtime_sample_project()
+    record = {"milestones": {"load": {"done": True}, "summary": {"done": True}}}
+
+    milestone = app.find_next_lab_milestone(project, record)
+
+    assert milestone is not None
+    assert milestone["id"] == "optional_card"
+
+
+def test_render_lab_project_catalog_card_marks_selected() -> None:
+    rendered = app.render_lab_project_catalog_card(
+        runtime_sample_project(),
+        {"done": 1, "total": 3, "ratio": 1 / 3, "complete": False},
+        selected=True,
+    )
+
+    assert "lab-project-card-selected" in rendered
+    assert "Orders EDA" in rendered
+    assert "1<span" in rendered
+    assert "pandas · eda" in rendered
+    assert "<button" not in rendered
+
+
+def test_build_lab_prerequisite_groups_renders_missing_targets_disabled() -> None:
+    project = runtime_sample_project()
+
+    groups = app.build_lab_prerequisite_groups(
+        project,
+        note_index={},
+        practice_cards=[],
+        mentor_tasks=[],
+        datasets=[],
+    )
+
+    flat_items = [item for group in groups for item in group["items"]]
+    assert [group["title"] for group in groups] == [
+        "Теория",
+        "Практика",
+        "Задачи",
+        "Датасеты",
+        "Не хватает перед стартом",
+    ]
+    assert any(item["label"] == "02_Data_Analysis/Pandas.md" and item["disabled"] for item in flat_items)
+    assert any("Заметка не найдена" in item["reason"] for item in flat_items)
+    assert any(item["label"] == "df_orders.csv" and item["disabled"] for item in flat_items)
+
+
+def test_render_lab_prerequisite_item_uses_button_state(monkeypatch) -> None:
+    buttons: list[dict[str, object]] = []
+    captions: list[str] = []
+    html_blocks: list[str] = []
+
+    def fake_button(label: str, **kwargs: object) -> bool:
+        buttons.append({"label": label, **kwargs})
+        return False
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "button", fake_button)
+    monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
+
+    app.render_lab_prerequisite_item(
+        {
+            "label": "Missing dataset",
+            "meta": "датасет",
+            "status": "BLOCKED",
+            "button_label": "Открыть датасет",
+            "disabled": True,
+            "reason": "Датасет не найден",
+            "target": None,
+        },
+        "lab_prereq_test",
+    )
+
+    assert "lab-prerequisite-row" in html_blocks[0]
+    assert buttons[0]["label"] == "Открыть датасет"
+    assert buttons[0]["disabled"] is True
+    assert buttons[0]["on_click"] is None
+    assert captions == ["Датасет не найден"]
+
+
+def test_render_data_lab_projects_tab_renders_catalog_and_selected_detail(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    markdown_blocks: list[str] = []
+    buttons: list[str] = []
+    selected_details: list[str] = []
+    first = runtime_sample_project()
+    second = runtime_sample_project() | {"id": "orders_ml", "title": "Orders ML", "track": "Classic ML"}
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: markdown_blocks.append(str(body)))
+    monkeypatch.setattr(app.st, "button", lambda label, **_kwargs: buttons.append(str(label)) or False)
+    monkeypatch.setattr(app.st, "columns", lambda *_args, **_kwargs: [FakeColumn(), FakeColumn()])
+    monkeypatch.setattr(app, "get_data_lab_project_record", lambda _project_id: {})
+    monkeypatch.setattr(
+        app,
+        "render_data_lab_project_detail",
+        lambda project, *_args, **_kwargs: selected_details.append(str(project["id"])),
+    )
+    app.st.session_state.clear()
+
+    app.render_data_lab_projects_tab([first, second], [], [], [], {}, title="Data Lab")
+
+    rendered = "\n".join(html_blocks + markdown_blocks)
+    assert "flat-section-header" in rendered
+    assert "lab-project-card-selected" in rendered
+    assert "Каталог проектов" in rendered
+    assert buttons == ["Выбран", "Выбрать проект"]
+    assert selected_details == ["orders_eda"]
 
 
 def test_render_section_eyebrow_block_uses_html_markdown(monkeypatch) -> None:
@@ -534,6 +701,18 @@ def test_project_milestone_internal_target_opens_project_and_milestone(monkeypat
     assert app.st.session_state["active_tab"] == "🤖 ML Lab"
     assert app.st.session_state["selected_data_lab_project"] == "orders_conversion_baseline"
     assert app.st.session_state["selected_project_milestone"] == "define_target"
+    assert reruns == [True]
+
+
+def test_dataset_internal_target_selects_dataset(monkeypatch) -> None:
+    reruns: list[bool] = []
+    app.st.session_state.clear()
+    monkeypatch.setattr(app.st, "rerun", lambda: reruns.append(True))
+
+    app.open_internal_target(app.InternalTarget(kind="dataset", label="Dataset", target_id="df_orders.csv"))
+
+    assert app.st.session_state["active_tab"] == "📊 Datasets"
+    assert app.st.session_state["selected_dataset"] == "df_orders.csv"
     assert reruns == [True]
 
 
