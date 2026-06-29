@@ -15,6 +15,22 @@ VAULT_PATH="/absolute/path/to/obsidian_vault" streamlit run app.py
 
 `VAULT_PATH` points to an Obsidian vault with markdown notes. If it is not set, the app asks for the vault path in the sidebar.
 
+## macOS App Launcher
+
+Build a desktop `Hub_ML.app` with a native icon:
+
+```bash
+.venv/bin/python scripts/macos/build_macos_app.py --output-dir ~/Desktop
+```
+
+Then launch `Hub_ML.app` from the Desktop. The app:
+
+- starts Streamlit on `127.0.0.1`;
+- uses port `8501`, or the next free port up to `8510`;
+- creates `.venv` and installs `requirements.txt` on first launch;
+- uses the sibling `obsidian_vkat/` folder as `VAULT_PATH` when it exists;
+- writes logs to `~/Library/Logs/Hub_ML/Hub_ML.log`.
+
 ## Current v0.2 Modules
 
 - Theory: Obsidian markdown navigator with sections, frontmatter chips, wiki links, backlinks, and Links Health.

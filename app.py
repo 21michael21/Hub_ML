@@ -1285,6 +1285,21 @@ def inject_styles() -> None:
             transform var(--duration-fast) var(--ease);
     }
 
+    a.clickable-row,
+    a.clickable-row:hover,
+    a.clickable-row:focus,
+    a.clickable-row:active,
+    a.clickable-row:visited {
+        color: inherit;
+        text-decoration: none !important;
+    }
+
+    .clickable-row *,
+    .clickable-row:hover *,
+    .clickable-row:focus * {
+        text-decoration: none !important;
+    }
+
     .clickable-row-fail {
         border-left: 2px solid var(--fail);
     }
@@ -1402,9 +1417,26 @@ def inject_styles() -> None:
         animation: fadeUp .32s var(--ease) both;
     }
 
-    .home-cockpit-head {
+    .home-cockpit-head,
+    .home-hero {
+        max-width: 920px;
         margin-bottom: var(--s4);
         animation: fadeUp .32s var(--ease) both;
+    }
+
+    .home-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 260px;
+        gap: 22px;
+        align-items: end;
+    }
+
+    .home-hero-kicker {
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
     }
 
     .home-cockpit-title {
@@ -1422,6 +1454,84 @@ def inject_styles() -> None:
         color: var(--dim);
         font-size: 1rem;
         line-height: 1.6;
+    }
+
+    .home-quality-gate {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+        padding: 18px 20px;
+        min-height: 168px;
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 16px;
+        align-items: center;
+        transition:
+            border-color var(--duration-fast) var(--ease),
+            transform var(--duration-fast) var(--ease);
+    }
+
+    .home-quality-gate:hover {
+        border-color: var(--border-strong);
+        transform: translateY(-2px);
+    }
+
+    .home-quality-ring {
+        position: relative;
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: conic-gradient(var(--pass) var(--pct), var(--surface-2) 0);
+        font-family: var(--font-mono);
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .home-quality-ring::before {
+        content: "";
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--surface);
+    }
+
+    .home-quality-ring span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .home-quality-label {
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 9px;
+    }
+
+    .home-quality-count {
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1;
+        margin-top: 11px;
+    }
+
+    .home-quality-count span {
+        color: var(--faint);
+        font-size: 16px;
+    }
+
+    .home-quality-caption {
+        color: var(--dim);
+        font-size: 13px;
+        line-height: 1.45;
+        margin-top: 10px;
     }
 
     .home-plan-panel {
@@ -1486,6 +1596,14 @@ def inject_styles() -> None:
         .today-plan-row {
             grid-template-columns: 1fr;
             align-items: start;
+        }
+
+        .home-hero {
+            grid-template-columns: 1fr;
+        }
+
+        .home-quality-gate {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -1716,6 +1834,40 @@ def theory_note_query_href(relative_path: str) -> str:
     return f"?tab=Theory&note={quote(str(relative_path or ''), safe='')}"
 
 
+def internal_target_tab_name(target: InternalTarget) -> str:
+    kind = str(target.kind or "").strip()
+    if kind == "theory_note":
+        return "Theory"
+    if kind == "task":
+        return "🎯 Tasks"
+    if kind == "practice":
+        return "🎯 Practice"
+    if kind in {"project", "milestone"}:
+        return "🤖 ML Lab" if target.source == "ml_lab" else "🧪 Data Lab Projects"
+    if kind == "dataset":
+        return "📊 Datasets"
+    if kind == "report":
+        return "🧭 Theory Quality"
+    return "Home"
+
+
+def internal_target_query_href(target: InternalTarget) -> str:
+    tab_name = internal_target_tab_name(target)
+    if target.kind == "theory_note":
+        return theory_note_query_href(target.path or target.target_id)
+
+    params = [
+        ("tab", tab_name),
+        ("kind", str(target.kind or "")),
+        ("target", target.target_id or target.path),
+        ("project", target.project_id),
+        ("milestone", target.milestone_id),
+        ("source", target.source),
+    ]
+    query = "&".join(f"{name}={quote(str(value), safe='')}" for name, value in params if value)
+    return f"?{query}"
+
+
 def render_clickable_row(
     title: str,
     meta: str,
@@ -1735,6 +1887,36 @@ def render_clickable_row(
         "</div>"
         f'<div class="clickable-row-action">→ {html.escape(str(action))}</div>'
         "</a>"
+    )
+
+
+def render_internal_action_row(
+    target: InternalTarget,
+    title: str,
+    subtitle: str,
+    status: str,
+    action_label: str = "Открыть",
+) -> str:
+    if target.exists:
+        return render_clickable_row(
+            title,
+            subtitle,
+            href=internal_target_query_href(target),
+            action=action_label,
+            status=status,
+        )
+
+    rendered_status = "BLOCKED" if target.disabled_reason else status
+    status_markup = render_status_chip(rendered_status)
+    meta = target.disabled_reason or subtitle
+    return (
+        '<div class="clickable-row disabled-target-card" aria-disabled="true">'
+        "<div>"
+        f'<div class="clickable-row-title">{html.escape(str(title))} {status_markup}</div>'
+        f'<div class="clickable-row-meta">{html.escape(str(meta))}</div>'
+        "</div>"
+        '<div class="clickable-row-action">done</div>'
+        "</div>"
     )
 
 
@@ -4117,7 +4299,12 @@ def query_param_value(name: str) -> str:
 def apply_query_param_navigation(note_index: dict[str, Any]) -> None:
     tab_name = query_param_value("tab")
     note_path = query_param_value("note")
-    signature = f"{tab_name}\0{note_path}"
+    target_kind = query_param_value("kind")
+    target_id = query_param_value("target")
+    project_id = query_param_value("project")
+    milestone_id = query_param_value("milestone")
+    source = query_param_value("source")
+    signature = "\0".join([tab_name, note_path, target_kind, target_id, project_id, milestone_id, source])
     if not tab_name or st.session_state.get("_last_query_nav") == signature:
         return
 
@@ -4125,6 +4312,20 @@ def apply_query_param_navigation(note_index: dict[str, Any]) -> None:
         st.session_state["active_tab"] = tab_name
     if tab_name == "Theory" and note_path:
         open_theory_note(note_path, note_index, rerun=False)
+    elif target_kind and target_id:
+        open_internal_target(
+            InternalTarget(
+                kind=target_kind,
+                label=target_id,
+                target_id=target_id,
+                path=target_id,
+                project_id=project_id,
+                milestone_id=milestone_id,
+                source=source,
+                exists=True,
+            ),
+            rerun=False,
+        )
     st.session_state["_last_query_nav"] = signature
 
 
@@ -4232,6 +4433,52 @@ def content_gate_status(report_path: Path = CONTENT_GATE_REPORT_PATH) -> str:
     if generated_at:
         return f"{status} · отчёт {generated_at[:10]}"
     return status
+
+
+def content_gate_home_summary(report_path: Path = CONTENT_GATE_REPORT_PATH) -> dict[str, Any]:
+    try:
+        payload = json.loads(report_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {
+            "percent": 0,
+            "passed": 0,
+            "total": 0,
+            "status": "NEEDS REVIEW",
+            "caption": "Content gate report не найден.",
+        }
+
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        return {
+            "percent": 0,
+            "passed": 0,
+            "total": 0,
+            "status": "NEEDS REVIEW",
+            "caption": "Content gate report неполный.",
+        }
+
+    passed_value = summary.get("passed_topics")
+    total_value = summary.get("total_topics")
+    if isinstance(passed_value, list):
+        passed_value = len(passed_value)
+    if total_value is None and isinstance(payload.get("topics"), list):
+        total_value = len(payload["topics"])
+    try:
+        passed = int(passed_value)
+        total = int(total_value)
+    except (TypeError, ValueError):
+        passed = 0
+        total = 0
+
+    percent = round((passed / total) * 100) if total else 0
+    status = "PASS" if total and passed >= total else "IN PROGRESS"
+    if total and passed >= total:
+        caption = f"Все {total} тем прошли контроль качества контента."
+    elif total:
+        caption = f"Пройдено {passed} из {total} тем — есть открытые проверки."
+    else:
+        caption = "Content gate ждёт валидный отчёт."
+    return {"percent": percent, "passed": passed, "total": total, "status": status, "caption": caption}
 
 
 def notebook_kernel_status_label() -> str:
@@ -4573,12 +4820,26 @@ def render_dashboard(
     next_task_target = mentor_task_target(next_task, {str(task.get("id") or "") for task in mentor_tasks})
     next_card_target = practice_card_target(next_card, {str(card.get("id") or "") for card in practice_cards})
     next_project_target = project_milestone_target(project_step)
+    gate_summary = content_gate_home_summary()
+    gate_percent = max(0, min(100, int(gate_summary["percent"])))
 
     st.markdown(
-        """
-<div class="home-cockpit-head">
-    <div class="home-cockpit-title">Hub_ML</div>
-    <div class="home-cockpit-subtitle">Инженерная консоль для локальной ML-практики: учиться, собирать проекты, тренироваться и готовить portfolio artifacts.</div>
+        f"""
+<div class="home-hero">
+    <div>
+        <div class="home-hero-kicker">Hub_ML · local workstation</div>
+        <div class="home-cockpit-title">Hub_ML</div>
+        <div class="home-cockpit-subtitle">Инженерная консоль для локальной ML-практики.</div>
+    </div>
+    <div class="home-quality-gate">
+        <div class="home-quality-ring" style="--pct:{gate_percent}%"><span>{gate_percent}%</span></div>
+        <div>
+            <div class="home-quality-label">QUALITY GATE</div>
+            {render_status_chip(str(gate_summary["status"]))}
+            <div class="home-quality-count">{html.escape(str(gate_summary["passed"]))}<span>/{html.escape(str(gate_summary["total"]))}</span></div>
+            <div class="home-quality-caption">{html.escape(str(gate_summary["caption"]))}</div>
+        </div>
+    </div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -4627,79 +4888,81 @@ def render_dashboard(
         resume_cards.append((None, "Теория закрыта", f"просмотрено заметок: {total_notes}", "PASS", "home_resume_note_done"))
 
     render_section_eyebrow_block("Продолжить")
-    for column, (target, title, subtitle, status, key_prefix) in zip(st.columns(3), resume_cards, strict=False):
-        with column:
-            if target:
-                render_internal_action_card(target, title, subtitle, status, key_prefix)
-            else:
-                render_html(render_card(title, subtitle, eyebrow="Продолжить", status=status, extra_class="home-stagger-1"))
+    resume_rows: list[str] = []
+    for target, title, subtitle, status, _key_prefix in resume_cards:
+        row_target = target or InternalTarget(kind="", label=title, exists=False)
+        resume_rows.append(render_internal_action_row(row_target, title, subtitle, status, "Открыть"))
+    render_html(f'<div class="clickable-row-list home-action-list home-stagger-1">{"".join(resume_rows)}</div>')
 
     render_section_eyebrow_block("План на сегодня")
     today_count = 0
+    today_rows: list[str] = []
     if next_note and next_note_target.exists and today_count < 4:
-        render_internal_action_card(
-            next_note_target,
-            next_note_target.label,
-            next_note_target.path,
-            "READING" if get_note_status(next_note) == STATUS_READING else "TODO",
-            "home_today_note",
-            "Открыть теорию",
+        today_rows.append(
+            render_internal_action_row(
+                next_note_target,
+                next_note_target.label,
+                next_note_target.path,
+                "READING" if get_note_status(next_note) == STATUS_READING else "TODO",
+                "Открыть теорию",
+            )
         )
         today_count += 1
     if next_card and next_card_target.exists and today_count < 4:
-        render_internal_action_card(
-            next_card_target,
-            str(next_card["title"]),
-            f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
-            "IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
-            "home_today_practice",
-            "Открыть практику",
+        today_rows.append(
+            render_internal_action_row(
+                next_card_target,
+                str(next_card["title"]),
+                f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
+                "IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
+                "Открыть практику",
+            )
         )
         today_count += 1
     if project_step and next_project_target.exists and today_count < 4:
         project = project_step["project"]
         milestone = project_step["milestone"]
-        render_internal_action_card(
-            next_project_target,
-            str(milestone.get("title") or milestone.get("id") or "Project milestone"),
-            str(project.get("title") or project.get("id") or "Project"),
-            "IN PROGRESS",
-            "home_today_project",
-            "Открыть проект",
+        today_rows.append(
+            render_internal_action_row(
+                next_project_target,
+                str(milestone.get("title") or milestone.get("id") or "Project milestone"),
+                str(project.get("title") or project.get("id") or "Project"),
+                "IN PROGRESS",
+                "Открыть проект",
+            )
         )
         today_count += 1
     if next_task and next_task_target.exists and today_count < 4:
-        render_internal_action_card(
-            next_task_target,
-            str(next_task["title"]),
-            str(next_task["notebook_label"]),
-            "TODO",
-            "home_today_task",
-            "Открыть задачу",
+        today_rows.append(
+            render_internal_action_row(
+                next_task_target,
+                str(next_task["title"]),
+                str(next_task["notebook_label"]),
+                "TODO",
+                "Открыть задачу",
+            )
         )
         today_count += 1
     if next_algorithm and today_count < 4:
-        render_today_plan_row(
-            kind="train",
-            title=next_algorithm["title"],
-            meta="Algorithms Lab",
-            status="TODO",
-            button_label="Открыть алгоритм",
-            button_key="home_today_algorithm",
-            on_click=open_algorithm_lesson,
-            args=(next_algorithm["id"],),
+        today_rows.append(
+            render_clickable_row(
+                str(next_algorithm["title"]),
+                "Algorithms Lab",
+                href=f"?tab={quote('🧩 Algorithms', safe='')}",
+                action="Открыть алгоритм",
+                status="TODO",
+            )
         )
         today_count += 1
     if today_count == 0 and interview_prompt:
-        render_today_plan_row(
-            kind="train",
-            title=f"Interview-вопрос: {interview_prompt['company']}",
-            meta=interview_prompt["text"][:120],
-            status="TODO",
-            button_label="Открыть Interviews",
-            button_key="home_today_interview",
-            on_click=open_tab,
-            args=("🎤 Interviews",),
+        today_rows.append(
+            render_clickable_row(
+                f"Interview-вопрос: {interview_prompt['company']}",
+                interview_prompt["text"][:120],
+                href=f"?tab={quote('🎤 Interviews', safe='')}",
+                action="Открыть Interviews",
+                status="TODO",
+            )
         )
         today_count += 1
     if today_count == 0:
@@ -4710,6 +4973,8 @@ def render_dashboard(
                 action="Выбери раздел в сайдбаре.",
             )
         )
+    else:
+        render_html(f'<div class="clickable-row-list home-action-list home-stagger-2">{"".join(today_rows)}</div>')
 
     render_section_eyebrow_block("Статус")
     task_ratio = mentor_stats["done"] / mentor_stats["total"] if mentor_stats["total"] else 0.0
@@ -4815,8 +5080,12 @@ def render_dashboard(
                 attention_actions.append(
                     (experiment_target, "Открыть ML Lab для experiment record", experiment_target.label, "TODO", "home_attention_experiment")
                 )
-        for target, title, subtitle, status, key_prefix in attention_actions[:3]:
-            render_internal_action_card(target, title, subtitle, status, key_prefix)
+        attention_rows = [
+            render_internal_action_row(target, title, subtitle, status, "Открыть")
+            for target, title, subtitle, status, _key_prefix in attention_actions[:3]
+        ]
+        if attention_rows:
+            render_html(f'<div class="clickable-row-list home-action-list home-stagger-4">{"".join(attention_rows)}</div>')
     else:
         st.markdown(
             render_card(

@@ -5,6 +5,14 @@ import json
 import app
 
 
+class FakeColumn:
+    def __enter__(self) -> "FakeColumn":
+        return self
+
+    def __exit__(self, *_: object) -> bool:
+        return False
+
+
 def test_safe_widget_key_accepts_two_and_four_parts() -> None:
     assert app.safe_widget_key("portfolio_output", "card 1") == "portfolio_output_card_1"
     assert (
@@ -114,6 +122,142 @@ def test_render_clickable_row_is_single_anchor_card() -> None:
     assert "→ Открыть" in rendered
     assert "<button" not in rendered
     assert rendered.count("<a ") == 1
+
+
+def test_internal_target_query_href_encodes_task_target() -> None:
+    target = app.InternalTarget(
+        kind="task",
+        label="Task <One>",
+        target_id="python/basics",
+        exists=True,
+    )
+
+    href = app.internal_target_query_href(target)
+
+    assert href == "?tab=%F0%9F%8E%AF%20Tasks&kind=task&target=python%2Fbasics"
+
+
+def test_render_internal_action_row_is_single_anchor_card() -> None:
+    target = app.InternalTarget(
+        kind="task",
+        label="Task <One>",
+        target_id="python/basics",
+        exists=True,
+    )
+
+    rendered = app.render_internal_action_row(
+        target,
+        "Advanced <Python>",
+        "задача · confidence high",
+        "IN PROGRESS",
+        "Открыть",
+    )
+
+    assert rendered.startswith('<a class="clickable-row"')
+    assert 'href="?tab=%F0%9F%8E%AF%20Tasks&amp;kind=task&amp;target=python%2Fbasics"' in rendered
+    assert "Advanced &lt;Python&gt;" in rendered
+    assert "Task &lt;One&gt;" not in rendered
+    assert "→ Открыть" in rendered
+    assert "<button" not in rendered
+    assert rendered.count("<a ") == 1
+
+
+def test_apply_query_param_navigation_opens_internal_target(monkeypatch) -> None:
+    values = {
+        "tab": "🎯 Tasks",
+        "kind": "task",
+        "target": "python/basics",
+        "project": "",
+        "milestone": "",
+        "source": "",
+        "note": "",
+    }
+    opened: list[tuple[app.InternalTarget, bool]] = []
+
+    monkeypatch.setattr(app, "query_param_value", lambda name: values.get(name, ""))
+    monkeypatch.setattr(app, "open_internal_target", lambda target, rerun=True: opened.append((target, rerun)))
+    app.st.session_state.pop("_last_query_nav", None)
+
+    app.apply_query_param_navigation({"all_notes": [], "rel_index": {}, "stem_index": {}})
+
+    assert len(opened) == 1
+    target, rerun = opened[0]
+    assert target.kind == "task"
+    assert target.target_id == "python/basics"
+    assert target.exists is True
+    assert rerun is False
+
+
+def test_home_dashboard_primary_actions_use_clickable_rows(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    buttons: list[str] = []
+    note = {
+        "section_key": "00_Atlas",
+        "display_name": "Knowledge Map.md",
+        "relative_path": "00_Atlas/Knowledge Map.md",
+        "path": "/vault/00_Atlas/Knowledge Map.md",
+        "stem": "Knowledge Map",
+    }
+    task = {
+        "id": "advanced_python",
+        "title": "Advanced Python",
+        "confidence": "high",
+        "notebook_label": "задача",
+    }
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: html_blocks.append(str(body)))
+    monkeypatch.setattr(app.st, "button", lambda label, **_kwargs: buttons.append(str(label)) or False)
+    monkeypatch.setattr(app.st, "columns", lambda count: [FakeColumn() for _ in range(count)])
+    monkeypatch.setattr(app, "ensure_progress_state", lambda: {"notes": {}, "mentor_tasks_status": {}})
+    monkeypatch.setattr(
+        app,
+        "content_gate_home_summary",
+        lambda: {"percent": 100, "passed": 36, "total": 36, "status": "PASS", "caption": "Все темы прошли контроль качества."},
+    )
+
+    app.render_dashboard(
+        {"00_Atlas": [note]},
+        [],
+        [],
+        {"summary": {"broken": 0}},
+        {"tasks": [task]},
+        [],
+        [],
+        {},
+        {"summary": {"average_quality_score": 54.5, "weakest_notes": []}},
+        {"summary": {}},
+    )
+
+    rendered = "\n".join(html_blocks)
+    assert "home-quality-gate" in rendered
+    assert "QUALITY GATE" in rendered
+    assert "36<span" in rendered
+    assert "clickable-row-list home-action-list" in rendered
+    assert "Открыть задачу" not in buttons
+    assert "Открыть теорию" not in buttons
+
+
+def test_content_gate_home_summary_parses_complete_report(tmp_path) -> None:
+    report = tmp_path / "content_gate_report.json"
+    report.write_text(
+        json.dumps(
+            {
+                "summary": {"passed_topics": 36, "total_topics": 36},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    summary = app.content_gate_home_summary(report)
+
+    assert summary == {
+        "percent": 100,
+        "passed": 36,
+        "total": 36,
+        "status": "PASS",
+        "caption": "Все 36 тем прошли контроль качества контента.",
+    }
 
 
 def test_inline_wikilink_renders_as_static_chip_not_fake_button() -> None:
