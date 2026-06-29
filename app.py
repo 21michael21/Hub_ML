@@ -220,6 +220,7 @@ def inject_styles() -> None:
     }
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @keyframes sectionFade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
     @keyframes shimmer{0%{background-position:-360px 0}100%{background-position:360px 0}}
     @keyframes growBar{from{width:0}}
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -388,6 +389,10 @@ def inject_styles() -> None:
 
     .section-gap {
         margin-top: var(--s4);
+    }
+
+    .section-fade {
+        animation: sectionFade 320ms var(--ease) both;
     }
 
     [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2,
@@ -777,7 +782,7 @@ def inject_styles() -> None:
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
-        padding: 14px;
+        padding: 16px;
         animation: fadeUp .32s var(--ease) both;
     }
 
@@ -1021,8 +1026,8 @@ def inject_styles() -> None:
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
-        padding: 16px 18px;
-        box-shadow: var(--shadow-card);
+        padding: 18px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.16);
         animation: fadeUp var(--duration-slow) var(--ease) both;
         transition:
             background var(--duration-med) var(--ease),
@@ -1040,7 +1045,7 @@ def inject_styles() -> None:
     .internal-action-card:hover {
         border-color: var(--border-strong);
         transform: translateY(-2px);
-        box-shadow: var(--shadow-card-hover);
+        box-shadow: 0 16px 38px rgba(0,0,0,0.20);
     }
 
     .console-card:focus-within {
@@ -1054,16 +1059,16 @@ def inject_styles() -> None:
         border-color: var(--border-soft);
         background: var(--surface);
         color: var(--dim);
-        opacity: 0.78;
+        opacity: 0.88;
         transform: none;
-        box-shadow: var(--shadow-card);
+        box-shadow: none;
     }
 
     .disabled-target-card:hover,
     .static-note-link:hover {
         border-color: var(--border-soft);
         transform: none;
-        box-shadow: var(--shadow-card);
+        box-shadow: none;
     }
 
     .console-card-eyebrow {
@@ -1159,7 +1164,7 @@ def inject_styles() -> None:
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
-        padding: 16px 18px;
+        padding: 18px;
         animation: fadeUp .45s var(--ease) both;
     }
 
@@ -1197,8 +1202,8 @@ def inject_styles() -> None:
     }
 
     .lab-prerequisite-row {
-        margin: 10px 0 8px;
-        padding: 13px 14px;
+        margin: 12px 0 10px;
+        padding: 15px 16px;
     }
 
     .lab-prerequisite-row-blocked {
@@ -1388,6 +1393,47 @@ def inject_styles() -> None:
         border-radius: 999px;
         background: var(--accent);
         transition: width var(--duration-slow) var(--ease), background var(--duration-fast) var(--ease);
+    }
+
+    .ui-state-card {
+        position: relative;
+        border-color: var(--border);
+        background:
+            linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0)),
+            var(--surface);
+        box-shadow: none;
+    }
+
+    .ui-state-card::before {
+        content: "";
+        position: absolute;
+        inset: 14px auto 14px 0;
+        width: 2px;
+        border-radius: 999px;
+        background: var(--border-strong);
+    }
+
+    .empty-state-card::before {
+        background: var(--info);
+    }
+
+    .warning-state-card::before {
+        background: var(--warn);
+    }
+
+    .error-state-card::before,
+    .task-result-state.error::before,
+    .task-result-state.fail::before {
+        background: var(--fail);
+    }
+
+    .kernel-busy-state {
+        border-left: 2px solid var(--warn);
+        background: rgba(229,178,58,0.08);
+    }
+
+    .task-result-state {
+        border-left: 2px solid var(--border-strong);
     }
 
     .metric-fill-pass,
@@ -2089,7 +2135,7 @@ def render_flat_section_header(
 ) -> str:
     caption_markup = f'<div class="flat-section-caption">{html.escape(str(caption))}</div>' if caption else ""
     return (
-        '<section class="flat-section-header">'
+        '<section class="flat-section-header section-fade">'
         f"{render_section_eyebrow(eyebrow)}"
         '<div class="flat-section-title-row">'
         f'<div class="flat-section-title">{html.escape(str(title))}</div>'
@@ -2349,7 +2395,7 @@ def render_empty_state(
         body,
         eyebrow=eyebrow,
         status=status,
-        extra_class="empty-state-card",
+        extra_class="ui-state-card empty-state-card",
         content_html=action_markup,
     )
 
@@ -2361,7 +2407,7 @@ def render_warning_state(title: str, body: str, *, reason: str = "") -> str:
         body,
         eyebrow="Warning",
         status="NEEDS REVIEW",
-        extra_class="warning-state-card",
+        extra_class="ui-state-card warning-state-card",
         content_html=content_html,
     )
 
@@ -5015,6 +5061,7 @@ def render_vault_setup_card(title: str, body: str, *, status: str = "IN PROGRESS
             body,
             eyebrow="Vault setup",
             status=status,
+            extra_class="ui-state-card vault-setup-card error-state-card" if normalize_chip_status(status) in {"ERROR", "FAIL"} else "ui-state-card vault-setup-card warning-state-card",
             content_html=(
                 '<div class="console-panel">'
                 '<div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>setup · VAULT_PATH</span></div>'
@@ -6353,7 +6400,7 @@ def render_project_milestone_result(result: dict[str, Any]) -> None:
     elapsed = float(result.get("elapsed") or 0)
     st.markdown(
         f"""
-<div class="run-result console-card">
+<div class="run-result console-card task-result-state {html.escape(normalize_chip_status(classification).lower().replace(' ', '-'))}">
     <div class="console-card-eyebrow">Milestone result</div>
     <div class="console-card-title">{render_status_chip(classification)} <span class="muted-small">kernel · {elapsed:.2f}s</span></div>
 </div>
@@ -7290,7 +7337,7 @@ def render_algorithm_result(result: dict[str, Any]) -> None:
             message,
             eyebrow="Run result",
             status=chip,
-            extra_class="run-result",
+            extra_class=f"run-result task-result-state {normalize_chip_status(chip).lower().replace(' ', '-')}",
         ),
         unsafe_allow_html=True,
     )
@@ -7601,7 +7648,7 @@ def render_mentor_task_result(result: dict[str, Any]) -> None:
             message_by_class.get(classification, "Проверь вывод и traceback ниже."),
             eyebrow="Task result",
             status=chip,
-            extra_class="run-result",
+            extra_class=f"run-result task-result-state {normalize_chip_status(chip).lower().replace(' ', '-')}",
         ),
         unsafe_allow_html=True,
     )
@@ -7645,9 +7692,10 @@ def render_mentor_task_result(result: dict[str, Any]) -> None:
 
 def render_kernel_panel_header(label: str = "python · kernel") -> None:
     kernel_status = notebook_kernel_status_label()
+    busy_class = " kernel-busy-state" if kernel_status == "busy" else ""
     st.markdown(
         f"""
-<div class="console-panel">
+<div class="console-panel{busy_class}">
     <div class="phead"><span class="dot3"><i></i><i></i><i></i></span><span>{html.escape(label)} {html.escape(kernel_status)}</span></div>
 </div>
         """,

@@ -244,6 +244,24 @@ def test_render_html_centralizes_trusted_helper_markup(monkeypatch) -> None:
     assert calls == [(app.render_status_chip("PASS"), True)]
 
 
+def test_injected_css_has_visual_polish_accessibility_contract(monkeypatch) -> None:
+    calls: list[str] = []
+
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: calls.append(str(body)))
+
+    app.inject_styles()
+
+    css = "\n".join(calls)
+    assert "@keyframes sectionFade" in css
+    assert ".section-fade" in css
+    assert ".ui-state-card" in css
+    assert ".kernel-busy-state" in css
+    assert ".task-result-state" in css
+    assert "prefers-reduced-motion" in css
+    assert ":focus-visible" in css
+    assert "transition: width var(--duration-slow)" in css
+
+
 def test_status_chip_is_static_not_clickable() -> None:
     rendered = app.render_status_chip("PASS")
 
@@ -327,9 +345,31 @@ def test_render_action_card_disables_with_reason(monkeypatch) -> None:
 def test_render_warning_state_uses_warning_semantics() -> None:
     rendered = app.render_warning_state("Проверь", "Нужна ручная проверка.", reason="Нет данных")
 
+    assert "ui-state-card" in rendered
     assert "warning-state-card" in rendered
     assert "NEEDS REVIEW" in rendered
     assert "Нет данных" in rendered
+
+
+def test_render_empty_state_uses_state_card_shell() -> None:
+    rendered = app.render_empty_state("Нет данных", "Добавь источник.", action="Открыть настройки")
+
+    assert "ui-state-card" in rendered
+    assert "empty-state-card" in rendered
+    assert "Открыть настройки" in rendered
+
+
+def test_render_vault_setup_card_uses_state_card_shell(monkeypatch) -> None:
+    calls: list[str] = []
+
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: calls.append(str(body)))
+
+    app.render_vault_setup_card("Нет vault", "Укажи путь.", status="ERROR")
+
+    rendered = "\n".join(calls)
+    assert "ui-state-card" in rendered
+    assert "vault-setup-card" in rendered
+    assert "ERROR" in rendered
 
 
 def test_render_flat_section_header_uses_no_card_wrapper() -> None:
