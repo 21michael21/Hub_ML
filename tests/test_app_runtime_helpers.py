@@ -1163,12 +1163,52 @@ def test_render_note_link_button_renders_clickable_button_for_existing_note(monk
     rendered = app.render_note_link_button("Knowledge Map", "00_Atlas/00_Knowledge_Map.md", "outgoing", note_index)
 
     assert rendered is True
-    assert buttons[0]["label"] == "Knowledge Map"
+    assert buttons[0]["label"] == "🔗 Knowledge Map"
     assert buttons[0]["help"] == "00_Atlas/00_Knowledge_Map.md"
     assert buttons[0]["on_click"] is app.open_theory_note
     assert buttons[0]["args"] == ("00_Atlas/00_Knowledge_Map.md", note_index, False)
     assert buttons[0]["disabled"] is False
     assert captions == ["00_Atlas/00_Knowledge_Map.md"]
+
+
+def test_render_note_link_button_callback_opens_resolved_outgoing_path(monkeypatch) -> None:
+    note, note_index = sample_note_index()
+    buttons: list[dict[str, object]] = []
+    opened: list[tuple[str, dict[str, object], bool]] = []
+
+    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
+    monkeypatch.setattr(app.st, "caption", lambda _value: None)
+    monkeypatch.setattr(
+        app,
+        "open_theory_note",
+        lambda path, index, rerun=True: opened.append((str(path), index, bool(rerun))),
+    )
+
+    app.render_link_card({"label": "Human label", "resolved_note": note, "status": "resolved"}, 0, "outgoing", note_index)
+    buttons[0]["on_click"](*buttons[0]["args"])
+
+    assert buttons[0]["label"] == "🔗 Human label"
+    assert opened == [("00_Atlas/00_Knowledge_Map.md", note_index, False)]
+
+
+def test_render_link_card_backlink_callback_opens_source_note(monkeypatch) -> None:
+    note, note_index = sample_note_index()
+    buttons: list[dict[str, object]] = []
+    opened: list[tuple[str, dict[str, object], bool]] = []
+
+    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
+    monkeypatch.setattr(app.st, "caption", lambda _value: None)
+    monkeypatch.setattr(
+        app,
+        "open_theory_note",
+        lambda path, index, rerun=True: opened.append((str(path), index, bool(rerun))),
+    )
+
+    app.render_link_card({"label": "Backlink title", "resolved_note": note, "status": "resolved"}, 1, "backlink", note_index)
+    buttons[0]["on_click"](*buttons[0]["args"])
+
+    assert buttons[0]["label"] == "🔗 Backlink title"
+    assert opened == [("00_Atlas/00_Knowledge_Map.md", note_index, False)]
 
 
 def test_open_theory_note_path_callback_does_not_request_rerun(monkeypatch) -> None:
@@ -1202,6 +1242,7 @@ def test_render_note_target_button_missing_target_is_disabled(monkeypatch) -> No
     assert len(buttons) == 1
     assert buttons[0]["label"] == "Missing long display label that should not be the path"
     assert buttons[0]["disabled"] is True
+    assert buttons[0]["on_click"] is None
     assert "Target не найден" in str(buttons[0]["help"])
     assert captions == ["missing_note.md · target не найден"]
 

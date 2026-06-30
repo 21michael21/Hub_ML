@@ -4914,6 +4914,11 @@ def readable_note_button_label(label: str, fallback_path: str) -> str:
     return display or "Заметка"
 
 
+def note_navigation_button_label(label: str) -> str:
+    display = str(label or "Заметка").strip()
+    return display if display.startswith("🔗 ") else f"🔗 {display}"
+
+
 def render_note_target_button(
     label: str,
     path: str,
@@ -4930,7 +4935,7 @@ def render_note_target_button(
         note_path = str(note.get("relative_path") or normalized_path)
         button_label = note_link_label(display, note, ambiguous=ambiguous)
         render_action_button(
-            button_label,
+            note_navigation_button_label(button_label),
             key=safe_widget_key(key_prefix, note_path, display),
             help_text=note_path,
             on_click=open_theory_note,

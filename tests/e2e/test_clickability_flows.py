@@ -229,6 +229,7 @@ def test_theory_outgoing_link_click_opens_target(page: Page, streamlit_app_url: 
 
     clicked = click_visible_graph_link(page)
     assert clicked is not None, "Expected at least one resolved outgoing Theory link button"
+    assert clicked.startswith("🔗")
 
     after = visible_text(page)
     assert after != before
@@ -241,11 +242,13 @@ def test_theory_backlink_click_opens_source_note(page: Page, streamlit_app_url: 
 
     outgoing_clicked = click_visible_graph_link(page)
     assert outgoing_clicked is not None, "Need an outgoing link target with backlinks"
+    assert outgoing_clicked.startswith("🔗")
     expect(page.locator("body")).to_contain_text("Открыть случайную непройденную заметку", timeout=10_000)
     before = visible_text(page)
 
     backlink_clicked = click_visible_graph_link(page, require_path_label=True)
     assert backlink_clicked is not None, "Expected a backlink button on the target note"
+    assert backlink_clicked.startswith("🔗")
     after = visible_text(page)
 
     assert after != before
