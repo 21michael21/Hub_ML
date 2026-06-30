@@ -238,6 +238,7 @@ def inject_styles() -> None:
         --accent:#8B9BFF; --accent-2:#6B7BF0; --accent-soft:rgba(139,155,255,.16);
         --pass:#4FD06A; --warn:#E5B23A; --fail:#FF5E54; --info:#5FAEFF;
         --r:13px; --r-sm:8px; --s1:8px; --s2:14px; --s3:22px; --s4:32px;
+        --section-gap:32px; --card-padding:18px; --card-padding-compact:16px;
         --f-display:"Space Grotesk"; --f-ui:"IBM Plex Sans"; --f-mono:"IBM Plex Mono";
         --ease:cubic-bezier(.2,.7,.3,1);
         --duration-fast:120ms; --duration-med:180ms; --duration-slow:420ms;
@@ -392,7 +393,10 @@ def inject_styles() -> None:
     [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:disabled,
     .ui-action-button:disabled {
         cursor: not-allowed;
-        opacity: 0.52;
+        opacity: 0.68;
+        color: var(--faint);
+        border-color: var(--border-soft);
+        background: rgba(18,21,29,0.72);
         transform: none;
         box-shadow: none;
     }
@@ -409,7 +413,7 @@ def inject_styles() -> None:
         box-sizing: border-box;
         width: min(100%, calc(var(--hub-page-shell-max) + var(--hub-page-shell-padding-x) + var(--hub-page-shell-padding-x)));
         max-width: calc(var(--hub-page-shell-max) + var(--hub-page-shell-padding-x) + var(--hub-page-shell-padding-x));
-        padding: var(--s4) var(--hub-page-shell-padding-x) 5rem var(--hub-page-shell-padding-x);
+        padding: clamp(24px, 3vw, 40px) var(--hub-page-shell-padding-x) clamp(56px, 7vw, 80px) var(--hub-page-shell-padding-x);
         margin-inline: auto;
         transition:
             width var(--duration-slow) var(--ease),
@@ -462,11 +466,16 @@ def inject_styles() -> None:
     }
 
     .section-gap {
-        margin-top: var(--s4);
+        margin-top: var(--section-gap);
     }
 
     .section-fade {
         animation: sectionFade 320ms var(--ease) both;
+    }
+
+    .page-shell > .section-fade + .section-fade,
+    .page-shell > section + section {
+        margin-top: var(--section-gap);
     }
 
     [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2,
@@ -1124,7 +1133,7 @@ def inject_styles() -> None:
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
-        padding: 18px;
+        padding: var(--card-padding);
         box-shadow: none;
         animation: fadeUp var(--duration-slow) var(--ease) both;
         transition:
@@ -1224,7 +1233,7 @@ def inject_styles() -> None:
     .lab-detail-flow {
         display: flex;
         flex-direction: column;
-        gap: 32px;
+        gap: var(--section-gap);
         min-width: 0;
     }
 
@@ -1380,8 +1389,8 @@ def inject_styles() -> None:
     }
 
     .lab-prerequisite-row {
-        margin: 12px 0 10px;
-        padding: 15px 16px;
+        margin: 10px 0;
+        padding: 16px 18px;
     }
 
     .lab-prerequisite-group {
@@ -1408,7 +1417,7 @@ def inject_styles() -> None:
     .lab-prerequisite-title-row,
     .lab-step-title-row {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: 12px;
     }
@@ -1622,6 +1631,18 @@ def inject_styles() -> None:
         width: 2px;
         border-radius: 999px;
         background: var(--border-strong);
+    }
+
+    .ui-state-card .console-card-eyebrow::before {
+        content: "";
+        display: inline-flex;
+        width: 38px;
+        height: 38px;
+        margin-right: 10px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--r-sm);
+        background: var(--surface-2);
+        vertical-align: middle;
     }
 
     .empty-state-card::before {

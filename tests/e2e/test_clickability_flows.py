@@ -392,10 +392,13 @@ def test_home_and_ml_lab_responsive_navigation(
     page.set_viewport_size({"width": width, "height": height})
     page.goto(streamlit_app_url, wait_until="domcontentloaded", timeout=20_000)
     expect(page.locator("body")).to_contain_text("Hub_ML", timeout=30_000)
+    assert body_has_any(page, ("Продолжить", "План на сегодня", "Quality Gate"))
     assert_clean_page(page)
     assert_no_horizontal_overflow(page)
 
     click_nav(page, "ML Lab")
     expect(page.locator("body")).to_contain_text("ML Lab", timeout=10_000)
+    expect(page.locator("body")).to_contain_text("Шаги проекта", timeout=10_000)
+    assert body_has_any(page, ("Перед стартом", "Experiment Tracker Lite", "Каталог проектов"))
     assert_clean_page(page)
     assert_no_horizontal_overflow(page)

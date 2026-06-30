@@ -321,6 +321,27 @@ def test_injected_css_has_visual_polish_accessibility_contract(monkeypatch) -> N
     assert "transition: width var(--duration-slow)" in css
 
 
+def test_injected_css_has_spacing_motion_responsive_polish(monkeypatch) -> None:
+    calls: list[str] = []
+
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: calls.append(str(body)))
+
+    app.inject_styles()
+
+    css = "\n".join(calls)
+    assert "--section-gap:32px" in css
+    assert "--card-padding:18px" in css
+    assert "padding: clamp(24px, 3vw, 40px)" in css
+    assert ".page-shell > .section-fade + .section-fade" in css
+    assert ".ui-state-card .console-card-eyebrow::before" in css
+    assert "width: 38px" in css
+    assert "opacity: 0.68" in css
+    assert ".lab-prerequisite-row" in css
+    assert "padding: 16px 18px" in css
+    assert ".lab-catalog-column" in css
+    assert "position: static" in css
+
+
 def test_normalize_layout_mode_accepts_known_modes() -> None:
     assert app.normalize_layout_mode("reading") == "reading"
     assert app.normalize_layout_mode("dashboard") == "dashboard"
