@@ -305,6 +305,24 @@ def test_render_page_shell_helpers_emit_safe_classes() -> None:
     assert "Theory Page" not in start
 
 
+def test_theory_layout_css_uses_article_and_side_panel(monkeypatch) -> None:
+    rendered: list[str] = []
+
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: rendered.append(str(body)))
+
+    app.inject_styles()
+
+    css = "\n".join(rendered)
+    assert ".theory-note-layout" in css
+    assert ".theory-main-column" in css
+    assert "max-width: min(100%, 1240px)" in css
+    assert "max-width: 820px" in css
+    assert "min-width: 300px" in css
+    assert "max-width: 1120px" not in css
+    assert "@media (max-width: 900px)" in css
+    assert "position: static" in css
+
+
 def test_status_chip_is_static_not_clickable() -> None:
     rendered = app.render_status_chip("PASS")
 
@@ -849,6 +867,26 @@ def test_render_link_card_resolves_outgoing_and_backlink_targets(monkeypatch) ->
         ("Knowledge Map", "00_Atlas/00_Knowledge_Map.md"),
         ("Backlink", "00_Atlas/00_Knowledge_Map.md"),
     ]
+
+
+def test_render_link_card_missing_target_disables_button_with_reason(monkeypatch) -> None:
+    _, note_index = sample_note_index()
+    buttons: list[dict[str, object]] = []
+    captions: list[str] = []
+
+    def fake_button(label: str, **kwargs: object) -> None:
+        buttons.append({"label": label, **kwargs})
+
+    monkeypatch.setattr(app.st, "button", fake_button)
+    monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
+
+    app.render_link_card({"label": "Missing note", "target": "No Folder/Missing"}, 0, "outgoing_missing", note_index)
+
+    assert len(buttons) == 1
+    assert buttons[0]["label"] == "Missing note"
+    assert buttons[0]["disabled"] is True
+    assert "Target не найден" in str(buttons[0]["help"])
+    assert captions == ["No Folder/Missing.md · target не найден"]
 
 
 def test_theory_internal_target_opens_by_path_not_display_label(monkeypatch) -> None:

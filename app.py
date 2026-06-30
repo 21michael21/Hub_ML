@@ -788,7 +788,7 @@ def inject_styles() -> None:
     }
 
     .theory-page {
-        max-width: 1120px;
+        max-width: min(100%, 1240px);
         margin: 0 auto;
     }
 
@@ -797,8 +797,17 @@ def inject_styles() -> None:
         max-width: 100%;
     }
 
+    .theory-note-layout {
+        width: 100%;
+    }
+
+    .theory-main-column {
+        min-width: 0;
+        max-width: 860px;
+    }
+
     .theory-note-body {
-        max-width: 760px;
+        max-width: 820px;
         margin: 0;
         color: var(--text);
     }
@@ -817,7 +826,7 @@ def inject_styles() -> None:
     }
 
     .st-key-theory_note_body [data-testid="stMarkdownContainer"] {
-        max-width: 760px;
+        max-width: 820px;
         margin: 0;
     }
 
@@ -827,6 +836,14 @@ def inject_styles() -> None:
         display: flex;
         flex-direction: column;
         gap: 14px;
+        min-width: 300px;
+        max-width: 360px;
+    }
+
+    .theory-side-panel .related-notes,
+    .theory-main-column .related-notes {
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .theory-side-panel [data-testid="stButton"] > button {
@@ -878,6 +895,8 @@ def inject_styles() -> None:
         .theory-side-panel {
             position: static;
             margin-top: var(--s3);
+            min-width: 0;
+            max-width: 100%;
         }
 
         .theory-note-body {
@@ -2221,7 +2240,7 @@ def render_page_shell_end() -> str:
 def page_layout_mode_css(mode: str) -> str:
     layout_mode = normalize_layout_mode(mode)
     widths = {
-        "reading": "1180px",
+        "reading": "1240px",
         "dashboard": "1280px",
         "workbench": "1440px",
     }
@@ -4957,11 +4976,14 @@ def render_note(
             args=(note_index,),
         )
 
-    main_col, side_col = st.columns([0.68, 0.32], gap="large")
+    st.markdown('<div class="theory-note-layout">', unsafe_allow_html=True)
+    main_col, side_col = st.columns([0.72, 0.28], gap="large")
     with main_col:
+        st.markdown('<main class="theory-main-column">', unsafe_allow_html=True)
         with st.container(key="theory_note_body"):
-            st.markdown(render_markdown_with_wikilinks(body), unsafe_allow_html=True)
+            render_html(render_theory_note_body(body))
         render_related_semantic_results(note, body, sections, practice_cards, mentor_tasks)
+        st.markdown("</main>", unsafe_allow_html=True)
     with side_col:
         st.markdown('<aside class="theory-side-panel">', unsafe_allow_html=True)
         render_learning_controls(note)
@@ -4973,6 +4995,7 @@ def render_note(
         render_related_practice_block(note, practice_cards, note_index)
         render_related_tasks_block(note, mentor_tasks)
         st.markdown("</aside>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 
