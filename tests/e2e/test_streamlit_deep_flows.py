@@ -87,7 +87,7 @@ def click_nav(page: Page, label: str) -> None:
         "Tasks": ("Tasks", "Автозадач"),
         "Datasets": ("CSV-файлы из папки", "Datasets"),
         "Notebook": ("Notebook", "Jupyter"),
-        "Data Lab": ("Data Lab Projects", "Каталог проектов", "Milestones"),
+        "Data Lab": ("Data Lab Projects", "Каталог проектов", "Шаги проекта"),
         "ML Lab": ("ML Lab", "Classic ML", "Experiment Tracker Lite"),
         "Portfolio": ("Portfolio Export", "Markdown exporter"),
         "Experiments": ("Experiments", "Experiment runs"),
@@ -182,13 +182,13 @@ def test_data_lab_project_workflow_clickability(page: Page, streamlit_app_url: s
     open_app(page, streamlit_app_url)
     click_nav(page, "Data Lab")
 
-    opened = click_first_available_button(page, ("Выбрать проект", "Открыть следующий milestone", "Открыть проект"))
-    assert opened is not None or body_has_any(page, ("Следующий шаг", "Milestones", "Каталог проектов"))
+    opened = click_first_available_button(page, ("Выбрать проект", "Открыть следующий шаг", "Открыть проект"))
+    assert opened is not None or body_has_any(page, ("Следующий шаг", "Шаги проекта", "Каталог проектов"))
     assert_clean_page(page)
 
     clicked_milestone = click_first_available_button(
         page,
-        ("Открыть следующий milestone", "Отметить готово", "Сбросить milestone", "▶ Run milestone"),
+        ("Открыть следующий шаг", "Отметить готово", "Сбросить milestone", "▶ Run milestone"),
     )
     if clicked_milestone is None:
         click_button_containing(page, "Define")
@@ -200,7 +200,7 @@ def test_classic_ml_experiment_tracker_manual_save(page: Page, streamlit_app_url
     open_app(page, streamlit_app_url)
     click_nav(page, "ML Lab")
 
-    click_first_available_button(page, ("Выбрать проект", "Открыть следующий milestone", "Открыть проект"))
+    click_first_available_button(page, ("Выбрать проект", "Открыть следующий шаг", "Открыть проект"))
     expect(page.locator("body")).to_contain_text("Experiment Tracker Lite", timeout=10_000)
 
     if click_button_containing(page, "Save current experiment summary"):

@@ -298,7 +298,7 @@ def test_home_next_project_milestone_opens_project_detail(page: Page, streamlit_
         return
 
     text = visible_text(page)
-    assert any(marker in text for marker in ("Следующий шаг", "Milestones", "milestone", "Experiment Tracker Lite"))
+    assert any(marker in text for marker in ("Следующий шаг", "Шаги проекта", "milestone", "Experiment Tracker Lite"))
     assert_clean_page(page)
 
 
@@ -309,9 +309,9 @@ def test_data_lab_project_next_milestone_flow(page: Page, streamlit_app_url: str
 
     click_first_available_button(page, ("Выбрать проект", "Выбран"))
     expect(page.locator("body")).to_contain_text("Перед стартом", timeout=10_000)
-    expect(page.locator("body")).to_contain_text("Milestones", timeout=10_000)
+    expect(page.locator("body")).to_contain_text("Шаги проекта", timeout=10_000)
 
-    opened = click_first_available_button(page, ("Открыть следующий milestone", "Отметить готово", "Сбросить milestone"))
+    opened = click_first_available_button(page, ("Открыть следующий шаг", "Отметить готово", "Сбросить milestone"))
     assert opened is not None or body_has_any(page, ("Проект готов", "Шаг 1:", "Run milestone"))
 
     checklist_clicked = click_first_visible_checkbox_containing(page, ("Loaded data", "Summary written"))
@@ -327,10 +327,10 @@ def test_ml_lab_project_detail_and_milestone_flow(page: Page, streamlit_app_url:
 
     expect(page.locator("body")).to_contain_text("ML Lab", timeout=10_000)
     expect(page.locator("body")).to_contain_text("Перед стартом", timeout=10_000)
-    expect(page.locator("body")).to_contain_text("Milestones", timeout=10_000)
+    expect(page.locator("body")).to_contain_text("Шаги проекта", timeout=10_000)
     assert body_has_any(page, ("Следующий шаг", "Проект готов", "Experiment Tracker Lite"))
 
-    opened = click_first_available_button(page, ("Открыть следующий milestone", "Отметить готово", "▶ Run milestone"))
+    opened = click_first_available_button(page, ("Открыть следующий шаг", "Отметить готово", "▶ Run milestone"))
     assert opened is not None or body_has_any(page, ("Шаг 1:", "Solution code", "Writing prompt"))
     assert_clean_page(page)
 

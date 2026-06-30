@@ -14,6 +14,9 @@ class FakeColumn:
     def __exit__(self, *_: object) -> bool:
         return False
 
+    def button(self, *_args: object, **_kwargs: object) -> bool:
+        return False
+
 
 def runtime_sample_project() -> dict[str, object]:
     return {
@@ -126,7 +129,8 @@ def test_render_lab_project_catalog_card_marks_selected() -> None:
 
     assert "lab-project-card-selected" in rendered
     assert "Orders EDA" in rendered
-    assert "1<span" in rendered
+    assert "lab-project-progress" in rendered
+    assert "1/3" in rendered
     assert "pandas · eda" in rendered
     assert "<button" not in rendered
 
@@ -148,7 +152,7 @@ def test_build_lab_prerequisite_groups_renders_missing_targets_disabled() -> Non
         "Практика",
         "Задачи",
         "Датасеты",
-        "Не хватает перед стартом",
+        "Что нужно закрыть",
     ]
     assert any(item["label"] == "02_Data_Analysis/Pandas.md" and item["disabled"] for item in flat_items)
     assert any("Заметка не найдена" in item["reason"] for item in flat_items)
@@ -186,6 +190,61 @@ def test_render_lab_prerequisite_item_uses_button_state(monkeypatch) -> None:
     assert buttons[0]["disabled"] is True
     assert buttons[0]["on_click"] is None
     assert captions == ["Датасет не найден"]
+
+
+def test_render_lab_milestone_summary_uses_ordered_russian_step_labels(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    project = runtime_sample_project()
+    milestone = project["milestones"][0]
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+
+    app.render_lab_milestone_summary(project, milestone, index=2, done=False, current=True)
+
+    rendered = "\n".join(html_blocks)
+    assert "lab-milestone-current" in rendered
+    assert "Шаг 2" in rendered
+    assert "обязательный" in rendered
+    assert "текущий шаг" in rendered
+    assert "Ожидаемый результат" in rendered
+
+
+def test_render_data_lab_project_detail_uses_learning_flow_sections(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    section_labels: list[str] = []
+    markdown_blocks: list[str] = []
+    project = runtime_sample_project()
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app, "render_section_eyebrow_block", lambda label: section_labels.append(str(label)))
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: markdown_blocks.append(str(body)))
+    monkeypatch.setattr(app.st, "button", lambda *_args, **_kwargs: False)
+    monkeypatch.setattr(app.st, "columns", lambda count, **_kwargs: [FakeColumn() for _ in range(count if isinstance(count, int) else len(count))])
+    monkeypatch.setattr(app.st, "expander", lambda *_args, **_kwargs: FakeColumn())
+    monkeypatch.setattr(app.st, "checkbox", lambda *_args, **kwargs: bool(kwargs.get("value", False)))
+    monkeypatch.setattr(app.st, "text_area", lambda *_args, **_kwargs: "")
+    monkeypatch.setattr(app.st, "caption", lambda value: markdown_blocks.append(str(value)))
+    monkeypatch.setattr(app.st, "code", lambda value, **_kwargs: markdown_blocks.append(str(value)))
+    monkeypatch.setattr(app, "get_data_lab_project_record", lambda _project_id: {})
+    monkeypatch.setattr(app, "get_data_lab_milestone_record", lambda _project_id, _milestone_id: {})
+    monkeypatch.setattr(app, "is_data_lab_milestone_done", lambda _project_id, _milestone_id: False)
+    monkeypatch.setattr(app, "render_project_code_runner", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(app, "render_project_writing_milestone", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(app, "render_project_workspace_scaffolder", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(app, "render_experiment_tracker", lambda *_args, **_kwargs: section_labels.append("Эксперименты"))
+    monkeypatch.setattr(app, "render_data_lab_project_completion", lambda *_args, **_kwargs: None)
+
+    app.render_data_lab_project_detail(project, [], [], [], {})
+
+    rendered = "\n".join(html_blocks + markdown_blocks + section_labels)
+    assert "lab-detail-flow" in rendered
+    assert "Обзор проекта" in section_labels
+    assert "Перед стартом" in section_labels
+    assert "База перед проектом" in section_labels
+    assert "Шаги проекта" in section_labels
+    assert "Portfolio output" in section_labels
+    assert "Milestones" not in section_labels
+    assert "Prerequisites" not in section_labels
 
 
 def test_render_data_lab_projects_tab_renders_catalog_and_selected_detail(monkeypatch) -> None:
