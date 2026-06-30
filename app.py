@@ -1542,6 +1542,41 @@ def inject_styles() -> None:
         animation: fadeUp .32s var(--ease) both;
     }
 
+    .home-cockpit-grid {
+        width: 100%;
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .home-main-column,
+    .home-right-rail {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s4);
+        min-width: 0;
+    }
+
+    .home-right-rail {
+        position: sticky;
+        top: 14px;
+        align-self: start;
+    }
+
+    .home-right-rail .section-eyebrow {
+        margin-bottom: 0;
+    }
+
+    .home-right-rail .home-metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 0;
+    }
+
+    .home-right-rail .attention-list,
+    .home-right-rail .clickable-row-list,
+    .home-main-column .clickable-row-list,
+    .home-main-column .home-metric-grid {
+        margin-bottom: 0;
+    }
+
     .home-metric-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1964,8 +1999,17 @@ def inject_styles() -> None:
     }
 
     @media (max-width: 900px) {
+        .home-right-rail {
+            position: static;
+            margin-top: var(--s4);
+        }
+
         .home-resume-grid,
         .home-metric-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .home-right-rail .home-metric-grid {
             grid-template-columns: 1fr;
         }
 
@@ -5494,29 +5538,28 @@ def render_dashboard(
     gate_summary = content_gate_home_summary()
     gate_percent = max(0, min(100, int(gate_summary["percent"])))
 
-    st.markdown(
-        f"""
+    hero_markup = """
 <div class="home-hero">
     <div>
         <div class="home-hero-kicker">Hub_ML · local workstation</div>
         <div class="home-cockpit-title">Hub_ML</div>
         <div class="home-cockpit-subtitle">Инженерная консоль для локальной ML-практики.</div>
     </div>
-    <div class="home-quality-gate">
-        <div class="home-quality-ring" style="--pct:{gate_percent}%"><span>{gate_percent}%</span></div>
-        <div>
-            <div class="home-quality-label">QUALITY GATE</div>
-            {render_status_chip(str(gate_summary["status"]))}
-            <div class="home-quality-count">{html.escape(str(gate_summary["passed"]))}<span>/{html.escape(str(gate_summary["total"]))}</span></div>
-            <div class="home-quality-caption">{html.escape(str(gate_summary["caption"]))}</div>
-        </div>
+</div>
+    """.strip()
+    gate_markup = f"""
+<div class="home-quality-gate">
+    <div class="home-quality-ring" style="--pct:{gate_percent}%"><span>{gate_percent}%</span></div>
+    <div>
+        <div class="home-quality-label">QUALITY GATE</div>
+        {render_status_chip(str(gate_summary["status"]))}
+        <div class="home-quality-count">{html.escape(str(gate_summary["passed"]))}<span>/{html.escape(str(gate_summary["total"]))}</span></div>
+        <div class="home-quality-caption">{html.escape(str(gate_summary["caption"]))}</div>
     </div>
 </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    """.strip()
 
-    resume_cards: list[tuple[InternalTarget | None, str, str, str, str]] = []
+    resume_cards: list[tuple[InternalTarget | None, str, str, str, str, str]] = []
     if next_task:
         resume_cards.append(
             (
@@ -5525,10 +5568,11 @@ def render_dashboard(
                 f"{next_task['notebook_label']} · confidence {next_task['confidence']} · решено: {mentor_stats['done']}/{mentor_stats['total']}",
                 "TODO",
                 "home_resume_task",
+                "Открыть задачу",
             )
         )
     else:
-        resume_cards.append((None, "Задачи ментора закрыты", "Нет открытой проверяемой задачи.", "PASS", "home_resume_task_done"))
+        resume_cards.append((None, "Задачи ментора закрыты", "Нет открытой проверяемой задачи.", "PASS", "home_resume_task_done", "Открыть задачу"))
 
     if project_step:
         project = project_step["project"]
@@ -5540,10 +5584,11 @@ def render_dashboard(
                 f"{project.get('title') or project.get('id') or 'Project'} · тип: {milestone.get('type', 'milestone')}",
                 "IN PROGRESS",
                 "home_resume_project",
+                "Открыть проект",
             )
         )
     else:
-        resume_cards.append((None, "Проекты закрыты", "Все обязательные milestones завершены.", "PASS", "home_resume_project_done"))
+        resume_cards.append((None, "Проекты закрыты", "Все обязательные milestones завершены.", "PASS", "home_resume_project_done", "Открыть проект"))
 
     if next_note and next_note_target.exists:
         resume_cards.append(
@@ -5553,19 +5598,17 @@ def render_dashboard(
                 f"заметок в vault: {len(notes)} · {next_note_target.path}",
                 "READING" if get_note_status(next_note) == STATUS_READING else "TODO",
                 "home_resume_note",
+                "Открыть теорию",
             )
         )
     else:
-        resume_cards.append((None, "Теория закрыта", f"просмотрено заметок: {total_notes}", "PASS", "home_resume_note_done"))
+        resume_cards.append((None, "Теория закрыта", f"просмотрено заметок: {total_notes}", "PASS", "home_resume_note_done", "Открыть теорию"))
 
-    render_section_eyebrow_block("Продолжить")
     resume_rows: list[str] = []
-    for target, title, subtitle, status, _key_prefix in resume_cards:
+    for target, title, subtitle, status, _key_prefix, action_label in resume_cards:
         row_target = target or InternalTarget(kind="", label=title, exists=False)
-        resume_rows.append(render_internal_action_row(row_target, title, subtitle, status, "Открыть"))
-    render_html(f'<div class="clickable-row-list home-action-list home-stagger-1">{"".join(resume_rows)}</div>')
+        resume_rows.append(render_internal_action_row(row_target, title, subtitle, status, action_label))
 
-    render_section_eyebrow_block("План на сегодня")
     today_count = 0
     today_rows: list[str] = []
     if next_note and next_note_target.exists and today_count < 4:
@@ -5637,17 +5680,51 @@ def render_dashboard(
         )
         today_count += 1
     if today_count == 0:
-        render_html(
-            render_empty_state(
-                "Нет готового следующего шага",
-                "Открой Projects или Theory и выбери направление вручную.",
-                action="Выбери раздел в сайдбаре.",
-            )
+        today_markup = render_empty_state(
+            "Нет готового следующего шага",
+            "Открой Projects или Theory и выбери направление вручную.",
+            action="Выбери раздел в сайдбаре.",
         )
     else:
-        render_html(f'<div class="clickable-row-list home-action-list home-stagger-2">{"".join(today_rows)}</div>')
+        today_markup = f'<div class="clickable-row-list home-action-list home-stagger-2">{"".join(today_rows)}</div>'
 
-    render_section_eyebrow_block("Статус")
+    quick_rows: list[str] = []
+    if next_card and next_card_target.exists:
+        quick_rows.append(
+            render_internal_action_row(
+                next_card_target,
+                str(next_card["title"]),
+                f"{next_card['section']} · {next_card['difficulty']} · {next_card['est_time']}",
+                "IN PROGRESS" if get_card_status(next_card) == PRACTICE_DOING else "TODO",
+                "Открыть практику",
+            )
+        )
+    if next_algorithm:
+        quick_rows.append(
+            render_clickable_row(
+                str(next_algorithm["title"]),
+                "Algorithms Lab",
+                href=f"?tab={quote('🧩 Algorithms', safe='')}",
+                action="Открыть алгоритм",
+                status="TODO",
+            )
+        )
+    if interview_prompt:
+        quick_rows.append(
+            render_clickable_row(
+                f"Интервью: {interview_prompt['company']}",
+                interview_prompt["text"][:120],
+                href=f"?tab={quote('🎤 Interviews', safe='')}",
+                action="Открыть интервью",
+                status="TODO",
+            )
+        )
+    quick_markup = (
+        f'<div class="clickable-row-list home-action-list home-stagger-3">{"".join(quick_rows[:3])}</div>'
+        if quick_rows
+        else render_empty_state("Быстрых действий нет", "Следующие шаги уже собраны выше.", status="READY")
+    )
+
     task_ratio = mentor_stats["done"] / mentor_stats["total"] if mentor_stats["total"] else 0.0
     project_ratio = project_stats["projects_done"] / project_stats["projects_total"] if project_stats["projects_total"] else 0.0
     metric_tiles = [
@@ -5684,9 +5761,8 @@ def render_dashboard(
         )
     else:
         metric_tiles.append(render_metric_tile("Среднее качество теории", "—", meta="нет theory audit report", status="WEAK"))
-    st.markdown(f'<div class="home-metric-grid home-stagger-3">{"".join(metric_tiles)}</div>', unsafe_allow_html=True)
+    progress_markup = f'<div class="home-metric-grid home-stagger-3">{"".join(metric_tiles)}</div>'
 
-    render_section_eyebrow_block("Требует внимания")
     attention: list[str] = []
     if not audit_report:
         attention.append("Нет theory audit report. Запусти аудит вручную из Theory Quality.")
@@ -5706,68 +5782,109 @@ def render_dashboard(
     if not datasets:
         attention.append("В datasets/ не найдены CSV. Добавь данные перед Data Lab.")
 
-    if attention:
-        st.markdown(
-            '<div class="attention-list home-stagger-4">'
-            + "".join(render_attention_item(item) for item in attention)
-            + "</div>",
-            unsafe_allow_html=True,
-        )
-        attention_actions: list[tuple[InternalTarget, str, str, str, str]] = []
-        if audit_report:
-            weak = [note for note in weakest_notes(audit_report, limit=20) if int(note.get("quality_score") or 0) < 45]
-            if weak:
-                weak_path = str(weak[0].get("relative_path") or weak[0].get("path") or "")
-                weak_target = InternalTarget(
-                    kind="theory_note",
-                    label=str(weak[0].get("title") or weak_path),
-                    target_id=weak_path,
-                    path=weak_path,
-                    exists=find_note_by_path(weak_path, note_index) is not None,
-                    disabled_reason=f"Заметка не найдена: {weak_path}",
-                )
-                attention_actions.append((weak_target, "Открыть слабую заметку", weak_target.label, "NEEDS REVIEW", "home_attention_weak_note"))
-        if incomplete_milestones and next_project_target.exists:
-            attention_actions.append(
-                (
-                    next_project_target,
-                    "Открыть ближайший milestone",
-                    next_project_target.path,
-                    "IN PROGRESS",
-                    "home_attention_milestone",
-                )
+    attention_actions: list[tuple[InternalTarget, str, str, str, str]] = []
+    if audit_report:
+        weak = [note for note in weakest_notes(audit_report, limit=20) if int(note.get("quality_score") or 0) < 45]
+        if weak:
+            weak_path = str(weak[0].get("relative_path") or weak[0].get("path") or "")
+            weak_target = InternalTarget(
+                kind="theory_note",
+                label=str(weak[0].get("title") or weak_path),
+                target_id=weak_path,
+                path=weak_path,
+                exists=find_note_by_path(weak_path, note_index) is not None,
+                disabled_reason=f"Заметка не найдена: {weak_path}",
             )
-        if not experiment_records:
-            ml_project = next((project for project in data_lab_projects if str(project.get("track") or "").casefold() == "classic ml"), None)
-            if ml_project:
-                experiment_target = InternalTarget(
-                    kind="project",
-                    label=str(ml_project.get("title") or ml_project.get("id")),
-                    target_id=str(ml_project.get("id") or ""),
-                    exists=bool(ml_project.get("id")),
-                    disabled_reason="Classic ML project не найден.",
-                    source="ml_lab",
-                )
-                attention_actions.append(
-                    (experiment_target, "Открыть ML Lab для experiment record", experiment_target.label, "TODO", "home_attention_experiment")
-                )
-        attention_rows = [
-            render_internal_action_row(target, title, subtitle, status, "Открыть")
-            for target, title, subtitle, status, _key_prefix in attention_actions[:3]
-        ]
-        if attention_rows:
-            render_html(f'<div class="clickable-row-list home-action-list home-stagger-4">{"".join(attention_rows)}</div>')
-    else:
-        st.markdown(
-            render_card(
-                "Срочных проблем нет",
-                "По текущим reports и progress всё выглядит спокойно.",
-                eyebrow="Needs attention",
-                status="READY",
-                extra_class="home-stagger-4",
-            ),
-            unsafe_allow_html=True,
+            attention_actions.append((weak_target, "Открыть слабую заметку", weak_target.label, "NEEDS REVIEW", "home_attention_weak_note"))
+    if incomplete_milestones and next_project_target.exists:
+        attention_actions.append(
+            (
+                next_project_target,
+                "Открыть ближайший milestone",
+                next_project_target.path,
+                "IN PROGRESS",
+                "home_attention_milestone",
+            )
         )
+    if not experiment_records:
+        ml_project = next((project for project in data_lab_projects if str(project.get("track") or "").casefold() == "classic ml"), None)
+        if ml_project:
+            experiment_target = InternalTarget(
+                kind="project",
+                label=str(ml_project.get("title") or ml_project.get("id")),
+                target_id=str(ml_project.get("id") or ""),
+                exists=bool(ml_project.get("id")),
+                disabled_reason="Classic ML project не найден.",
+                source="ml_lab",
+            )
+            attention_actions.append(
+                (experiment_target, "Открыть ML Lab для experiment record", experiment_target.label, "TODO", "home_attention_experiment")
+            )
+    attention_markup = (
+        '<div class="attention-list home-stagger-4">'
+        + "".join(render_attention_item(item) for item in attention)
+        + "</div>"
+        if attention
+        else render_card(
+            "Срочных проблем нет",
+            "По текущим reports и progress всё выглядит спокойно.",
+            eyebrow="Требует внимания",
+            status="READY",
+            extra_class="home-stagger-4",
+        )
+    )
+    attention_rows = [
+        render_internal_action_row(target, title, subtitle, status, "Открыть")
+        for target, title, subtitle, status, _key_prefix in attention_actions[:3]
+    ]
+    attention_actions_markup = (
+        f'<div class="clickable-row-list home-action-list home-stagger-4">{"".join(attention_rows)}</div>'
+        if attention_rows
+        else ""
+    )
+
+    if experiment_records:
+        latest_experiment = experiment_records[0]
+        latest_experiment_markup = render_card(
+            "Последний эксперимент",
+            str(latest_experiment.get("model_name") or latest_experiment.get("project_title") or "Experiment run"),
+            eyebrow="Эксперимент",
+            status="READY",
+            meta=str(latest_experiment.get("timestamp") or "timestamp не указан")[:16],
+        )
+    else:
+        latest_experiment_markup = render_empty_state(
+            "Экспериментов пока нет",
+            "Сохрани первый run из ML Lab, чтобы видеть последнюю проверку здесь.",
+            status="IN PROGRESS",
+            action="Открыть ML Lab",
+        )
+
+    render_html('<div class="home-cockpit-grid">')
+    left_col, right_col = st.columns([0.66, 0.34], gap="large")
+    with left_col:
+        render_html('<div class="home-main-column">')
+        render_html(hero_markup)
+        render_section_eyebrow_block("Продолжить")
+        render_html(f'<div class="clickable-row-list home-action-list home-stagger-1">{"".join(resume_rows)}</div>')
+        render_section_eyebrow_block("План на сегодня")
+        render_html(today_markup)
+        render_section_eyebrow_block("Быстрые действия")
+        render_html(quick_markup)
+        render_html("</div>")
+    with right_col:
+        render_html('<aside class="home-right-rail">')
+        render_html(gate_markup)
+        render_section_eyebrow_block("Статус")
+        render_html(progress_markup)
+        render_section_eyebrow_block("Требует внимания")
+        render_html(attention_markup)
+        if attention_actions_markup:
+            render_html(attention_actions_markup)
+        render_section_eyebrow_block("Эксперименты")
+        render_html(latest_experiment_markup)
+        render_html("</aside>")
+    render_html("</div>")
 
 
 def render_roadmap(sections: dict[str, list[dict[str, str]]]) -> None:

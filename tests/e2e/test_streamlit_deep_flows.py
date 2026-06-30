@@ -138,6 +138,10 @@ def body_has_any(page: Page, patterns: tuple[str, ...]) -> bool:
 def test_home_actions_are_clickable(page: Page, streamlit_app_url: str) -> None:
     open_app(page, streamlit_app_url)
 
+    right_rail_gate = page.locator(".home-right-rail .home-quality-gate")
+    expect(right_rail_gate).to_have_count(1, timeout=10_000)
+    expect(right_rail_gate).to_contain_text("QUALITY GATE", timeout=10_000)
+
     if click_button_containing(page, "Открыть теорию"):
         expect(page.locator("body")).to_contain_text("Theory", timeout=10_000)
         assert body_has_any(page, ("Theory note", ".md", "Knowledge Map", "Welcome"))
@@ -244,6 +248,8 @@ def test_responsive_home_and_projects_have_no_horizontal_overflow(
 ) -> None:
     width, height = viewport
     open_app(page, streamlit_app_url, width=width, height=height)
+    expect(page.locator(".home-cockpit-grid")).to_have_count(1, timeout=10_000)
+    expect(page.locator(".home-right-rail .home-quality-gate")).to_have_count(1, timeout=10_000)
     assert_clean_page(page)
     overflow = page.evaluate(
         """() => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth"""

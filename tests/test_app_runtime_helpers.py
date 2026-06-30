@@ -572,7 +572,11 @@ def test_home_dashboard_primary_actions_use_clickable_rows(monkeypatch) -> None:
     monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
     monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: html_blocks.append(str(body)))
     monkeypatch.setattr(app.st, "button", lambda label, **_kwargs: buttons.append(str(label)) or False)
-    monkeypatch.setattr(app.st, "columns", lambda count: [FakeColumn() for _ in range(count)])
+    monkeypatch.setattr(
+        app.st,
+        "columns",
+        lambda spec, **_kwargs: [FakeColumn() for _ in range(len(spec) if isinstance(spec, list) else spec)],
+    )
     monkeypatch.setattr(app, "ensure_progress_state", lambda: {"notes": {}, "mentor_tasks_status": {}})
     monkeypatch.setattr(
         app,
@@ -594,10 +598,16 @@ def test_home_dashboard_primary_actions_use_clickable_rows(monkeypatch) -> None:
     )
 
     rendered = "\n".join(html_blocks)
+    assert "home-cockpit-grid" in rendered
+    assert "home-main-column" in rendered
+    assert "home-right-rail" in rendered
+    assert rendered.index("home-main-column") < rendered.index("home-right-rail")
     assert "home-quality-gate" in rendered
     assert "QUALITY GATE" in rendered
     assert "36<span" in rendered
     assert "clickable-row-list home-action-list" in rendered
+    assert "→ Открыть задачу" in rendered
+    assert "→ Открыть теорию" in rendered
     assert "Открыть задачу" not in buttons
     assert "Открыть теорию" not in buttons
 
