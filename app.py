@@ -5365,6 +5365,155 @@ def semantic_search_backend_label(index: SearchIndex) -> str:
     return "TF-IDF"
 
 
+def semantic_search_index_state(index: Any, meta: dict[str, Any]) -> dict[str, str]:
+    status = str(meta.get("status") or "").strip().casefold()
+    if status == "building":
+        return {
+            "status": "building",
+            "chip": "IN PROGRESS",
+            "message": "Индекс собирается локально.",
+        }
+    if status == "failed":
+        error = str(meta.get("error") or "Не удалось собрать индекс.").strip()
+        return {"status": "failed", "chip": "ERROR", "message": error}
+    if isinstance(index, SearchIndex):
+        items = int(meta.get("items", len(index.items)) or 0)
+        backend = semantic_search_backend_label(index)
+        return {
+            "status": "ready",
+            "chip": "READY",
+            "message": f"Индекс готов: {items} документов · {backend}",
+        }
+    return {
+        "status": "not_built",
+        "chip": "TODO",
+        "message": "Нажми «Обновить индекс поиска», чтобы построить локальный индекс.",
+    }
+
+
+def semantic_search_result_source_id(result: Any) -> str:
+    payload = getattr(result, "payload", {}) if isinstance(getattr(result, "payload", {}), dict) else {}
+    source = str(getattr(result, "source", "") or "")
+    if source == "theory_note":
+        return str(getattr(result, "path", "") or getattr(result, "id", ""))
+    if source == "practice":
+        return str(payload.get("card_id") or str(getattr(result, "id", "")).removeprefix("practice:"))
+    if source == "task":
+        return str(payload.get("task_id") or str(getattr(result, "id", "")).removeprefix("task:"))
+    return str(getattr(result, "id", ""))
+
+
+def semantic_search_result_target(
+    result: Any,
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+) -> InternalTarget:
+    source = str(getattr(result, "source", "") or "")
+    title = str(getattr(result, "title", "") or semantic_search_result_source_id(result) or "Search result")
+    payload = getattr(result, "payload", {}) if isinstance(getattr(result, "payload", {}), dict) else {}
+
+    if source == "theory_note":
+        result_path = str(getattr(result, "path", "") or "")
+        note = note_from_relative_path_in_sections(result_path, sections)
+        target_path = str(note.get("relative_path") or result_path) if note else result_path
+        return InternalTarget(
+            kind="theory_note",
+            label=title,
+            target_id=target_path,
+            path=target_path,
+            exists=note is not None,
+            disabled_reason="" if note else f"theory note not found: {result_path}",
+        )
+
+    if source == "practice":
+        card_id = str(payload.get("card_id") or str(getattr(result, "id", "")).removeprefix("practice:"))
+        exists = any(str(card.get("id") or "") == card_id for card in practice_cards)
+        return InternalTarget(
+            kind="practice",
+            label=title,
+            target_id=card_id,
+            exists=exists,
+            disabled_reason="" if exists else f"practice card not found: {card_id}",
+        )
+
+    if source == "task":
+        task_id = str(payload.get("task_id") or str(getattr(result, "id", "")).removeprefix("task:"))
+        exists = any(str(task.get("id") or "") == task_id for task in mentor_tasks)
+        return InternalTarget(
+            kind="task",
+            label=title,
+            target_id=task_id,
+            path=task_id,
+            exists=exists,
+            disabled_reason="" if exists else f"mentor task not found: {task_id}",
+        )
+
+    result_id = str(getattr(result, "id", "") or "")
+    return InternalTarget(
+        kind=source or "unknown",
+        label=title,
+        target_id=result_id,
+        exists=False,
+        disabled_reason=f"unsupported search result type: {source or 'unknown'}",
+    )
+
+
+def semantic_search_result_action_label(target: InternalTarget) -> str:
+    if target.kind == "theory_note":
+        return "Открыть заметку"
+    if target.kind == "practice":
+        return "Открыть practice"
+    if target.kind == "task":
+        return "Открыть задачу"
+    return "Открыть"
+
+
+def semantic_search_result_summary(result: Any, target: InternalTarget) -> str:
+    payload = getattr(result, "payload", {}) if isinstance(getattr(result, "payload", {}), dict) else {}
+    snippet = str(payload.get("snippet") or payload.get("description") or "").strip()
+    score = getattr(result, "score", None)
+    score_text = f"score {float(score):.2f}" if isinstance(score, (int, float)) else ""
+    parts = [
+        f"type: {semantic_search_source_label(str(getattr(result, 'source', '') or ''))}",
+        score_text,
+        f"source: {semantic_search_result_source_id(result)}",
+        f"snippet: {snippet}" if snippet else "",
+    ]
+    if not target.exists and target.disabled_reason:
+        parts.append(target.disabled_reason)
+    return " · ".join(part for part in parts if part)
+
+
+def render_semantic_search_result_action(
+    result: Any,
+    target: InternalTarget,
+    *,
+    key_prefix: str,
+    index: int,
+) -> bool:
+    return render_action_button(
+        semantic_search_result_action_label(target),
+        key=safe_widget_key(key_prefix, getattr(result, "source", ""), getattr(result, "id", ""), index),
+        on_click=open_internal_target_fields if target.exists else None,
+        args=(
+            target.kind,
+            target.label,
+            target.target_id,
+            target.path,
+            target.project_id,
+            target.milestone_id,
+            target.source,
+            target.exists,
+            target.disabled_reason,
+            False,
+        ),
+        disabled=not target.exists,
+        disabled_reason=target.disabled_reason,
+        help_text=target.path or target.target_id,
+    )
+
+
 def render_semantic_search_results(
     results: list[Any],
     sections: dict[str, list[dict[str, str]]],
@@ -5373,53 +5522,19 @@ def render_semantic_search_results(
     *,
     key_prefix: str,
 ) -> None:
-    task_by_id = {str(task.get("id")): task for task in mentor_tasks}
     for index, result in enumerate(results):
-        score = f"score {result.score:.2f}"
+        target = semantic_search_result_target(result, sections, practice_cards, mentor_tasks)
         status = semantic_search_result_status(result.source, result.path, result.payload, sections, practice_cards)
-        meta_parts = [score]
-        if result.source == "theory_note" and result.path:
-            meta_parts.append(result.path)
-        elif result.source == "practice":
-            meta_parts.append(result.payload.get("card_id", ""))
-        elif result.source == "task":
-            meta_parts.append(str(result.payload.get("notebook_label") or "Mentor task"))
         st.markdown(
             render_card(
                 result.title,
-                " · ".join(part for part in meta_parts if part),
+                semantic_search_result_summary(result, target),
                 eyebrow=semantic_search_source_label(result.source),
                 status=status,
             ),
             unsafe_allow_html=True,
         )
-        button_key = safe_widget_key(key_prefix, result.source, result.id, index)
-        if result.source == "theory_note":
-            st.button(
-                "Открыть заметку",
-                key=button_key,
-                on_click=open_theory_note_path,
-                args=(result.path, sections),
-            )
-        elif result.source == "practice":
-            card_id = str(result.payload.get("card_id") or "")
-            st.button(
-                "Открыть practice card",
-                key=button_key,
-                on_click=open_practice_card,
-                args=(card_id,),
-                disabled=not any(card.get("id") == card_id for card in practice_cards),
-            )
-        elif result.source == "task":
-            task_id = str(result.payload.get("task_id") or "")
-            task = task_by_id.get(task_id)
-            st.button(
-                "Открыть mentor task",
-                key=button_key,
-                on_click=open_mentor_task,
-                args=(task,),
-                disabled=task is None,
-            )
+        render_semantic_search_result_action(result, target, key_prefix=key_prefix, index=index)
 
 
 def render_theory_search_box(
@@ -5444,24 +5559,45 @@ def render_theory_search_box(
         placeholder="Например: pandas groupby, leakage, window function",
     )
     if st.button("Обновить индекс поиска", key="semantic_search_refresh"):
-        with st.spinner("Собираю локальный TF-IDF индекс..."):
-            index = build_semantic_search_index(sections, practice_cards, mentor_tasks)
-        st.session_state[SEMANTIC_SEARCH_INDEX_KEY] = index
-        st.session_state[SEMANTIC_SEARCH_META_KEY] = {
-            "items": len(index.items),
-            "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        }
-        st.success(f"Индекс обновлён: {len(index.items)} документов · {semantic_search_backend_label(index)}")
+        st.session_state[SEMANTIC_SEARCH_META_KEY] = {"status": "building"}
+        try:
+            with st.spinner("Собираю локальный TF-IDF индекс..."):
+                index = build_semantic_search_index(sections, practice_cards, mentor_tasks)
+            st.session_state[SEMANTIC_SEARCH_INDEX_KEY] = index
+            st.session_state[SEMANTIC_SEARCH_META_KEY] = {
+                "status": "ready",
+                "items": len(index.items),
+                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            }
+            st.success(f"Индекс обновлён: {len(index.items)} документов · {semantic_search_backend_label(index)}")
+        except Exception as exc:
+            st.session_state.pop(SEMANTIC_SEARCH_INDEX_KEY, None)
+            st.session_state[SEMANTIC_SEARCH_META_KEY] = {
+                "status": "failed",
+                "error": str(exc) or exc.__class__.__name__,
+            }
 
     index = st.session_state.get(SEMANTIC_SEARCH_INDEX_KEY)
     meta = st.session_state.get(SEMANTIC_SEARCH_META_KEY, {})
+    state = semantic_search_index_state(index, meta if isinstance(meta, dict) else {})
+    st.markdown(
+        render_card(
+            "Статус индекса",
+            state["message"],
+            eyebrow="Search index",
+            status=state["chip"],
+        ),
+        unsafe_allow_html=True,
+    )
     if not isinstance(index, SearchIndex):
+        if query.strip():
+            st.warning("Сначала нажми «Обновить индекс поиска», затем повтори запрос.")
         st.markdown(
             render_card(
                 "Индекс ещё не собран",
                 "Нажми «Обновить индекс поиска», чтобы построить локальный индекс. Автосканирования на загрузке нет.",
                 eyebrow="Empty state",
-                status="TODO",
+                status=state["chip"],
             ),
             unsafe_allow_html=True,
         )

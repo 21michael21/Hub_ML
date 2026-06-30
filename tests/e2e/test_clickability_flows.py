@@ -273,6 +273,28 @@ def test_theory_outline_section_note_button_opens_note(page: Page, streamlit_app
     assert_clean_page(page)
 
 
+def test_local_semantic_search_builds_and_opens_note_result_if_available(
+    page: Page,
+    streamlit_app_url: str,
+) -> None:
+    open_theory_from_home(page, streamlit_app_url)
+
+    clicked = click_visible_button_containing(page, "Обновить индекс поиска", wait_ms=1_500)
+    assert clicked is not None
+    expect(page.locator("body")).to_contain_text("Статус индекса", timeout=20_000)
+
+    assert fill_input_by_label(page, "Поиск по смыслу", "pandas")
+    page.keyboard.press("Enter")
+    page.wait_for_timeout(1_200)
+
+    note_clicked = click_visible_button_containing(page, "Открыть заметку")
+    if note_clicked is not None:
+        assert body_has_any(page, ("Theory", ".md", "Исходящие ссылки", "Разделы Theory"))
+    else:
+        assert body_has_any(page, ("Совпадений нет", "Открыть practice", "Открыть задачу"))
+    assert_clean_page(page)
+
+
 def test_random_uncompleted_note_button_is_safe(page: Page, streamlit_app_url: str) -> None:
     before = open_theory_from_home(page, streamlit_app_url)
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -1406,6 +1407,139 @@ def test_dataset_internal_target_selects_dataset(monkeypatch) -> None:
     assert app.st.session_state["active_tab"] == "📊 Datasets"
     assert app.st.session_state["selected_dataset"] == "df_orders.csv"
     assert reruns == [True]
+
+
+def test_semantic_search_index_state_handles_empty_ready_and_failed() -> None:
+    empty = app.semantic_search_index_state(None, {})
+    ready = app.semantic_search_index_state(app.SearchIndex(items=[]), {"items": 0})
+    failed = app.semantic_search_index_state(None, {"status": "failed", "error": "boom"})
+
+    assert empty["status"] == "not_built"
+    assert empty["chip"] == "TODO"
+    assert "Обновить индекс поиска" in empty["message"]
+    assert ready["status"] == "ready"
+    assert ready["chip"] == "READY"
+    assert failed["status"] == "failed"
+    assert failed["chip"] == "ERROR"
+    assert "boom" in failed["message"]
+
+
+def test_semantic_search_note_result_target_validates_path() -> None:
+    note = sample_theory_sections()["00_Atlas"][0]
+    sections = {"00_Atlas": [note]}
+    result = SimpleNamespace(
+        source="theory_note",
+        id="note:00_Atlas/00_Knowledge_Map.md",
+        title="Human title",
+        score=0.91,
+        path="00_Atlas/00_Knowledge_Map.md",
+        payload={},
+    )
+
+    target = app.semantic_search_result_target(result, sections, [], [])
+
+    assert target.kind == "theory_note"
+    assert target.label == "Human title"
+    assert target.path == "00_Atlas/00_Knowledge_Map.md"
+    assert target.target_id == "00_Atlas/00_Knowledge_Map.md"
+    assert target.exists is True
+
+
+def test_semantic_search_missing_note_result_is_disabled() -> None:
+    result = SimpleNamespace(
+        source="theory_note",
+        id="note:missing.md",
+        title="Missing note",
+        score=0.4,
+        path="missing.md",
+        payload={},
+    )
+
+    target = app.semantic_search_result_target(result, {}, [], [])
+
+    assert target.kind == "theory_note"
+    assert target.exists is False
+    assert "not found" in target.disabled_reason
+
+
+def test_semantic_search_practice_and_task_targets_validate_ids() -> None:
+    practice_result = SimpleNamespace(
+        source="practice",
+        id="practice:orders_practice",
+        title="Orders practice",
+        score=0.7,
+        path="",
+        payload={"card_id": "orders_practice"},
+    )
+    task_result = SimpleNamespace(
+        source="task",
+        id="task:python_basics_records",
+        title="Python task",
+        score=0.6,
+        path="python_basics_records",
+        payload={"task_id": "python_basics_records"},
+    )
+
+    practice = app.semantic_search_result_target(
+        practice_result,
+        {},
+        [{"id": "orders_practice", "title": "Orders practice"}],
+        [],
+    )
+    task = app.semantic_search_result_target(
+        task_result,
+        {},
+        [],
+        [{"id": "python_basics_records", "title": "Python task"}],
+    )
+    missing_task = app.semantic_search_result_target(task_result, {}, [], [])
+
+    assert practice.kind == "practice"
+    assert practice.exists is True
+    assert practice.target_id == "orders_practice"
+    assert task.kind == "task"
+    assert task.exists is True
+    assert task.target_id == "python_basics_records"
+    assert missing_task.exists is False
+    assert "not found" in missing_task.disabled_reason
+
+
+def test_render_semantic_search_result_action_opens_note_target(monkeypatch) -> None:
+    result = SimpleNamespace(
+        source="theory_note",
+        id="note:00_Atlas/00_Knowledge_Map.md",
+        title="Knowledge Map",
+        score=0.91,
+        path="00_Atlas/00_Knowledge_Map.md",
+        payload={},
+    )
+    target = app.InternalTarget(
+        kind="theory_note",
+        label="Knowledge Map",
+        target_id="00_Atlas/00_Knowledge_Map.md",
+        path="00_Atlas/00_Knowledge_Map.md",
+    )
+    buttons: list[dict[str, object]] = []
+
+    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
+
+    app.render_semantic_search_result_action(result, target, key_prefix="semantic_search", index=0)
+
+    assert buttons[0]["label"] == "Открыть заметку"
+    assert buttons[0]["disabled"] is False
+    assert buttons[0]["on_click"] is app.open_internal_target_fields
+    assert buttons[0]["args"] == (
+        "theory_note",
+        "Knowledge Map",
+        "00_Atlas/00_Knowledge_Map.md",
+        "00_Atlas/00_Knowledge_Map.md",
+        "",
+        "",
+        "",
+        True,
+        "",
+        False,
+    )
 
 
 def test_invalid_internal_target_does_not_rerun(monkeypatch) -> None:
