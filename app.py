@@ -848,6 +848,38 @@ def inject_styles() -> None:
         background: var(--surface-2);
     }
 
+    .theory-position-chip {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        margin-bottom: 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--raised);
+        color: var(--dim);
+        padding: 5px 10px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        line-height: 1.2;
+    }
+
+    .theory-prev-next-strip {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--s2);
+        margin: var(--s4) 0 0;
+    }
+
+    .theory-prev-next-strip .clickable-row {
+        min-height: 64px;
+    }
+
+    @media (max-width: 720px) {
+        .theory-prev-next-strip {
+            grid-template-columns: 1fr;
+        }
+    }
+
     .theory-main-column {
         min-width: 0;
         max-width: 860px;
@@ -4595,12 +4627,20 @@ def render_sidebar(sections: dict[str, list[dict[str, str]]]) -> tuple[str, dict
     return selected_note["section_key"], selected_note
 
 
-def render_note_header(section_key: str, note: dict[str, str], frontmatter: dict[str, Any]) -> None:
+def render_note_header(
+    section_key: str,
+    note: dict[str, str],
+    frontmatter: dict[str, Any],
+    *,
+    position_text: str = "",
+) -> None:
     section_label = humanize_section_name(section_key)
     title = str(frontmatter.get("title") or note["display_name"])
     status = render_status_chip(note_status_to_chip(get_note_status(note)))
+    position_markup = f'<div class="theory-position-chip">{html.escape(position_text)}</div>' if position_text else ""
     header = f"""
 <div class="note-header">
+    {position_markup}
     {render_section_eyebrow("Theory note")}
     <div class="breadcrumbs">{html.escape(section_label)} / {html.escape(note["display_name"])}</div>
     <div class="note-header-title">{html.escape(title)} {status}</div>
@@ -4624,6 +4664,109 @@ def note_link_label(label: str, note: dict[str, str], *, ambiguous: bool = False
 def theory_section_summary(notes: list[dict[str, str]]) -> str:
     progress = section_progress(notes)
     return f"{progress[STATUS_DONE]}/{progress['total']} done"
+
+
+def theory_note_matches(left: dict[str, str], right: dict[str, str]) -> bool:
+    left_path = str(left.get("path") or "")
+    right_path = str(right.get("path") or "")
+    left_relative = str(left.get("relative_path") or "")
+    right_relative = str(right.get("relative_path") or "")
+    return bool(
+        (left_path and left_path == right_path)
+        or (left_relative and left_relative == right_relative)
+    )
+
+
+def theory_note_position_text(
+    sections: dict[str, list[dict[str, str]]],
+    note: dict[str, str],
+) -> str:
+    section_key = str(note.get("section_key") or "")
+    notes = sections.get(section_key, [])
+    for index, candidate in enumerate(notes, start=1):
+        if theory_note_matches(candidate, note):
+            return f"{humanize_section_name(section_key)} · заметка {index} из {len(notes)}"
+    return ""
+
+
+def theory_ordered_section_notes(
+    sections: dict[str, list[dict[str, str]]],
+) -> list[tuple[str, dict[str, str]]]:
+    ordered: list[tuple[str, dict[str, str]]] = []
+    for section_key, notes in sections.items():
+        ordered.extend((section_key, note) for note in notes)
+    return ordered
+
+
+def theory_adjacent_note_targets(
+    sections: dict[str, list[dict[str, str]]],
+    note: dict[str, str],
+) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
+    ordered = theory_ordered_section_notes(sections)
+    current_index = next(
+        (index for index, (_section_key, candidate) in enumerate(ordered) if theory_note_matches(candidate, note)),
+        None,
+    )
+    if current_index is None:
+        return None, None
+
+    current_section = ordered[current_index][0]
+    previous_target: dict[str, Any] | None = None
+    next_target: dict[str, Any] | None = None
+    if current_index > 0:
+        previous_section, previous_note = ordered[current_index - 1]
+        previous_target = {
+            "note": previous_note,
+            "context": (
+                "Предыдущая заметка"
+                if previous_section == current_section
+                else f"Предыдущий раздел: {humanize_section_name(previous_section)}"
+            ),
+        }
+    if current_index < len(ordered) - 1:
+        next_section, next_note = ordered[current_index + 1]
+        next_target = {
+            "note": next_note,
+            "context": (
+                "Следующая заметка"
+                if next_section == current_section
+                else f"Следующий раздел: {humanize_section_name(next_section)}"
+            ),
+        }
+    return previous_target, next_target
+
+
+def render_theory_prev_next_strip(
+    sections: dict[str, list[dict[str, str]]],
+    note: dict[str, str],
+) -> str:
+    previous_target, next_target = theory_adjacent_note_targets(sections, note)
+    rows: list[str] = []
+    if previous_target:
+        previous_note = previous_target["note"]
+        rows.append(
+            render_clickable_row(
+                f"← {previous_note.get('display_name') or 'Заметка'}",
+                str(previous_target["context"]),
+                href=theory_note_query_href(str(previous_note.get("relative_path") or "")),
+                action="Открыть",
+                status=note_status_to_chip(get_note_status(previous_note)),
+            )
+        )
+    if next_target:
+        next_note = next_target["note"]
+        rows.append(
+            render_clickable_row(
+                f"{next_note.get('display_name') or 'Заметка'} →",
+                str(next_target["context"]),
+                href=theory_note_query_href(str(next_note.get("relative_path") or "")),
+                action="Открыть",
+                status=note_status_to_chip(get_note_status(next_note)),
+            )
+        )
+    if not rows:
+        return ""
+    return f'<nav class="theory-prev-next-strip">{"".join(rows)}</nav>'
 
 
 def render_theory_section_note_row(note: dict[str, str], *, current_note_path: str) -> str:
@@ -5284,7 +5427,7 @@ def render_note(
 
     frontmatter, body = split_frontmatter(text)
     st.markdown('<div class="theory-page">', unsafe_allow_html=True)
-    render_note_header(section_key, note, frontmatter)
+    render_note_header(section_key, note, frontmatter, position_text=theory_note_position_text(sections, note))
 
     if st.session_state.get("note_history"):
         st.button(
@@ -5302,6 +5445,7 @@ def render_note(
         st.markdown('<main class="theory-main-column">', unsafe_allow_html=True)
         with st.container(key="theory_note_body"):
             render_html(render_theory_note_body(body))
+        render_html(render_theory_prev_next_strip(sections, note))
         render_related_semantic_results(note, body, sections, practice_cards, mentor_tasks)
         st.markdown("</main>", unsafe_allow_html=True)
     with side_col:

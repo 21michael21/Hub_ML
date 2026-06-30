@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pytest
 
@@ -894,6 +895,28 @@ def sample_theory_sections() -> dict[str, list[dict[str, str]]]:
     return {"00_Atlas": [atlas_note], "01_Python": [python_note]}
 
 
+def sample_sequential_theory_sections() -> dict[str, list[dict[str, str]]]:
+    def note(section_key: str, display_name: str) -> dict[str, str]:
+        return {
+            "section_key": section_key,
+            "display_name": display_name,
+            "relative_path": f"{section_key}/{display_name}",
+            "path": f"/vault/{section_key}/{display_name}",
+            "stem": Path(display_name).stem,
+        }
+
+    return {
+        "00_Atlas": [
+            note("00_Atlas", "Start.md"),
+            note("00_Atlas", "Middle.md"),
+            note("00_Atlas", "End.md"),
+        ],
+        "01_Python": [
+            note("01_Python", "Python Basics.md"),
+        ],
+    }
+
+
 def test_normalize_theory_note_path_adds_suffix_and_strips_anchor() -> None:
     assert app.normalize_theory_note_path("00 Atlas\\Knowledge Map#section") == "00 Atlas/Knowledge Map.md"
     assert app.normalize_theory_note_path("00_Atlas/00_Knowledge_Map.md") == "00_Atlas/00_Knowledge_Map.md"
@@ -957,6 +980,84 @@ def test_render_theory_section_navigator_expands_current_section(monkeypatch) ->
     assert "theory-section-navigator" in rendered
     assert "clickable-row-current" in rendered
     assert "Python Basics.md" in rendered
+
+
+def test_theory_note_position_indicator_uses_position_within_section() -> None:
+    sections = sample_sequential_theory_sections()
+    note = sections["00_Atlas"][1]
+
+    assert app.theory_note_position_text(sections, note) == "00 Atlas · заметка 2 из 3"
+
+
+def test_render_note_header_includes_position_indicator(monkeypatch) -> None:
+    sections = sample_sequential_theory_sections()
+    note = sections["00_Atlas"][1]
+    rendered: list[str] = []
+
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: rendered.append(str(body)))
+    monkeypatch.setattr(app, "get_note_status", lambda _note: app.STATUS_READING)
+
+    app.render_note_header(
+        "00_Atlas",
+        note,
+        {},
+        position_text=app.theory_note_position_text(sections, note),
+    )
+
+    assert "theory-position-chip" in rendered[0]
+    assert "00 Atlas · заметка 2 из 3" in rendered[0]
+
+
+def test_theory_adjacent_note_targets_use_same_section_order() -> None:
+    sections = sample_sequential_theory_sections()
+    note = sections["00_Atlas"][1]
+
+    previous_target, next_target = app.theory_adjacent_note_targets(sections, note)
+
+    assert previous_target is not None
+    assert previous_target["note"]["display_name"] == "Start.md"
+    assert previous_target["context"] == "Предыдущая заметка"
+    assert next_target is not None
+    assert next_target["note"]["display_name"] == "End.md"
+    assert next_target["context"] == "Следующая заметка"
+
+
+def test_theory_adjacent_note_targets_cross_section_boundary() -> None:
+    sections = sample_sequential_theory_sections()
+    note = sections["00_Atlas"][2]
+
+    previous_target, next_target = app.theory_adjacent_note_targets(sections, note)
+
+    assert previous_target is not None
+    assert previous_target["note"]["display_name"] == "Middle.md"
+    assert next_target is not None
+    assert next_target["note"]["display_name"] == "Python Basics.md"
+    assert next_target["context"] == "Следующий раздел: 01 Python"
+
+
+def test_theory_adjacent_note_targets_omit_missing_edges() -> None:
+    sections = sample_sequential_theory_sections()
+
+    first_previous, first_next = app.theory_adjacent_note_targets(sections, sections["00_Atlas"][0])
+    last_previous, last_next = app.theory_adjacent_note_targets(sections, sections["01_Python"][0])
+
+    assert first_previous is None
+    assert first_next is not None
+    assert last_previous is not None
+    assert last_next is None
+
+
+def test_render_theory_prev_next_strip_renders_only_available_targets() -> None:
+    sections = sample_sequential_theory_sections()
+    rendered = app.render_theory_prev_next_strip(sections, sections["00_Atlas"][2])
+
+    assert "theory-prev-next-strip" in rendered
+    assert "← Middle.md" in rendered
+    assert "Python Basics.md →" in rendered
+    assert "Следующий раздел: 01 Python" in rendered
+    assert "disabled-target-card" not in rendered
+    assert "<button" not in rendered
+    assert rendered.count('<a class="clickable-row') == 2
 
 
 def test_open_theory_note_updates_expected_session_keys(monkeypatch) -> None:
