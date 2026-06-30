@@ -813,6 +813,41 @@ def inject_styles() -> None:
         width: 100%;
     }
 
+    .theory-section-navigator {
+        margin: var(--s3) 0 var(--s4);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        background: var(--surface);
+        padding: 14px 16px;
+        animation: fadeUp .32s var(--ease) both;
+    }
+
+    .theory-section-navigator [data-testid="stExpander"] {
+        border-color: var(--border);
+        background: rgba(18,21,29,0.62);
+    }
+
+    .theory-section-navigator .clickable-row {
+        min-height: 44px;
+        padding: 10px 12px;
+        border-radius: var(--r-sm);
+    }
+
+    .theory-section-navigator .clickable-row-title {
+        font-size: 0.86rem;
+    }
+
+    .theory-section-navigator .clickable-row-meta,
+    .theory-section-navigator .clickable-row-action {
+        font-size: 0.68rem;
+    }
+
+    .theory-section-navigator .clickable-row-current {
+        border-left: 2px solid var(--accent);
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+    }
+
     .theory-main-column {
         min-width: 0;
         max-width: 860px;
@@ -2709,7 +2744,7 @@ def render_clickable_row(
     accent_class = f" clickable-row-{html.escape(str(accent).strip().casefold())}" if accent else ""
     status_markup = f" {render_status_chip(status)}" if status else ""
     return (
-        f'<a class="clickable-row{accent_class}" href="{html.escape(str(href), quote=True)}">'
+        f'<a class="clickable-row{accent_class}" href="{html.escape(str(href), quote=True)}" target="_self">'
         "<div>"
         f'<div class="clickable-row-title">{html.escape(str(title))}{status_markup}</div>'
         f'<div class="clickable-row-meta">{html.escape(str(meta))}</div>'
@@ -4586,6 +4621,50 @@ def note_link_label(label: str, note: dict[str, str], *, ambiguous: bool = False
     return f"{display}{suffix}"
 
 
+def theory_section_summary(notes: list[dict[str, str]]) -> str:
+    progress = section_progress(notes)
+    return f"{progress[STATUS_DONE]}/{progress['total']} done"
+
+
+def render_theory_section_note_row(note: dict[str, str], *, current_note_path: str) -> str:
+    note_path = str(note.get("path") or "")
+    relative_path = str(note.get("relative_path") or "")
+    is_current = note_path == current_note_path or relative_path == current_note_path
+    return render_clickable_row(
+        str(note.get("display_name") or Path(relative_path).name or "Заметка"),
+        relative_path,
+        href=theory_note_query_href(relative_path),
+        action="Текущая" if is_current else "Открыть",
+        status=note_status_to_chip(get_note_status(note)),
+        accent="current" if is_current else "",
+    )
+
+
+def render_theory_section_navigator(
+    sections: dict[str, list[dict[str, str]]],
+    current_note: dict[str, str] | None,
+) -> None:
+    if not sections or not current_note:
+        return
+
+    current_section = str(current_note.get("section_key") or "")
+    current_note_path = str(current_note.get("path") or current_note.get("relative_path") or "")
+    render_html(
+        '<section class="theory-section-navigator">'
+        f'{render_section_eyebrow("Разделы Theory")}'
+        '<div class="muted-small">Быстрая навигация по vault: текущий раздел раскрыт, остальные свернуты.</div>'
+        "</section>"
+    )
+    for section_key, notes in sections.items():
+        label = f"{humanize_section_name(section_key)} · {theory_section_summary(notes)}"
+        with st.expander(label, expanded=section_key == current_section):
+            rows = [
+                render_theory_section_note_row(note, current_note_path=current_note_path)
+                for note in notes
+            ]
+            render_html(f'<div class="clickable-row-list theory-section-note-list">{"".join(rows)}</div>')
+
+
 def readable_note_button_label(label: str, fallback_path: str) -> str:
     display = str(label or Path(str(fallback_path or "Заметка")).stem or "Заметка").strip()
     display = re.sub(r"\s+", " ", display)
@@ -5214,6 +5293,8 @@ def render_note(
             on_click=go_back,
             args=(note_index,),
         )
+
+    render_theory_section_navigator(sections, note)
 
     st.markdown('<div class="theory-note-layout">', unsafe_allow_html=True)
     main_col, side_col = st.columns([0.72, 0.28], gap="large")

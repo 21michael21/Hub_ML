@@ -876,6 +876,24 @@ def sample_note_index() -> tuple[dict[str, str], dict[str, object]]:
     return note, app.build_note_index(sections)
 
 
+def sample_theory_sections() -> dict[str, list[dict[str, str]]]:
+    atlas_note = {
+        "section_key": "00_Atlas",
+        "display_name": "00_Knowledge_Map.md",
+        "relative_path": "00_Atlas/00_Knowledge_Map.md",
+        "path": "/vault/00_Atlas/00_Knowledge_Map.md",
+        "stem": "00_Knowledge_Map",
+    }
+    python_note = {
+        "section_key": "01_Python",
+        "display_name": "Python Basics.md",
+        "relative_path": "01_Python/Python Basics.md",
+        "path": "/vault/01_Python/Python Basics.md",
+        "stem": "Python Basics",
+    }
+    return {"00_Atlas": [atlas_note], "01_Python": [python_note]}
+
+
 def test_normalize_theory_note_path_adds_suffix_and_strips_anchor() -> None:
     assert app.normalize_theory_note_path("00 Atlas\\Knowledge Map#section") == "00 Atlas/Knowledge Map.md"
     assert app.normalize_theory_note_path("00_Atlas/00_Knowledge_Map.md") == "00_Atlas/00_Knowledge_Map.md"
@@ -887,6 +905,58 @@ def test_find_note_by_path_uses_relative_and_absolute_paths() -> None:
     assert app.find_note_by_path("00_Atlas/00_Knowledge_Map", note_index) is note
     assert app.find_note_by_path("/vault/00_Atlas/00_Knowledge_Map.md", note_index) is note
     assert app.find_note_by_path("missing.md", note_index) is None
+
+
+def test_theory_section_summary_uses_done_and_total(monkeypatch) -> None:
+    sections = sample_theory_sections()
+    statuses = {
+        "/vault/00_Atlas/00_Knowledge_Map.md": app.STATUS_DONE,
+        "/vault/01_Python/Python Basics.md": app.STATUS_READING,
+    }
+
+    monkeypatch.setattr(app, "get_note_status", lambda note: statuses[str(note["path"])])
+
+    assert app.theory_section_summary(sections["00_Atlas"] + sections["01_Python"]) == "1/2 done"
+
+
+def test_render_theory_section_note_row_highlights_current_note(monkeypatch) -> None:
+    note = sample_theory_sections()["00_Atlas"][0]
+
+    monkeypatch.setattr(app, "get_note_status", lambda _note: app.STATUS_DONE)
+
+    rendered = app.render_theory_section_note_row(note, current_note_path="/vault/00_Atlas/00_Knowledge_Map.md")
+
+    assert "clickable-row-current" in rendered
+    assert "href=\"?tab=Theory&amp;note=00_Atlas%2F00_Knowledge_Map.md\"" in rendered
+    assert 'target="_self"' in rendered
+    assert "00_Knowledge_Map.md" in rendered
+    assert "PASS" in rendered
+    assert "→ Текущая" in rendered
+
+
+def test_render_theory_section_navigator_expands_current_section(monkeypatch) -> None:
+    sections = sample_theory_sections()
+    current_note = sections["01_Python"][0]
+    expanders: list[dict[str, object]] = []
+    html_blocks: list[str] = []
+
+    def fake_expander(label: str, *, expanded: bool = False):
+        expanders.append({"label": label, "expanded": expanded})
+        return FakeColumn()
+
+    monkeypatch.setattr(app.st, "expander", fake_expander)
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app, "get_note_status", lambda note: app.STATUS_DONE if note is current_note else app.STATUS_READING)
+
+    app.render_theory_section_navigator(sections, current_note)
+
+    assert [item["expanded"] for item in expanders] == [False, True]
+    assert "00 Atlas · 0/1 done" in str(expanders[0]["label"])
+    assert "01 Python · 1/1 done" in str(expanders[1]["label"])
+    rendered = "\n".join(html_blocks)
+    assert "theory-section-navigator" in rendered
+    assert "clickable-row-current" in rendered
+    assert "Python Basics.md" in rendered
 
 
 def test_open_theory_note_updates_expected_session_keys(monkeypatch) -> None:
