@@ -395,6 +395,7 @@ def test_static_chip_is_metadata_only() -> None:
     rendered = app.render_static_chip("level", "beginner")
 
     assert "static-chip" in rendered
+    assert 'aria-disabled="true"' in rendered
     assert "clickable" not in rendered
     assert "<button" not in rendered
     assert "level" in rendered
@@ -416,6 +417,34 @@ def test_render_action_button_requires_action_target(monkeypatch) -> None:
         app.render_action_button("Открыть", key="missing_action")
 
 
+def test_ui_component_rules_are_explicit() -> None:
+    rules = app.ui_component_rules()
+
+    assert rules["action_button"] == "real_streamlit_button"
+    assert rules["link_button"] == "real_streamlit_link_button"
+    assert rules["static_chip"] == "metadata_only"
+    assert rules["disabled_chip"] == "muted_with_reason"
+    assert rules["metric_tile"] == "static_by_default"
+    assert rules["card"] == "static_unless_action_is_explicit"
+
+
+def test_ui_semantics_css_prevents_fake_clickable_chips(monkeypatch) -> None:
+    rendered: list[str] = []
+
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: rendered.append(str(body)))
+
+    app.inject_styles()
+
+    css = "\n".join(rendered)
+    assert ".static-chip:hover" in css
+    assert "pointer-events: none" in css
+    assert ".ui-action-button" in css
+    assert "min-height: 40px" in css
+    assert ".metric-tile {" in css
+    assert "cursor: default" in css
+    assert ".clickable-card:not(.disabled-target-card)" in css
+
+
 def test_render_action_button_uses_real_streamlit_button(monkeypatch) -> None:
     buttons: list[dict[str, object]] = []
 
@@ -431,6 +460,16 @@ def test_render_action_button_uses_real_streamlit_button(monkeypatch) -> None:
     assert buttons[0]["key"] == "open_one"
     assert buttons[0]["help"] == "target.md"
     assert buttons[0]["use_container_width"] is True
+
+
+def test_render_action_button_adds_semantic_button_type(monkeypatch) -> None:
+    buttons: list[dict[str, object]] = []
+
+    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
+
+    app.render_action_button("Открыть", key="semantic_open", on_click=lambda: None)
+
+    assert buttons[0]["type"] == "primary"
 
 
 def test_render_action_card_requires_enabled_action() -> None:

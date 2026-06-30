@@ -347,9 +347,10 @@ def inject_styles() -> None:
 
     [data-testid="stMain"] .stButton > button,
     [data-testid="stMain"] .stDownloadButton > button,
-    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button {
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button,
+    .ui-action-button {
         width: 100%;
-        min-height: 38px;
+        min-height: 40px;
         justify-content: center;
         border-color: var(--border);
         border-radius: var(--r-sm);
@@ -369,11 +370,12 @@ def inject_styles() -> None:
 
     [data-testid="stMain"] .stButton > button:hover:not(:disabled),
     [data-testid="stMain"] .stDownloadButton > button:hover:not(:disabled),
-    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:hover:not(:disabled) {
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:hover:not(:disabled),
+    .ui-action-button:hover:not(:disabled) {
         border-color: var(--border-strong);
         background: var(--raised);
         transform: translateY(-1px);
-        box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+        box-shadow: none;
     }
 
     [data-testid="stMain"] .stButton > button:focus-visible,
@@ -387,7 +389,8 @@ def inject_styles() -> None:
 
     [data-testid="stMain"] .stButton > button:disabled,
     [data-testid="stMain"] .stDownloadButton > button:disabled,
-    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:disabled {
+    [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:disabled,
+    .ui-action-button:disabled {
         cursor: not-allowed;
         opacity: 0.52;
         transform: none;
@@ -848,7 +851,7 @@ def inject_styles() -> None:
 
     .theory-side-panel [data-testid="stButton"] > button {
         justify-content: flex-start;
-        min-height: 38px;
+        min-height: 40px;
         border-color: var(--border);
         background: var(--surface);
         color: var(--text);
@@ -885,7 +888,7 @@ def inject_styles() -> None:
     [data-testid="stMain"] [class*="st-key-related_practice_"] button,
     [data-testid="stMain"] [class*="st-key-theory_task_"] button {
         justify-content: flex-start;
-        min-height: 38px;
+        min-height: 40px;
         text-align: left;
         white-space: normal;
         box-shadow: none;
@@ -1122,7 +1125,7 @@ def inject_styles() -> None:
         border-radius: var(--r);
         background: var(--surface);
         padding: 18px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+        box-shadow: none;
         animation: fadeUp var(--duration-slow) var(--ease) both;
         transition:
             background var(--duration-med) var(--ease),
@@ -1131,21 +1134,21 @@ def inject_styles() -> None:
             transform var(--duration-med) var(--ease);
     }
 
-    .clickable-card,
+    .clickable-card:not(.disabled-target-card),
     .internal-action-card {
         border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
     }
 
-    .clickable-card:hover,
+    .clickable-card:not(.disabled-target-card):hover,
     .internal-action-card:hover {
         border-color: var(--border-strong);
         transform: translateY(-2px);
-        box-shadow: 0 16px 38px rgba(0,0,0,0.20);
+        box-shadow: none;
     }
 
     .console-card:focus-within {
         border-color: var(--accent);
-        box-shadow: var(--shadow-focus), var(--shadow-card-hover);
+        box-shadow: var(--shadow-focus);
     }
 
     .disabled-target-card,
@@ -1543,6 +1546,7 @@ def inject_styles() -> None:
         background: var(--surface);
         min-height: 118px;
         padding: 16px 18px;
+        cursor: default;
         animation: fadeUp var(--duration-slow) var(--ease) both;
         transition:
             border-color var(--duration-med) var(--ease),
@@ -1550,7 +1554,7 @@ def inject_styles() -> None:
             transform var(--duration-med) var(--ease);
     }
 
-    .metric-tile:hover {
+    .metric-tile.metric-tile-clickable:hover {
         border-color: var(--border-strong);
         transform: translateY(-2px);
     }
@@ -2190,6 +2194,12 @@ def inject_styles() -> None:
         pointer-events: none;
     }
 
+    .static-chip:hover {
+        border-color: var(--border);
+        transform: none;
+        box-shadow: none;
+    }
+
     .static-chip-value {
         margin-left: 6px;
         color: var(--text);
@@ -2314,6 +2324,20 @@ STATUS_CHIP_CLASSES = {
 }
 
 
+UI_COMPONENT_RULES = {
+    "action_button": "real_streamlit_button",
+    "link_button": "real_streamlit_link_button",
+    "static_chip": "metadata_only",
+    "disabled_chip": "muted_with_reason",
+    "metric_tile": "static_by_default",
+    "card": "static_unless_action_is_explicit",
+}
+
+
+def ui_component_rules() -> dict[str, str]:
+    return dict(UI_COMPONENT_RULES)
+
+
 def render_html(markup: str) -> None:
     """Render trusted HTML returned by Hub_ML UI helpers only."""
     st.markdown(markup, unsafe_allow_html=True)
@@ -2404,7 +2428,7 @@ def render_status_chip(status: str) -> str:
     label = normalize_chip_status(status)
     css_class = STATUS_CHIP_CLASSES.get(label, "chip-info")
     return (
-        f'<span class="status-chip static-chip {css_class}">'
+        f'<span class="status-chip static-chip {css_class}" aria-disabled="true">'
         f'<span class="chip-dot"></span>{html.escape(label)}</span>'
     )
 
@@ -2413,7 +2437,7 @@ def render_static_chip(label: str, value: str = "", *, status: str = "INFO") -> 
     css_class = STATUS_CHIP_CLASSES.get(normalize_chip_status(status), "chip-info")
     value_markup = f'<span class="static-chip-value">{html.escape(str(value))}</span>' if value else ""
     return (
-        f'<span class="status-chip static-chip {css_class}">'
+        f'<span class="status-chip static-chip {css_class}" aria-disabled="true">'
         f'<span class="chip-dot"></span>{html.escape(str(label))}{value_markup}</span>'
     )
 
@@ -2518,7 +2542,15 @@ def render_action_button(
         raise ValueError("render_action_button requires on_click or href for enabled actions")
     help_value = disabled_reason or help_text or href or None
     if href and on_click is None:
-        st.link_button(label, href, key=key, help=help_value, disabled=disabled, use_container_width=use_container_width)
+        st.link_button(
+            label,
+            href,
+            key=key,
+            help=help_value,
+            disabled=disabled,
+            type="primary",
+            use_container_width=use_container_width,
+        )
         return False
     return bool(
         st.button(
@@ -2526,6 +2558,7 @@ def render_action_button(
             key=key,
             help=help_value,
             disabled=disabled,
+            type="primary",
             on_click=on_click if not disabled else None,
             args=args if not disabled else (),
             use_container_width=use_container_width,
