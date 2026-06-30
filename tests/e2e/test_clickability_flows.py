@@ -253,6 +253,23 @@ def test_theory_backlink_click_opens_source_note(page: Page, streamlit_app_url: 
     assert_clean_page(page)
 
 
+def test_theory_outline_section_note_button_opens_note(page: Page, streamlit_app_url: str) -> None:
+    page.set_viewport_size({"width": 1440, "height": 1000})
+    page.goto(f"{streamlit_app_url}?tab=Theory&note=welcome.md", wait_until="domcontentloaded", timeout=20_000)
+    expect(page.locator("body")).to_contain_text("Разделы Theory", timeout=30_000)
+
+    click_visible_button_containing(page, "00 Atlas")
+    before = visible_text(page)
+    clicked = click_visible_button_containing(page, "00_Knowledge_Map.md")
+    assert clicked is not None, "Expected real note button inside Theory section outline"
+
+    expect(page.locator("body")).to_contain_text("00_Atlas/00_Knowledge_Map.md", timeout=10_000)
+    after = visible_text(page)
+    assert after != before
+    assert "Knowledge Map" in after or "00_Knowledge_Map.md" in after
+    assert_clean_page(page)
+
+
 def test_random_uncompleted_note_button_is_safe(page: Page, streamlit_app_url: str) -> None:
     before = open_theory_from_home(page, streamlit_app_url)
 

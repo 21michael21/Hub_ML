@@ -848,6 +848,46 @@ def inject_styles() -> None:
         background: var(--surface-2);
     }
 
+    .theory-outline-note {
+        margin: var(--s2) 0 6px;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        background: rgba(18,21,29,0.58);
+    }
+
+    .theory-outline-current {
+        border-left: 2px solid var(--accent);
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+    }
+
+    .theory-outline-note-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--text);
+        font-family: var(--font-ui);
+        font-weight: 650;
+        font-size: 0.86rem;
+        line-height: 1.25;
+    }
+
+    .theory-outline-note-meta {
+        margin-top: 5px;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    [data-testid="stMain"] [class*="st-key-theory_outline_note_"] button {
+        min-height: 34px;
+        margin-top: 0;
+    }
+
     .theory-position-chip {
         display: inline-flex;
         align-items: center;
@@ -4769,18 +4809,74 @@ def render_theory_prev_next_strip(
     return f'<nav class="theory-prev-next-strip">{"".join(rows)}</nav>'
 
 
-def render_theory_section_note_row(note: dict[str, str], *, current_note_path: str) -> str:
+def theory_sorted_section_notes(notes: list[dict[str, str]]) -> list[dict[str, str]]:
+    return sorted(
+        notes,
+        key=lambda note: (
+            str(note.get("display_name") or "").casefold(),
+            str(note.get("relative_path") or "").casefold(),
+        ),
+    )
+
+
+def theory_section_note_button_state(
+    note: dict[str, str],
+    *,
+    current_note_path: str,
+    note_index: dict[str, Any] | None,
+) -> dict[str, object]:
     note_path = str(note.get("path") or "")
     relative_path = str(note.get("relative_path") or "")
     is_current = note_path == current_note_path or relative_path == current_note_path
-    return render_clickable_row(
-        str(note.get("display_name") or Path(relative_path).name or "Заметка"),
-        relative_path,
-        href=theory_note_query_href(relative_path),
-        action="Текущая" if is_current else "Открыть",
-        status=note_status_to_chip(get_note_status(note)),
-        accent="current" if is_current else "",
+    label = readable_note_button_label(str(note.get("display_name") or ""), relative_path or note_path)
+    target = find_note_by_path(relative_path or note_path, note_index)
+    disabled = target is None
+    reason = f"Заметка не найдена: {relative_path or note_path}" if disabled else ""
+    return {
+        "label": label,
+        "caption": relative_path or note_path,
+        "status": note_status_to_chip(get_note_status(note)),
+        "current": is_current,
+        "disabled": disabled,
+        "reason": reason,
+        "key": safe_widget_key("theory_outline_note", relative_path or note_path),
+        "target_path": str(target.get("relative_path") or relative_path or note_path) if target else relative_path or note_path,
+    }
+
+
+def render_theory_section_note_button(
+    note: dict[str, str],
+    *,
+    current_note_path: str,
+    note_index: dict[str, Any],
+) -> None:
+    state = theory_section_note_button_state(
+        note,
+        current_note_path=current_note_path,
+        note_index=note_index,
     )
+    current_class = " theory-outline-current" if state["current"] else ""
+    status = render_status_chip(str(state["status"]))
+    if state["disabled"]:
+        status = render_disabled_chip("Недоступно", str(state["reason"]))
+    render_html(
+        f'<div class="theory-outline-note{current_class}">'
+        '<div class="theory-outline-note-title">'
+        f'<span>{"Текущая заметка" if state["current"] else "Заметка"}</span>{status}'
+        "</div>"
+        f'<div class="theory-outline-note-meta">{html.escape(str(state["caption"]))}</div>'
+        "</div>"
+    )
+    st.button(
+        str(state["label"]),
+        key=str(state["key"]),
+        help=str(state["reason"] or state["caption"]),
+        disabled=bool(state["disabled"]),
+        on_click=open_theory_note if not state["disabled"] else None,
+        args=(str(state["target_path"]), note_index, False) if not state["disabled"] else (),
+        use_container_width=True,
+    )
+    st.caption(str(state["caption"]))
 
 
 def render_theory_section_navigator(
@@ -4792,6 +4888,7 @@ def render_theory_section_navigator(
 
     current_section = str(current_note.get("section_key") or "")
     current_note_path = str(current_note.get("path") or current_note.get("relative_path") or "")
+    note_index = build_note_index(sections)
     render_html(
         '<section class="theory-section-navigator">'
         f'{render_section_eyebrow("Разделы Theory")}'
@@ -4801,11 +4898,12 @@ def render_theory_section_navigator(
     for section_key, notes in sections.items():
         label = f"{humanize_section_name(section_key)} · {theory_section_summary(notes)}"
         with st.expander(label, expanded=section_key == current_section):
-            rows = [
-                render_theory_section_note_row(note, current_note_path=current_note_path)
-                for note in notes
-            ]
-            render_html(f'<div class="clickable-row-list theory-section-note-list">{"".join(rows)}</div>')
+            for note in theory_sorted_section_notes(notes):
+                render_theory_section_note_button(
+                    note,
+                    current_note_path=current_note_path,
+                    note_index=note_index,
+                )
 
 
 def readable_note_button_label(label: str, fallback_path: str) -> str:

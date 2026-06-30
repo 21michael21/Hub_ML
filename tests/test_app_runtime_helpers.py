@@ -942,19 +942,46 @@ def test_theory_section_summary_uses_done_and_total(monkeypatch) -> None:
     assert app.theory_section_summary(sections["00_Atlas"] + sections["01_Python"]) == "1/2 done"
 
 
-def test_render_theory_section_note_row_highlights_current_note(monkeypatch) -> None:
+def test_theory_section_note_button_state_highlights_current_note(monkeypatch) -> None:
     note = sample_theory_sections()["00_Atlas"][0]
 
     monkeypatch.setattr(app, "get_note_status", lambda _note: app.STATUS_DONE)
 
-    rendered = app.render_theory_section_note_row(note, current_note_path="/vault/00_Atlas/00_Knowledge_Map.md")
+    state = app.theory_section_note_button_state(
+        note,
+        current_note_path="/vault/00_Atlas/00_Knowledge_Map.md",
+        note_index=app.build_note_index({"00_Atlas": [note]}),
+    )
 
-    assert "clickable-row-current" in rendered
-    assert "href=\"?tab=Theory&amp;note=00_Atlas%2F00_Knowledge_Map.md\"" in rendered
-    assert 'target="_self"' in rendered
-    assert "00_Knowledge_Map.md" in rendered
-    assert "PASS" in rendered
-    assert "→ Текущая" in rendered
+    assert state["label"] == "00_Knowledge_Map.md"
+    assert state["caption"] == "00_Atlas/00_Knowledge_Map.md"
+    assert state["status"] == "PASS"
+    assert state["current"] is True
+    assert state["disabled"] is False
+    assert state["reason"] == ""
+    assert state["key"] == "theory_outline_note_00_Atlas_00_Knowledge_Map_md"
+
+
+def test_theory_section_note_button_state_disables_missing_note() -> None:
+    note = {
+        "section_key": "00_Atlas",
+        "display_name": "Missing.md",
+        "relative_path": "00_Atlas/Missing.md",
+        "path": "/vault/00_Atlas/Missing.md",
+        "stem": "Missing",
+    }
+    _, note_index = sample_note_index()
+
+    state = app.theory_section_note_button_state(
+        note,
+        current_note_path="/vault/00_Atlas/00_Knowledge_Map.md",
+        note_index=note_index,
+    )
+
+    assert state["label"] == "Missing.md"
+    assert state["caption"] == "00_Atlas/Missing.md"
+    assert state["disabled"] is True
+    assert state["reason"] == "Заметка не найдена: 00_Atlas/Missing.md"
 
 
 def test_render_theory_section_navigator_expands_current_section(monkeypatch) -> None:
@@ -962,12 +989,20 @@ def test_render_theory_section_navigator_expands_current_section(monkeypatch) ->
     current_note = sections["01_Python"][0]
     expanders: list[dict[str, object]] = []
     html_blocks: list[str] = []
+    buttons: list[dict[str, object]] = []
+    captions: list[str] = []
 
     def fake_expander(label: str, *, expanded: bool = False):
         expanders.append({"label": label, "expanded": expanded})
         return FakeColumn()
 
+    def fake_button(label: str, **kwargs: object) -> bool:
+        buttons.append({"label": label, **kwargs})
+        return False
+
     monkeypatch.setattr(app.st, "expander", fake_expander)
+    monkeypatch.setattr(app.st, "button", fake_button)
+    monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
     monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
     monkeypatch.setattr(app, "get_note_status", lambda note: app.STATUS_DONE if note is current_note else app.STATUS_READING)
 
@@ -978,8 +1013,12 @@ def test_render_theory_section_navigator_expands_current_section(monkeypatch) ->
     assert "01 Python · 1/1 done" in str(expanders[1]["label"])
     rendered = "\n".join(html_blocks)
     assert "theory-section-navigator" in rendered
-    assert "clickable-row-current" in rendered
+    assert "theory-outline-current" in rendered
     assert "Python Basics.md" in rendered
+    assert [button["label"] for button in buttons] == ["00_Knowledge_Map.md", "Python Basics.md"]
+    assert all(button["on_click"] is app.open_theory_note for button in buttons)
+    assert buttons[1]["args"] == ("01_Python/Python Basics.md", app.build_note_index(sections), False)
+    assert captions == ["00_Atlas/00_Knowledge_Map.md", "01_Python/Python Basics.md"]
 
 
 def test_theory_note_position_indicator_uses_position_within_section() -> None:
