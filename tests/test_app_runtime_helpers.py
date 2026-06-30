@@ -125,13 +125,50 @@ def test_render_lab_project_catalog_card_marks_selected() -> None:
         runtime_sample_project(),
         {"done": 1, "total": 3, "ratio": 1 / 3, "complete": False},
         selected=True,
+        source="data_lab",
     )
 
-    assert "lab-project-card-selected" in rendered
+    assert rendered.startswith('<a class="lab-project-card lab-project-card-selected"')
+    assert "href=\"?tab=%F0%9F%A7%AA%20Data%20Lab%20Projects&amp;kind=project&amp;target=orders_eda&amp;project=orders_eda&amp;source=data_lab\"" in rendered
     assert "Orders EDA" in rendered
     assert "lab-project-progress" in rendered
     assert "1/3" in rendered
     assert "pandas · eda" in rendered
+    assert "→ Выбран" in rendered
+    assert "<button" not in rendered
+
+
+def test_render_lab_project_catalog_card_uses_ml_lab_query_target() -> None:
+    rendered = app.render_lab_project_catalog_card(
+        runtime_sample_project() | {"track": "Classic ML"},
+        {"done": 0, "total": 3, "ratio": 0, "complete": False},
+        selected=False,
+        source="ml_lab",
+    )
+
+    assert rendered.startswith('<a class="lab-project-card"')
+    assert "href=\"?tab=%F0%9F%A4%96%20ML%20Lab&amp;kind=project&amp;target=orders_eda&amp;project=orders_eda&amp;source=ml_lab\"" in rendered
+    assert "→ Открыть проект" in rendered
+    assert "<button" not in rendered
+
+
+def test_render_lab_next_action_is_attached_clickable_card(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    action_buttons: list[str] = []
+    project = runtime_sample_project()
+    milestone = project["milestones"][1]
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app, "render_action_button", lambda label, **_kwargs: action_buttons.append(str(label)) or False)
+
+    app.render_lab_next_action(project, milestone, {"done": 1, "total": 3})
+
+    rendered = "\n".join(html_blocks)
+    assert rendered.startswith('<a class="lab-next-action"')
+    assert "href=\"?tab=%F0%9F%A7%AA%20Data%20Lab%20Projects&amp;kind=milestone&amp;target=orders_eda%3A%3Asummary&amp;project=orders_eda&amp;milestone=summary&amp;source=data_lab\"" in rendered
+    assert "Следующий шаг: Write summary" in rendered
+    assert "→ Открыть следующий шаг" in rendered
+    assert action_buttons == []
     assert "<button" not in rendered
 
 
@@ -272,8 +309,9 @@ def test_render_data_lab_projects_tab_renders_catalog_and_selected_detail(monkey
     rendered = "\n".join(html_blocks + markdown_blocks)
     assert "flat-section-header" in rendered
     assert "lab-project-card-selected" in rendered
+    assert "lab-project-card-action" in rendered
     assert "Каталог проектов" in rendered
-    assert buttons == ["Выбран", "Выбрать проект"]
+    assert buttons == []
     assert selected_details == ["orders_eda"]
 
 

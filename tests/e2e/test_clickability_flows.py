@@ -53,11 +53,11 @@ def open_app(page: Page, app_url: str) -> None:
 def click_visible_button_containing(page: Page, text: str, *, wait_ms: int = 900) -> str | None:
     result = page.evaluate(
         """({ text }) => {
-            const buttons = Array.from(document.querySelectorAll('button'));
-            const target = buttons.find((button) => {
-                const label = (button.innerText || button.textContent || '').trim();
-                const rect = button.getBoundingClientRect();
-                return label.includes(text) && rect.width > 0 && rect.height > 0 && !button.disabled;
+            const controls = Array.from(document.querySelectorAll('button, a[href]'));
+            const target = controls.find((control) => {
+                const label = (control.innerText || control.textContent || '').trim();
+                const rect = control.getBoundingClientRect();
+                return label.includes(text) && rect.width > 0 && rect.height > 0 && !control.disabled;
             });
             if (!target) {
                 return null;

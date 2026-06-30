@@ -1257,10 +1257,13 @@ def inject_styles() -> None:
     }
 
     .lab-project-card {
+        display: block;
         border: 1px solid var(--border);
         border-radius: var(--r);
         background: var(--surface);
         padding: 13px 14px;
+        color: inherit;
+        text-decoration: none;
         animation: fadeUp .42s var(--ease) both;
         transition: transform 160ms var(--ease), border-color 160ms var(--ease), background 160ms var(--ease);
     }
@@ -1274,6 +1277,27 @@ def inject_styles() -> None:
 
     .lab-project-card-selected {
         border-left: 2px solid var(--accent);
+    }
+
+    a.lab-project-card,
+    a.lab-project-card:hover,
+    a.lab-project-card:focus,
+    a.lab-project-card:active,
+    a.lab-project-card:visited,
+    a.lab-next-action,
+    a.lab-next-action:hover,
+    a.lab-next-action:focus,
+    a.lab-next-action:active,
+    a.lab-next-action:visited {
+        color: inherit;
+        text-decoration: none !important;
+    }
+
+    .lab-project-card *,
+    .lab-project-card:hover *,
+    .lab-next-action *,
+    .lab-next-action:hover * {
+        text-decoration: none !important;
     }
 
     .lab-project-title {
@@ -1291,6 +1315,7 @@ def inject_styles() -> None:
     .lab-project-meta,
     .lab-step-meta,
     .lab-prerequisite-meta {
+        display: block;
         color: var(--faint);
         font-family: var(--font-mono);
         font-size: 0.72rem;
@@ -1302,12 +1327,14 @@ def inject_styles() -> None:
     }
 
     .lab-project-skills {
+        display: block;
         margin-top: 8px;
         color: var(--dim);
         font-size: 0.82rem;
     }
 
     .lab-project-progress {
+        display: block;
         margin-top: 12px;
         border-top: 1px solid var(--border-soft);
         padding-top: 10px;
@@ -1329,6 +1356,7 @@ def inject_styles() -> None:
     }
 
     .lab-project-progress-bar {
+        display: block;
         overflow: hidden;
         height: 4px;
         margin-top: 8px;
@@ -1342,6 +1370,22 @@ def inject_styles() -> None:
         border-radius: inherit;
         background: var(--accent);
         transition: width 160ms var(--ease);
+    }
+
+    .lab-project-card-action {
+        display: block;
+        margin-top: 10px;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        text-align: right;
+        transition: color 160ms var(--ease), transform 160ms var(--ease);
+    }
+
+    .lab-project-card:hover .lab-project-card-action,
+    .lab-project-card-selected .lab-project-card-action {
+        color: var(--accent);
+        transform: translateX(2px);
     }
 
     .lab-detail-hero,
@@ -1365,6 +1409,7 @@ def inject_styles() -> None:
     .lab-detail-title,
     .lab-next-title,
     .lab-step-title {
+        display: block;
         color: var(--text);
         font-family: var(--font-display);
         font-weight: 600;
@@ -1377,15 +1422,41 @@ def inject_styles() -> None:
 
     .lab-detail-goal,
     .lab-next-body {
+        display: block;
         margin-top: 8px;
         color: var(--dim);
         line-height: 1.55;
     }
 
     .lab-next-action {
+        display: block;
         margin-top: 14px;
         border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
         background: linear-gradient(180deg, rgba(139,155,255,.08), var(--surface));
+        color: inherit;
+        text-decoration: none;
+        transition: transform 160ms var(--ease), border-color 160ms var(--ease), background 160ms var(--ease);
+    }
+
+    .lab-next-action[href]:hover {
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+        transform: translateY(-2px);
+    }
+
+    .lab-next-action-affordance {
+        display: block;
+        margin-top: 12px;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        text-align: right;
+        transition: color 160ms var(--ease), transform 160ms var(--ease);
+    }
+
+    .lab-next-action[href]:hover .lab-next-action-affordance {
+        color: var(--accent);
+        transform: translateX(2px);
     }
 
     .lab-prerequisite-row {
@@ -2198,6 +2269,7 @@ def inject_styles() -> None:
         font-weight: 600;
         letter-spacing: 0.06em;
         line-height: 1.35;
+        white-space: nowrap;
         text-transform: uppercase;
         vertical-align: middle;
         cursor: default;
@@ -6596,7 +6668,13 @@ def select_project_milestone(project_id: str, milestone_id: str) -> None:
     st.session_state["selected_project_milestone"] = milestone_id
 
 
-def render_lab_project_catalog_card(project: dict[str, Any], stats: dict[str, Any], *, selected: bool) -> str:
+def render_lab_project_catalog_card(
+    project: dict[str, Any],
+    stats: dict[str, Any],
+    *,
+    selected: bool,
+    source: str = "data_lab",
+) -> str:
     status = lab_project_status(stats)
     selected_class = " lab-project-card-selected" if selected else ""
     datasets = ", ".join(str(item) for item in project.get("datasets", [])) or "датасеты не указаны"
@@ -6605,26 +6683,37 @@ def render_lab_project_catalog_card(project: dict[str, Any], stats: dict[str, An
     total = int(stats.get("total", 0) or 0)
     progress = max(0.0, min(1.0, float(stats.get("ratio", 0) or 0)))
     progress_markup = (
-        '<div class="lab-project-progress">'
-        '<div class="lab-project-progress-row">'
+        '<span class="lab-project-progress">'
+        '<span class="lab-project-progress-row">'
         "<span>Прогресс</span>"
         f"<strong>{done}/{total}</strong>"
-        "</div>"
-        '<div class="lab-project-progress-bar">'
+        "</span>"
+        '<span class="lab-project-progress-bar">'
         f'<span style="width:{progress * 100:.0f}%"></span>'
-        "</div>"
-        "</div>"
+        "</span>"
+        "</span>"
     )
+    project_id = str(project.get("id") or "")
+    target = InternalTarget(
+        kind="project",
+        label=str(project.get("title") or project_id or "Project"),
+        target_id=project_id,
+        project_id=project_id,
+        source=source,
+        exists=True,
+    )
+    action = "Выбран" if selected else "Открыть проект"
     return (
-        f'<div class="lab-project-card{selected_class}">'
-        '<div class="lab-project-title">'
+        f'<a class="lab-project-card{selected_class}" href="{html.escape(internal_target_query_href(target), quote=True)}">'
+        '<span class="lab-project-title">'
         f'<span>{html.escape(str(project.get("title") or project.get("id") or "Project"))}</span>'
         f"{render_status_chip(status)}"
-        "</div>"
-        f'<div class="lab-project-meta">{html.escape(str(project.get("level") or "level"))} · {html.escape(datasets)}</div>'
-        f'<div class="lab-project-skills">{html.escape(skills)}</div>'
+        "</span>"
+        f'<span class="lab-project-meta">{html.escape(str(project.get("level") or "level"))} · {html.escape(datasets)}</span>'
+        f'<span class="lab-project-skills">{html.escape(skills)}</span>'
         f"{progress_markup}"
-        "</div>"
+        f'<span class="lab-project-card-action">→ {html.escape(action)}</span>'
+        "</a>"
     )
 
 
@@ -6828,18 +6917,9 @@ def render_lab_prerequisite_item(item: dict[str, Any], key_prefix: str) -> None:
         st.caption(reason)
 
 
-def render_data_lab_project_card(project: dict[str, Any], *, selected: bool = False) -> None:
+def render_data_lab_project_card(project: dict[str, Any], *, selected: bool = False, source: str = "data_lab") -> None:
     stats = project_progress_from_record(project, get_data_lab_project_record(project["id"]))
-    render_html(render_lab_project_catalog_card(project, stats, selected=selected))
-    render_action_button(
-        "Выбран" if selected else "Выбрать проект",
-        key=f"data_lab_select_{project['id']}",
-        on_click=select_data_lab_project,
-        args=(project["id"],),
-        disabled=selected,
-        disabled_reason="Проект уже выбран" if selected else "",
-        use_container_width=True,
-    )
+    render_html(render_lab_project_catalog_card(project, stats, selected=selected, source=source))
 
 
 def project_milestone_widget_key(project_id: str, milestone_id: str, suffix: str) -> str:
@@ -6995,34 +7075,23 @@ def render_lab_next_action(project: dict[str, Any], milestone: dict[str, Any] | 
     if milestone:
         title = str(milestone.get("title") or milestone.get("id") or "Milestone")
         meta = f"{milestone.get('type', 'milestone')} · {stats.get('done', 0)}/{stats.get('total', 0)} закрыто"
+        target = project_milestone_target({"project": project, "milestone": milestone})
         render_html(
-            '<div class="lab-next-action">'
-            f'<div class="lab-next-title">Следующий шаг: {html.escape(title)}</div>'
-            f'<div class="lab-next-body">{html.escape(str(milestone.get("description") or ""))}</div>'
-            f'<div class="lab-step-meta">{html.escape(meta)}</div>'
-            "</div>"
-        )
-        render_action_button(
-            "Открыть следующий шаг",
-            key=safe_widget_key("lab_next_milestone", project["id"], milestone.get("id")),
-            on_click=select_project_milestone,
-            args=(project["id"], str(milestone.get("id") or "")),
-            use_container_width=True,
+            f'<a class="lab-next-action" href="{html.escape(internal_target_query_href(target), quote=True)}">'
+            f'<span class="lab-next-title">Следующий шаг: {html.escape(title)}</span>'
+            f'<span class="lab-next-body">{html.escape(str(milestone.get("description") or ""))}</span>'
+            f'<span class="lab-step-meta">{html.escape(meta)}</span>'
+            '<span class="lab-next-action-affordance">→ Открыть следующий шаг</span>'
+            "</a>"
         )
         return
 
     render_html(
         '<div class="lab-next-action">'
-        '<div class="lab-next-title">Проект готов</div>'
-        '<div class="lab-next-body">Все шаги закрыты. Проверь portfolio output и отметь готовность проекта.</div>'
+        '<span class="lab-next-title">Проект готов</span>'
+        '<span class="lab-next-body">Все шаги закрыты. Проверь portfolio output и отметь готовность проекта.</span>'
+        '<span class="lab-next-action-affordance">Все шаги закрыты</span>'
         "</div>"
-    )
-    render_action_button(
-        "Продолжить проект",
-        key=safe_widget_key("lab_next_done", project["id"]),
-        disabled=True,
-        disabled_reason="Все milestones уже закрыты.",
-        use_container_width=True,
     )
 
 
@@ -7521,13 +7590,18 @@ def render_data_lab_projects_tab(
         selected_id = projects[0]["id"]
         st.session_state["selected_data_lab_project"] = selected_id
 
+    project_source = "ml_lab" if "ML Lab" in title else "data_lab"
     list_col, detail_col = st.columns([0.34, 0.66], gap="large")
     render_html('<div class="lab-workbench">')
     with list_col:
         render_html('<aside class="lab-catalog-column">')
         render_section_eyebrow_block("Каталог проектов")
         for project in projects:
-            render_data_lab_project_card(project, selected=str(project["id"]) == str(selected_id))
+            render_data_lab_project_card(
+                project,
+                selected=str(project["id"]) == str(selected_id),
+                source=project_source,
+            )
         render_html("</aside>")
 
     selected_project = next(project for project in projects if project["id"] == selected_id)

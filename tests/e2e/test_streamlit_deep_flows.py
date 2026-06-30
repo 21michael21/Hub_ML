@@ -42,10 +42,14 @@ def click_button_containing(page: Page, text: str, *, timeout_ms: int = 8_000) -
     def attempt_click() -> dict[str, object]:
         return page.evaluate(
             """({ text }) => {
-                const buttons = Array.from(document.querySelectorAll('button'));
-                const target = buttons.find((button) => (button.innerText || button.textContent || '').includes(text));
+                const controls = Array.from(document.querySelectorAll('button, a[href]'));
+                const target = controls.find((control) => {
+                    const rect = control.getBoundingClientRect();
+                    const label = (control.innerText || control.textContent || '').trim();
+                    return rect.width > 0 && rect.height > 0 && label.includes(text) && !control.disabled;
+                });
                 if (!target) {
-                    return { clicked: false, labels: buttons.map((button) => (button.innerText || button.textContent || '').trim()).slice(0, 60) };
+                    return { clicked: false, labels: controls.map((control) => (control.innerText || control.textContent || '').trim()).slice(0, 60) };
                 }
                 target.scrollIntoView({ block: 'center', inline: 'nearest' });
                 target.click();
