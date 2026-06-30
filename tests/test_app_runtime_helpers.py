@@ -956,8 +956,23 @@ def test_render_note_link_button_renders_clickable_button_for_existing_note(monk
     assert buttons[0]["label"] == "Knowledge Map"
     assert buttons[0]["help"] == "00_Atlas/00_Knowledge_Map.md"
     assert buttons[0]["on_click"] is app.open_theory_note
+    assert buttons[0]["args"] == ("00_Atlas/00_Knowledge_Map.md", note_index, False)
     assert buttons[0]["disabled"] is False
     assert captions == ["00_Atlas/00_Knowledge_Map.md"]
+
+
+def test_open_theory_note_path_callback_does_not_request_rerun(monkeypatch) -> None:
+    opened: list[tuple[str, dict[str, object], bool]] = []
+
+    def fake_open_theory_note(relative_path: str, note_index: dict[str, object], rerun: bool = True) -> None:
+        opened.append((relative_path, note_index, rerun))
+
+    monkeypatch.setattr(app, "build_note_index", lambda sections: {"built": sections})
+    monkeypatch.setattr(app, "open_theory_note", fake_open_theory_note)
+
+    app.open_theory_note_path("00_Atlas/00_Knowledge_Map.md", {"00_Atlas": []})
+
+    assert opened == [("00_Atlas/00_Knowledge_Map.md", {"built": {"00_Atlas": []}}, False)]
 
 
 def test_render_note_target_button_missing_target_is_disabled(monkeypatch) -> None:
@@ -1104,6 +1119,30 @@ def test_project_milestone_internal_target_opens_project_and_milestone(monkeypat
     assert app.st.session_state["selected_data_lab_project"] == "orders_conversion_baseline"
     assert app.st.session_state["selected_project_milestone"] == "define_target"
     assert reruns == [True]
+
+
+def test_open_internal_target_fields_can_suppress_callback_rerun(monkeypatch) -> None:
+    opened: list[tuple[app.InternalTarget, bool]] = []
+
+    monkeypatch.setattr(app, "open_internal_target", lambda target, rerun=True: opened.append((target, rerun)))
+
+    app.open_internal_target_fields(
+        "project",
+        "Orders",
+        "orders_eda",
+        "",
+        "orders_eda",
+        "",
+        "data_lab",
+        True,
+        "",
+        rerun=False,
+    )
+
+    target, rerun = opened[0]
+    assert target.kind == "project"
+    assert target.target_id == "orders_eda"
+    assert rerun is False
 
 
 def test_dataset_internal_target_selects_dataset(monkeypatch) -> None:

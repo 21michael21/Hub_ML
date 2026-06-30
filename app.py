@@ -4614,7 +4614,7 @@ def render_note_target_button(
             key=safe_widget_key(key_prefix, note_path, display),
             help_text=note_path,
             on_click=open_theory_note,
-            args=(note_path, note_index, True),
+            args=(note_path, note_index, False),
             use_container_width=use_container_width,
         )
         st.caption(note_path)
@@ -4852,6 +4852,7 @@ def open_internal_target_fields(
     source: str,
     exists: bool = True,
     disabled_reason: str = "",
+    rerun: bool = False,
 ) -> None:
     open_internal_target(
         InternalTarget(
@@ -4865,7 +4866,7 @@ def open_internal_target_fields(
             exists=exists,
             disabled_reason=disabled_reason,
         ),
-        rerun=False,
+        rerun=rerun,
     )
 
 
@@ -5271,8 +5272,12 @@ def note_from_relative_path_in_sections(
     return None
 
 
-def open_theory_note_path(relative_path: str, sections: dict[str, list[dict[str, str]]]) -> None:
-    open_theory_note(relative_path, build_note_index(sections))
+def open_theory_note_path(
+    relative_path: str,
+    sections: dict[str, list[dict[str, str]]],
+    rerun: bool = False,
+) -> None:
+    open_theory_note(relative_path, build_note_index(sections), rerun=rerun)
 
 
 def open_tab(tab_name: str) -> None:
