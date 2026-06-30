@@ -800,7 +800,8 @@ def inject_styles() -> None:
     }
 
     .theory-page {
-        max-width: min(100%, 1240px);
+        width: 100%;
+        max-width: min(100%, 1380px);
         margin: 0 auto;
     }
 
@@ -811,6 +812,11 @@ def inject_styles() -> None:
 
     .theory-note-layout {
         width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 860px) minmax(320px, 380px);
+        gap: var(--s5);
+        align-items: start;
+        justify-content: center;
     }
 
     .theory-section-navigator {
@@ -920,6 +926,7 @@ def inject_styles() -> None:
         }
     }
 
+    .theory-main,
     .theory-main-column {
         min-width: 0;
         max-width: 860px;
@@ -955,11 +962,12 @@ def inject_styles() -> None:
         display: flex;
         flex-direction: column;
         gap: 14px;
-        min-width: 300px;
-        max-width: 360px;
+        min-width: 320px;
+        max-width: 380px;
     }
 
     .theory-side-panel .related-notes,
+    .theory-main .related-notes,
     .theory-main-column .related-notes {
         margin-left: 0;
         margin-right: 0;
@@ -1011,10 +1019,18 @@ def inject_styles() -> None:
     }
 
     @media (max-width: 900px) {
+        .theory-note-layout {
+            display: block;
+        }
+
         .theory-side-panel {
             position: static;
             margin-top: var(--s3);
             min-width: 0;
+            max-width: 100%;
+        }
+
+        .theory-main {
             max-width: 100%;
         }
 
@@ -5679,9 +5695,9 @@ def render_note(
     render_theory_section_navigator(sections, note)
 
     st.markdown('<div class="theory-note-layout">', unsafe_allow_html=True)
-    main_col, side_col = st.columns([0.72, 0.28], gap="large")
+    main_col, side_col = st.columns([0.68, 0.32], gap="large")
     with main_col:
-        st.markdown('<main class="theory-main-column">', unsafe_allow_html=True)
+        st.markdown('<main class="theory-main">', unsafe_allow_html=True)
         with st.container(key="theory_note_body"):
             render_html(render_theory_note_body(body))
         render_html(render_theory_prev_next_strip(sections, note))

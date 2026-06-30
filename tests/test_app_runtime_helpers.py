@@ -434,10 +434,10 @@ def test_theory_layout_css_uses_article_and_side_panel(monkeypatch) -> None:
 
     css = "\n".join(rendered)
     assert ".theory-note-layout" in css
-    assert ".theory-main-column" in css
-    assert "max-width: min(100%, 1240px)" in css
+    assert ".theory-main" in css
+    assert "max-width: min(100%, 1380px)" in css
     assert "max-width: 820px" in css
-    assert "min-width: 300px" in css
+    assert "minmax(320px, 380px)" in css
     assert "max-width: 1120px" not in css
     assert "@media (max-width: 900px)" in css
     assert "position: static" in css

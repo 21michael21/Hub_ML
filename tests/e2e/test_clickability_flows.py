@@ -315,6 +315,22 @@ def test_home_next_theory_action_opens_theory(page: Page, streamlit_app_url: str
     assert_clean_page(page)
 
 
+@pytest.mark.parametrize("viewport", [(1440, 900), (390, 844)])
+def test_theory_layout_responsive_without_horizontal_overflow(
+    page: Page,
+    streamlit_app_url: str,
+    viewport: tuple[int, int],
+) -> None:
+    width, height = viewport
+    page.set_viewport_size({"width": width, "height": height})
+    page.goto(f"{streamlit_app_url}?tab=Theory&note=welcome.md", wait_until="domcontentloaded", timeout=20_000)
+
+    expect(page.locator("body")).to_contain_text("Theory", timeout=30_000)
+    assert body_has_any(page, ("Разделы Theory", "Исходящие ссылки", "Учебный статус", ".md"))
+    assert_clean_page(page)
+    assert_no_horizontal_overflow(page)
+
+
 def test_home_next_task_action_opens_task_detail(page: Page, streamlit_app_url: str) -> None:
     open_app(page, streamlit_app_url)
 
