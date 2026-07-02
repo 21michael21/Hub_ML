@@ -9,6 +9,17 @@ import pytest
 import app
 
 
+def test_shared_ui_helpers_are_reexported_from_common() -> None:
+    from core.ui import common
+
+    assert app.render_card is common.render_card
+    assert app.render_status_chip is common.render_status_chip
+    assert app.render_metric_tile is common.render_metric_tile
+    assert app.render_clickable_row is common.render_clickable_row
+    assert app.render_section_eyebrow is common.render_section_eyebrow
+    assert app.render_empty_state is common.render_empty_state
+
+
 class FakeColumn:
     def __enter__(self) -> "FakeColumn":
         return self
@@ -584,11 +595,13 @@ def test_render_action_card_requires_enabled_action() -> None:
 
 
 def test_render_action_card_disables_with_reason(monkeypatch) -> None:
+    from core.ui import common
+
     html_blocks: list[str] = []
     buttons: list[dict[str, object]] = []
     captions: list[str] = []
 
-    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(common, "render_html", lambda markup: html_blocks.append(str(markup)))
     monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
     monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
 
@@ -1745,6 +1758,8 @@ def test_invalid_internal_target_does_not_rerun(monkeypatch) -> None:
 
 
 def test_render_internal_action_card_disables_invalid_target(monkeypatch) -> None:
+    from core.ui import common
+
     buttons: list[dict[str, object]] = []
     captions: list[str] = []
     html_blocks: list[str] = []
@@ -1753,7 +1768,7 @@ def test_render_internal_action_card_disables_invalid_target(monkeypatch) -> Non
         buttons.append({"label": label, **kwargs})
         return False
 
-    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(common, "render_html", lambda markup: html_blocks.append(str(markup)))
     monkeypatch.setattr(app.st, "button", fake_button)
     monkeypatch.setattr(app.st, "caption", lambda value: captions.append(str(value)))
 
@@ -1774,6 +1789,8 @@ def test_render_internal_action_card_disables_invalid_target(monkeypatch) -> Non
 
 
 def test_render_internal_action_card_marks_clickable_target(monkeypatch) -> None:
+    from core.ui import common
+
     buttons: list[dict[str, object]] = []
     html_blocks: list[str] = []
 
@@ -1781,7 +1798,7 @@ def test_render_internal_action_card_marks_clickable_target(monkeypatch) -> None
         buttons.append({"label": label, **kwargs})
         return False
 
-    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(common, "render_html", lambda markup: html_blocks.append(str(markup)))
     monkeypatch.setattr(app.st, "button", fake_button)
 
     target = app.InternalTarget(
