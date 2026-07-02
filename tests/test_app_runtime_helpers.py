@@ -805,6 +805,9 @@ def test_home_dashboard_primary_actions_use_clickable_rows(monkeypatch) -> None:
     )
 
     rendered = "\n".join(html_blocks)
+    next_note_href = "?tab=Theory&amp;note=00_Atlas%2FKnowledge%20Map.md"
+    assert rendered.index("continue-learning-card") < rendered.index("home-cockpit-grid")
+    assert rendered.count(next_note_href) >= 2
     assert "home-cockpit-grid" in rendered
     assert "home-main-column" in rendered
     assert "home-right-rail" in rendered
@@ -817,6 +820,55 @@ def test_home_dashboard_primary_actions_use_clickable_rows(monkeypatch) -> None:
     assert "→ Открыть теорию" in rendered
     assert "Открыть задачу" not in buttons
     assert "Открыть теорию" not in buttons
+
+
+def test_continue_learning_cta_uses_find_next_note_for_home_and_theory(monkeypatch) -> None:
+    note = {
+        "section_key": "01_Python",
+        "display_name": "Functions.md",
+        "relative_path": "01_Python/Functions.md",
+        "path": "/vault/01_Python/Functions.md",
+        "stem": "Functions",
+    }
+    sections = {"01_Python": [note]}
+    calls: list[dict[str, list[dict[str, str]]]] = []
+
+    def fake_find_next_note(received_sections: dict[str, list[dict[str, str]]]) -> dict[str, str] | None:
+        calls.append(received_sections)
+        return note
+
+    monkeypatch.setattr(app, "find_next_note", fake_find_next_note)
+    home = app.continue_learning_cta_model(sections)
+    theory = app.continue_learning_cta_model(sections)
+
+    assert calls == [sections, sections]
+    assert home == theory
+    assert home["href"] == "?tab=Theory&note=01_Python%2FFunctions.md"
+    assert home["title"] == "Продолжить обучение"
+    assert home["target_title"] == "01 Python / Functions.md"
+    assert home["section"] == "01 Python"
+    assert home["status"] == "TODO"
+
+
+def test_render_continue_learning_cta_is_prominent_clickable_card() -> None:
+    rendered = app.render_continue_learning_cta(
+        {
+            "title": "Продолжить обучение",
+            "target_title": "01 Python / Functions.md",
+            "section": "01 Python",
+            "meta": "Следующая незакрытая заметка.",
+            "why": "Продолжи с первого открытого шага.",
+            "href": "?tab=Theory&note=01_Python%2FFunctions.md",
+            "status": "TODO",
+            "exists": True,
+        }
+    )
+
+    assert 'class="continue-learning-card clickable-row' in rendered
+    assert "Продолжить обучение" in rendered
+    assert "01 Python / Functions.md" in rendered
+    assert "Продолжить обучение →" in rendered
+    assert '?tab=Theory&amp;note=01_Python%2FFunctions.md' in rendered
 
 
 def test_ui_state_persists_onboarding_dismissal(monkeypatch, tmp_path) -> None:

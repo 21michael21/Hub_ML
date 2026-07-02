@@ -2106,6 +2106,22 @@ def inject_styles() -> None:
         color: var(--text);
     }
 
+    .continue-learning-card {
+        margin: 0 0 var(--s4);
+        border-color: var(--border-strong);
+        background: linear-gradient(180deg, rgba(139,155,255,.08), rgba(18,21,29,.96));
+        padding: 18px 20px;
+    }
+
+    .continue-learning-card .clickable-row-title {
+        font-family: var(--font-display);
+        font-size: 1.08rem;
+    }
+
+    .continue-learning-card .clickable-row-action {
+        color: var(--accent);
+    }
+
     @media (max-width: 720px) {
         .theory-quality-metric-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -6353,6 +6369,67 @@ def target_or_tab_href(target: InternalTarget, fallback_tab: str) -> str:
     return internal_target_query_href(target) if target.exists else tab_query_href(fallback_tab)
 
 
+def continue_learning_cta_model(sections: dict[str, list[dict[str, str]]]) -> dict[str, Any]:
+    note = find_next_note(sections)
+    note_index = build_note_index(sections)
+    target = theory_note_target(note, note_index)
+    if not note or not target.exists:
+        return {
+            "title": "Продолжить обучение",
+            "target_title": "Теория закрыта",
+            "section": "Theory",
+            "meta": "Все заметки отмечены как готовые.",
+            "why": "Можно перейти к Practice, Tasks или проектам.",
+            "href": tab_query_href("🎯 Practice"),
+            "status": "PASS",
+            "exists": False,
+        }
+
+    section_label = humanize_section_name(str(note.get("section_key") or "Theory"))
+    status = get_note_status(note)
+    return {
+        "title": "Продолжить обучение",
+        "target_title": target.label,
+        "section": section_label,
+        "meta": f"{section_label} · {target.path}",
+        "why": "Следующая незакрытая заметка по дорожной карте.",
+        "href": internal_target_query_href(target),
+        "status": "READING" if status == STATUS_READING else "TODO",
+        "exists": True,
+    }
+
+
+def render_continue_learning_cta(model: dict[str, Any]) -> str:
+    status = str(model.get("status") or "TODO")
+    href = str(model.get("href") or tab_query_href("Theory"))
+    title = str(model.get("title") or "Продолжить обучение")
+    target_title = str(model.get("target_title") or "")
+    meta = str(model.get("meta") or "")
+    why = str(model.get("why") or "")
+    exists = bool(model.get("exists", True))
+    if not exists:
+        return (
+            '<div class="continue-learning-card clickable-row disabled-target-card" aria-disabled="true">'
+            "<div>"
+            f'<div class="clickable-row-title">{html.escape(title)} {render_status_chip(status)}</div>'
+            f'<div class="clickable-row-meta">{html.escape(target_title)} · {html.escape(why or meta)}</div>'
+            "</div>"
+            f'<div class="clickable-row-action">{render_disabled_chip("Недоступно", why or meta)}</div>'
+            "</div>"
+        )
+
+    return (
+        f'<a class="continue-learning-card clickable-row" href="{html.escape(href, quote=True)}" target="_self">'
+        "<div>"
+        f'<div class="clickable-row-title">{html.escape(title)} {render_status_chip(status)}</div>'
+        f'<div class="clickable-row-meta">{html.escape(target_title)}</div>'
+        f'<div class="clickable-row-meta">{html.escape(meta)} · {html.escape(why)}</div>'
+        "</div>"
+        '<div class="clickable-row-action">Продолжить обучение →</div>'
+        "</a>"
+    )
+
+
 def onboarding_steps(
     sections: dict[str, list[dict[str, str]]],
     practice_cards: list[dict[str, Any]],
@@ -6474,6 +6551,7 @@ def render_dashboard(
     next_project_target = project_milestone_target(project_step)
     gate_summary = content_gate_home_summary()
     gate_percent = max(0, min(100, int(gate_summary["percent"])))
+    continue_cta = continue_learning_cta_model(sections)
 
     hero_markup = """
 <div class="home-hero">
@@ -6796,6 +6874,8 @@ def render_dashboard(
             status="IN PROGRESS",
             action="Открыть ML Lab",
         )
+
+    render_html(render_continue_learning_cta(continue_cta))
 
     if should_show_onboarding():
         render_onboarding_card(onboarding_steps(sections, practice_cards, mentor_tasks, data_lab_projects))
@@ -10400,15 +10480,7 @@ def main() -> None:
         )
     elif active_tab == "Theory":
         if selected_note is None:
-            st.markdown(
-                render_card(
-                    "Заметка не выбрана",
-                    "Выбери заметку в сайдбаре или очисти поиск, если список пуст.",
-                    eyebrow="Theory",
-                    status="TODO",
-                ),
-                unsafe_allow_html=True,
-            )
+            render_html(render_continue_learning_cta(continue_learning_cta_model(sections)))
         else:
             render_theory_search_box(sections, practice_cards, mentor_data.get("tasks", []))
             render_note(
