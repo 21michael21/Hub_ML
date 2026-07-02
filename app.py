@@ -105,6 +105,7 @@ PRACTICE_DIR = Path(__file__).with_name("practice")
 DATASETS_DIR = Path(__file__).with_name("datasets")
 PORTFOLIO_DIR = PROJECT_ROOT / "portfolio"
 USER_PROJECTS_DIR = env_path("HUB_ML_USER_PROJECTS_DIR", PROJECT_ROOT / "user_projects")
+UI_STATE_PATH = USER_PROJECTS_DIR / "ui_state.json"
 ALGORITHMS_DIR = PROJECT_ROOT / "content" / "source" / "vkat" / "VKAT-main" / "algos_patterns"
 INTERVIEW_QUESTIONS_PATH = PROJECT_ROOT / "content" / "interview_questions" / "ml_ds_interview_questions.json"
 ARCHITECTURE_GUIDELINES_PATH = PROJECT_ROOT / "content" / "study" / "architecture_guidelines.html"
@@ -3085,6 +3086,54 @@ def read_note(path: str) -> tuple[str, str | None]:
         return "", str(exc)
 
 
+def load_ui_state() -> dict[str, Any]:
+    try:
+        data = json.loads(UI_STATE_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def save_ui_state(state: dict[str, Any]) -> None:
+    try:
+        UI_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        UI_STATE_PATH.write_text(
+            json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True),
+            encoding="utf-8",
+        )
+    except OSError as exc:
+        logger.warning("Failed to save UI state: %s", exc)
+
+
+def ensure_ui_state() -> dict[str, Any]:
+    if "ui_state" not in st.session_state:
+        st.session_state["ui_state"] = load_ui_state()
+    state = st.session_state["ui_state"]
+    if not isinstance(state, dict):
+        state = {}
+        st.session_state["ui_state"] = state
+    return state
+
+
+def set_onboarding_dismissed(dismissed: bool) -> None:
+    state = ensure_ui_state()
+    state["onboarding_dismissed"] = bool(dismissed)
+    save_ui_state(state)
+
+
+def dismiss_onboarding() -> None:
+    set_onboarding_dismissed(True)
+
+
+def reopen_onboarding() -> None:
+    set_onboarding_dismissed(False)
+    st.session_state["active_tab"] = "Home"
+
+
+def should_show_onboarding() -> bool:
+    return not bool(ensure_ui_state().get("onboarding_dismissed"))
+
+
 def load_progress() -> dict[str, Any]:
     if not PROGRESS_PATH.exists():
         return {
@@ -5898,6 +5947,13 @@ def render_nav_mode_toggle() -> None:
         format_func=lambda mode: NAV_MODE_LABELS.get(str(mode), str(mode)),
         horizontal=True,
     )
+    st.sidebar.button(
+        "?",
+        key="reopen_onboarding",
+        help="Показать подсказку «Как учиться в Hub_ML»",
+        on_click=reopen_onboarding,
+        use_container_width=False,
+    )
 
 
 def render_breadcrumb(active_tab: str) -> None:
@@ -6289,12 +6345,98 @@ def project_milestone_target(project_step: dict[str, Any] | None) -> InternalTar
     )
 
 
+def tab_query_href(tab_name: str) -> str:
+    return f"?tab={quote(tab_name, safe='')}"
+
+
+def target_or_tab_href(target: InternalTarget, fallback_tab: str) -> str:
+    return internal_target_query_href(target) if target.exists else tab_query_href(fallback_tab)
+
+
+def onboarding_steps(
+    sections: dict[str, list[dict[str, str]]],
+    practice_cards: list[dict[str, Any]],
+    mentor_tasks: list[dict[str, Any]],
+    data_lab_projects: list[dict[str, Any]],
+) -> list[dict[str, str]]:
+    note_index = build_note_index(sections)
+    next_note_target = theory_note_target(find_next_note(sections), note_index)
+    next_card_target = practice_card_target(
+        next_practice_card(practice_cards),
+        {str(card.get("id") or "") for card in practice_cards},
+    )
+    next_task_target = mentor_task_target(
+        next_mentor_task(mentor_tasks),
+        {str(task.get("id") or "") for task in mentor_tasks},
+    )
+    next_project_target = project_milestone_target(next_project_milestone(data_lab_projects))
+    project_fallback = "🧪 Data Lab Projects" if data_lab_projects else "📁 Portfolio"
+
+    return [
+        {
+            "title": "Читай теорию",
+            "meta": next_note_target.path or "Открой следующую заметку в Theory.",
+            "href": target_or_tab_href(next_note_target, "Theory"),
+            "action": "Открыть Theory",
+            "status": "READY" if next_note_target.exists else "TODO",
+        },
+        {
+            "title": "Закрепи практикой",
+            "meta": next_card_target.label if next_card_target.exists else "Открой Practice и выбери карточку по теме.",
+            "href": target_or_tab_href(next_card_target, "🎯 Practice"),
+            "action": "Открыть Practice",
+            "status": "READY" if next_card_target.exists else "TODO",
+        },
+        {
+            "title": "Реши задачу с авто-проверкой",
+            "meta": next_task_target.label if next_task_target.exists else "Открой Tasks и выбери задачу с проверками.",
+            "href": target_or_tab_href(next_task_target, "🎯 Tasks"),
+            "action": "Открыть Tasks",
+            "status": "READY" if next_task_target.exists else "TODO",
+        },
+        {
+            "title": "Собери проект и положи результат в портфолио",
+            "meta": next_project_target.path if next_project_target.exists else "Открой Data Lab или Portfolio.",
+            "href": target_or_tab_href(next_project_target, project_fallback),
+            "action": "Открыть Data Lab",
+            "status": "READY" if next_project_target.exists else "TODO",
+        },
+    ]
+
+
 def render_attention_item(label: str, marker: str = "WARN") -> str:
     return (
         '<div class="attention-item">'
         f'<span class="attention-marker">{html.escape(marker)}</span>'
         f'<span>{html.escape(label)}</span>'
         "</div>"
+    )
+
+
+def render_onboarding_card(steps: list[dict[str, str]]) -> None:
+    rows = [
+        render_clickable_row(
+            f"{index}. {step['title']}",
+            step["meta"],
+            href=step["href"],
+            action=step["action"],
+            status=step["status"],
+        )
+        for index, step in enumerate(steps, start=1)
+    ]
+    render_html(
+        '<section class="console-card onboarding-card section-fade">'
+        f'{render_section_eyebrow("Первый запуск")}'
+        '<div class="console-card-title">Как учиться в Hub_ML</div>'
+        '<div class="console-card-body">Один спокойный цикл: теория, практика, задача, проект.</div>'
+        f'<div class="clickable-row-list onboarding-steps">{"".join(rows)}</div>'
+        "</section>"
+    )
+    st.button(
+        "Понятно, скрыть",
+        key="dismiss_onboarding",
+        on_click=dismiss_onboarding,
+        use_container_width=False,
     )
 
 
@@ -6654,6 +6796,9 @@ def render_dashboard(
             status="IN PROGRESS",
             action="Открыть ML Lab",
         )
+
+    if should_show_onboarding():
+        render_onboarding_card(onboarding_steps(sections, practice_cards, mentor_tasks, data_lab_projects))
 
     render_html('<div class="home-cockpit-grid">')
     left_col, right_col = st.columns([0.66, 0.34], gap="large")

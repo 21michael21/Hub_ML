@@ -819,6 +819,92 @@ def test_home_dashboard_primary_actions_use_clickable_rows(monkeypatch) -> None:
     assert "Открыть теорию" not in buttons
 
 
+def test_ui_state_persists_onboarding_dismissal(monkeypatch, tmp_path) -> None:
+    state_path = tmp_path / "user_projects" / "ui_state.json"
+    monkeypatch.setattr(app, "UI_STATE_PATH", state_path)
+    app.st.session_state.clear()
+
+    assert app.load_ui_state() == {}
+    assert app.should_show_onboarding() is True
+
+    app.set_onboarding_dismissed(True)
+    app.st.session_state.clear()
+
+    assert app.load_ui_state()["onboarding_dismissed"] is True
+    assert app.should_show_onboarding() is False
+
+    app.reopen_onboarding()
+
+    assert app.load_ui_state()["onboarding_dismissed"] is False
+    assert app.st.session_state["active_tab"] == "Home"
+
+
+def test_onboarding_steps_use_existing_learning_targets() -> None:
+    note = {
+        "section_key": "00_Atlas",
+        "display_name": "Knowledge Map.md",
+        "relative_path": "00_Atlas/Knowledge Map.md",
+        "path": "/vault/00_Atlas/Knowledge Map.md",
+        "stem": "Knowledge Map",
+    }
+    practice = {
+        "id": "practice_one",
+        "title": "Practice One",
+        "section": "Atlas",
+        "difficulty": "easy",
+        "est_time": "10 мин",
+    }
+    task = {
+        "id": "task_one",
+        "title": "Task One",
+        "confidence": "high",
+        "notebook_label": "Notebook",
+    }
+    project = runtime_sample_project()
+
+    steps = app.onboarding_steps(
+        {"00_Atlas": [note]},
+        [practice],
+        [task],
+        [project],
+    )
+
+    assert [step["title"] for step in steps] == [
+        "Читай теорию",
+        "Закрепи практикой",
+        "Реши задачу с авто-проверкой",
+        "Собери проект и положи результат в портфолио",
+    ]
+    assert steps[0]["href"] == "?tab=Theory&note=00_Atlas%2FKnowledge%20Map.md"
+    assert "kind=practice" in steps[1]["href"]
+    assert "kind=task" in steps[2]["href"]
+    assert "kind=milestone" in steps[3]["href"]
+
+
+def test_render_onboarding_card_has_four_clickable_rows_and_dismiss(monkeypatch) -> None:
+    html_blocks: list[str] = []
+    buttons: list[dict[str, object]] = []
+
+    monkeypatch.setattr(app, "render_html", lambda markup: html_blocks.append(str(markup)))
+    monkeypatch.setattr(app.st, "button", lambda label, **kwargs: buttons.append({"label": label, **kwargs}) or False)
+
+    app.render_onboarding_card(
+        [
+            {"title": "Читай теорию", "meta": "next", "href": "?tab=Theory", "action": "Theory", "status": "READY"},
+            {"title": "Закрепи практикой", "meta": "card", "href": "?tab=Practice", "action": "Practice", "status": "READY"},
+            {"title": "Реши задачу с авто-проверкой", "meta": "task", "href": "?tab=Tasks", "action": "Tasks", "status": "READY"},
+            {"title": "Собери проект и положи результат в портфолио", "meta": "project", "href": "?tab=Portfolio", "action": "Portfolio", "status": "READY"},
+        ]
+    )
+
+    rendered = "\n".join(html_blocks)
+    assert "Как учиться в Hub_ML" in rendered
+    assert rendered.count('<a class="clickable-row') == 4
+    assert "Читай теорию" in rendered
+    assert buttons[0]["label"] == "Понятно, скрыть"
+    assert buttons[0]["on_click"] is app.dismiss_onboarding
+
+
 def test_content_gate_home_summary_parses_complete_report(tmp_path) -> None:
     report = tmp_path / "content_gate_report.json"
     report.write_text(
