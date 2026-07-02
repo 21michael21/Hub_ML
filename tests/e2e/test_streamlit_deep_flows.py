@@ -83,6 +83,18 @@ def click_first_available_button(page: Page, labels: tuple[str, ...]) -> str | N
     return None
 
 
+def enable_admin_mode(page: Page) -> None:
+    page.evaluate(
+        """() => {
+            const labels = Array.from(document.querySelectorAll('label'));
+            const admin = labels.find((label) => (label.innerText || label.textContent || '').includes('Админ'));
+            if (admin) admin.click();
+        }"""
+    )
+    page.wait_for_timeout(600)
+    assert_clean_page(page)
+
+
 def click_nav(page: Page, label: str) -> None:
     active_markers = {
         "Home": ("Hub_ML", "Открыть теорию"),
@@ -118,6 +130,9 @@ def click_nav(page: Page, label: str) -> None:
         "Links Health": ("Links Health", "↔ Links Health", "↔"),
     }
     clicked = click_first_available_button(page, nav_aliases.get(label, (label,)))
+    if clicked is None:
+        enable_admin_mode(page)
+        clicked = click_first_available_button(page, nav_aliases.get(label, (label,)))
     assert clicked is not None, f"Navigation item not found: {label}"
     expect(page.locator("body")).to_contain_text(active_markers.get(label, (label,))[0], timeout=10_000)
     assert_clean_page(page)

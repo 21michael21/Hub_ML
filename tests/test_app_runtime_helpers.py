@@ -403,6 +403,36 @@ def test_layout_mode_for_tab_maps_workspace_pages() -> None:
     assert app.layout_mode_for_tab("📓 Notebook") == "full_workspace"
 
 
+def test_learner_navigation_shows_only_learning_loop() -> None:
+    visible = app.visible_nav_tabs("learner")
+
+    assert visible == [
+        "Home",
+        "Theory",
+        "🎯 Practice",
+        "🎯 Tasks",
+        "🧪 Data Lab Projects",
+        "🤖 ML Lab",
+        "📓 Notebook",
+        "📁 Portfolio",
+    ]
+    assert len(visible) == 8
+    assert "🧭 Theory Quality" not in visible
+    assert "Roadmap" not in visible
+    assert "Progress" not in visible
+
+
+def test_admin_navigation_shows_every_tab_and_deep_links_stay_available() -> None:
+    admin_tabs = app.visible_nav_tabs("admin")
+
+    assert admin_tabs == app.TAB_OPTIONS
+    assert "🧭 Theory Quality" in admin_tabs
+    assert "Roadmap" in admin_tabs
+    assert "Progress" in admin_tabs
+    assert "🧭 Theory Quality" in app.TAB_OPTIONS
+    assert app.normalize_nav_mode("unknown") == "learner"
+
+
 def test_page_layout_css_reduces_one_size_global_constraint() -> None:
     dashboard_css = app.page_layout_mode_css("dashboard")
     workbench_css = app.page_layout_mode_css("workbench")

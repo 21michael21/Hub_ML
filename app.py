@@ -136,49 +136,55 @@ PRACTICE_META = {
     PRACTICE_DOING: {"label": "Практика в работе", "icon": "◐", "class": "status-reading"},
     PRACTICE_DONE: {"label": "Практика готова", "icon": "■", "class": "status-done"},
 }
-NAV_GROUPS: list[tuple[str, list[tuple[str, str, str]]]] = [
-    ("Home", [("Home", "Home", "◧")]),
+NAV_MODE_LEARNER = "learner"
+NAV_MODE_ADMIN = "admin"
+NAV_MODE_LABELS = {
+    NAV_MODE_LEARNER: "Обучение",
+    NAV_MODE_ADMIN: "Админ",
+}
+NAV_GROUPS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
+    ("Home", [("Home", "Home", "◧", NAV_MODE_LEARNER)]),
     (
         "Learn",
         [
-            ("Theory", "Theory", "◎"),
-            ("🎯 Practice", "Practice", "✎"),
-            ("🧭 Theory Quality", "Theory Quality", "◇"),
-            ("Roadmap", "Roadmap", "▤"),
-            ("Progress", "Progress", "▥"),
+            ("Theory", "Theory", "◎", NAV_MODE_LEARNER),
+            ("🎯 Practice", "Practice", "✎", NAV_MODE_LEARNER),
+            ("🎯 Tasks", "Tasks", "✓", NAV_MODE_LEARNER),
+            ("🧭 Theory Quality", "Theory Quality", "◇", NAV_MODE_ADMIN),
+            ("Roadmap", "Roadmap", "▤", NAV_MODE_ADMIN),
+            ("Progress", "Progress", "▥", NAV_MODE_ADMIN),
         ],
     ),
     (
         "Build",
         [
-            ("🧪 Data Lab Projects", "Data Lab", "▣"),
-            ("🤖 ML Lab", "ML Lab", "▧"),
-            ("📓 Notebook", "Notebook", "▦"),
-            ("📊 Datasets", "Datasets", "▨"),
-            ("⚡ Scratch", "Scratch", "⌁"),
+            ("🧪 Data Lab Projects", "Data Lab", "▣", NAV_MODE_LEARNER),
+            ("🤖 ML Lab", "ML Lab", "▧", NAV_MODE_LEARNER),
+            ("📓 Notebook", "Notebook", "▦", NAV_MODE_LEARNER),
+            ("📊 Datasets", "Datasets", "▨", NAV_MODE_ADMIN),
+            ("⚡ Scratch", "Scratch", "⌁", NAV_MODE_ADMIN),
         ],
     ),
     (
         "Train",
         [
-            ("🎯 Tasks", "Tasks", "✓"),
-            ("🧩 Algorithms", "Algorithms", "⌘"),
-            ("🎤 Interviews", "Interviews", "?"),
+            ("🧩 Algorithms", "Algorithms", "⌘", NAV_MODE_ADMIN),
+            ("🎤 Interviews", "Interviews", "?", NAV_MODE_ADMIN),
         ],
     ),
     (
         "Output",
         [
-            ("📁 Portfolio", "Portfolio", "□"),
-            ("🧪 Experiments", "Experiments", "◌"),
-            ("🏗 Architecture", "Architecture", "△"),
-            ("🔗 Links Health", "Links Health", "↔"),
+            ("📁 Portfolio", "Portfolio", "□", NAV_MODE_LEARNER),
+            ("🧪 Experiments", "Experiments", "◌", NAV_MODE_ADMIN),
+            ("🏗 Architecture", "Architecture", "△", NAV_MODE_ADMIN),
+            ("🔗 Links Health", "Links Health", "↔", NAV_MODE_ADMIN),
         ],
     ),
 ]
-NAV_LABELS = {tab: label for _, items in NAV_GROUPS for tab, label, _ in items}
-NAV_ICONS = {tab: icon for _, items in NAV_GROUPS for tab, _, icon in items}
-NAV_GROUP_BY_TAB = {tab: group for group, items in NAV_GROUPS for tab, _, _ in items}
+NAV_LABELS = {tab: label for _, items in NAV_GROUPS for tab, label, _, _ in items}
+NAV_ICONS = {tab: icon for _, items in NAV_GROUPS for tab, _, icon, _ in items}
+NAV_GROUP_BY_TAB = {tab: group for group, items in NAV_GROUPS for tab, _, _, _ in items}
 TAB_OPTIONS = list(NAV_LABELS)
 LAYOUT_MODES = {"reading", "dashboard", "workbench", "full_workspace"}
 DEFAULT_LAYOUT_MODE = "dashboard"
@@ -2570,6 +2576,36 @@ def layout_mode_for_tab(tab_name: str) -> str:
 
 def page_class_for_tab(tab_name: str) -> str:
     return TAB_PAGE_CLASSES.get(str(tab_name or ""), "hub-page")
+
+
+def normalize_nav_mode(mode: str) -> str:
+    normalized = str(mode or "").strip().casefold()
+    return normalized if normalized in NAV_MODE_LABELS else NAV_MODE_LEARNER
+
+
+def nav_item_visible(item_mode: str, nav_mode: str) -> bool:
+    mode = normalize_nav_mode(nav_mode)
+    return mode == NAV_MODE_ADMIN or normalize_nav_mode(item_mode) == NAV_MODE_LEARNER
+
+
+def visible_nav_groups(nav_mode: str) -> list[tuple[str, list[tuple[str, str, str, str]]]]:
+    mode = normalize_nav_mode(nav_mode)
+    groups: list[tuple[str, list[tuple[str, str, str, str]]]] = []
+    for group, items in NAV_GROUPS:
+        visible_items = [item for item in items if nav_item_visible(item[3], mode)]
+        if visible_items:
+            groups.append((group, visible_items))
+    return groups
+
+
+def visible_nav_tabs(nav_mode: str) -> list[str]:
+    return [tab for _group, items in visible_nav_groups(nav_mode) for tab, _label, _icon, _mode in items]
+
+
+def current_nav_mode() -> str:
+    mode = normalize_nav_mode(st.session_state.get("nav_mode", NAV_MODE_LEARNER))
+    st.session_state["nav_mode"] = mode
+    return mode
 
 
 def css_class_name(raw: str) -> str:
@@ -5830,14 +5866,15 @@ def render_grouped_navigation() -> str:
         active_tab = "Home"
         st.session_state["active_tab"] = active_tab
 
+    nav_mode = current_nav_mode()
     st.sidebar.markdown("### Hub_ML")
     st.sidebar.caption("local ML workstation")
-    for group, items in NAV_GROUPS:
+    for group, items in visible_nav_groups(nav_mode):
         st.sidebar.markdown(
             f'<div class="nav-group-label">{html.escape(group)}</div>',
             unsafe_allow_html=True,
         )
-        for tab_name, _, _ in items:
+        for tab_name, _, _, _ in items:
             if tab_name == active_tab:
                 render_nav_active_row(tab_name)
                 continue
@@ -5849,6 +5886,18 @@ def render_grouped_navigation() -> str:
                 use_container_width=True,
             )
     return active_tab
+
+
+def render_nav_mode_toggle() -> None:
+    current_nav_mode()
+    st.sidebar.divider()
+    st.sidebar.radio(
+        "Режим навигации",
+        [NAV_MODE_LEARNER, NAV_MODE_ADMIN],
+        key="nav_mode",
+        format_func=lambda mode: NAV_MODE_LABELS.get(str(mode), str(mode)),
+        horizontal=True,
+    )
 
 
 def render_breadcrumb(active_tab: str) -> None:
@@ -10186,6 +10235,7 @@ def main() -> None:
     st.sidebar.divider()
     active_tab = render_grouped_navigation()
     selected_section, selected_note = render_sidebar(sections)
+    render_nav_mode_toggle()
     render_breadcrumb(active_tab)
     active_layout_mode = layout_mode_for_tab(active_tab)
     apply_page_layout_mode(active_layout_mode)

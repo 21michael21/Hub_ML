@@ -69,6 +69,13 @@ def click_button_containing(at: AppTest, text: str) -> AppTest:
     return at.run(timeout=15)
 
 
+def switch_to_admin_mode(at: AppTest) -> AppTest:
+    matches = [radio for radio in at.sidebar.radio if str(radio.label) == "Режим навигации"]
+    assert len(matches) == 1
+    matches[0].set_value("Админ")
+    return at.run(timeout=15)
+
+
 def raw_html_markdown_without_allow_html(at: AppTest) -> list[str]:
     markers = ("<div", "</div>", "section-eyebrow", "class=")
     offenders: list[str] = []
@@ -110,9 +117,14 @@ def test_sidebar_or_navigation_has_core_sections(smoke_vault: Path) -> None:
     labels = " ".join(button_labels(at))
     sidebar_markdown = " ".join(markdown_values(at.sidebar))
 
-    for expected in ("Home", "Theory", "Practice", "Tasks", "Datasets", "Notebook", "Portfolio"):
+    for expected in ("Home", "Theory", "Practice", "Tasks", "Notebook", "Portfolio"):
         assert expected in labels or expected in sidebar_markdown
     assert "Data Lab" in labels or "Projects" in labels
+    assert "Datasets" not in labels
+
+    at = switch_to_admin_mode(at)
+    admin_labels = " ".join(button_labels(at))
+    assert "Datasets" in admin_labels
 
 
 def test_data_lab_projects_route_does_not_crash(smoke_vault: Path) -> None:
@@ -126,6 +138,7 @@ def test_data_lab_projects_route_does_not_crash(smoke_vault: Path) -> None:
 
 def test_theory_quality_report_view_does_not_crash(smoke_vault: Path) -> None:
     at = run_app()
+    at = switch_to_admin_mode(at)
 
     at = click_button_containing(at, "Theory Quality")
 
@@ -293,22 +306,31 @@ def test_navigation_labels_include_major_sections_and_russian_home_labels(smoke_
         "Home",
         "Theory",
         "Practice",
-        "Theory Quality",
-        "Roadmap",
-        "Progress",
         "Data Lab",
         "ML Lab",
         "Notebook",
-        "Datasets",
         "Tasks",
+        "Portfolio",
+    ):
+        assert expected in combined
+
+    for hidden in ("Theory Quality", "Roadmap", "Progress", "Datasets", "Algorithms", "Interviews"):
+        assert hidden not in labels
+
+    at = switch_to_admin_mode(at)
+    admin_combined = f"{' '.join(markdown_values(at))} {' '.join(button_labels(at))}"
+    for expected in (
+        "Theory Quality",
+        "Roadmap",
+        "Progress",
+        "Datasets",
         "Algorithms",
         "Interviews",
-        "Portfolio",
         "Experiments",
         "Architecture",
         "Links Health",
     ):
-        assert expected in combined
+        assert expected in admin_combined
 
     assert "Продолжить" in visible
     assert "План на сегодня" in visible

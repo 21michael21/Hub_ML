@@ -33,6 +33,18 @@ def open_app(page: Page, app_url: str) -> None:
     expect(page.locator("body")).to_contain_text("Открыть теорию", timeout=30_000)
 
 
+def enable_admin_mode(page: Page) -> None:
+    page.evaluate(
+        """() => {
+            const labels = Array.from(document.querySelectorAll('label'));
+            const admin = labels.find((label) => (label.innerText || label.textContent || '').includes('Админ'));
+            if (admin) admin.click();
+        }"""
+    )
+    page.wait_for_timeout(600)
+    assert_no_runtime_errors(page)
+
+
 def click_nav(page: Page, label_fragment: str) -> None:
     if label_fragment == "Home" and re.search(r"\bHome\b", body_text(page)):
         assert_no_runtime_errors(page)
@@ -50,6 +62,20 @@ def click_nav(page: Page, label_fragment: str) -> None:
         }""",
         label_fragment,
     )
+    if not clicked["clicked"]:
+        enable_admin_mode(page)
+        clicked = page.evaluate(
+            """label => {
+                const buttons = Array.from(document.querySelectorAll('button'));
+                const target = buttons.find((button) => (button.innerText || button.textContent || '').includes(label));
+                if (!target) {
+                    return { clicked: false, labels: buttons.map((button) => (button.innerText || button.textContent || '').trim()) };
+                }
+                target.click();
+                return { clicked: true, labels: [] };
+            }""",
+            label_fragment,
+        )
     assert clicked["clicked"], f"Could not find nav button {label_fragment!r}. Buttons: {clicked['labels']}"
     page.wait_for_timeout(500)
     assert_no_runtime_errors(page)

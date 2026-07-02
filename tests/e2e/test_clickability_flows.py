@@ -120,6 +120,18 @@ def click_visible_graph_link(page: Page, *, require_path_label: bool = False, wa
     return str(result)
 
 
+def enable_admin_mode(page: Page) -> None:
+    page.evaluate(
+        """() => {
+            const labels = Array.from(document.querySelectorAll('label'));
+            const admin = labels.find((label) => (label.innerText || label.textContent || '').includes('Админ'));
+            if (admin) admin.click();
+        }"""
+    )
+    page.wait_for_timeout(600)
+    assert_clean_page(page)
+
+
 def click_nav(page: Page, label: str) -> None:
     nav_aliases = {
         "Data Lab": ("Data Lab", "▣ Data Lab", "▣"),
@@ -144,6 +156,12 @@ def click_nav(page: Page, label: str) -> None:
             }"""
         )
         page.wait_for_timeout(600)
+        for candidate in nav_aliases.get(label, (label,)):
+            clicked = click_visible_button_containing(page, candidate)
+            if clicked is not None:
+                break
+    if clicked is None:
+        enable_admin_mode(page)
         for candidate in nav_aliases.get(label, (label,)):
             clicked = click_visible_button_containing(page, candidate)
             if clicked is not None:
