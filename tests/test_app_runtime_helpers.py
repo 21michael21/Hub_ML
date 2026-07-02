@@ -473,6 +473,21 @@ def test_theory_layout_css_uses_article_and_side_panel(monkeypatch) -> None:
     assert "position: static" in css
 
 
+def test_inject_styles_loads_static_stylesheet(monkeypatch, tmp_path) -> None:
+    css_path = tmp_path / "styles.css"
+    css_path.write_text(".probe { color: red; }\n", encoding="utf-8")
+    rendered: list[str] = []
+
+    monkeypatch.setattr(app, "STATIC_STYLES_PATH", css_path)
+    monkeypatch.setenv("HUBML_DEV_CSS", "1")
+    monkeypatch.setattr(app.st, "markdown", lambda body, **_kwargs: rendered.append(str(body)))
+
+    assert app.load_stylesheet() == ".probe { color: red; }\n"
+    app.inject_styles()
+
+    assert rendered == ["<style>.probe { color: red; }\n</style>"]
+
+
 def test_status_chip_is_static_not_clickable() -> None:
     rendered = app.render_status_chip("PASS")
 
